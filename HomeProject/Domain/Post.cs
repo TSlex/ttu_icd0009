@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -14,5 +15,11 @@ namespace Domain
 
         public int PostFavoritesCount { get; set; }
         public int PostCommentsCount { get; set; }
+        
+        public string ProfileId { get; set; }
+        public Profile Profile { get; set; }
+        
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Favorite> Favorites { get; set; }
     }
 }

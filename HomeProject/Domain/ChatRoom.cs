@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -10,5 +11,8 @@ namespace Domain
         public string LastMessageValue { get; set; }
         
         public DateTime LastMessageDateTime { get; set; }
+        
+        public ICollection<ChatMember> ChatMembers { get; set; }
+        public ICollection<Message> Messages { get; set; }
     }
 }

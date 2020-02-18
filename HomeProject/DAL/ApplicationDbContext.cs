@@ -15,7 +15,7 @@ namespace DAL
         
         public DbSet<Gift> Gifts { get; set; }
         public DbSet<Rank> Ranks { get; set; }
-        public DbSet<Watcher> Watchers { get; set; }
+        public DbSet<Follower> Watchers { get; set; }
         
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
