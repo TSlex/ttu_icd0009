@@ -29,6 +29,7 @@
         <e p="Comment.cs" t="Include" />
         <e p="Domain.csproj" t="IncludeRecursive" />
         <e p="Favorite.cs" t="Include" />
+        <e p="Follower.cs" t="Include" />
         <e p="Gift.cs" t="Include" />
         <e p="Message.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
@@ -43,7 +44,6 @@
         <e p="ProfileGift.cs" t="Include" />
         <e p="ProfileRank.cs" t="Include" />
         <e p="Rank.cs" t="Include" />
-        <e p="Watcher.cs" t="Include" />
       </e>
       <e p="packages" t="ExcludeRecursive" />
       <e p="WebApp" t="IncludeRecursive">

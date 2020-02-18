@@ -2,7 +2,7 @@
 {
     public class ChatMember
     {
-        public int ChatMemberId { get; set; }
+        public string ChatMemberId { get; set; }
         
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }

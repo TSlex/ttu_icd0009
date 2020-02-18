@@ -5,7 +5,7 @@ namespace Domain
 {
     public class Post
     {
-        public int PostId { get; set; }
+        public string PostId { get; set; }
         
         public string PostImageUrl { get; set; }
         public string PostTitle { get; set; }

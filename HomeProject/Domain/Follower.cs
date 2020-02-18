@@ -2,7 +2,7 @@
 {
     public class Follower
     {
-        public int FollowerId { get; set; }
+        public string FollowerId { get; set; }
 
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }

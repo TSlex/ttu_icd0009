@@ -2,7 +2,7 @@
 {
     public class ProfileGift
     {
-        public int ProfileGiftId { get; set; }
+        public string ProfileGiftId { get; set; }
         
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }

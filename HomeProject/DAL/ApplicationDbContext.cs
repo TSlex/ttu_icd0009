@@ -35,7 +35,34 @@ namespace DAL
         {
             base.OnModelCreating(builder);
 
+//            builder.Ignore<BlockedProfile>();
+            
             builder.Entity<Profile>(b => b.ToTable("Profile"));
+
+            builder.Entity<BlockedProfile>()
+                .HasOne(m => m.Profile)
+                .WithMany(p => p.BlockedByProfiles)
+                .IsRequired()
+                .HasForeignKey(p => p.ProfileId);
+            
+            builder.Entity<BlockedProfile>()
+                .HasOne(m => m.BProfile)
+                .WithMany(p => p.BlockedProfiles)
+                .IsRequired()
+                .HasForeignKey(p => p.BProfileId);
+
+
+            builder.Entity<Follower>()
+                .HasOne(m => m.Profile)
+                .WithMany(p => p.Followed)
+                .IsRequired()
+                .HasForeignKey(p => p.ProfileId);
+            
+            builder.Entity<Follower>()
+                .HasOne(m => m.FollowerProfile)
+                .WithMany(p => p.Followers)
+                .IsRequired()
+                .HasForeignKey(p => p.FollowerProfileId);
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace Domain
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain
 {
     public class BlockedProfile
     {
-        public int BlockedProfileId { get; set; }
+        public string BlockedProfileId { get; set; }
         
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }
