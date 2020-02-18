@@ -2,6 +2,6 @@
 {
     public class ChatMember
     {
-        
+        public int ChatMemberId { get; set; }
     }
 }

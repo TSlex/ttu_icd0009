@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Profile>
     {
 
         public DbSet<Profile> Profiles { get; set; }
@@ -29,6 +29,13 @@ namespace DAL
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Profile>(b => b.ToTable("Profile"));
         }
     }
 }

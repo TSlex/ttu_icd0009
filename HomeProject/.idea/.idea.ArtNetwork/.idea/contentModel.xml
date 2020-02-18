@@ -47,7 +47,6 @@
       </e>
       <e p="packages" t="ExcludeRecursive" />
       <e p="WebApp" t="IncludeRecursive">
-        <e p="app.db" t="Include" />
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="Areas" t="Include">
@@ -60,14 +59,6 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
           <e p="HomeController.cs" t="Include" />
-        </e>
-        <e p="Data" t="Include">
-          <e p="ApplicationDbContext.cs" t="Include" />
-          <e p="Migrations" t="Include">
-            <e p="00000000000000_CreateIdentitySchema.cs" t="Include" />
-            <e p="00000000000000_CreateIdentitySchema.Designer.cs" t="Include" />
-            <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
-          </e>
         </e>
         <e p="Models" t="Include">
           <e p="ErrorViewModel.cs" t="Include" />
