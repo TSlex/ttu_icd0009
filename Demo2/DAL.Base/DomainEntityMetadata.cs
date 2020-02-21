@@ -1,0 +1,14 @@
+﻿using System;
+using System.ComponentModel;
+using Contracts.DAL.Base;
+
+namespace DAL.Base
+{
+    public class DomainEntityMetadata : DomainEntity, IDomainEntityMetadata
+    {
+        public string?CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string? DeletedBy { get; set; }
+        public DateTime? DeletedAt { get; set; }
+    }
+}
