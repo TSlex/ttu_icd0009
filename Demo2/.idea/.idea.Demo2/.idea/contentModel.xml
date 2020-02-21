@@ -25,8 +25,8 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="DAL.App.EF.csproj" t="IncludeRecursive" />
         <e p="Migrations" t="Include">
-          <e p="20200221180453_Init.cs" t="Include" />
-          <e p="20200221180453_Init.Designer.cs" t="Include" />
+          <e p="20200221190407_Initial.cs" t="Include" />
+          <e p="20200221190407_Initial.Designer.cs" t="Include" />
           <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

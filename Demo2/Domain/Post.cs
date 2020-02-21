@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Base;
@@ -20,7 +20,10 @@ namespace Domain
         public string CoAuthorId { get; set; } = default!;
         public Author? CoAuthor { get; set; }
 
-        [MaxLength(2000)] public string Body { get; set; } = "";
+        [MaxLength(4096)] 
+        [MinLength(1)]
+        public string Body { get; set; } = default!;
+
 
         public ICollection<PostCategory>? PostCategories { get; set; }
     }

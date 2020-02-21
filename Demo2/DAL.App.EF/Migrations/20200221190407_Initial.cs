@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DAL.Migrations
+namespace DAL.App.EF.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -235,7 +235,7 @@ namespace DAL.Migrations
                     DeletedAt = table.Column<DateTime>(nullable: true),
                     AuthorId = table.Column<string>(maxLength: 36, nullable: false),
                     CoAuthorId = table.Column<string>(maxLength: 36, nullable: false),
-                    Body = table.Column<string>(maxLength: 2000, nullable: false)
+                    Body = table.Column<string>(maxLength: 4096, nullable: false)
                 },
                 constraints: table =>
                 {

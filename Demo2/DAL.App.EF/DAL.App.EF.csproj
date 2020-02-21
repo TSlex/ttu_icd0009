@@ -2,17 +2,62 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <RootNamespace>DAL</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
-      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_UnmanagedRegistrationCache Remove="obj\DAL.App.EF.csproj.UnmanagedRegistration.cache" />
+      <_UnmanagedRegistrationCache Remove="obj\DAL.App.EF.csproj.UnmanagedRegistration.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Debug\netstandard2.1\DAL.App.EF.csproj.ResolveComReference.cache" />
+      <_ResolveComReferenceCache Remove="obj\Debug\netstandard2.1\DAL.App.EF.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Debug\netstandard2.1\DAL.App.EF.dll" />
+      <IntermediateAssembly Remove="obj\Debug\netstandard2.1\DAL.App.EF.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netstandard2.1\DAL.App.EF.pdb" />
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netstandard2.1\DAL.App.EF.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netstandard2.1\DAL.App.EF.dll" />
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netstandard2.1\DAL.App.EF.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Debug\netstandard2.1\Native.DAL.App.EF.manifest" />
+      <ApplicationManifest Remove="obj\Debug\netstandard2.1\Native.DAL.App.EF.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Debug\netstandard2.1\DAL.App.EF.application" />
+      <DeployManifest Remove="obj\Debug\netstandard2.1\DAL.App.EF.application" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ClsidMap Remove="obj\Debug\netstandard2.1\DAL.App.EF.clsidmap" />
+      <ClsidMap Remove="obj\Debug\netstandard2.1\DAL.App.EF.clsidmap" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <RegFreeComManifest Remove="obj\Debug\netstandard2.1\DAL.App.EF.X.manifest" />
+      <RegFreeComManifest Remove="obj\Debug\netstandard2.1\DAL.App.EF.X.manifest" />
     </ItemGroup>
 
 </Project>
