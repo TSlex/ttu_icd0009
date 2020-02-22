@@ -20,6 +20,9 @@
         "projectReferences": {
           "C:\\Users\\alex1\\icd0009-2019s\\Demo2\\DAL.App.EF\\DAL.App.EF.csproj": {
             "projectPath": "C:\\Users\\alex1\\icd0009-2019s\\Demo2\\DAL.App.EF\\DAL.App.EF.csproj"
+          },
+          "C:\\Users\\alex1\\icd0009-2019s\\Demo2\\Extensions\\Extensions.csproj": {
+            "projectPath": "C:\\Users\\alex1\\icd0009-2019s\\Demo2\\Extensions\\Extensions.csproj"
           }
         }
       }
@@ -42,6 +45,10 @@
           "version": "[3.1.2, )"
         },
         "Microsoft.AspNetCore.Identity.UI": {
+          "target": "Package",
+          "version": "[3.1.2, )"
+        },
+        "Microsoft.EntityFrameworkCore.SqlServer": {
           "target": "Package",
           "version": "[3.1.2, )"
         },

@@ -2,48 +2,122 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03566fc-1f0d-431f-a766-223b709aa2f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Demo2.corrupted/.idea/.idea.Demo2/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Demo2.corrupted/.idea/.idea.Demo2/riderModule.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApp/obj/Debug/netcoreapp3.1/WebApp.AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApp/obj/Debug/netcoreapp3.1/WebApp.AssemblyInfoInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebApp/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Extensions/Extensions.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Extensions/IdentityExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/IdentityHostingStartup.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/AccessDenied.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/AccessDenied.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ConfirmEmail.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ConfirmEmail.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ExternalLogin.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ExternalLogin.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ForgotPassword.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ForgotPassword.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Lockout.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Lockout.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/LoginWith2fa.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/LoginWith2fa.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Logout.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Logout.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/Email.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/Email.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/Index.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/Index.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ManageNavPages.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_Layout.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ResetPassword.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ResetPassword.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/_StatusMessage.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/_ViewImports.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Error.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Error.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_Layout.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_ViewImports.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Controllers/AuthorPicturesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Controllers/CategoriesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Controllers/PostCategoriesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Controllers/PostsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/ScaffoldingReadMe.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Create.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Details.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Edit.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Index.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Delete.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Details.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Edit.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Index.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Categories/Create.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Categories/Delete.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Categories/Details.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Categories/Edit.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Categories/Index.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/PostCategories/Create.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/PostCategories/Delete.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/PostCategories/Details.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/PostCategories/Edit.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/PostCategories/Index.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Create.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Delete.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Details.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Edit.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/riderModule.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts.DAL.Base/Contracts.DAL.Base.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts.DAL.Base/Contracts.DAL.Base.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntityMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntityMetadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/ApplicationDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/DAL.App.EF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/DAL.App.EF.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200221180453_Init.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200221180453_Init.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.Base/DomainEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.Base/DomainEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.Base/DomainEntityMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.Base/DomainEntityMetadata.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200221190407_Initial.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200222094745_Initial.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200221190407_Initial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200222094745_Initial.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Demo2.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Demo2.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Author.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Author.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/AuthorPicture.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/AuthorPicture.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Category.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Identity/AppRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Identity/AppRole.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/Identity/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Identity/AppUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Post.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Post.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/PostCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/PostCategory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_ViewStart.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_ViewStart.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Models/ErrorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Models/ErrorViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Shared/_LoginPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Shared/_LoginPartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/WebApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/WebApp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/obj/project.packagespec.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,10 +126,18 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/_ViewStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.App.EF/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.Base/DomainEntityMetadata.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.Base/DomainEntity.cs" root0="FORCE_HIGHLIGHTING" />
@@ -64,12 +146,30 @@
     <setting file="file://$PROJECT_DIR$/Domain/PostCategory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Post.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Category.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DFC33C49-3ECB-4A52-87A4-AE44D73F2848/4a/174e7022/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Author.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Identity/AppUser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Identity/AppRole.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE5B5FB7-5A0A-4DE7-8C71-44A0134B78CC/16/2bad42ad/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Extensions/IdentityExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Details.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Models/ErrorViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/Shared/_LoginPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -88,9 +188,23 @@
         <option value="$PROJECT_DIR$/Domain/PostCategory.cs" />
         <option value="$PROJECT_DIR$/Domain/Post.cs" />
         <option value="$PROJECT_DIR$/Domain/Category.cs" />
-        <option value="$PROJECT_DIR$/Domain/Identity/AppUser.cs" />
         <option value="$PROJECT_DIR$/WebApp/WebApp.csproj" />
         <option value="$PROJECT_DIR$/WebApp/Models/ErrorViewModel.cs" />
+        <option value="$PROJECT_DIR$/WebApp/Views/Shared/_LoginPartial.cshtml" />
+        <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.cs" />
+        <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_Layout.cshtml" />
+        <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" />
+        <option value="$PROJECT_DIR$/Domain/Identity/AppUser.cs" />
+        <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml" />
+        <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" />
+        <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" />
+        <option value="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" />
+        <option value="$PROJECT_DIR$/Extensions/Class1.cs" />
+        <option value="$PROJECT_DIR$/Extensions/IdentityExtensions.cs" />
+        <option value="$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" />
+        <option value="$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" />
       </list>
     </option>
   </component>
@@ -109,6 +223,7 @@
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RunDashboard">
@@ -165,21 +280,32 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1582310117725</updated>
-      <workItem from="1582310118984" duration="1743000" />
+      <workItem from="1582310118984" duration="2245000" />
+      <workItem from="1582364529620" duration="6205000" />
     </task>
+    <task id="LOCAL-00001" summary="demo 2 fixed no custom auth">
+      <created>1582312053096</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1582312053096</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -188,6 +314,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
+    <MESSAGE value="demo 2 fixed no custom auth" />
+    <option name="LAST_COMMIT_MESSAGE" value="demo 2 fixed no custom auth" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

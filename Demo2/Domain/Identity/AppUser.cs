@@ -10,7 +10,7 @@ namespace Domain.Identity
 
         public ICollection<Author>? Authors { get; set; }
 
-//        [MaxLength(256)] [MinLength(1)] public string FirstName { get; set; } = default!;
-//        [MaxLength(256)] [MinLength(1)] public string LastName { get; set; } = default!;
+        [MaxLength(256)] [MinLength(1)] public string FirstName { get; set; } = default!;
+        [MaxLength(256)] [MinLength(1)] public string LastName { get; set; } = default!;
     }
 }
