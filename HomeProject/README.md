@@ -16,5 +16,5 @@ dotnet aspnet-codegenerator controller -name ProfilesController -actions -m Prof
 dotnet aspnet-codegenerator controller -name ProfileGiftsController -actions -m ProfileGift -dc ApplicationDbContext -outDir Controllers --useDefaultLayout --useAsyncActions --referenceScriptLibraries -f
 dotnet aspnet-codegenerator controller -name ProfileRanksController -actions -m ProfileRank -dc ApplicationDbContext -outDir Controllers --useDefaultLayout --useAsyncActions --referenceScriptLibraries -f
 dotnet aspnet-codegenerator controller -name RanksController -actions -m Rank -dc ApplicationDbContext -outDir Controllers --useDefaultLayout --useAsyncActions --referenceScriptLibraries -f
-
+ 
 

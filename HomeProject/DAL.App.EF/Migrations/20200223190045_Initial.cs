@@ -4,54 +4,48 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ChatRoles",
                 columns: table => new
                 {
-                    ChatRoleId = table.Column<string>(nullable: false),
-                    RoleTitle = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    RoleTitle = table.Column<string>(maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChatRoles", x => x.ChatRoleId);
+                    table.PrimaryKey("PK_ChatRoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Gifts",
                 columns: table => new
                 {
-                    GiftId = table.Column<string>(nullable: false),
-                    GiftName = table.Column<string>(nullable: false),
-                    GiftImageUrl = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    GiftName = table.Column<string>(maxLength: 100, nullable: false),
+                    GiftImageUrl = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Gifts", x => x.GiftId);
+                    table.PrimaryKey("PK_Gifts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Profile",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -67,10 +61,10 @@ namespace DAL.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     RegistrationDateTime = table.Column<DateTime>(nullable: false),
-                    LastLoginDateTime = table.Column<DateTime>(nullable: false),
-                    ProfileStatus = table.Column<string>(nullable: false),
-                    ProfileAvatarUrl = table.Column<string>(nullable: false),
-                    ProfileAbout = table.Column<string>(nullable: false),
+                    LastLoginDateTime = table.Column<DateTime>(nullable: true),
+                    ProfileStatus = table.Column<string>(maxLength: 300, nullable: true),
+                    ProfileAvatarUrl = table.Column<string>(maxLength: 300, nullable: true),
+                    ProfileAbout = table.Column<string>(maxLength: 1000, nullable: true),
                     FollowersCount = table.Column<int>(nullable: false),
                     FollowedCount = table.Column<int>(nullable: false),
                     PostsCount = table.Column<int>(nullable: false)
@@ -84,48 +78,49 @@ namespace DAL.Migrations
                 name: "Ranks",
                 columns: table => new
                 {
-                    RankId = table.Column<string>(nullable: false),
-                    RankTitle = table.Column<string>(nullable: false),
-                    RankDescription = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    RankTitle = table.Column<string>(maxLength: 100, nullable: false),
+                    RankDescription = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ranks", x => x.RankId);
+                    table.PrimaryKey("PK_Ranks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
-                    ChatRoomId = table.Column<string>(nullable: false),
-                    ChatRoomTitle = table.Column<string>(nullable: false),
-                    LastMessageValue = table.Column<string>(nullable: false),
-                    LastMessageDateTime = table.Column<DateTime>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ChatRoomTitle = table.Column<string>(maxLength: 100, nullable: false),
+                    LastMessageValue = table.Column<string>(maxLength: 100, nullable: true),
+                    LastMessageDateTime = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.ChatRoomId);
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
+                name: "UserRole",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_UserRole", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,30 +165,6 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_Profile_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
@@ -217,13 +188,18 @@ namespace DAL.Migrations
                 name: "BlockedProfiles",
                 columns: table => new
                 {
-                    BlockedProfileId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    BProfileId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    BProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    Reason = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlockedProfiles", x => x.BlockedProfileId);
+                    table.PrimaryKey("PK_BlockedProfiles", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BlockedProfiles_Profile_BProfileId",
                         column: x => x.BProfileId,
@@ -242,18 +218,22 @@ namespace DAL.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    PostId = table.Column<string>(nullable: false),
-                    PostImageUrl = table.Column<string>(nullable: false),
-                    PostTitle = table.Column<string>(nullable: false),
-                    PostDescription = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    PostTitle = table.Column<string>(maxLength: 100, nullable: false),
+                    PostImageUrl = table.Column<string>(maxLength: 300, nullable: true),
+                    PostDescription = table.Column<string>(maxLength: 500, nullable: true),
                     PostPublicationDateTime = table.Column<DateTime>(nullable: false),
                     PostFavoritesCount = table.Column<int>(nullable: false),
                     PostCommentsCount = table.Column<int>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false)
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.PostId);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Posts_Profile_ProfileId",
                         column: x => x.ProfileId,
@@ -266,18 +246,22 @@ namespace DAL.Migrations
                 name: "ProfileGifts",
                 columns: table => new
                 {
-                    ProfileGiftId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    GiftId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    GiftId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileGifts", x => x.ProfileGiftId);
+                    table.PrimaryKey("PK_ProfileGifts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProfileGifts_Gifts_GiftId",
                         column: x => x.GiftId,
                         principalTable: "Gifts",
-                        principalColumn: "GiftId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProfileGifts_Profile_ProfileId",
@@ -291,13 +275,17 @@ namespace DAL.Migrations
                 name: "Watchers",
                 columns: table => new
                 {
-                    FollowerId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    FollowerProfileId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    FollowerProfileId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Watchers", x => x.FollowerId);
+                    table.PrimaryKey("PK_Watchers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Watchers_Profile_FollowerProfileId",
                         column: x => x.FollowerProfileId,
@@ -316,13 +304,17 @@ namespace DAL.Migrations
                 name: "ProfileRanks",
                 columns: table => new
                 {
-                    ProfileRankId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    RankId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    RankId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileRanks", x => x.ProfileRankId);
+                    table.PrimaryKey("PK_ProfileRanks", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProfileRanks_Profile_ProfileId",
                         column: x => x.ProfileId,
@@ -333,7 +325,7 @@ namespace DAL.Migrations
                         name: "FK_ProfileRanks_Ranks_RankId",
                         column: x => x.RankId,
                         principalTable: "Ranks",
-                        principalColumn: "RankId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -341,25 +333,29 @@ namespace DAL.Migrations
                 name: "ChatMembers",
                 columns: table => new
                 {
-                    ChatMemberId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    ChatRoleId = table.Column<string>(nullable: false),
-                    ChatRoomId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    ChatRoleId = table.Column<string>(maxLength: 36, nullable: false),
+                    ChatRoomId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChatMembers", x => x.ChatMemberId);
+                    table.PrimaryKey("PK_ChatMembers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ChatMembers_ChatRoles_ChatRoleId",
                         column: x => x.ChatRoleId,
                         principalTable: "ChatRoles",
-                        principalColumn: "ChatRoleId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ChatMembers_Rooms_ChatRoomId",
                         column: x => x.ChatRoomId,
                         principalTable: "Rooms",
-                        principalColumn: "ChatRoomId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ChatMembers_Profile_ProfileId",
@@ -373,20 +369,24 @@ namespace DAL.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    MessageId = table.Column<string>(nullable: false),
-                    MessageValue = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    MessageValue = table.Column<string>(maxLength: 2000, nullable: false),
                     MessageDateTime = table.Column<DateTime>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    ChatRoomId = table.Column<string>(nullable: false)
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    ChatRoomId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.MessageId);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Messages_Rooms_ChatRoomId",
                         column: x => x.ChatRoomId,
                         principalTable: "Rooms",
-                        principalColumn: "ChatRoomId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Messages_Profile_ProfileId",
@@ -397,23 +397,72 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
+                name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    CommentId = table.Column<string>(nullable: false),
-                    CommentValue = table.Column<string>(nullable: false),
-                    CommentDateTime = table.Column<DateTime>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    PostId = table.Column<string>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_UserRole_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "UserRole",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_UserRole_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "UserRole",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_Profile_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Profile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    CommentValue = table.Column<string>(maxLength: 300, nullable: false),
+                    CommentDateTime = table.Column<DateTime>(nullable: false),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    PostId = table.Column<string>(maxLength: 36, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "PostId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comments_Profile_ProfileId",
@@ -427,18 +476,22 @@ namespace DAL.Migrations
                 name: "Favorites",
                 columns: table => new
                 {
-                    FavoriteId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<string>(nullable: false),
-                    PostId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedBy = table.Column<string>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    ProfileId = table.Column<string>(maxLength: 36, nullable: false),
+                    PostId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Favorites", x => x.FavoriteId);
+                    table.PrimaryKey("PK_Favorites", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Favorites_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "PostId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Favorites_Profile_ProfileId",
@@ -452,12 +505,6 @@ namespace DAL.Migrations
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -566,6 +613,12 @@ namespace DAL.Migrations
                 column: "RankId");
 
             migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "UserRole",
+                column: "NormalizedName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Watchers_FollowerProfileId",
                 table: "Watchers",
                 column: "FollowerProfileId");
@@ -618,7 +671,7 @@ namespace DAL.Migrations
                 name: "Watchers");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "UserRole");
 
             migrationBuilder.DropTable(
                 name: "ChatRoles");
