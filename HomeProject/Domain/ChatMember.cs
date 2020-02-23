@@ -2,8 +2,6 @@
 {
     public class ChatMember
     {
-        public string ChatMemberId { get; set; }
-        
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }
         

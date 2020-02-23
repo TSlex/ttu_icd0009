@@ -2,8 +2,6 @@
 {
     public class Favorite
     {
-        public string FavoriteId { get; set; }
-        
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }
         

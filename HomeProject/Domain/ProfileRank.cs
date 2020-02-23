@@ -2,8 +2,6 @@
 {
     public class ProfileRank
     {
-        public string ProfileRankId { get; set; }
-        
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }
         

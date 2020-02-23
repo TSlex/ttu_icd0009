@@ -4,7 +4,6 @@ namespace Domain
 {
     public class Comment
     {
-        public string CommentId { get; set; }
         public string CommentValue{ get; set; }
         public DateTime CommentDateTime { get; set; }
         

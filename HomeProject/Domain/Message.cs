@@ -4,8 +4,6 @@ namespace Domain
 {
     public class Message
     {
-        public string MessageId { get; set; }
-        
         public string MessageValue { get; set; }
         
         public DateTime MessageDateTime { get; set; }

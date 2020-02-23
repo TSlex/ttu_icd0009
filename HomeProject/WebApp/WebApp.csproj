@@ -18,8 +18,76 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DAL\DAL.csproj" />
+      <ProjectReference Include="..\DAL.App.EF\DAL.App.EF.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\BlockedProfiles\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\BlockedProfiles\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\BlockedProfiles\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\BlockedProfiles\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\BlockedProfiles\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatMembers\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatMembers\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatMembers\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatMembers\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatMembers\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRoles\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRoles\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRoles\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRoles\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRoles\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRooms\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRooms\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRooms\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRooms\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ChatRooms\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Comments\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Comments\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Comments\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Comments\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Comments\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Favorites\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Favorites\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Favorites\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Favorites\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Favorites\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Followers\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Followers\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Followers\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Followers\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Followers\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Gifts\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Gifts\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Gifts\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Gifts\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Gifts\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Messages\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Messages\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Messages\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Messages\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Messages\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Posts\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Posts\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Posts\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Posts\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Posts\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileGifts\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileGifts\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileGifts\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileGifts\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileGifts\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileRanks\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileRanks\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileRanks\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileRanks\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfileRanks\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Profiles\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Profiles\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Profiles\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Profiles\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Profiles\Index.cshtml" />
     </ItemGroup>
 
 </Project>

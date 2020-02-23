@@ -2,8 +2,6 @@
 {
     public class ProfileGift
     {
-        public string ProfileGiftId { get; set; }
-        
         public string ProfileId { get; set; }
         public Profile Profile { get; set; }
         
