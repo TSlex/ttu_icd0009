@@ -15,8 +15,10 @@ namespace Domain
         public string AppUserId { get; set; } = default!;
         public AppUser? AppUser { get; set; }
         
-        [MaxLength(2000)] public string FirstName { get; set; } = "";
-        [MaxLength(2000)] public string LastName { get; set; } = "";
+        [MaxLength(100)][MinLength(1)] public string FirstName { get; set; } = default!;
+        [MaxLength(100)][MinLength(1)] public string LastName { get; set; } = default!;
+        
+        [MaxLength(100)][MinLength(1)] public string FullName { get; set; } = default!;
 
         [MaxLength(36)] public string? AuthorPictureId { get; set; } = default!;
         public AuthorPicture? AuthorPicture { get; set; }

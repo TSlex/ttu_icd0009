@@ -2,69 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03566fc-1f0d-431f-a766-223b709aa2f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/BlockedProfilesController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/ChatMembersController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/ChatRolesController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/ChatRoomsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/CommentsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/FavoritesController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/FollowersController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Controllers/GiftsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/BlockedProfiles/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/BlockedProfiles/Delete.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/BlockedProfiles/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/BlockedProfiles/Edit.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/BlockedProfiles/Index.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatMembers/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatMembers/Delete.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatMembers/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatMembers/Edit.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatMembers/Index.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRoles/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRoles/Delete.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRoles/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRoles/Edit.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRooms/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRooms/Delete.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRooms/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRooms/Edit.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/ChatRooms/Index.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Comments/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Comments/Delete.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Comments/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Comments/Edit.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Comments/Index.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Favorites/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Favorites/Delete.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Favorites/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Favorites/Edit.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Followers/Create.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Followers/Details.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Views/Followers/Edit.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141412_Init.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141412_Init.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/.idea/.idea.ArtNetwork/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/.idea/.idea.ArtNetwork/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/ApplicationDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/Migrations/20200218164335_Init.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/Migrations/20200223190045_Initial.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/Migrations/20200218164335_Init.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/Migrations/20200223190045_Initial.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/BlockedProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/BlockedProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/ChatMember.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/ChatMember.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/ChatRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/ChatRole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/ChatRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/ChatRoom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Favorite.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Favorite.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Follower.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Follower.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Gift.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Gift.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Identity/MRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Identity/MRole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Identity/MUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Identity/MUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Post.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Post.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Profile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/ProfileGift.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/ProfileGift.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/ProfileRank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/ProfileRank.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/Domain/Rank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/Domain/Rank.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HomeProject/WebApp/Models/ErrorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../HomeProject/WebApp/Models/ErrorViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Author.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Author.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Startup.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,10 +20,24 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="master" />
+        <entry key="$PROJECT_DIR$/.." value="demo2-4week" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -110,6 +72,7 @@
     <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Details.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HomeProject/Domain/BlockedProfile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
@@ -127,7 +90,6 @@
         <option value="$PROJECT_DIR$/Contracts.DAL.Base/Class1.cs" />
         <option value="$PROJECT_DIR$/DAL.Base/Class1.cs" />
         <option value="$PROJECT_DIR$/Domain/Class1.cs" />
-        <option value="$PROJECT_DIR$/WebApp/Startup.cs" />
         <option value="$PROJECT_DIR$/WebApp/appsettings.json" />
         <option value="$PROJECT_DIR$/Contracts.DAL.Base/Contracts.DAL.Base.csproj" />
         <option value="$PROJECT_DIR$/DAL.App.EF/DAL.App.EF.csproj" />
@@ -147,13 +109,17 @@
         <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" />
         <option value="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" />
         <option value="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" />
         <option value="$PROJECT_DIR$/Extensions/Class1.cs" />
         <option value="$PROJECT_DIR$/Extensions/IdentityExtensions.cs" />
         <option value="$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" />
         <option value="$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" />
         <option value="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntity.cs" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/WebApp/Startup.cs" />
+        <option value="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228140341_AddMiddleName.cs" />
+        <option value="$PROJECT_DIR$/Domain/Author.cs" />
+        <option value="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" />
       </list>
     </option>
   </component>
@@ -165,6 +131,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -233,6 +200,7 @@
       <workItem from="1582364529620" duration="6205000" />
       <workItem from="1582376256079" duration="47000" />
       <workItem from="1582477994583" duration="4329000" />
+      <workItem from="1582895903461" duration="4262000" />
     </task>
     <task id="LOCAL-00001" summary="demo 2 fixed no custom auth">
       <created>1582312053096</created>
