@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03566fc-1f0d-431f-a766-223b709aa2f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141412_Init.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141412_Init.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Author.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Author.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Startup.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,8 +61,8 @@
     <setting file="file://$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Edit.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Details.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/PostCategories/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HomeProject/Domain/BlockedProfile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
@@ -201,6 +191,7 @@
       <workItem from="1582376256079" duration="47000" />
       <workItem from="1582477994583" duration="4329000" />
       <workItem from="1582895903461" duration="4262000" />
+      <workItem from="1582981987606" duration="56000" />
     </task>
     <task id="LOCAL-00001" summary="demo 2 fixed no custom auth">
       <created>1582312053096</created>
@@ -234,7 +225,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
     <MESSAGE value="demo 2 fixed no custom auth" />
-    <option name="LAST_COMMIT_MESSAGE" value="demo 2 fixed no custom auth" />
+    <MESSAGE value="demo 2 - week 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="demo 2 - week 5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
