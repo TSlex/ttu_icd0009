@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Category : DomainEntityMetadata
+    public class Category : DomainEntity
     {
         [MaxLength(128)] public string Name { get; set; } = default!;
 

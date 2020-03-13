@@ -59,7 +59,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AuthorId,CoAuthorId,Body,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Post post)
+        public async Task<IActionResult> Create([Bind("AuthorId,CoAuthorId,Body,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AuthorId,CoAuthorId,Body,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Post post)
+        public async Task<IActionResult> Edit(string id, [Bind("AuthorId,CoAuthorId,Body,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] Post post)
         {
             if (id != post.Id)
             {

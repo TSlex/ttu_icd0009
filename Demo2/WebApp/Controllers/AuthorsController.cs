@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
 using Domain;
-using Extensions;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
     public class AuthorsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,11 +22,7 @@ namespace WebApp.Controllers
         // GET: Authors
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext =
-                _context.Authors
-                    .Include(a => a.AppUser)
-                    .Where(a => a.AppUserId == User.UserId());
-
+            var applicationDbContext = _context.Authors.Include(a => a.AppUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -56,7 +48,7 @@ namespace WebApp.Controllers
         // GET: Authors/Create
         public IActionResult Create()
         {
-//            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -65,24 +57,15 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-//            [Bind("AppUserId,FirstName,LastName,AuthorPictureId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")]
-            Author author)
+        public async Task<IActionResult> Create([Bind("AppUserId,FirstName,LastName,FullName,AuthorPictureId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] Author author)
         {
-//            var userId = User.Claims.Single(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
-
-            author.AppUserId = User.UserId();
-
-            ModelState.Clear();
-            TryValidateModel(author);
-
             if (ModelState.IsValid)
             {
                 _context.Add(author);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", author.AppUserId);
             return View(author);
         }
 
@@ -99,7 +82,6 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-
             ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", author.AppUserId);
             return View(author);
         }
@@ -109,9 +91,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id,
-            [Bind("AppUserId,FirstName,LastName,AuthorPictureId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")]
-            Author author)
+        public async Task<IActionResult> Edit(string id, [Bind("AppUserId,FirstName,LastName,FullName,AuthorPictureId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] Author author)
         {
             if (id != author.Id)
             {
@@ -136,10 +116,8 @@ namespace WebApp.Controllers
                         throw;
                     }
                 }
-
                 return RedirectToAction(nameof(Index));
             }
-
             ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", author.AppUserId);
             return View(author);
         }

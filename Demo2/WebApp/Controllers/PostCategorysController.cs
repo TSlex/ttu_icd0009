@@ -10,11 +10,11 @@ using Domain;
 
 namespace WebApp.Controllers
 {
-    public class PostCategoriesController : Controller
+    public class PostCategorysController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PostCategoriesController(ApplicationDbContext context)
+        public PostCategorysController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -59,7 +59,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,CategoryId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] PostCategory postCategory)
+        public async Task<IActionResult> Create([Bind("PostId,CategoryId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] PostCategory postCategory)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("PostId,CategoryId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] PostCategory postCategory)
+        public async Task<IActionResult> Edit(string id, [Bind("PostId,CategoryId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] PostCategory postCategory)
         {
             if (id != postCategory.Id)
             {

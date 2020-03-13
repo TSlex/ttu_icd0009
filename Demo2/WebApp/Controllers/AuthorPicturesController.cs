@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PictureUrl,AuthorId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] AuthorPicture authorPicture)
+        public async Task<IActionResult> Create([Bind("PictureUrl,AuthorId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] AuthorPicture authorPicture)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("PictureUrl,AuthorId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] AuthorPicture authorPicture)
+        public async Task<IActionResult> Edit(string id, [Bind("PictureUrl,AuthorId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] AuthorPicture authorPicture)
         {
             if (id != authorPicture.Id)
             {

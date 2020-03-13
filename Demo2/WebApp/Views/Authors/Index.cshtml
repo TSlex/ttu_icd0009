@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.AuthorPictureId)
             </th>
             <th>
@@ -31,10 +34,10 @@
                 @Html.DisplayNameFor(model => model.CreatedAt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeletedBy)
+                @Html.DisplayNameFor(model => model.ChangedBy)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
+                @Html.DisplayNameFor(model => model.ChangedAt)
             </th>
             <th></th>
         </tr>
@@ -52,6 +55,9 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.AuthorPictureId)
             </td>
             <td>
@@ -61,10 +67,10 @@
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeletedBy)
+                @Html.DisplayFor(modelItem => item.ChangedBy)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeletedAt)
+                @Html.DisplayFor(modelItem => item.ChangedAt)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

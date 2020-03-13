@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Base;
+ using Contracts.DAL.Base;
+ using DAL.Base;
 using Domain.Identity;
 
 namespace Domain
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class Author : DomainEntityMetadata
+    public class Author : DomainEntity
     {
         
         [MaxLength(36)]

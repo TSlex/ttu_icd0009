@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class AuthorPicture : DomainEntityMetadata
+    public class AuthorPicture : DomainEntity
     {
         [MaxLength(255)] public string PictureUrl { get; set; } = default!;
 

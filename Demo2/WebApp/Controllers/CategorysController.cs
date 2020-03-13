@@ -10,11 +10,11 @@ using Domain;
 
 namespace WebApp.Controllers
 {
-    public class CategoriesController : Controller
+    public class CategorysController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategorysController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,ParentCategoryId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Category category)
+        public async Task<IActionResult> Create([Bind("Name,ParentCategoryId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Name,ParentCategoryId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Category category)
+        public async Task<IActionResult> Edit(string id, [Bind("Name,ParentCategoryId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt")] Category category)
         {
             if (id != category.Id)
             {

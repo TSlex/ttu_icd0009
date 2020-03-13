@@ -3,7 +3,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class PostCategory : DomainEntityMetadata
+    public class PostCategory : DomainEntity
     {
         [MaxLength(36)] public string PostId { get; set; } = default!;
         public Post? Post { get; set; }

@@ -7,7 +7,7 @@ namespace Domain
 {
     // ReSharper disable MemberCanBePrivate.Global
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class Post : DomainEntityMetadata
+    public class Post : DomainEntity
     {
         [ForeignKey(nameof(Author))]
         [MaxLength(36)]
