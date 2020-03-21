@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRoles/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -54,10 +54,11 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoleTitle,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ChatRole chatRole)
+        public async Task<IActionResult> Create([Bind("RoleTitle,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRole chatRole)
         {
             if (ModelState.IsValid)
             {
+                chatRole.Id = Guid.NewGuid();
                 _context.Add(chatRole);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +67,7 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRoles/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +87,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("RoleTitle,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ChatRole chatRole)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RoleTitle,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRole chatRole)
         {
             if (id != chatRole.Id)
             {
@@ -117,7 +118,7 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRoles/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -137,7 +138,7 @@ namespace WebApp.Controllers
         // POST: ChatRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var chatRole = await _context.ChatRoles.FindAsync(id);
             _context.ChatRoles.Remove(chatRole);
@@ -145,7 +146,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ChatRoleExists(string id)
+        private bool ChatRoleExists(Guid id)
         {
             return _context.ChatRoles.Any(e => e.Id == id);
         }

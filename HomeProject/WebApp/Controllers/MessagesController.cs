@@ -22,12 +22,12 @@ namespace WebApp.Controllers
         // GET: Messages
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Messages.Include(m => m.ChatRoom).Include(m => m.Profile);
+            var applicationDbContext = _context.Messages.Include(m => m.Profile);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Messages/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -35,7 +35,6 @@ namespace WebApp.Controllers
             }
 
             var message = await _context.Messages
-                .Include(m => m.ChatRoom)
                 .Include(m => m.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (message == null)
@@ -49,7 +48,6 @@ namespace WebApp.Controllers
         // GET: Messages/Create
         public IActionResult Create()
         {
-            ViewData["ChatRoomId"] = new SelectList(_context.Rooms, "Id", "Id");
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
@@ -59,21 +57,21 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Message message)
+        public async Task<IActionResult> Create([Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Message message)
         {
             if (ModelState.IsValid)
             {
+                message.Id = Guid.NewGuid();
                 _context.Add(message);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ChatRoomId"] = new SelectList(_context.Rooms, "Id", "Id", message.ChatRoomId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
             return View(message);
         }
 
         // GET: Messages/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -85,7 +83,6 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["ChatRoomId"] = new SelectList(_context.Rooms, "Id", "Id", message.ChatRoomId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
             return View(message);
         }
@@ -95,7 +92,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Message message)
+        public async Task<IActionResult> Edit(Guid id, [Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Message message)
         {
             if (id != message.Id)
             {
@@ -122,13 +119,12 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ChatRoomId"] = new SelectList(_context.Rooms, "Id", "Id", message.ChatRoomId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
             return View(message);
         }
 
         // GET: Messages/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -136,7 +132,6 @@ namespace WebApp.Controllers
             }
 
             var message = await _context.Messages
-                .Include(m => m.ChatRoom)
                 .Include(m => m.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (message == null)
@@ -150,7 +145,7 @@ namespace WebApp.Controllers
         // POST: Messages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var message = await _context.Messages.FindAsync(id);
             _context.Messages.Remove(message);
@@ -158,7 +153,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MessageExists(string id)
+        private bool MessageExists(Guid id)
         {
             return _context.Messages.Any(e => e.Id == id);
         }

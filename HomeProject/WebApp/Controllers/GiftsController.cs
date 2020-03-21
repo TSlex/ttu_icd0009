@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Gifts/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -54,10 +54,11 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GiftName,GiftImageUrl,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Gift gift)
+        public async Task<IActionResult> Create([Bind("GiftName,GiftImageUrl,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Gift gift)
         {
             if (ModelState.IsValid)
             {
+                gift.Id = Guid.NewGuid();
                 _context.Add(gift);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +67,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Gifts/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +87,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("GiftName,GiftImageUrl,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Gift gift)
+        public async Task<IActionResult> Edit(Guid id, [Bind("GiftName,GiftImageUrl,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Gift gift)
         {
             if (id != gift.Id)
             {
@@ -117,7 +118,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Gifts/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -137,7 +138,7 @@ namespace WebApp.Controllers
         // POST: Gifts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var gift = await _context.Gifts.FindAsync(id);
             _context.Gifts.Remove(gift);
@@ -145,7 +146,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GiftExists(string id)
+        private bool GiftExists(Guid id)
         {
             return _context.Gifts.Any(e => e.Id == id);
         }

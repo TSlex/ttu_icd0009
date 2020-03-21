@@ -22,12 +22,12 @@ namespace WebApp.Controllers
         // GET: ProfileGifts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ProfileGifts.Include(p => p.Gift).Include(p => p.Profile);
+            var applicationDbContext = _context.ProfileGifts.Include(p => p.Profile);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: ProfileGifts/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -35,7 +35,6 @@ namespace WebApp.Controllers
             }
 
             var profileGift = await _context.ProfileGifts
-                .Include(p => p.Gift)
                 .Include(p => p.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profileGift == null)
@@ -49,7 +48,6 @@ namespace WebApp.Controllers
         // GET: ProfileGifts/Create
         public IActionResult Create()
         {
-            ViewData["GiftId"] = new SelectList(_context.Gifts, "Id", "Id");
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
@@ -59,21 +57,21 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,GiftId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ProfileGift profileGift)
+        public async Task<IActionResult> Create([Bind("ProfileId,GiftId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ProfileGift profileGift)
         {
             if (ModelState.IsValid)
             {
+                profileGift.Id = Guid.NewGuid();
                 _context.Add(profileGift);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GiftId"] = new SelectList(_context.Gifts, "Id", "Id", profileGift.GiftId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileGift.ProfileId);
             return View(profileGift);
         }
 
         // GET: ProfileGifts/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -85,7 +83,6 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["GiftId"] = new SelectList(_context.Gifts, "Id", "Id", profileGift.GiftId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileGift.ProfileId);
             return View(profileGift);
         }
@@ -95,7 +92,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProfileId,GiftId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ProfileGift profileGift)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,GiftId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ProfileGift profileGift)
         {
             if (id != profileGift.Id)
             {
@@ -122,13 +119,12 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GiftId"] = new SelectList(_context.Gifts, "Id", "Id", profileGift.GiftId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileGift.ProfileId);
             return View(profileGift);
         }
 
         // GET: ProfileGifts/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -136,7 +132,6 @@ namespace WebApp.Controllers
             }
 
             var profileGift = await _context.ProfileGifts
-                .Include(p => p.Gift)
                 .Include(p => p.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profileGift == null)
@@ -150,7 +145,7 @@ namespace WebApp.Controllers
         // POST: ProfileGifts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var profileGift = await _context.ProfileGifts.FindAsync(id);
             _context.ProfileGifts.Remove(profileGift);
@@ -158,7 +153,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfileGiftExists(string id)
+        private bool ProfileGiftExists(Guid id)
         {
             return _context.ProfileGifts.Any(e => e.Id == id);
         }

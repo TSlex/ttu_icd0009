@@ -22,12 +22,12 @@ namespace WebApp.Controllers
         // GET: ProfileRanks
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ProfileRanks.Include(p => p.Profile).Include(p => p.Rank);
+            var applicationDbContext = _context.ProfileRanks.Include(p => p.Profile);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: ProfileRanks/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -36,7 +36,6 @@ namespace WebApp.Controllers
 
             var profileRank = await _context.ProfileRanks
                 .Include(p => p.Profile)
-                .Include(p => p.Rank)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profileRank == null)
             {
@@ -50,7 +49,6 @@ namespace WebApp.Controllers
         public IActionResult Create()
         {
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
-            ViewData["RankId"] = new SelectList(_context.Ranks, "Id", "Id");
             return View();
         }
 
@@ -59,21 +57,21 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,RankId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ProfileRank profileRank)
+        public async Task<IActionResult> Create([Bind("ProfileId,RankId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ProfileRank profileRank)
         {
             if (ModelState.IsValid)
             {
+                profileRank.Id = Guid.NewGuid();
                 _context.Add(profileRank);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
-            ViewData["RankId"] = new SelectList(_context.Ranks, "Id", "Id", profileRank.RankId);
             return View(profileRank);
         }
 
         // GET: ProfileRanks/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +84,6 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
-            ViewData["RankId"] = new SelectList(_context.Ranks, "Id", "Id", profileRank.RankId);
             return View(profileRank);
         }
 
@@ -95,7 +92,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProfileId,RankId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ProfileRank profileRank)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,RankId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ProfileRank profileRank)
         {
             if (id != profileRank.Id)
             {
@@ -123,12 +120,11 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
-            ViewData["RankId"] = new SelectList(_context.Ranks, "Id", "Id", profileRank.RankId);
             return View(profileRank);
         }
 
         // GET: ProfileRanks/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -137,7 +133,6 @@ namespace WebApp.Controllers
 
             var profileRank = await _context.ProfileRanks
                 .Include(p => p.Profile)
-                .Include(p => p.Rank)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (profileRank == null)
             {
@@ -150,7 +145,7 @@ namespace WebApp.Controllers
         // POST: ProfileRanks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var profileRank = await _context.ProfileRanks.FindAsync(id);
             _context.ProfileRanks.Remove(profileRank);
@@ -158,7 +153,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfileRankExists(string id)
+        private bool ProfileRankExists(Guid id)
         {
             return _context.ProfileRanks.Any(e => e.Id == id);
         }

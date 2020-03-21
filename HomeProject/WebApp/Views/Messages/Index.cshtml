@@ -22,13 +22,19 @@
                 @Html.DisplayNameFor(model => model.Profile)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChatRoom)
+                @Html.DisplayNameFor(model => model.ChatRoomId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedBy)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangedAt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DeletedBy)
@@ -52,13 +58,19 @@
                 @Html.DisplayFor(modelItem => item.Profile.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ChatRoom.Id)
+                @Html.DisplayFor(modelItem => item.ChatRoomId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedBy)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangedAt)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeletedBy)

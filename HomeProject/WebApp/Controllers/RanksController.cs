@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Ranks/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -54,10 +54,11 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RankTitle,RankDescription,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Rank rank)
+        public async Task<IActionResult> Create([Bind("RankTitle,RankDescription,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Rank rank)
         {
             if (ModelState.IsValid)
             {
+                rank.Id = Guid.NewGuid();
                 _context.Add(rank);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +67,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Ranks/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +87,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("RankTitle,RankDescription,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Rank rank)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RankTitle,RankDescription,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Rank rank)
         {
             if (id != rank.Id)
             {
@@ -117,7 +118,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Ranks/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -137,7 +138,7 @@ namespace WebApp.Controllers
         // POST: Ranks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var rank = await _context.Ranks.FindAsync(id);
             _context.Ranks.Remove(rank);
@@ -145,7 +146,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RankExists(string id)
+        private bool RankExists(Guid id)
         {
             return _context.Ranks.Any(e => e.Id == id);
         }

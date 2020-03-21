@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRooms/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -54,10 +54,11 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ChatRoom chatRoom)
+        public async Task<IActionResult> Create([Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRoom chatRoom)
         {
             if (ModelState.IsValid)
             {
+                chatRoom.Id = Guid.NewGuid();
                 _context.Add(chatRoom);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +67,7 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRooms/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +87,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] ChatRoom chatRoom)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRoom chatRoom)
         {
             if (id != chatRoom.Id)
             {
@@ -117,7 +118,7 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRooms/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -137,7 +138,7 @@ namespace WebApp.Controllers
         // POST: ChatRooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var chatRoom = await _context.Rooms.FindAsync(id);
             _context.Rooms.Remove(chatRoom);
@@ -145,7 +146,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ChatRoomExists(string id)
+        private bool ChatRoomExists(Guid id)
         {
             return _context.Rooms.Any(e => e.Id == id);
         }

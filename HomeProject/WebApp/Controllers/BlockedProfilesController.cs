@@ -27,7 +27,7 @@ namespace WebApp.Controllers
         }
 
         // GET: BlockedProfiles/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -59,10 +59,11 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,BProfileId,Reason,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] BlockedProfile blockedProfile)
+        public async Task<IActionResult> Create([Bind("ProfileId,BProfileId,Reason,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] BlockedProfile blockedProfile)
         {
             if (ModelState.IsValid)
             {
+                blockedProfile.Id = Guid.NewGuid();
                 _context.Add(blockedProfile);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,7 +74,7 @@ namespace WebApp.Controllers
         }
 
         // GET: BlockedProfiles/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -95,7 +96,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProfileId,BProfileId,Reason,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] BlockedProfile blockedProfile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,BProfileId,Reason,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] BlockedProfile blockedProfile)
         {
             if (id != blockedProfile.Id)
             {
@@ -128,7 +129,7 @@ namespace WebApp.Controllers
         }
 
         // GET: BlockedProfiles/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -150,7 +151,7 @@ namespace WebApp.Controllers
         // POST: BlockedProfiles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var blockedProfile = await _context.BlockedProfiles.FindAsync(id);
             _context.BlockedProfiles.Remove(blockedProfile);
@@ -158,7 +159,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BlockedProfileExists(string id)
+        private bool BlockedProfileExists(Guid id)
         {
             return _context.BlockedProfiles.Any(e => e.Id == id);
         }

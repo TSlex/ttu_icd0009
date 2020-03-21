@@ -22,12 +22,12 @@ namespace WebApp.Controllers
         // GET: Favorites
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Favorites.Include(f => f.Post).Include(f => f.Profile);
+            var applicationDbContext = _context.Favorites.Include(f => f.Profile);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Favorites/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -35,7 +35,6 @@ namespace WebApp.Controllers
             }
 
             var favorite = await _context.Favorites
-                .Include(f => f.Post)
                 .Include(f => f.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (favorite == null)
@@ -49,7 +48,6 @@ namespace WebApp.Controllers
         // GET: Favorites/Create
         public IActionResult Create()
         {
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id");
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
@@ -59,21 +57,21 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,PostId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Favorite favorite)
+        public async Task<IActionResult> Create([Bind("ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Favorite favorite)
         {
             if (ModelState.IsValid)
             {
+                favorite.Id = Guid.NewGuid();
                 _context.Add(favorite);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", favorite.PostId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
             return View(favorite);
         }
 
         // GET: Favorites/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -85,7 +83,6 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", favorite.PostId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
             return View(favorite);
         }
@@ -95,7 +92,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProfileId,PostId,CreatedBy,CreatedAt,DeletedBy,DeletedAt,Id")] Favorite favorite)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Favorite favorite)
         {
             if (id != favorite.Id)
             {
@@ -122,13 +119,12 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Id", favorite.PostId);
             ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
             return View(favorite);
         }
 
         // GET: Favorites/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -136,7 +132,6 @@ namespace WebApp.Controllers
             }
 
             var favorite = await _context.Favorites
-                .Include(f => f.Post)
                 .Include(f => f.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (favorite == null)
@@ -150,7 +145,7 @@ namespace WebApp.Controllers
         // POST: Favorites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var favorite = await _context.Favorites.FindAsync(id);
             _context.Favorites.Remove(favorite);
@@ -158,7 +153,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FavoriteExists(string id)
+        private bool FavoriteExists(Guid id)
         {
             return _context.Favorites.Any(e => e.Id == id);
         }
