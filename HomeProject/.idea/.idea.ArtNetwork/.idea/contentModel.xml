@@ -19,6 +19,22 @@
             </e>
           </e>
         </e>
+        <e p="Repositories" t="Include">
+          <e p="IBlockedProfileRepo.cs" t="Include" />
+          <e p="IChatMemberRepo.cs" t="Include" />
+          <e p="IChatRoleRepo.cs" t="Include" />
+          <e p="IChatRoomRepo.cs" t="Include" />
+          <e p="ICommentRepo.cs" t="Include" />
+          <e p="IFavoriteRepo.cs" t="Include" />
+          <e p="IFollowerRepo.cs" t="Include" />
+          <e p="IGiftRepo.cs" t="Include" />
+          <e p="IMessageRepo.cs" t="Include" />
+          <e p="IPostRepo.cs" t="Include" />
+          <e p="IProfileGiftRepo.cs" t="Include" />
+          <e p="IProfileRankRepo.cs" t="Include" />
+          <e p="IProfileRepo.cs" t="Include" />
+          <e p="IRankRepo.cs" t="Include" />
+        </e>
       </e>
       <e p="Contracts.DAL.Base" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -52,6 +68,22 @@
               <e p="DAL.App.EF.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="IBlockedProfileRepo.cs" t="Include" />
+          <e p="IChatMemberRepo.cs" t="Include" />
+          <e p="IChatRoleRepo.cs" t="Include" />
+          <e p="IChatRoomRepo.cs" t="Include" />
+          <e p="ICommentRepo.cs" t="Include" />
+          <e p="IFavoriteRepo.cs" t="Include" />
+          <e p="IFollowerRepo.cs" t="Include" />
+          <e p="IGiftRepo.cs" t="Include" />
+          <e p="IMessageRepo.cs" t="Include" />
+          <e p="IProfileGiftRepo.cs" t="Include" />
+          <e p="IProfileRankRepo.cs" t="Include" />
+          <e p="IProfileRepo.cs" t="Include" />
+          <e p="IRankRepo.cs" t="Include" />
+          <e p="PostRepo.cs" t="Include" />
         </e>
       </e>
       <e p="DAL.Base" t="IncludeRecursive">
