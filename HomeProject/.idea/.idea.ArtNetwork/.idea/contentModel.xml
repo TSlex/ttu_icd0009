@@ -50,7 +50,7 @@
           </e>
         </e>
         <e p="Repositories" t="Include">
-          <e p="IBaseRepository.cs" t="Include" />
+          <e p="IBaseRepo.cs" t="Include" />
         </e>
       </e>
       <e p="DAL.App.EF" t="IncludeRecursive">
@@ -70,20 +70,20 @@
           </e>
         </e>
         <e p="Repositories" t="Include">
-          <e p="IBlockedProfileRepo.cs" t="Include" />
-          <e p="IChatMemberRepo.cs" t="Include" />
-          <e p="IChatRoleRepo.cs" t="Include" />
-          <e p="IChatRoomRepo.cs" t="Include" />
-          <e p="ICommentRepo.cs" t="Include" />
-          <e p="IFavoriteRepo.cs" t="Include" />
-          <e p="IFollowerRepo.cs" t="Include" />
-          <e p="IGiftRepo.cs" t="Include" />
-          <e p="IMessageRepo.cs" t="Include" />
-          <e p="IProfileGiftRepo.cs" t="Include" />
-          <e p="IProfileRankRepo.cs" t="Include" />
-          <e p="IProfileRepo.cs" t="Include" />
-          <e p="IRankRepo.cs" t="Include" />
+          <e p="BlockedProfileRepo.cs" t="Include" />
+          <e p="ChatMemberRepo.cs" t="Include" />
+          <e p="ChatRoleRepo.cs" t="Include" />
+          <e p="ChatRoomRepo.cs" t="Include" />
+          <e p="CommentRepo.cs" t="Include" />
+          <e p="FavoriteRepo.cs" t="Include" />
+          <e p="FollowerRepo.cs" t="Include" />
+          <e p="GiftRepo.cs" t="Include" />
+          <e p="MessageRepo.cs" t="Include" />
           <e p="PostRepo.cs" t="Include" />
+          <e p="ProfileGiftRepo.cs" t="Include" />
+          <e p="ProfileRankRepo.cs" t="Include" />
+          <e p="ProfileRepo.cs" t="Include" />
+          <e p="RankRepo.cs" t="Include" />
         </e>
       </e>
       <e p="DAL.Base" t="IncludeRecursive">
@@ -100,7 +100,7 @@
           </e>
         </e>
         <e p="Repositories" t="Include">
-          <e p="BaseRepository.cs" t="Include" />
+          <e p="BaseRepo.cs" t="Include" />
         </e>
       </e>
       <e p="DAL.Base.EF" t="IncludeRecursive">

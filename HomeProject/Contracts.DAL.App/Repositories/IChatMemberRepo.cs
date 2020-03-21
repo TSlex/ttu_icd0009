@@ -1,6 +1,9 @@
-﻿namespace Contracts.DAL.App.Repositories
+﻿using Contracts.DAL.Base.Repositories;
+using Domain;
+
+namespace Contracts.DAL.App.Repositories
 {
-    public class IChatMemberRepo
+    public interface IChatMemberRepo : IBaseRepo<ChatMember>
     {
         
     }

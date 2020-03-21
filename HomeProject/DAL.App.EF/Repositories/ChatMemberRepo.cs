@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class PostRepo : BaseRepo<Post>, IPostRepo
+    public class ChatMemberRepo : BaseRepo<ChatMember>, IChatMemberRepo
     {
-        public PostRepo(DbContext dbContext) : base(dbContext)
+        public ChatMemberRepo(DbContext dbContext) : base(dbContext)
         {
         }
     }

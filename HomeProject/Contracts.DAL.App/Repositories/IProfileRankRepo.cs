@@ -1,7 +1,9 @@
-﻿namespace Contracts.DAL.App.Repositories
+﻿using Contracts.DAL.Base.Repositories;
+using Domain;
+
+namespace Contracts.DAL.App.Repositories
 {
-    public interface IProfileRankRepo
+    public interface IProfileRankRepo : IBaseRepo<ProfileRank>
     {
-        
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Contracts.DAL.App.Repositories
+﻿using Contracts.DAL.Base.Repositories;
+
+namespace Contracts.DAL.App.Repositories
 {
-    public class IProfileRepo
+    public interface IProfileRepo
     {
         
     }

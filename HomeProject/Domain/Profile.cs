@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Contracts.DAL.Base;
+using DAL.Base;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 

@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Base.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    public class BaseRepo<TEntity> : IBaseRepo<TEntity>
         where TEntity : class, IDomainEntity<Guid>, new()
     {
         protected readonly DbContext RepoDbContext;
         protected readonly DbSet<TEntity> RepoDbSet;
 
-        public BaseRepository(DbContext dbContext)
+        public BaseRepo(DbContext dbContext)
         {
             RepoDbContext = dbContext;
             RepoDbSet = RepoDbContext.Set<TEntity>();

@@ -3,7 +3,7 @@ using Domain;
 
 namespace Contracts.DAL.App.Repositories
 {
-    public interface IBlockedProfileRepo : IBaseRepository<BlockedProfile>
+    public interface IBlockedProfileRepo : IBaseRepo<BlockedProfile>
     {
         
     }
