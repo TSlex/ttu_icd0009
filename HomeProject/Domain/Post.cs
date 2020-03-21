@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Post: DomainEntityMetadata
+    public class Post: DomainEntity
     {
         [MaxLength(100)] public string PostTitle { get; set; } = default!;
         [MaxLength(300)] public string? PostImageUrl { get; set; }

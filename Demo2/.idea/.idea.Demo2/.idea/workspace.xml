@@ -2,60 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b03566fc-1f0d-431f-a766-223b709aa2f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Contracts.DAL.App/Contracts.DAL.App.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Contracts.DAL.App/Repositories/IAuthorRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainBaseEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Contracts.DAL.Base/Repositories/IBaseRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.App.EF/Repositories/AuthorRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.Base.EF/DAL.Base.EF.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.Base.EF/Repositories/BaseRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DAL.Base/DomainBaseEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Demo2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntityMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntityMetadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.App.EF/DAL.App.EF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.App.EF/DAL.App.EF.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.Base/DomainEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.Base/DomainEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DAL.Base/DomainEntityMetadata.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL.Base/DomainEntityMetadata.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Demo2.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Demo2.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Author.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Author.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/AuthorPicture.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/AuthorPicture.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Category.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/Post.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Post.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/PostCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/PostCategory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/AuthorPicturesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/AuthorPicturesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/AuthorsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/CategoriesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/CategorysController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/PostCategoriesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/PostCategorysController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/PostsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/PostsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Details.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/AuthorPictures/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Authors/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Authors/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Details.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Authors/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Authors/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Authors/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Categories/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Categorys/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Categories/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Categorys/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Categories/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Categorys/Details.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Categories/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Categorys/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Categories/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Categorys/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/PostCategories/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/PostCategorys/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/PostCategories/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/PostCategorys/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/PostCategories/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/PostCategorys/Details.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/PostCategories/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/PostCategorys/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/PostCategories/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/PostCategorys/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Posts/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Posts/Delete.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Delete.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Posts/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Details.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Posts/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Posts/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Posts/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/WebApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/WebApp.csproj" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +33,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/_ViewStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Extensions/IdentityExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/Authors/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DAL.Base/DomainEntity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Contracts.DAL.App/Repositories/IAuthorRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DAL.App.EF/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.Base/DomainEntityMetadata.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.Base/DomainBaseEntity.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Contracts.DAL.Base/IDomainEntityMetadata.cs" root0="FORCE_HIGHLIGHTING" />
@@ -96,14 +51,19 @@
     <setting file="file://$PROJECT_DIR$/Domain/Category.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DFC33C49-3ECB-4A52-87A4-AE44D73F2848/4a/174e7022/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/AuthorPicture.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Author.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Views/Categorys/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Identity/AppUser.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Domain/Identity/AppRole.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Manage/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebApp/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EE5B5FB7-5A0A-4DE7-8C71-44A0134B78CC/16/2bad42ad/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.Base.EF/Repositories/BaseRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DAL.App.EF/Repositories/AuthorRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HomeProject/Domain/BlockedProfile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Models/ErrorViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Views/AuthorPictures/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
@@ -114,19 +74,6 @@
     <setting file="file://$PROJECT_DIR$/WebApp/Views/Shared/_LoginPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Views/_ViewStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Views/Authors/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DAL.Base/DomainEntity.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Contracts.DAL.App/Repositories/IAuthorRepository.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DAL.App.EF/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Views/Categorys/Delete.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Areas/Identity/Pages/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebApp/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/DAL.App.EF/Migrations/20200228141628_AddFullName.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -260,7 +207,10 @@
       <workItem from="1582477994583" duration="4329000" />
       <workItem from="1582895903461" duration="4262000" />
       <workItem from="1582981987606" duration="56000" />
-      <workItem from="1584103886528" duration="7067000" />
+      <workItem from="1584103886528" duration="7366000" />
+      <workItem from="1584549950112" duration="88000" />
+      <workItem from="1584550102725" duration="2000" />
+      <workItem from="1584550189547" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="demo 2 fixed no custom auth">
       <created>1582312053096</created>
@@ -269,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582312053096</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="blah">
+      <created>1584113173462</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584113173463</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +252,8 @@
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
     <MESSAGE value="demo 2 fixed no custom auth" />
     <MESSAGE value="demo 2 - week 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="demo 2 - week 5" />
+    <MESSAGE value="blah" />
+    <option name="LAST_COMMIT_MESSAGE" value="blah" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

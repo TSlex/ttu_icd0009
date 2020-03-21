@@ -3,7 +3,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ChatMember: DomainEntityMetadata
+    public class ChatMember: DomainEntity
     {
         [MaxLength(36)] public string ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

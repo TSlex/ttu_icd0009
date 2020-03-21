@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ChatRoom: DomainEntityMetadata
+    public class ChatRoom: DomainEntity
     {
         [MaxLength(100)] public string ChatRoomTitle { get; set; } = default!;
         [MaxLength(100)] public string? LastMessageValue { get; set; }

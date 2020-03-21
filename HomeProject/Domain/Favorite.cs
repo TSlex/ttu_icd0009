@@ -3,7 +3,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Favorite: DomainEntityMetadata
+    public class Favorite: DomainEntity
     {
         [MaxLength(36)] public string ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

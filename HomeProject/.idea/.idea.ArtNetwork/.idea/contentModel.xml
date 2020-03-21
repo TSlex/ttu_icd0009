@@ -8,9 +8,22 @@
     <e p="C:\Users\alex1\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_ArtNetwork.-1903454932.00" t="ExcludeRecursive" />
     <e p="C:\Users\alex1\icd0009-2019s\HomeProject" t="IncludeFlat">
       <e p="ArtNetwork.sln" t="IncludeFlat" />
+      <e p="Contracts.DAL.App" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Contracts.DAL.App.csproj" t="IncludeRecursive" />
+        <e p="IAppUnitOfWork.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.1" t="Include">
+              <e p="Contracts.DAL.App.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
       <e p="Contracts.DAL.Base" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Contracts.DAL.Base.csproj" t="IncludeRecursive" />
+        <e p="IDomainBaseEntity.cs" t="Include" />
         <e p="IDomainEntity.cs" t="Include" />
         <e p="IDomainEntityMetadata.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
@@ -19,6 +32,9 @@
               <e p="Contracts.DAL.Base.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="IBaseRepository.cs" t="Include" />
         </e>
       </e>
       <e p="DAL.App.EF" t="IncludeRecursive">
@@ -41,12 +57,27 @@
       <e p="DAL.Base" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="DAL.Base.csproj" t="IncludeRecursive" />
+        <e p="DomainBaseEntity.cs" t="Include" />
         <e p="DomainEntity.cs" t="Include" />
         <e p="DomainEntityMetadata.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.1" t="Include">
               <e p="DAL.Base.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="BaseRepository.cs" t="Include" />
+        </e>
+      </e>
+      <e p="DAL.Base.EF" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="DAL.Base.EF.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.1" t="Include">
+              <e p="DAL.Base.EF.AssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>

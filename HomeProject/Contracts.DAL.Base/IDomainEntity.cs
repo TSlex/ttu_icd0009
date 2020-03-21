@@ -3,13 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Contracts.DAL.Base
 {
-    public interface IDomainEntity : IDomainEntity<string>
+    public interface IDomainEntity : IDomainEntity<Guid>
     { 
     }
 
-    public interface IDomainEntity<TKey>
-        where TKey : IComparable
+    public interface IDomainEntity<TKey> : IDomainBaseEntity<TKey>, IDomainEntityMetadata
+        where TKey : struct, IComparable
     {
-        TKey Id { get; set; }
     }
 }
