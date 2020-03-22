@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class FollowerRepo : BaseRepo<Follower>, IFollowerRepo
+    public class FollowerRepo : BaseRepo<Follower, ApplicationDbContext>, IFollowerRepo
     {
-        public FollowerRepo(DbContext dbContext) : base(dbContext)
+        public FollowerRepo(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

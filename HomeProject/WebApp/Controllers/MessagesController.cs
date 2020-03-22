@@ -6,24 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using DAL.Repositories;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class MessagesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly MessageRepo _messageRepo;
 
         public MessagesController(ApplicationDbContext context)
         {
             _context = context;
+            _messageRepo = new MessageRepo(context);
         }
 
         // GET: Messages
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Messages.Include(m => m.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _messageRepo.AllAsync());
         }
 
         // GET: Messages/Details/5
@@ -34,9 +37,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var message = await _context.Messages
-                .Include(m => m.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var message = await _messageRepo.FindAsync(id);
+
             if (message == null)
             {
                 return NotFound();
@@ -48,7 +50,6 @@ namespace WebApp.Controllers
         // GET: Messages/Create
         public IActionResult Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -59,14 +60,20 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Message message)
         {
+            ModelState.Clear();
+            message.ProfileId = User.UserId();
+            message.ChangedAt = DateTime.Now;
+            message.CreatedAt = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 message.Id = Guid.NewGuid();
-                _context.Add(message);
+                _messageRepo.Add(message);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
+
             return View(message);
         }
 
@@ -78,12 +85,13 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var message = await _context.Messages.FindAsync(id);
+            var message = await _messageRepo.FindAsync(id);
+
             if (message == null)
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
+
             return View(message);
         }
 
@@ -94,32 +102,20 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Message message)
         {
-            if (id != message.Id)
+            if (id != message.Id || User.UserId() != message.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(message);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MessageExists(message.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _messageRepo.Update(message);
+                await _messageRepo.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
+
             return View(message);
         }
 
@@ -131,9 +127,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var message = await _context.Messages
-                .Include(m => m.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var message = await _messageRepo.FindAsync(id);
+            
             if (message == null)
             {
                 return NotFound();
@@ -151,11 +146,6 @@ namespace WebApp.Controllers
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool MessageExists(Guid id)
-        {
-            return _context.Messages.Any(e => e.Id == id);
         }
     }
 }

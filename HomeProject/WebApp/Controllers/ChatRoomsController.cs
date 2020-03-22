@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using DAL.Repositories;
 using Domain;
 
 namespace WebApp.Controllers
@@ -13,10 +14,12 @@ namespace WebApp.Controllers
     public class ChatRoomsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ChatRoomRepo _chatRoomRepo;
 
         public ChatRoomsController(ApplicationDbContext context)
         {
             _context = context;
+            _chatRoomRepo = new ChatRoomRepo(context);
         }
 
         // GET: ChatRooms
@@ -33,8 +36,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRoom = await _context.Rooms
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var chatRoom = await _chatRoomRepo.FindAsync(id);
+            
             if (chatRoom == null)
             {
                 return NotFound();
@@ -56,11 +59,16 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRoom chatRoom)
         {
+            ModelState.Clear();
+            chatRoom.ChangedAt = DateTime.Now;
+            chatRoom.CreatedAt = DateTime.Now;
+            
             if (ModelState.IsValid)
             {
                 chatRoom.Id = Guid.NewGuid();
-                _context.Add(chatRoom);
-                await _context.SaveChangesAsync();
+                _chatRoomRepo.Add(chatRoom);
+                await _chatRoomRepo.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(chatRoom);
@@ -74,11 +82,13 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRoom = await _context.Rooms.FindAsync(id);
+            var chatRoom = await _chatRoomRepo.FindAsync(id);
+            
             if (chatRoom == null)
             {
                 return NotFound();
             }
+            
             return View(chatRoom);
         }
 
@@ -96,24 +106,13 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(chatRoom);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ChatRoomExists(chatRoom.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _chatRoomRepo.Update(chatRoom);
+                await _chatRoomRepo.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(chatRoom);
         }
 
@@ -125,14 +124,14 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRoom = await _context.Rooms
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (chatRoom == null)
+            var charRoom = await _chatRoomRepo.FindAsync(id);
+            
+            if (charRoom == null)
             {
                 return NotFound();
             }
 
-            return View(chatRoom);
+            return View(charRoom);
         }
 
         // POST: ChatRooms/Delete/5
@@ -140,15 +139,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var chatRoom = await _context.Rooms.FindAsync(id);
-            _context.Rooms.Remove(chatRoom);
-            await _context.SaveChangesAsync();
+            _chatRoomRepo.Remove(id);
+            await _chatRoomRepo.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ChatRoomExists(Guid id)
-        {
-            return _context.Rooms.Any(e => e.Id == id);
         }
     }
 }

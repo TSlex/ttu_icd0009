@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class ProfileRankRepo : BaseRepo<ProfileRank>, IProfileRankRepo
+    public class ProfileRankRepo : BaseRepo<ProfileRank, ApplicationDbContext>, IProfileRankRepo
     {
-        public ProfileRankRepo(DbContext dbContext) : base(dbContext)
+        public ProfileRankRepo(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

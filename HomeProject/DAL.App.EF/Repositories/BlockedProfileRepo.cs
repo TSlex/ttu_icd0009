@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class BlockedProfileRepo : BaseRepo<BlockedProfile>, IBlockedProfileRepo
+    public class BlockedProfileRepo : BaseRepo<BlockedProfile, ApplicationDbContext>, IBlockedProfileRepo
     {
-        public BlockedProfileRepo(DbContext dbContext) : base(dbContext)
+        public BlockedProfileRepo(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

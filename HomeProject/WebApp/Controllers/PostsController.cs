@@ -6,24 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using DAL.Repositories;
 using Domain;
+using Domain.Identity;
+using Extension;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly PostRepo _postRepo;
 
         public PostsController(ApplicationDbContext context)
         {
             _context = context;
+            _postRepo = new PostRepo(_context);
         }
 
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Posts.Include(p => p.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _postRepo.AllAsync());
         }
 
         // GET: Posts/Details/5
@@ -34,9 +41,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .Include(p => p.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var post = await _postRepo.FindAsync(id);
+
             if (post == null)
             {
                 return NotFound();
@@ -48,7 +54,7 @@ namespace WebApp.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -57,16 +63,24 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostTitle,PostImageUrl,PostDescription,PostPublicationDateTime,PostFavoritesCount,PostCommentsCount,ProfileId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Post post)
+        public async Task<IActionResult> Create(
+            [Bind("PostTitle,PostImageUrl,PostDescription")]
+            Post post)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            post.ProfileId = User.UserId();
+            post.ChangedAt = DateTime.Now;
+            post.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
-                _context.Add(post);
-                await _context.SaveChangesAsync();
+                _postRepo.Add(post);
+                await _postRepo.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
+
             return View(post);
         }
 
@@ -78,12 +92,14 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _postRepo.FindAsync(id);
+
             if (post == null)
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
             return View(post);
         }
 
@@ -92,34 +108,31 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("PostTitle,PostImageUrl,PostDescription,PostPublicationDateTime,PostFavoritesCount,PostCommentsCount,ProfileId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Post post)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind(
+                "PostTitle,PostImageUrl,PostDescription, Id, ProfileId")]
+            Post post)
         {
-            if (id != post.Id)
+            if (id != post.Id || User.UserId() != post.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(post);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PostExists(post.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                var oldRecord = await _postRepo.FindAsync(id);
+
+                oldRecord.PostTitle = post.PostTitle;
+                oldRecord.PostImageUrl = post.PostImageUrl;
+                oldRecord.PostDescription = post.PostDescription;
+                
+                _postRepo.Update(oldRecord);
+                await _postRepo.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
+            
             return View(post);
         }
 
@@ -131,9 +144,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
-                .Include(p => p.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var post = await _postRepo.FindAsync(id);
+            
             if (post == null)
             {
                 return NotFound();
@@ -147,15 +159,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            _context.Posts.Remove(post);
-            await _context.SaveChangesAsync();
+            _postRepo.Remove(id);
+            await _postRepo.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool PostExists(Guid id)
-        {
-            return _context.Posts.Any(e => e.Id == id);
         }
     }
 }

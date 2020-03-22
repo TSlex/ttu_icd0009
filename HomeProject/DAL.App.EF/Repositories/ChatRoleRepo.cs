@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class ChatRoleRepo : BaseRepo<ChatRole>, IChatRoleRepo
+    public class ChatRoleRepo : BaseRepo<ChatRole, ApplicationDbContext>, IChatRoleRepo
     {
-        public ChatRoleRepo(DbContext dbContext) : base(dbContext)
+        public ChatRoleRepo(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

@@ -6,24 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using DAL.Repositories;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class ChatMembersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ChatMemberRepo _chatMemberRepo;
 
         public ChatMembersController(ApplicationDbContext context)
         {
             _context = context;
+            _chatMemberRepo = new ChatMemberRepo(context);
         }
 
         // GET: ChatMembers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ChatMembers.Include(c => c.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _chatMemberRepo.AllAsync());
         }
 
         // GET: ChatMembers/Details/5
@@ -34,9 +37,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatMember = await _context.ChatMembers
-                .Include(c => c.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var chatMember = await _chatMemberRepo.FindAsync(id);
+
             if (chatMember == null)
             {
                 return NotFound();
@@ -48,7 +50,6 @@ namespace WebApp.Controllers
         // GET: ChatMembers/Create
         public IActionResult Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -57,16 +58,24 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,ChatRoleId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatMember chatMember)
+        public async Task<IActionResult> Create(
+            [Bind("ProfileId,ChatRoleId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
+            ChatMember chatMember)
         {
+            ModelState.Clear();
+            chatMember.ProfileId = User.UserId();
+            chatMember.ChangedAt = DateTime.Now;
+            chatMember.CreatedAt = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 chatMember.Id = Guid.NewGuid();
-                _context.Add(chatMember);
+                _chatMemberRepo.Add(chatMember);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatMember.ProfileId);
+
             return View(chatMember);
         }
 
@@ -78,12 +87,13 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatMember = await _context.ChatMembers.FindAsync(id);
+            var chatMember = await _chatMemberRepo.FindAsync(id);
+
             if (chatMember == null)
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatMember.ProfileId);
+
             return View(chatMember);
         }
 
@@ -92,34 +102,24 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,ChatRoleId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatMember chatMember)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind("ProfileId,ChatRoleId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
+            ChatMember chatMember)
         {
-            if (id != chatMember.Id)
+            if (id != chatMember.Id || User.UserId() != chatMember.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(chatMember);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ChatMemberExists(chatMember.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _chatMemberRepo.Update(chatMember);
+                await _chatMemberRepo.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatMember.ProfileId);
+
             return View(chatMember);
         }
 
@@ -131,9 +131,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatMember = await _context.ChatMembers
-                .Include(c => c.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var chatMember = await _chatMemberRepo.FindAsync(id);
+            
             if (chatMember == null)
             {
                 return NotFound();
@@ -147,15 +146,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var chatMember = await _context.ChatMembers.FindAsync(id);
-            _context.ChatMembers.Remove(chatMember);
+            _chatMemberRepo.Remove(id);
             await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ChatMemberExists(Guid id)
-        {
-            return _context.ChatMembers.Any(e => e.Id == id);
         }
     }
 }

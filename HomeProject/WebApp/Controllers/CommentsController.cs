@@ -6,24 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
+using DAL.Repositories;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly CommentRepo _commentRepo;
 
         public CommentsController(ApplicationDbContext context)
         {
             _context = context;
+            _commentRepo = new CommentRepo(context);
         }
 
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Comments.Include(c => c.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _commentRepo.AllAsync());
         }
 
         // GET: Comments/Details/5
@@ -34,9 +37,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
-                .Include(c => c.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var comment = await _commentRepo.FindAsync(id);
+
             if (comment == null)
             {
                 return NotFound();
@@ -48,7 +50,6 @@ namespace WebApp.Controllers
         // GET: Comments/Create
         public IActionResult Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -57,16 +58,25 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentValue,CommentDateTime,ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Comment comment)
+        public async Task<IActionResult> Create(
+            [Bind(
+                "CommentValue,CommentDateTime,ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
+            Comment comment)
         {
+            ModelState.Clear();
+            comment.ProfileId = User.UserId();
+            comment.ChangedAt = DateTime.Now;
+            comment.CreatedAt = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 comment.Id = Guid.NewGuid();
-                _context.Add(comment);
+                _commentRepo.Add(comment);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+
             return View(comment);
         }
 
@@ -78,12 +88,13 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await _commentRepo.FindAsync(id);
+
             if (comment == null)
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+
             return View(comment);
         }
 
@@ -92,34 +103,25 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("CommentValue,CommentDateTime,ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Comment comment)
+        public async Task<IActionResult> Edit(Guid id,
+            [Bind(
+                "CommentValue,CommentDateTime,ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
+            Comment comment)
         {
-            if (id != comment.Id)
+            if (id != comment.Id || User.UserId() != comment.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(comment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CommentExists(comment.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _commentRepo.Update(comment);
+                await _commentRepo.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+
             return View(comment);
         }
 
@@ -131,9 +133,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
-                .Include(c => c.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var comment = await _commentRepo.FindAsync(id);
+            
             if (comment == null)
             {
                 return NotFound();
@@ -147,15 +148,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            _context.Comments.Remove(comment);
+            _commentRepo.Remove(id);
             await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CommentExists(Guid id)
-        {
-            return _context.Comments.Any(e => e.Id == id);
         }
     }
 }

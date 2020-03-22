@@ -44,12 +44,14 @@ namespace DAL
 //            builder.Entity<BlockedProfile>()
 //                .HasOne(m => m.Profile)
 //                .WithMany(p => p.BlockedByProfiles)
+//                .OnDelete(DeleteBehavior.NoAction)
 //                .IsRequired()
 //                .HasForeignKey(p => p.ProfileId);
 //            
 //            builder.Entity<BlockedProfile>()
 //                .HasOne(m => m.BProfile)
 //                .WithMany(p => p.BlockedProfiles)
+//                .OnDelete(DeleteBehavior.NoAction)
 //                .IsRequired()
 //                .HasForeignKey(p => p.BProfileId);
 //
@@ -57,12 +59,14 @@ namespace DAL
 //            builder.Entity<Follower>()
 //                .HasOne(m => m.Profile)
 //                .WithMany(p => p.Followed)
+//                .OnDelete(DeleteBehavior.NoAction)
 //                .IsRequired()
 //                .HasForeignKey(p => p.ProfileId);
 //            
 //            builder.Entity<Follower>()
 //                .HasOne(m => m.FollowerProfile)
 //                .WithMany(p => p.Followers)
+//                .OnDelete(DeleteBehavior.NoAction)
 //                .IsRequired()
 //                .HasForeignKey(p => p.FollowerProfileId);
         }

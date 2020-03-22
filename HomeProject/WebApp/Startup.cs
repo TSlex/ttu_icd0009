@@ -32,16 +32,22 @@ namespace WebApp
                 options.UseMySql(
                     Configuration.GetConnectionString("MySqlConnection")));
             
+//            services.AddDbContext<ApplicationDbContext>(options =>
+//                options.UseSqlServer(
+//                    Configuration.GetConnectionString("MSSql")));
+            
             services.AddDefaultIdentity<Profile>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            UpdateDatabase(app, env, Configuration);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,6 +75,20 @@ namespace WebApp
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+        
+        private static void UpdateDatabase(IApplicationBuilder app, IWebHostEnvironment env,
+            IConfiguration Configuration)
+        {
+            // give me the scoped services (everyhting created by it will be closed at the end of service scope life).
+            using var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope();
+
+            using var ctx = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+
+//            ctx.Database.EnsureDeleted();
+//            ctx.Database.Migrate();
         }
     }
 }
