@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class Post: DomainEntity
+    public class PostDTO: DomainEntity
     {
         [MaxLength(100)] public string PostTitle { get; set; } = default!;
         [MaxLength(300)] public string? PostImageUrl { get; set; }

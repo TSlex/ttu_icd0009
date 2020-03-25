@@ -3,7 +3,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ProfileRank: DomainEntity
+    public class ProfileRankDTO: DomainEntity
     {
         [MaxLength(36)] public string ProfileId { get; set; } = default!;
 

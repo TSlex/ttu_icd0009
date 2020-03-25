@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class Message: DomainEntity
+    public class MessageDTO: DomainEntity
     {
         [MaxLength(2000)] public string MessageValue { get; set; } = default!;
         
