@@ -23,16 +23,16 @@ namespace WebApp.ApiControllers
 
         // GET: api/ChatRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRooms()
         {
-            return await _context.Rooms.ToListAsync();
+            return await _context.ChatRooms.ToListAsync();
         }
 
         // GET: api/ChatRooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ChatRoom>> GetChatRoom(Guid id)
         {
-            var chatRoom = await _context.Rooms.FindAsync(id);
+            var chatRoom = await _context.ChatRooms.FindAsync(id);
 
             if (chatRoom == null)
             {
@@ -80,7 +80,7 @@ namespace WebApp.ApiControllers
         [HttpPost]
         public async Task<ActionResult<ChatRoom>> PostChatRoom(ChatRoom chatRoom)
         {
-            _context.Rooms.Add(chatRoom);
+            _context.ChatRooms.Add(chatRoom);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetChatRoom", new { id = chatRoom.Id }, chatRoom);
@@ -90,13 +90,13 @@ namespace WebApp.ApiControllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChatRoom>> DeleteChatRoom(Guid id)
         {
-            var chatRoom = await _context.Rooms.FindAsync(id);
+            var chatRoom = await _context.ChatRooms.FindAsync(id);
             if (chatRoom == null)
             {
                 return NotFound();
             }
 
-            _context.Rooms.Remove(chatRoom);
+            _context.ChatRooms.Remove(chatRoom);
             await _context.SaveChangesAsync();
 
             return chatRoom;
@@ -104,7 +104,7 @@ namespace WebApp.ApiControllers
 
         private bool ChatRoomExists(Guid id)
         {
-            return _context.Rooms.Any(e => e.Id == id);
+            return _context.ChatRooms.Any(e => e.Id == id);
         }
     }
 }

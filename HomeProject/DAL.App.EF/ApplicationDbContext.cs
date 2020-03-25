@@ -22,7 +22,7 @@ namespace DAL
         public DbSet<Comment> Comments { get; set; } = default!;
         public DbSet<Favorite> Favorites { get; set; } = default!;
         
-        public DbSet<ChatRoom> Rooms { get; set; } = default!;
+        public DbSet<ChatRoom> ChatRooms { get; set; } = default!;
         public DbSet<Message> Messages { get; set; } = default!;
         public DbSet<ChatMember> ChatMembers { get; set; } = default!;
         public DbSet<ChatRole> ChatRoles { get; set; } = default!;
