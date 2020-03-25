@@ -2,28 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class FavoritesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUnitOfWork _uow;
 
-        public FavoritesController(ApplicationDbContext context)
+        public FavoritesController(IAppUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: Favorites
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Favorites.Include(f => f.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _uow.Favorites.AllAsync());
         }
 
         // GET: Favorites/Details/5
@@ -34,9 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var favorite = await _context.Favorites
-                .Include(f => f.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var favorite = await _uow.Favorites.FindAsync(id);
+
             if (favorite == null)
             {
                 return NotFound();
@@ -48,25 +48,32 @@ namespace WebApp.Controllers
         // GET: Favorites/Create
         public IActionResult Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: Favorites/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overfavoriteing attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Favorite favorite)
+        public async Task<IActionResult> Create(
+            Favorite favorite)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            favorite.ProfileId = User.UserId();
+            favorite.ChangedAt = DateTime.Now;
+            favorite.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(favorite))
             {
                 favorite.Id = Guid.NewGuid();
-                _context.Add(favorite);
-                await _context.SaveChangesAsync();
+                _uow.Favorites.Add(favorite);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
+
             return View(favorite);
         }
 
@@ -78,48 +85,39 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var favorite = await _context.Favorites.FindAsync(id);
+            var favorite = await _uow.Favorites.FindAsync(id);
+
             if (favorite == null)
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
             return View(favorite);
         }
 
         // POST: Favorites/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overfavoriteing attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Favorite favorite)
+        public async Task<IActionResult> Edit(Guid id,
+            Favorite favorite)
         {
-            if (id != favorite.Id)
+            if (id != favorite.Id || User.UserId() != favorite.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(favorite);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FavoriteExists(favorite.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _uow.Favorites.Update(favorite);
+                await _uow.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
+
             return View(favorite);
         }
 
@@ -131,9 +129,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var favorite = await _context.Favorites
-                .Include(f => f.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var favorite = await _uow.Favorites.FindAsync(id);
+
             if (favorite == null)
             {
                 return NotFound();
@@ -147,15 +144,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var favorite = await _context.Favorites.FindAsync(id);
-            _context.Favorites.Remove(favorite);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            _uow.Favorites.Remove(id);
+            await _uow.SaveChangesAsync();
 
-        private bool FavoriteExists(Guid id)
-        {
-            return _context.Favorites.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

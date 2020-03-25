@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Contracts.DAL.Base;
 using Contracts.DAL.Base.Repositories;
@@ -34,6 +35,27 @@ namespace DAL.Base.Repositories
         public virtual async Task<IEnumerable<TEntity>> AllAsync()
         {
             return await RepoDbSet.ToListAsync();
+        }
+
+
+        public IEnumerable<TEntity> All(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = RepoDbSet;
+            
+            foreach (var includeProperty in includeProperties) {
+                query = query.Include(includeProperty);
+            }
+            return query.ToList();
+        }
+
+        public async Task<IEnumerable<TEntity>> AllAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = RepoDbSet;
+            
+            foreach (var includeProperty in includeProperties) {
+                query = query.Include(includeProperty);
+            }
+            return await query.ToListAsync();
         }
 
         public virtual TEntity Find(params object[] id)

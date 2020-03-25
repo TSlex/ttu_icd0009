@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,19 +19,19 @@ namespace WebApp.Controllers
     [Authorize]
     public class PostsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly PostRepo _postRepo;
+//        private readonly ApplicationDbContext _context;
+//        private readonly PostRepo _postRepo;
+        private readonly IAppUnitOfWork _uow;
 
-        public PostsController(ApplicationDbContext context)
+        public PostsController(IAppUnitOfWork uow)
         {
-            _context = context;
-            _postRepo = new PostRepo(_context);
+            _uow = uow;
         }
 
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            return View(await _postRepo.AllAsync());
+            return View(await _uow.Posts.AllAsync());
         }
 
         // GET: Posts/Details/5
@@ -41,7 +42,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var post = await _postRepo.FindAsync(id);
+            var post = await _uow.Posts.FindAsync(id);
 
             if (post == null)
             {
@@ -75,8 +76,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
-                _postRepo.Add(post);
-                await _postRepo.SaveChangesAsync();
+                _uow.Posts.Add(post);
+                await _uow.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -92,7 +93,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var post = await _postRepo.FindAsync(id);
+            var post = await _uow.Posts.FindAsync(id);
 
             if (post == null)
             {
@@ -120,14 +121,14 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                var oldRecord = await _postRepo.FindAsync(id);
+                var oldRecord = await _uow.Posts.FindAsync(id);
 
                 oldRecord.PostTitle = post.PostTitle;
                 oldRecord.PostImageUrl = post.PostImageUrl;
                 oldRecord.PostDescription = post.PostDescription;
                 
-                _postRepo.Update(oldRecord);
-                await _postRepo.SaveChangesAsync();
+                _uow.Posts.Update(oldRecord);
+                await _uow.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -144,7 +145,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var post = await _postRepo.FindAsync(id);
+            var post = await _uow.Posts.FindAsync(id);
             
             if (post == null)
             {
@@ -159,8 +160,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _postRepo.Remove(id);
-            await _postRepo.SaveChangesAsync();
+            _uow.Posts.Remove(id);
+            await _uow.SaveChangesAsync();
             
             return RedirectToAction(nameof(Index));
         }

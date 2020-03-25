@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,17 @@ namespace WebApp.Controllers
 {
     public class CommentsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly CommentRepo _commentRepo;
+        private readonly IAppUnitOfWork _uow;
 
-        public CommentsController(ApplicationDbContext context)
+        public CommentsController(IAppUnitOfWork uow)
         {
-            _context = context;
-            _commentRepo = new CommentRepo(context);
+            _uow = uow;
         }
 
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            return View(await _commentRepo.AllAsync());
+            return View(await _uow.Comments.AllAsync());
         }
 
         // GET: Comments/Details/5
@@ -37,7 +36,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var comment = await _commentRepo.FindAsync(id);
+            var comment = await _uow.Comments.FindAsync(id);
 
             if (comment == null)
             {
@@ -50,17 +49,16 @@ namespace WebApp.Controllers
         // GET: Comments/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: Comments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overcommenting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind(
-                "CommentValue,CommentDateTime,ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
             Comment comment)
         {
             ModelState.Clear();
@@ -68,11 +66,11 @@ namespace WebApp.Controllers
             comment.ChangedAt = DateTime.Now;
             comment.CreatedAt = DateTime.Now;
 
-            if (ModelState.IsValid)
+            if (TryValidateModel(comment))
             {
                 comment.Id = Guid.NewGuid();
-                _commentRepo.Add(comment);
-                await _context.SaveChangesAsync();
+                _uow.Comments.Add(comment);
+                await _uow.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -88,24 +86,23 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var comment = await _commentRepo.FindAsync(id);
+            var comment = await _uow.Comments.FindAsync(id);
 
             if (comment == null)
             {
                 return NotFound();
             }
 
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
             return View(comment);
         }
 
         // POST: Comments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overcommenting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            [Bind(
-                "CommentValue,CommentDateTime,ProfileId,PostId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
             Comment comment)
         {
             if (id != comment.Id || User.UserId() != comment.ProfileId)
@@ -115,8 +112,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _commentRepo.Update(comment);
-                await _commentRepo.SaveChangesAsync();
+                _uow.Comments.Update(comment);
+                await _uow.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -133,8 +130,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var comment = await _commentRepo.FindAsync(id);
-            
+            var comment = await _uow.Comments.FindAsync(id);
+
             if (comment == null)
             {
                 return NotFound();
@@ -148,9 +145,9 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _commentRepo.Remove(id);
-            await _context.SaveChangesAsync();
-            
+            _uow.Comments.Remove(id);
+            await _uow.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

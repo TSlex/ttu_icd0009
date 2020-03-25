@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using DAL;
 using Domain;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,8 @@ namespace WebApp
             
             services.AddDefaultIdentity<Profile>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
             
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();

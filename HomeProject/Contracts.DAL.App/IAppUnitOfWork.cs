@@ -1,23 +1,24 @@
 ﻿using System;
 using Contracts.DAL.App.Repositories;
+using Contracts.DAL.Base;
 
 namespace Contracts.DAL.App
 {
-    public interface IAppUnitOfWork
+    public interface IAppUnitOfWork : IBaseUnitOfWork
     {
-        IBlockedProfileRepo BlockedProfile { get; }
-        IChatMemberRepo ChatMemberRepo { get; }
-        IChatRoleRepo ChatRoleRepo { get; }
-        IChatRoomRepo ChatRoomRepo { get; }
-        ICommentRepo CommentRepo { get; }
-        IFavoriteRepo FavoriteRepo { get; }
-        IFollowerRepo FollowerRepo { get; }
-        IGiftRepo GiftRepo { get; }
-        IMessageRepo MessageRepo { get; }
-        IPostRepo PostRepo { get; }
-        IProfileGiftRepo ProfileGiftRepo { get; }
-        IProfileRankRepo ProfileRankRepo { get; }
-        IProfileRepo ProfileRepo { get; }
-        IRankRepo RankRepo { get; }
+        IBlockedProfileRepo BlockedProfiles { get; }
+        IChatMemberRepo ChatMembers { get; }
+        IChatRoleRepo ChatRoles { get; }
+        IChatRoomRepo ChatRooms { get; }
+        ICommentRepo Comments { get; }
+        IFavoriteRepo Favorites { get; }
+        IFollowerRepo Followers { get; }
+        IGiftRepo Gifts { get; }
+        IMessageRepo Messages { get; }
+        IPostRepo Posts { get; }
+        IProfileGiftRepo ProfileGifts { get; }
+        IProfileRankRepo ProfileRanks { get; }
+        IProfileRepo Profiles { get; }
+        IRankRepo Ranks { get; }
     }
 }

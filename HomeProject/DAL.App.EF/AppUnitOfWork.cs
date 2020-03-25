@@ -12,43 +12,43 @@ namespace DAL
         {
         }
 
-        public IBlockedProfileRepo BlockedProfile =>
+        public IBlockedProfileRepo BlockedProfiles =>
             GetRepository<IBlockedProfileRepo>(() => new BlockedProfileRepo(UOWDbContext));
 
-        public IChatMemberRepo ChatMemberRepo =>
+        public IChatMemberRepo ChatMembers =>
             GetRepository<IChatMemberRepo>(() => new ChatMemberRepo(UOWDbContext));
 
-        public IChatRoleRepo ChatRoleRepo =>
+        public IChatRoleRepo ChatRoles =>
             GetRepository<IChatRoleRepo>(() => new ChatRoleRepo(UOWDbContext));
 
-        public IChatRoomRepo ChatRoomRepo =>
+        public IChatRoomRepo ChatRooms =>
             GetRepository<IChatRoomRepo>(() => new ChatRoomRepo(UOWDbContext));
 
-        public ICommentRepo CommentRepo =>
+        public ICommentRepo Comments =>
             GetRepository<ICommentRepo>(() => new CommentRepo(UOWDbContext));
 
-        public IFavoriteRepo FavoriteRepo =>
+        public IFavoriteRepo Favorites =>
             GetRepository<IFavoriteRepo>(() => new FavoriteRepo(UOWDbContext));
 
-        public IFollowerRepo FollowerRepo =>
+        public IFollowerRepo Followers =>
             GetRepository<IFollowerRepo>(() => new FollowerRepo(UOWDbContext));
 
-        public IGiftRepo GiftRepo => GetRepository<IGiftRepo>(() => new GiftRepo(UOWDbContext));
+        public IGiftRepo Gifts => GetRepository<IGiftRepo>(() => new GiftRepo(UOWDbContext));
 
-        public IMessageRepo MessageRepo =>
+        public IMessageRepo Messages =>
             GetRepository<IMessageRepo>(() => new MessageRepo(UOWDbContext));
 
-        public IPostRepo PostRepo => GetRepository<IPostRepo>(() => new PostRepo(UOWDbContext));
+        public IPostRepo Posts => GetRepository<IPostRepo>(() => new PostRepo(UOWDbContext));
 
-        public IProfileGiftRepo ProfileGiftRepo =>
+        public IProfileGiftRepo ProfileGifts =>
             GetRepository<IProfileGiftRepo>(() => new ProfileGiftRepo(UOWDbContext));
 
-        public IProfileRankRepo ProfileRankRepo =>
+        public IProfileRankRepo ProfileRanks =>
             GetRepository<IProfileRankRepo>(() => new ProfileRankRepo(UOWDbContext));
 
-        public IProfileRepo ProfileRepo =>
+        public IProfileRepo Profiles =>
             GetRepository<IProfileRepo>(() => new ProfileRepo());
 
-        public IRankRepo RankRepo => GetRepository<IRankRepo>(() => new RankRepo(UOWDbContext));
+        public IRankRepo Ranks => GetRepository<IRankRepo>(() => new RankRepo(UOWDbContext));
     }
 }

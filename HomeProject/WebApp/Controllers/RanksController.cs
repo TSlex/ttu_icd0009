@@ -2,27 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class RanksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUnitOfWork _uow;
 
-        public RanksController(ApplicationDbContext context)
+        public RanksController(IAppUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: Ranks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ranks.ToListAsync());
+            return View(await _uow.Ranks.AllAsync());
         }
 
         // GET: Ranks/Details/5
@@ -33,8 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var rank = await _context.Ranks
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var rank = await _uow.Ranks.FindAsync(id);
+
             if (rank == null)
             {
                 return NotFound();
@@ -46,23 +48,31 @@ namespace WebApp.Controllers
         // GET: Ranks/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: Ranks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overranking attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RankTitle,RankDescription,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Rank rank)
+        public async Task<IActionResult> Create(
+            Rank rank)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            rank.ChangedAt = DateTime.Now;
+            rank.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(rank))
             {
                 rank.Id = Guid.NewGuid();
-                _context.Add(rank);
-                await _context.SaveChangesAsync();
+                _uow.Ranks.Add(rank);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(rank);
         }
 
@@ -74,20 +84,24 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var rank = await _context.Ranks.FindAsync(id);
+            var rank = await _uow.Ranks.FindAsync(id);
+
             if (rank == null)
             {
                 return NotFound();
             }
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", rank.ProfileId);
             return View(rank);
         }
 
         // POST: Ranks/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overranking attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("RankTitle,RankDescription,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Rank rank)
+        public async Task<IActionResult> Edit(Guid id,
+            Rank rank)
         {
             if (id != rank.Id)
             {
@@ -96,24 +110,13 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(rank);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RankExists(rank.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _uow.Ranks.Update(rank);
+                await _uow.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(rank);
         }
 
@@ -125,8 +128,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var rank = await _context.Ranks
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var rank = await _uow.Ranks.FindAsync(id);
+
             if (rank == null)
             {
                 return NotFound();
@@ -140,15 +143,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var rank = await _context.Ranks.FindAsync(id);
-            _context.Ranks.Remove(rank);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            _uow.Ranks.Remove(id);
+            await _uow.SaveChangesAsync();
 
-        private bool RankExists(Guid id)
-        {
-            return _context.Ranks.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,17 @@ namespace WebApp.Controllers
 {
     public class ChatRolesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUnitOfWork _uow;
 
-        public ChatRolesController(ApplicationDbContext context)
+        public ChatRolesController(IAppUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: ChatRoles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ChatRoles.ToListAsync());
+            return View(await _uow.ChatRoles.AllAsync());
         }
 
         // GET: ChatRoles/Details/5
@@ -33,8 +34,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRole = await _context.ChatRoles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var chatRole = await _uow.ChatRoles.FindAsync(id);
+
             if (chatRole == null)
             {
                 return NotFound();
@@ -46,23 +47,31 @@ namespace WebApp.Controllers
         // GET: ChatRoles/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: ChatRoles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overchatRoleing attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RoleTitle,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRole chatRole)
+        public async Task<IActionResult> Create(
+            ChatRole chatRole)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            chatRole.ChangedAt = DateTime.Now;
+            chatRole.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(chatRole))
             {
                 chatRole.Id = Guid.NewGuid();
-                _context.Add(chatRole);
-                await _context.SaveChangesAsync();
+                _uow.ChatRoles.Add(chatRole);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(chatRole);
         }
 
@@ -74,20 +83,24 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRole = await _context.ChatRoles.FindAsync(id);
+            var chatRole = await _uow.ChatRoles.FindAsync(id);
+
             if (chatRole == null)
             {
                 return NotFound();
             }
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatRole.ProfileId);
             return View(chatRole);
         }
 
         // POST: ChatRoles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overchatRoleing attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("RoleTitle,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRole chatRole)
+        public async Task<IActionResult> Edit(Guid id,
+            ChatRole chatRole)
         {
             if (id != chatRole.Id)
             {
@@ -96,24 +109,13 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(chatRole);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ChatRoleExists(chatRole.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _uow.ChatRoles.Update(chatRole);
+                await _uow.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(chatRole);
         }
 
@@ -125,8 +127,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRole = await _context.ChatRoles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var chatRole = await _uow.ChatRoles.FindAsync(id);
+
             if (chatRole == null)
             {
                 return NotFound();
@@ -140,15 +142,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var chatRole = await _context.ChatRoles.FindAsync(id);
-            _context.ChatRoles.Remove(chatRole);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            _uow.ChatRoles.Remove(id);
+            await _uow.SaveChangesAsync();
 
-        private bool ChatRoleExists(Guid id)
-        {
-            return _context.ChatRoles.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

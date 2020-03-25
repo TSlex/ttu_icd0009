@@ -2,27 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class GiftsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUnitOfWork _uow;
 
-        public GiftsController(ApplicationDbContext context)
+        public GiftsController(IAppUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: Gifts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Gifts.ToListAsync());
+            return View(await _uow.Gifts.AllAsync());
         }
 
         // GET: Gifts/Details/5
@@ -33,8 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var gift = await _context.Gifts
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var gift = await _uow.Gifts.FindAsync(id);
+
             if (gift == null)
             {
                 return NotFound();
@@ -46,23 +48,31 @@ namespace WebApp.Controllers
         // GET: Gifts/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: Gifts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overgifting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GiftName,GiftImageUrl,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Gift gift)
+        public async Task<IActionResult> Create(
+            Gift gift)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            gift.ChangedAt = DateTime.Now;
+            gift.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(gift))
             {
                 gift.Id = Guid.NewGuid();
-                _context.Add(gift);
-                await _context.SaveChangesAsync();
+                _uow.Gifts.Add(gift);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(gift);
         }
 
@@ -74,20 +84,24 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var gift = await _context.Gifts.FindAsync(id);
+            var gift = await _uow.Gifts.FindAsync(id);
+
             if (gift == null)
             {
                 return NotFound();
             }
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", gift.ProfileId);
             return View(gift);
         }
 
         // POST: Gifts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overgifting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("GiftName,GiftImageUrl,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Gift gift)
+        public async Task<IActionResult> Edit(Guid id,
+            Gift gift)
         {
             if (id != gift.Id)
             {
@@ -96,24 +110,13 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(gift);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GiftExists(gift.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _uow.Gifts.Update(gift);
+                await _uow.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(gift);
         }
 
@@ -125,8 +128,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var gift = await _context.Gifts
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var gift = await _uow.Gifts.FindAsync(id);
+
             if (gift == null)
             {
                 return NotFound();
@@ -140,15 +143,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var gift = await _context.Gifts.FindAsync(id);
-            _context.Gifts.Remove(gift);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            _uow.Gifts.Remove(id);
+            await _uow.SaveChangesAsync();
 
-        private bool GiftExists(Guid id)
-        {
-            return _context.Gifts.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

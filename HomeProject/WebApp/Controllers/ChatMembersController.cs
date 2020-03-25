@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,17 @@ namespace WebApp.Controllers
 {
     public class ChatMembersController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ChatMemberRepo _chatMemberRepo;
+        private readonly IAppUnitOfWork _uow;
 
-        public ChatMembersController(ApplicationDbContext context)
+        public ChatMembersController(IAppUnitOfWork uow)
         {
-            _context = context;
-            _chatMemberRepo = new ChatMemberRepo(context);
+            _uow = uow;
         }
 
         // GET: ChatMembers
         public async Task<IActionResult> Index()
         {
-            return View(await _chatMemberRepo.AllAsync());
+            return View(await _uow.ChatMembers.AllAsync());
         }
 
         // GET: ChatMembers/Details/5
@@ -37,7 +36,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatMember = await _chatMemberRepo.FindAsync(id);
+            var chatMember = await _uow.ChatMembers.FindAsync(id);
 
             if (chatMember == null)
             {
@@ -50,28 +49,27 @@ namespace WebApp.Controllers
         // GET: ChatMembers/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: ChatMembers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overchatMembering attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("ProfileId,ChatRoleId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
             ChatMember chatMember)
         {
             ModelState.Clear();
-            chatMember.ProfileId = User.UserId();
             chatMember.ChangedAt = DateTime.Now;
             chatMember.CreatedAt = DateTime.Now;
 
-            if (ModelState.IsValid)
+            if (TryValidateModel(chatMember))
             {
                 chatMember.Id = Guid.NewGuid();
-                _chatMemberRepo.Add(chatMember);
-                await _context.SaveChangesAsync();
+                _uow.ChatMembers.Add(chatMember);
+                await _uow.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -87,34 +85,34 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatMember = await _chatMemberRepo.FindAsync(id);
+            var chatMember = await _uow.ChatMembers.FindAsync(id);
 
             if (chatMember == null)
             {
                 return NotFound();
             }
 
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatMember.ProfileId);
             return View(chatMember);
         }
 
         // POST: ChatMembers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overchatMembering attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            [Bind("ProfileId,ChatRoleId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")]
             ChatMember chatMember)
         {
-            if (id != chatMember.Id || User.UserId() != chatMember.ProfileId)
+            if (id != chatMember.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                _chatMemberRepo.Update(chatMember);
-                await _chatMemberRepo.SaveChangesAsync();
+                _uow.ChatMembers.Update(chatMember);
+                await _uow.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -131,8 +129,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatMember = await _chatMemberRepo.FindAsync(id);
-            
+            var chatMember = await _uow.ChatMembers.FindAsync(id);
+
             if (chatMember == null)
             {
                 return NotFound();
@@ -146,9 +144,9 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _chatMemberRepo.Remove(id);
-            await _context.SaveChangesAsync();
-            
+            _uow.ChatMembers.Remove(id);
+            await _uow.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

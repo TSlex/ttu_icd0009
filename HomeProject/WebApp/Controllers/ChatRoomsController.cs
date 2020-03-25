@@ -2,30 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.Repositories;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class ChatRoomsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ChatRoomRepo _chatRoomRepo;
+        private readonly IAppUnitOfWork _uow;
 
-        public ChatRoomsController(ApplicationDbContext context)
+        public ChatRoomsController(IAppUnitOfWork uow)
         {
-            _context = context;
-            _chatRoomRepo = new ChatRoomRepo(context);
+            _uow = uow;
         }
 
         // GET: ChatRooms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Rooms.ToListAsync());
+            return View(await _uow.ChatRooms.AllAsync());
         }
 
         // GET: ChatRooms/Details/5
@@ -36,8 +36,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRoom = await _chatRoomRepo.FindAsync(id);
-            
+            var chatRoom = await _uow.ChatRooms.FindAsync(id);
+
             if (chatRoom == null)
             {
                 return NotFound();
@@ -49,28 +49,31 @@ namespace WebApp.Controllers
         // GET: ChatRooms/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: ChatRooms/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overchatRooming attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRoom chatRoom)
+        public async Task<IActionResult> Create(
+            ChatRoom chatRoom)
         {
             ModelState.Clear();
             chatRoom.ChangedAt = DateTime.Now;
             chatRoom.CreatedAt = DateTime.Now;
-            
-            if (ModelState.IsValid)
+
+            if (TryValidateModel(chatRoom))
             {
                 chatRoom.Id = Guid.NewGuid();
-                _chatRoomRepo.Add(chatRoom);
-                await _chatRoomRepo.SaveChangesAsync();
-                
+                _uow.ChatRooms.Add(chatRoom);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(chatRoom);
         }
 
@@ -82,22 +85,24 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var chatRoom = await _chatRoomRepo.FindAsync(id);
-            
+            var chatRoom = await _uow.ChatRooms.FindAsync(id);
+
             if (chatRoom == null)
             {
                 return NotFound();
             }
-            
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatRoom.ProfileId);
             return View(chatRoom);
         }
 
         // POST: ChatRooms/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overchatRooming attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ChatRoomTitle,LastMessageValue,LastMessageDateTime,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ChatRoom chatRoom)
+        public async Task<IActionResult> Edit(Guid id,
+            ChatRoom chatRoom)
         {
             if (id != chatRoom.Id)
             {
@@ -106,8 +111,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _chatRoomRepo.Update(chatRoom);
-                await _chatRoomRepo.SaveChangesAsync();
+                _uow.ChatRooms.Update(chatRoom);
+                await _uow.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -124,14 +129,14 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var charRoom = await _chatRoomRepo.FindAsync(id);
-            
-            if (charRoom == null)
+            var chatRoom = await _uow.ChatRooms.FindAsync(id);
+
+            if (chatRoom == null)
             {
                 return NotFound();
             }
 
-            return View(charRoom);
+            return View(chatRoom);
         }
 
         // POST: ChatRooms/Delete/5
@@ -139,9 +144,9 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _chatRoomRepo.Remove(id);
-            await _chatRoomRepo.SaveChangesAsync();
-            
+            _uow.ChatRooms.Remove(id);
+            await _uow.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

@@ -2,28 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class FollowersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUnitOfWork _uow;
 
-        public FollowersController(ApplicationDbContext context)
+        public FollowersController(IAppUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: Followers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Watchers.Include(f => f.FollowerProfile).Include(f => f.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _uow.Followers.AllAsync());
         }
 
         // GET: Followers/Details/5
@@ -34,10 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var follower = await _context.Watchers
-                .Include(f => f.FollowerProfile)
-                .Include(f => f.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var follower = await _uow.Followers.FindAsync(id);
+
             if (follower == null)
             {
                 return NotFound();
@@ -49,27 +48,32 @@ namespace WebApp.Controllers
         // GET: Followers/Create
         public IActionResult Create()
         {
-            ViewData["FollowerProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: Followers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overfollowering attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,FollowerProfileId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Follower follower)
+        public async Task<IActionResult> Create(
+            Follower follower)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            follower.ProfileId = User.UserId();
+            follower.ChangedAt = DateTime.Now;
+            follower.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(follower))
             {
                 follower.Id = Guid.NewGuid();
-                _context.Add(follower);
-                await _context.SaveChangesAsync();
+                _uow.Followers.Add(follower);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FollowerProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.FollowerProfileId);
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.ProfileId);
+
             return View(follower);
         }
 
@@ -81,50 +85,39 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var follower = await _context.Watchers.FindAsync(id);
+            var follower = await _uow.Followers.FindAsync(id);
+
             if (follower == null)
             {
                 return NotFound();
             }
-            ViewData["FollowerProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.FollowerProfileId);
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.ProfileId);
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.ProfileId);
             return View(follower);
         }
 
         // POST: Followers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overfollowering attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,FollowerProfileId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Follower follower)
+        public async Task<IActionResult> Edit(Guid id,
+            Follower follower)
         {
-            if (id != follower.Id)
+            if (id != follower.Id || User.UserId() != follower.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(follower);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FollowerExists(follower.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _uow.Followers.Update(follower);
+                await _uow.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FollowerProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.FollowerProfileId);
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.ProfileId);
+
             return View(follower);
         }
 
@@ -136,10 +129,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var follower = await _context.Watchers
-                .Include(f => f.FollowerProfile)
-                .Include(f => f.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var follower = await _uow.Followers.FindAsync(id);
+
             if (follower == null)
             {
                 return NotFound();
@@ -153,15 +144,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var follower = await _context.Watchers.FindAsync(id);
-            _context.Watchers.Remove(follower);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            _uow.Followers.Remove(id);
+            await _uow.SaveChangesAsync();
 
-        private bool FollowerExists(Guid id)
-        {
-            return _context.Watchers.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

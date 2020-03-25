@@ -2,28 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Extension;
 
 namespace WebApp.Controllers
 {
     public class ProfileRanksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUnitOfWork _uow;
 
-        public ProfileRanksController(ApplicationDbContext context)
+        public ProfileRanksController(IAppUnitOfWork uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: ProfileRanks
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ProfileRanks.Include(p => p.Profile);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _uow.ProfileRanks.AllAsync());
         }
 
         // GET: ProfileRanks/Details/5
@@ -34,9 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var profileRank = await _context.ProfileRanks
-                .Include(p => p.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var profileRank = await _uow.ProfileRanks.FindAsync(id);
+
             if (profileRank == null)
             {
                 return NotFound();
@@ -48,25 +48,32 @@ namespace WebApp.Controllers
         // GET: ProfileRanks/Create
         public IActionResult Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: ProfileRanks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overprofileRanking attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfileId,RankId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ProfileRank profileRank)
+        public async Task<IActionResult> Create(
+            ProfileRank profileRank)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            profileRank.ProfileId = User.UserId();
+            profileRank.ChangedAt = DateTime.Now;
+            profileRank.CreatedAt = DateTime.Now;
+
+            if (TryValidateModel(profileRank))
             {
                 profileRank.Id = Guid.NewGuid();
-                _context.Add(profileRank);
-                await _context.SaveChangesAsync();
+                _uow.ProfileRanks.Add(profileRank);
+                await _uow.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
+
             return View(profileRank);
         }
 
@@ -78,48 +85,39 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var profileRank = await _context.ProfileRanks.FindAsync(id);
+            var profileRank = await _uow.ProfileRanks.FindAsync(id);
+
             if (profileRank == null)
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
+
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
             return View(profileRank);
         }
 
         // POST: ProfileRanks/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overprofileRanking attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ProfileId,RankId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] ProfileRank profileRank)
+        public async Task<IActionResult> Edit(Guid id,
+            ProfileRank profileRank)
         {
-            if (id != profileRank.Id)
+            if (id != profileRank.Id || User.UserId() != profileRank.ProfileId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(profileRank);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProfileRankExists(profileRank.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _uow.ProfileRanks.Update(profileRank);
+                await _uow.SaveChangesAsync();
+
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
+
             return View(profileRank);
         }
 
@@ -131,9 +129,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var profileRank = await _context.ProfileRanks
-                .Include(p => p.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var profileRank = await _uow.ProfileRanks.FindAsync(id);
+
             if (profileRank == null)
             {
                 return NotFound();
@@ -147,15 +144,10 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var profileRank = await _context.ProfileRanks.FindAsync(id);
-            _context.ProfileRanks.Remove(profileRank);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            _uow.ProfileRanks.Remove(id);
+            await _uow.SaveChangesAsync();
 
-        private bool ProfileRankExists(Guid id)
-        {
-            return _context.ProfileRanks.Any(e => e.Id == id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

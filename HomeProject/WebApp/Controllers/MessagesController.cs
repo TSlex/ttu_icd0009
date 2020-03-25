@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,17 @@ namespace WebApp.Controllers
 {
     public class MessagesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly MessageRepo _messageRepo;
+        private readonly IAppUnitOfWork _uow;
 
-        public MessagesController(ApplicationDbContext context)
+        public MessagesController(IAppUnitOfWork uow)
         {
-            _context = context;
-            _messageRepo = new MessageRepo(context);
+            _uow = uow;
         }
 
         // GET: Messages
         public async Task<IActionResult> Index()
         {
-            return View(await _messageRepo.AllAsync());
+            return View(await _uow.Messages.AllAsync());
         }
 
         // GET: Messages/Details/5
@@ -37,7 +36,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var message = await _messageRepo.FindAsync(id);
+            var message = await _uow.Messages.FindAsync(id);
 
             if (message == null)
             {
@@ -50,26 +49,28 @@ namespace WebApp.Controllers
         // GET: Messages/Create
         public IActionResult Create()
         {
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
         // POST: Messages/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overmessageing attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Message message)
+        public async Task<IActionResult> Create(
+            Message message)
         {
             ModelState.Clear();
             message.ProfileId = User.UserId();
             message.ChangedAt = DateTime.Now;
             message.CreatedAt = DateTime.Now;
 
-            if (ModelState.IsValid)
+            if (TryValidateModel(message))
             {
                 message.Id = Guid.NewGuid();
-                _messageRepo.Add(message);
-                await _context.SaveChangesAsync();
+                _uow.Messages.Add(message);
+                await _uow.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -85,22 +86,24 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var message = await _messageRepo.FindAsync(id);
+            var message = await _uow.Messages.FindAsync(id);
 
             if (message == null)
             {
                 return NotFound();
             }
 
+//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
             return View(message);
         }
 
         // POST: Messages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overmessageing attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("MessageValue,MessageDateTime,ProfileId,ChatRoomId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Message message)
+        public async Task<IActionResult> Edit(Guid id,
+            Message message)
         {
             if (id != message.Id || User.UserId() != message.ProfileId)
             {
@@ -109,8 +112,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _messageRepo.Update(message);
-                await _messageRepo.SaveChangesAsync();
+                _uow.Messages.Update(message);
+                await _uow.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -127,8 +130,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var message = await _messageRepo.FindAsync(id);
-            
+            var message = await _uow.Messages.FindAsync(id);
+
             if (message == null)
             {
                 return NotFound();
@@ -142,9 +145,9 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var message = await _context.Messages.FindAsync(id);
-            _context.Messages.Remove(message);
-            await _context.SaveChangesAsync();
+            _uow.Messages.Remove(id);
+            await _uow.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }
