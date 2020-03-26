@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using PublicApi.DTO.v1;
 
 namespace WebApp.ApiControllers
 {
@@ -23,9 +24,26 @@ namespace WebApp.ApiControllers
 
         // GET: api/Posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<PostDTO>>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+//            return await _context.Posts.ToListAsync();
+            return await _context.Posts.Select(post => new PostDTO
+            {
+                Id = post.Id,
+                CreatedAt = post.CreatedAt,
+                CreatedBy = post.CreatedBy,
+                ChangedAt = post.ChangedAt,
+                ChangedBy = post.ChangedBy,
+                DeletedAt = post.DeletedAt,
+                DeletedBy = post.DeletedBy,
+                PostDescription = post.PostDescription,
+                PostTitle = post.PostTitle,
+                ProfileId = post.ProfileId,
+                PostCommentsCount = post.PostCommentsCount,
+                PostFavoritesCount = post.PostFavoritesCount,
+                PostImageUrl = post.PostImageUrl,
+                PostPublicationDateTime = post.PostPublicationDateTime
+            }).ToListAsync();
         }
 
         // GET: api/Posts/5

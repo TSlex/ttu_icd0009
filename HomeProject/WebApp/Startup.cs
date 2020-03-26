@@ -44,6 +44,17 @@ namespace WebApp
             
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsAllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,7 +76,9 @@ namespace WebApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
+            app.UseCors("CorsAllowAll");
+            
             app.UseRouting();
 
             app.UseAuthentication();
