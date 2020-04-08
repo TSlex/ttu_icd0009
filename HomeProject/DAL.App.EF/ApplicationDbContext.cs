@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Domain;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -39,7 +40,13 @@ namespace DAL
 //            builder.Ignore<BlockedProfile>();
             
             builder.Entity<Profile>(b => b.ToTable("Profile"));
-//            builder.Entity<MRole>(b => b.ToTable("UserRole"));
+            builder.Entity<MRole>(b => b.ToTable("UserRole"));
+            
+            //remove cascade delete
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
 //            builder.Entity<BlockedProfile>()
 //                .HasOne(m => m.Profile)
@@ -69,6 +76,8 @@ namespace DAL
 //                .OnDelete(DeleteBehavior.NoAction)
 //                .IsRequired()
 //                .HasForeignKey(p => p.FollowerProfileId);
+
+            
         }
     }
 }

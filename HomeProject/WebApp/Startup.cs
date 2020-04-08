@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Contracts.DAL.App;
 using DAL;
 using Domain;
+using Domain.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
