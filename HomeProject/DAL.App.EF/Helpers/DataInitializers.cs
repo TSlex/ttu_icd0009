@@ -48,10 +48,13 @@ namespace DAL.Helpers
                 var newUser = userManager.FindByNameAsync(user.Login).Result;
                 if (newUser == null)
                 {
-                    newUser = new Profile();
-                    newUser.Email = user.Login;
-                    newUser.UserName = user.Login;
-                    
+                    newUser = new Profile
+                    {
+                        Email = user.Login, 
+                        UserName = user.Login,
+                        EmailConfirmed = true
+                    };
+
                     var result = userManager.CreateAsync(newUser, user.Password).Result;
                     if (!result.Succeeded)
                     {
