@@ -16,6 +16,6 @@ namespace PublicApi.DTO.v1
         public int PostFavoritesCount { get; set; } = 0;
         public int PostCommentsCount { get; set; } = 0;
 
-        [MaxLength(36)] public string ProfileId { get; set; } = default!;
+        public Guid ProfileId { get; set; } = default!;
     }
 }

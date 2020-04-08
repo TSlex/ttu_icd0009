@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<Profile, MRole, string>
+    public class ApplicationDbContext : IdentityDbContext<Profile, MRole, Guid>
     {
         public DbSet<Profile> Profiles { get; set; } = default!;
         public DbSet<BlockedProfile> BlockedProfiles { get; set; } = default!;

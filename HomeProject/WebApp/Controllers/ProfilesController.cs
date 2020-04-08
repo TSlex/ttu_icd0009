@@ -26,7 +26,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Profiles/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("LastLoginDateTime,ProfileStatus,ProfileAvatarUrl,ProfileAbout,FollowersCount,FollowedCount,PostsCount,Id,RegistrationDateTime,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Profile profile)
+        public async Task<IActionResult> Edit(Guid id, [Bind("LastLoginDateTime,ProfileStatus,ProfileAvatarUrl,ProfileAbout,FollowersCount,FollowedCount,PostsCount,Id,RegistrationDateTime,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Profile profile)
         {
             if (id != profile.Id)
             {
@@ -117,7 +117,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Profiles/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -145,7 +145,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfileExists(string id)
+        private bool ProfileExists(Guid id)
         {
             return _context.Profiles.Any(e => e.Id == id);
         }

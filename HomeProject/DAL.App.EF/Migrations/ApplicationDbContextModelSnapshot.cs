@@ -23,9 +23,8 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("BProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("BProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.Property<DateTime>("ChangedAt")
@@ -46,9 +45,8 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.Property<string>("Reason")
@@ -76,21 +74,13 @@ namespace DAL.Migrations
                     b.Property<string>("ChangedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ChatRoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ChatRoleId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<Guid?>("ChatRoleId1")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ChatRoomId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ChatRoomId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
-
-                    b.Property<Guid?>("ChatRoomId1")
-                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -104,16 +94,15 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatRoleId1");
+                    b.HasIndex("ChatRoleId");
 
-                    b.HasIndex("ChatRoomId1");
+                    b.HasIndex("ChatRoomId");
 
                     b.HasIndex("ProfileId");
 
@@ -192,7 +181,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("ChatRooms");
                 });
 
             modelBuilder.Entity("Domain.Comment", b =>
@@ -227,22 +216,17 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<Guid?>("PostId1")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId1");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("ProfileId");
 
@@ -273,22 +257,17 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("PostId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<Guid?>("PostId1")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId1");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("ProfileId");
 
@@ -319,14 +298,12 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("FollowerProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("FollowerProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
@@ -378,8 +355,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Domain.Identity.MRole", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.Property<string>("ConcurrencyStamp")
@@ -400,7 +378,7 @@ namespace DAL.Migrations
                         .IsUnique()
                         .HasName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
@@ -415,13 +393,9 @@ namespace DAL.Migrations
                     b.Property<string>("ChangedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ChatRoomId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ChatRoomId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
-
-                    b.Property<Guid?>("ChatRoomId1")
-                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -443,14 +417,13 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(2000) CHARACTER SET utf8mb4")
                         .HasMaxLength(2000);
 
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatRoomId1");
+                    b.HasIndex("ChatRoomId");
 
                     b.HasIndex("ProfileId");
 
@@ -503,9 +476,8 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
                         .HasMaxLength(100);
 
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
@@ -517,15 +489,34 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Domain.Profile", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ChangedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Email")
@@ -631,22 +622,17 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("GiftId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("GiftId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<Guid?>("GiftId1")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GiftId1");
+                    b.HasIndex("GiftId");
 
                     b.HasIndex("ProfileId");
 
@@ -677,24 +663,19 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("ProfileId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
 
-                    b.Property<string>("RankId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4")
+                    b.Property<Guid>("RankId")
+                        .HasColumnType("char(36)")
                         .HasMaxLength(36);
-
-                    b.Property<Guid?>("RankId1")
-                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProfileId");
 
-                    b.HasIndex("RankId1");
+                    b.HasIndex("RankId");
 
                     b.ToTable("ProfileRanks");
                 });
@@ -737,7 +718,7 @@ namespace DAL.Migrations
                     b.ToTable("Ranks");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -749,9 +730,8 @@ namespace DAL.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -760,7 +740,7 @@ namespace DAL.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -772,9 +752,8 @@ namespace DAL.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -783,22 +762,19 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(128) CHARACTER SET utf8mb4")
-                        .HasMaxLength(128);
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("varchar(128) CHARACTER SET utf8mb4")
-                        .HasMaxLength(128);
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -807,13 +783,13 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -822,18 +798,16 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(36) CHARACTER SET utf8mb4");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(128) CHARACTER SET utf8mb4")
-                        .HasMaxLength(128);
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
-                        .HasColumnType("varchar(128) CHARACTER SET utf8mb4")
-                        .HasMaxLength(128);
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Value")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -848,13 +822,13 @@ namespace DAL.Migrations
                     b.HasOne("Domain.Profile", "BProfile")
                         .WithMany("BlockedByProfiles")
                         .HasForeignKey("BProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("BlockedProfiles")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -862,16 +836,20 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Domain.ChatRole", "ChatRole")
                         .WithMany("ChatMembers")
-                        .HasForeignKey("ChatRoleId1");
+                        .HasForeignKey("ChatRoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.ChatRoom", "ChatRoom")
                         .WithMany("ChatMembers")
-                        .HasForeignKey("ChatRoomId1");
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("ChatMembers")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -879,12 +857,14 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Domain.Post", "Post")
                         .WithMany("Comments")
-                        .HasForeignKey("PostId1");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("Comments")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -892,12 +872,14 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Domain.Post", "Post")
                         .WithMany("Favorites")
-                        .HasForeignKey("PostId1");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("Favorites")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -906,13 +888,13 @@ namespace DAL.Migrations
                     b.HasOne("Domain.Profile", "FollowerProfile")
                         .WithMany("Followed")
                         .HasForeignKey("FollowerProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("Followers")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -920,12 +902,14 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Domain.ChatRoom", "ChatRoom")
                         .WithMany("Messages")
-                        .HasForeignKey("ChatRoomId1");
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("Messages")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -934,7 +918,7 @@ namespace DAL.Migrations
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("Posts")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -942,12 +926,14 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Domain.Gift", "Gift")
                         .WithMany("ProfileGifts")
-                        .HasForeignKey("GiftId1");
+                        .HasForeignKey("GiftId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("ProfileGifts")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -956,62 +942,64 @@ namespace DAL.Migrations
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("ProfileRanks")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Rank", "Rank")
                         .WithMany("ProfileRanks")
-                        .HasForeignKey("RankId1");
+                        .HasForeignKey("RankId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Domain.Identity.MRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("Domain.Profile", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("Domain.Profile", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.HasOne("Domain.Identity.MRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Profile", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("Domain.Profile", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

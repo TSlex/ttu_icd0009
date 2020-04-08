@@ -68,6 +68,7 @@ namespace WebApp.Controllers
             [Bind("PostTitle,PostImageUrl,PostDescription")]
             Post post)
         {
+
             ModelState.Clear();
             post.ProfileId = User.UserId();
             post.ChangedAt = DateTime.Now;

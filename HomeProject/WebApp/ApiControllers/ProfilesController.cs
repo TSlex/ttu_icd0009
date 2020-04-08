@@ -46,7 +46,7 @@ namespace WebApp.ApiControllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfile(string id, Profile profile)
+        public async Task<IActionResult> PutProfile(Guid id, Profile profile)
         {
             if (id != profile.Id)
             {
@@ -116,7 +116,7 @@ namespace WebApp.ApiControllers
             return profile;
         }
 
-        private bool ProfileExists(string id)
+        private bool ProfileExists(Guid id)
         {
             return _context.Profiles.Any(e => e.Id == id);
         }

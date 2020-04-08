@@ -9,8 +9,8 @@ namespace PublicApi.DTO.v1
         [MaxLength(300)][MinLength(1)] public string CommentValue { get; set; } = default!;
         public DateTime CommentDateTime { get; set; } = DateTime.Now;
 
-        [MaxLength(36)] public string ProfileId { get; set; } = default!;
+        public Guid ProfileId { get; set; } = default!;
 
-        [MaxLength(36)] public string PostId { get; set; } = default!;
+        public Guid PostId { get; set; } = default!;
     }
 }

@@ -37,9 +37,11 @@ namespace WebApp
 //            services.AddDbContext<ApplicationDbContext>(options =>
 //                options.UseSqlServer(
 //                    Configuration.GetConnectionString("MSSql")));
-            
-            services.AddDefaultIdentity<Profile>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<Profile, MRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
             
@@ -95,17 +97,43 @@ namespace WebApp
         }
         
         private static void UpdateDatabase(IApplicationBuilder app, IWebHostEnvironment env,
-            IConfiguration Configuration)
+            IConfiguration configuration)
         {
             // give me the scoped services (everyhting created by it will be closed at the end of service scope life).
-            using var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope();
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
             using var ctx = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            using var userManager = serviceScope.ServiceProvider.GetService<UserManager<Profile>>();
+            using var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<MRole>>();
+            
+            Console.WriteLine(ctx == null);
+            Console.WriteLine(userManager == null);
+            Console.WriteLine(roleManager == null);
 
-//            ctx.Database.EnsureDeleted();
-//            ctx.Database.Migrate();
+            if (configuration["AppDataInitialization:DropDatabase"] == "True")
+            {
+                Console.WriteLine("DropDatabase");
+                DAL.Helpers.DataInitializers.DeleteDatabase(ctx);
+            }
+
+            if (configuration["AppDataInitialization:MigrateDatabase"] == "True")
+            {
+                Console.WriteLine("MigrateDatabase");
+                DAL.Helpers.DataInitializers.MigrateDatabase(ctx);
+            }
+
+            if (configuration["AppDataInitialization:SeedIdentity"] == "True")
+            {
+                Console.WriteLine("SeedIdentity");
+                DAL.Helpers.DataInitializers.SeedIdentity(userManager, roleManager);
+            }
+
+            if (configuration.GetValue<bool>("AppDataInitialization:SeedData"))
+            {
+                Console.WriteLine("SeedData");
+                DAL.Helpers.DataInitializers.SeedData(ctx);
+            }
+
         }
     }
 }

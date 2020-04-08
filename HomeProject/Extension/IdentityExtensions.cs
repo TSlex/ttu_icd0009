@@ -10,9 +10,11 @@ namespace Extension
 {
     public static class IdentityExtensions
     {
-        public static string UserId(this ClaimsPrincipal user)
+        public static Guid UserId(this ClaimsPrincipal user)
         {
-            return user.Claims.Single(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+            var stringId = user.Claims.Single(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
+            return new Guid(stringId);
         }
 
         public static string GenerateJWT(IEnumerable<Claim> claims, string signingKey, string issuer, int expiresInDays)

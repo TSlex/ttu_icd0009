@@ -10,8 +10,8 @@ namespace PublicApi.DTO.v1
         
         public DateTime MessageDateTime { get; set; } = DateTime.Now;
         
-        [MaxLength(36)] public string ProfileId { get; set; } = default!;
+        public Guid ProfileId { get; set; } = default!;
 
-        [MaxLength(36)] public string ChatRoomId { get; set; } = default!;
+        public Guid ChatRoomId { get; set; } = default!;
     }
 }
