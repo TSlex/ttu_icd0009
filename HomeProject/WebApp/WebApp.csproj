@@ -24,6 +24,7 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Extension\Extension.csproj" />
       <ProjectReference Include="..\PublicApi.DTO.v1\PublicApi.DTO.v1.csproj" />
+      <ProjectReference Include="..\Resourses\Resourses.csproj" />
     </ItemGroup>
 
     <ItemGroup>
