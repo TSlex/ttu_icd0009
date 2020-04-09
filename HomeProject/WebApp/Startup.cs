@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace WebApp
@@ -79,6 +82,24 @@ namespace WebApp
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
                     };
                 });
+            
+            services.Configure<RequestLocalizationOptions>(options =>{
+                var supportedCultures = new[]{
+                    new CultureInfo(name: "en-GB"),
+                    new CultureInfo(name: "et-EE"),
+                    new CultureInfo(name: "ru-RU")
+                };
+
+                // State what the default culture for your application is. 
+                options.DefaultRequestCulture = new RequestCulture(culture: "ru-RU", uiCulture: "ru-RU");
+
+                // You must explicitly state which cultures your application supports.
+                options.SupportedCultures = supportedCultures;
+
+                // These are the cultures the app supports for UI strings
+                options.SupportedUICultures = supportedCultures;
+            });
+
 
         }
 
@@ -98,6 +119,9 @@ namespace WebApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseRequestLocalization(
+                options: app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
