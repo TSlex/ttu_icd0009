@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DAL;
 using Domain;
@@ -64,7 +66,24 @@ namespace WebApp.ApiControllers.Identity
         [HttpPost]
         public async Task<ActionResult<string>> Register([FromBody] RegisterDTO model)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                var user = new Profile() { UserName = model.Email, Email = model.Email, EmailConfirmed = true};
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+                    
+                    return Ok(new {status = "Registration was successful!"});
+                }
+                
+                var errors = result.Errors.Select(error => error.Description).ToList();
+
+                return ValidationProblem(JsonSerializer.Serialize(errors));
+            }
+            
+            return StatusCode(403);
         }
         
         public class LoginDTO
