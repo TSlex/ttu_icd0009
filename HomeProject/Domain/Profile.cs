@@ -13,7 +13,6 @@ namespace Domain
     public class Profile : MUser
     {
         public DateTime? LastLoginDateTime { get; set; }
-        
 
         [MaxLength(300)] public string? ProfileStatus { get; set; }
 
