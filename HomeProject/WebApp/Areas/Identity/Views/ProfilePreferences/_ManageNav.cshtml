@@ -2,15 +2,36 @@
 @inject SignInManager<Profile> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+
+    static string IsSelected(IHtmlHelper htmlHelper, string actions, string cssClass = "active")
+    {
+        string currentAction = htmlHelper.ViewContext.RouteData.Values["action"] as string;
+
+        return currentAction.Equals(actions) ? cssClass : "";
+    }
+
 }
+
 <ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
+    <li class="nav-item">
+        <a class="nav-link @IsSelected(Html, "Index")" asp-action="Index">Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @IsSelected(Html, "Email")" asp-action="Email">Email</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @IsSelected(Html, "ChangePassword")" asp-action="ChangePassword">Password</a>
+    </li>
     @if (hasExternalLogins)
     {
-        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+        <li id="external-logins" class="nav-item">
+            <a class="nav-link @IsSelected(Html, "ExternalLogins")" asp-action="ExternalLogins">External logins</a>
+        </li>
     }
-    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
+    <li class="nav-item">
+        <a class="nav-link @IsSelected(Html, "TwoFactorAuthentication")" asp-action="TwoFactorAuthentication">Two-factor authentication</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @IsSelected(Html, "PersonalData")" asp-action="PersonalData">Personal data</a>
+    </li>
 </ul>

@@ -13,10 +13,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Controller = Microsoft.AspNetCore.Mvc.Controller;
+using FileContentResult = Microsoft.AspNetCore.Mvc.FileContentResult;
 
 namespace WebApp.Areas.Identity.Controllers
 {
     [Authorize]
+    [Area("Identity")]
+    [Route("{controller}/{action}")]
     public class ProfilePreferencesController : Controller
     {
         private readonly UserManager<Profile> _userManager;
@@ -60,6 +64,8 @@ namespace WebApp.Areas.Identity.Controllers
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            dto.Username = await _userManager.GetUserNameAsync(user);
+
             if (!ModelState.IsValid)
             {
                 dto = new IndexDTO()
@@ -84,8 +90,10 @@ namespace WebApp.Areas.Identity.Controllers
             }
 
             await _signInManager.RefreshSignInAsync(user);
-//            StatusMessage = "Your profile has been updated";
-            return View();
+            
+            dto.StatusMessage = "Your profile has been updated";
+            
+            return View(dto);
         }
 
         public class IndexDTO
@@ -93,8 +101,9 @@ namespace WebApp.Areas.Identity.Controllers
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
-
-            public string Username { get; set; }
+            
+            public string? Username { get; set; }
+            public string? StatusMessage { get; set; }
         }
 
         //Change password
@@ -110,13 +119,13 @@ namespace WebApp.Areas.Identity.Controllers
             if (!hasPassword)
             {
 //                return RedirectToPage("./SetPassword");
-//                TODO: return RedirectToAction(nameof())
+                return RedirectToAction(nameof(SetPassword));
             }
 
             return View();
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordDTO dto)
         {
             if (!ModelState.IsValid)
@@ -166,7 +175,7 @@ namespace WebApp.Areas.Identity.Controllers
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -187,7 +196,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View(dto);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> DeletePersonalData(DeletePersonalDataDTO dto)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -248,7 +257,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View();
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> Disable2fa(string? nothing)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -270,7 +279,7 @@ namespace WebApp.Areas.Identity.Controllers
 //            StatusMessage = "2fa has been disabled. You can reenable 2fa when you setup an authenticator app";
 
 //           todo: return RedirectToPage("./TwoFactorAuthentication");
-            return View();
+            return RedirectToAction(nameof(TwoFactorAuthentication));
         }
 
         //PersonalData
@@ -286,7 +295,7 @@ namespace WebApp.Areas.Identity.Controllers
         }
 
         //DownloadPersonalData
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -332,7 +341,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View(dto);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> ChangeEmailAsync(EmailDTO dto)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -377,7 +386,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View("Email", dto);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> SendVerificationEmailAsync(EmailDTO dto)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -446,7 +455,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View();
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorDTO dto)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -482,13 +491,21 @@ namespace WebApp.Areas.Identity.Controllers
 
             if (await _userManager.CountRecoveryCodesAsync(user) == 0)
             {
-                var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+//                var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
 //                RecoveryCodes = recoveryCodes.ToArray();
 //                return RedirectToPage("./ShowRecoveryCodes");
+                
+                var newDTO = new ShowRecoveryCodesDTO()
+                {
+                    RecoveryCodes = (await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10)).ToArray()
+                };
+                
+                return RedirectToAction(nameof(ShowRecoveryCodes), newDTO);
             }
             else
             {
 //                return RedirectToPage("./TwoFactorAuthentication");
+                return RedirectToAction(nameof(TwoFactorAuthentication));
             }
 
             return View();
@@ -573,7 +590,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View(dto);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> RemoveLoginAsync(string loginProvider, string providerKey)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -596,7 +613,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View("ExternalLogins");
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> LinkLoginAsync(string provider)
         {
             // Clear the existing external cookie to ensure a clean login process
@@ -642,8 +659,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View("ExternalLogins");
         }
 
-        class ExternalLoginsDTO()
-        {
+        public class ExternalLoginsDTO{
             public IList<UserLoginInfo> CurrentLogins { get; set; }
 
             public IList<AuthenticationScheme> OtherLogins { get; set; }
@@ -671,7 +687,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View();
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> GenerateRecoveryCodes(string? nothing)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -710,13 +726,14 @@ namespace WebApp.Areas.Identity.Controllers
         {
             if (RecoveryCodes == null || RecoveryCodes.Length == 0)
             {
-                return RedirectToPage("./TwoFactorAuthentication");
+//                return RedirectToPage("./TwoFactorAuthentication");
+                return RedirectToAction(nameof(TwoFactorAuthentication));
             }
 
             return View();
         }
 
-        public class ShowRecoveryCodesDTO()
+        public class ShowRecoveryCodesDTO
         {
             public string[] RecoveryCodes { get; set; }
         }
@@ -734,13 +751,14 @@ namespace WebApp.Areas.Identity.Controllers
 
             if (hasPassword)
             {
-                return RedirectToPage("./ChangePassword");
+//                return RedirectToPage("./ChangePassword");
+                return RedirectToAction(nameof(ChangePassword));
             }
 
             return View();
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> SetPassword(SetPasswordDTO dto)
         {
             if (!ModelState.IsValid)
@@ -782,7 +800,7 @@ namespace WebApp.Areas.Identity.Controllers
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -811,7 +829,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View(dto);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> TwoFactorAuthentication(TwoFactorAuthenticationDTO dto)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -850,7 +868,7 @@ namespace WebApp.Areas.Identity.Controllers
             return View();
         }
         
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public async Task<IActionResult> ResetAuthenticator(string? nothing)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -867,7 +885,8 @@ namespace WebApp.Areas.Identity.Controllers
             
 //            StatusMessage = "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.";
 
-            return RedirectToPage("./EnableAuthenticator");
+//            return RedirectToPage("./EnableAuthenticator");
+            return RedirectToAction(nameof(EnableAuthenticator));
         }
     }
 }

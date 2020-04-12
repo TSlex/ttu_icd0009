@@ -98,6 +98,24 @@
       <_ContentIncludedByDefault Remove="Views\Ranks\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Ranks\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Ranks\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\ChangePassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\DeletePersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\Disable2fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\DownloadPersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\Email.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\EnableAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\ExternalLogins.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\GenerateRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\PersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\ResetAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\SetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\ShowRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\TwoFactorAuthentication.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_ManageNav.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_StatusMessage.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_ViewImports.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
