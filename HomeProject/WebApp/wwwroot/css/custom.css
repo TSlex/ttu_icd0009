@@ -7,6 +7,10 @@ body{
     padding-top: 100px !important;
 }
 
+.fa, .fas{
+    line-height: inherit !important;
+}
+
 /*navbar*/
 .navbar{
     padding: 0.5em !important;
@@ -93,7 +97,7 @@ form button{
     margin-top: .5em !important;
 }
 
-li form button{
+li form button, nav form button{
     margin-top: 0 !important;
 }
 

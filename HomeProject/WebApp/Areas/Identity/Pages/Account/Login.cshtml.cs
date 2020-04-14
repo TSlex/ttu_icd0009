@@ -81,7 +81,9 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                 if (user == null)
                 {
-                    return NotFound($"Unable to load user with Email '{Input.Email}'.");
+//                    return NotFound($"Unable to load user with Email '{Input.Email}'.");
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
                 }
 
                 // var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

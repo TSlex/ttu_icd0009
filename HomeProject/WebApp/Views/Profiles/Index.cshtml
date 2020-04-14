@@ -1,161 +1,146 @@
-@model IEnumerable<Domain.Profile>
+@model Domain.Profile
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LastLoginDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfileStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfileAvatarUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfileAbout)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FollowersCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FollowedCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostsCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NormalizedUserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NormalizedEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailConfirmed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SecurityStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LockoutEnd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LockoutEnabled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AccessFailedCount)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastLoginDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileAvatarUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfileAbout)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FollowersCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FollowedCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostsCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NormalizedUserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NormalizedEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailConfirmed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PasswordHash)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SecurityStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LockoutEnd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LockoutEnabled)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessFailedCount)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="profile_container">
+    <div class="profile_section">
+        <div class="profile_image col-3 d-flex justify-content-center">
+            <img alt="" width="150px" height="150px"
+                 src=@Model.ProfileAvatarUrl>
+        </div>
+        <div class="profile_description col-9">
+            <div class="profile_name">@Model.UserName</div>
+            <ul class="profile_meta_section">
+                <li class="profile_meta">
+                    <span class="meta_counter">@Model.PostsCount</span>
+                    <span class="meta_title">публикаций</span>
+                </li>
+                <li class="profile_meta">
+                    <span class="meta_counter">@Model.FollowersCount</span>
+                    <span class="meta_title">подписчиков</span>
+                </li>
+                <li class="profile_meta">
+                    <span class="meta_counter">@Model.FollowedCount</span>
+                    <span class="meta_title">подписок</span>
+                </li>
+            </ul>
+            <div class="profile_about">
+                <h1>@Model.ProfileFullName</h1>
+                <span>@Model.ProfileAbout</span>
+                <br>
+                <a href="">@Model.ProfileWorkPlace</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="album posts_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img alt="" decoding="auto" sizes="300px"
+                             srcset="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s150x150/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=cb5fb550616a067167cf6881b0b7af02&amp;oe=5EBAFCEC 150w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s240x240/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=e1dd923f143b3cc2a88fbfc41a179152&amp;oe=5EB8BCA2 240w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s320x320/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=c052f04546871bdf962178162c5d878a&amp;oe=5EB83A1C 320w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/e35/c0.95.927.927a/s480x480/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=d9c7ace84f5b0bb3c549b420b4ced169&amp;oe=5EB83CC2 480w,https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2 640w"
+                             src="https://scontent-hel2-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/c0.95.927.927a/s640x640/92487174_882762298907049_8949106436443340609_n.jpg?_nc_ht=scontent-hel2-1.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=-salrP0N6X0AX-AO2Ep&amp;oh=8f44f028183bfe719e1f026c623b0d61&amp;oe=5EB8F5E2"
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -35,7 +35,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             [Phone]
             [MaxLength(300)]
             [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; } = default!;
+            public string? PhoneNumber { get; set; }
 
             [MaxLength(300)] public string Username { get; set; } = default!;
             
@@ -109,6 +109,14 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             var username = await _userManager.GetUserNameAsync(user);
             if (Input.Username != username)
             {
+                var userCheck = await _userManager.FindByNameAsync(Input.Username);
+
+                if (userCheck != null && !(userCheck.Equals(user)))
+                {
+                    StatusMessage = "Error. That username is already taken!";
+                    return RedirectToPage();
+                }
+                
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Username);
                 
                 if (!setUserNameResult.Succeeded)
