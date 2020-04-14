@@ -1,4 +1,13 @@
-﻿/*navbar*/
+﻿/*shared*/
+.alert{
+    margin-bottom: 0 !important;
+}
+
+body{
+    padding-top: 100px !important;
+}
+
+/*navbar*/
 .navbar{
     padding: 0.5em !important;
     /*background-color: #9fcdff !important;*/
@@ -68,3 +77,44 @@
 .profile_name{
     font-size: 20px;
 }
+
+/*preferences*/
+.preferences_section{
+    /*margin-top: 4em !important;*/
+    margin-right: 6em !important;
+    margin-left: 6em !important;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+/*form*/
+form button{
+    margin-top: .5em !important;
+}
+
+li form button{
+    margin-top: 0 !important;
+}
+
+/*.form-inline{
+    display: flex;
+    !*flex-direction: row;*!
+    !*flex-flow: inherit !important;*!
+    justify-content: space-between !important;
+    flex-wrap: nowrap;
+}
+
+.form-inline label{
+    margin-right: 1em;
+    flex-grow: 1;
+    display: inline;
+    text-align: right;
+}
+
+.form-inline label + *{
+    width: 200px !important;
+}*/
+/*.form-inline *{*/
+/*    flex-grow: 1;*/
+/*}*/

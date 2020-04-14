@@ -20,7 +20,7 @@ namespace DAL.Helpers
             return context.Database.EnsureDeleted();
         }
 
-        public static void SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
+        public static async void SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
         {
             var roleNames = new[] {new Role {Name = "User"}, new Role {Name = "Admin"}};
 
@@ -41,17 +41,17 @@ namespace DAL.Helpers
                 }
             }
 
-            var users = new[] {new User{Login = "admin@admin.com", Password = "Admin_123", RolesNames = new []{"User", "Admin"}}};
+            var users = new[] {new User{Email = "admin@admin.com", Password = "Admin_123", RolesNames = new []{"User", "Admin"}}};
             
             foreach (var user in users)
             {
-                var newUser = userManager.FindByNameAsync(user.Login).Result;
+                var newUser = await userManager.FindByEmailAsync(user.Email);
                 if (newUser == null)
                 {
                     newUser = new Profile
                     {
-                        Email = user.Login, 
-                        UserName = user.Login,
+                        Email = user.Email, 
+                        UserName = user.Email,
                         EmailConfirmed = true
                     };
 
@@ -62,7 +62,7 @@ namespace DAL.Helpers
 
                     }
 
-                    foreach (var roleName in user.RolesNames)
+                    foreach (var roleName in user.RolesNames!)
                     {
                         var roleResult = userManager.AddToRoleAsync(newUser, roleName).Result;
                         
@@ -82,7 +82,7 @@ namespace DAL.Helpers
 
     struct User
     {
-        public string Login { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         
         public ICollection<string>? RolesNames { get; set; }

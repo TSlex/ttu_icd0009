@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,36 +7,32 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
-    public class TwoFactorAuthenticationModel : PageModel
+    public class PrivacyNSecurityModel : PageModel
     {
-        private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
 
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
-        private readonly ILogger<TwoFactorAuthenticationModel> _logger;
-
-        public TwoFactorAuthenticationModel(
-            UserManager<Profile> userManager,
-            SignInManager<Profile> signInManager,
-            ILogger<TwoFactorAuthenticationModel> logger)
+        private readonly ILogger<PrivacyNSecurityModel> _logger;
+        
+        public PrivacyNSecurityModel(UserManager<Profile> userManager, SignInManager<Profile> signInManager, ILogger<PrivacyNSecurityModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
-
+        
         public bool HasAuthenticator { get; set; }
-
+        public bool IsMachineRemembered { get; set; }
+        
         public int RecoveryCodesLeft { get; set; }
-
+        
         [BindProperty]
         public bool Is2faEnabled { get; set; } = default!;
-
-        public bool IsMachineRemembered { get; set; }
-
+        
         [TempData]
         public string? StatusMessage { get; set; }
-
+        
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);

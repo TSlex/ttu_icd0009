@@ -1,9 +1,10 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Contracts.DAL.Base;
 using DAL.Base;
+using Domain.Enums;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,11 +15,20 @@ namespace Domain
     {
         public DateTime? LastLoginDateTime { get; set; }
 
+        [MinLength(1)] [MaxLength(100)] public string? ProfileFullName { get; set; }
+
+        [MaxLength(300)] public string? ProfileWorkPlace { get; set; }
+        
         [MaxLength(300)] public string? ProfileStatus { get; set; }
 
         [MaxLength(300)] public string? ProfileAvatarUrl { get; set; }
 
         [MaxLength(1000)] public string? ProfileAbout { get; set; }
+
+        [Range(0, int.MaxValue)] public ProfileGender ProfileGender { get; set; } = ProfileGender.Undefined;
+        
+        [MaxLength(20)]
+        public string? ProfileGenderOwn { get; set; }
 
         public int FollowersCount { get; set; } = 0;
         public int FollowedCount { get; set; } = 0;
@@ -38,7 +48,7 @@ namespace Domain
 
         [InverseProperty(nameof(Follower.FollowerProfile))]
         public ICollection<Follower>? Followed { get; set; } //profile followed profiles list
-        
+
         //Chat
         public ICollection<ChatMember>? ChatMembers { get; set; } //List of ChatRooms, where profile participate
         public ICollection<Message>? Messages { get; set; }

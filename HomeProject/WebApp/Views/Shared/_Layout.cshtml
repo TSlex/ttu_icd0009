@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/custom.css">
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
         <div class="container">
             <a class="navbar-brand fa fa-palette" asp-area="" asp-controller="Home" asp-action="Index">ArtNetwork</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -29,14 +30,14 @@
                     @*     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
                     @* </li> *@
 
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Resourses.Views.Shared._Layout.Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Resourses.Views.Shared._Layout.Privacy</a>
-                    </li>
+                    </li>*@
 
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link text-dark fa fa-blog" asp-area="" asp-controller="Posts" asp-action="Index">Posts</a>
                     </li>
                     <li class="nav-item">
@@ -45,7 +46,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link text-dark fa fa-comments" asp-area="" asp-controller="Messages" asp-action="Index">Messages</a>
-                    </li>
+                    </li>*@
 
                     @* test *@
                     @* <li class="nav-item"> *@
@@ -54,12 +55,12 @@
                     @* <li class="nav-item"> *@
                     @*     <a class="nav-link text-dark" asp-area="" asp-controller="BlockedProfiles" asp-action="Index">BlockedProfiles</a> *@
                     @* </li> *@
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link text-dark fa fa-user-friends" asp-area="" asp-controller="ChatMembers" asp-action="Index">ChatMembers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark fa fa-headset" asp-area="" asp-controller="ChatRooms" asp-action="Index">ChatRooms</a>
-                    </li>
+                    </li>*@
                     @* <li class="nav-item"> *@
                     @*     <a class="nav-link text-dark" asp-area="" asp-controller="ChatRoles" asp-action="Index">ChatRoles</a> *@
                     @* </li> *@

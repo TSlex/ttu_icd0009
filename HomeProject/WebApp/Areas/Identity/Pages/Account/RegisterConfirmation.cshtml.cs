@@ -22,11 +22,11 @@ namespace WebApp.Areas.Identity.Pages.Account
             _sender = sender;
         }
 
-        public string Email { get; set; }
+        public string Email { get; set; } = default!;
 
         public bool DisplayConfirmAccountLink { get; set; }
 
-        public string EmailConfirmationUrl { get; set; }
+        public string EmailConfirmationUrl { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string email)
         {

@@ -1,30 +1,71 @@
 @page
+@using Domain.Enums
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<h4 class="">@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage"/>
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" class="" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Input.ProfileAvatarUrl" class="control-label">Аватар:</label>
+                <input asp-for="Input.ProfileAvatarUrl" class="form-control"/>
+                <span asp-validation-for="Input.ProfileAvatarUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ProfileFullName" class="control-label">Имя:</label>
+                <input asp-for="Input.ProfileFullName" class="form-control"/>
+                <span asp-validation-for="Input.ProfileFullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Username"></label>
+                <input asp-for="Input.Username" class="form-control"/>
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ProfileWorkPlace" class="control-label">Место работы:</label>
+                <input asp-for="Input.ProfileWorkPlace" class="form-control"/>
+                <span asp-validation-for="Input.ProfileWorkPlace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ProfileAbout" class="control-label">О себе:</label>
+                <textarea asp-for="Input.ProfileAbout" class="form-control form-"></textarea>
+                <span asp-validation-for="Input.ProfileAbout" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <input asp-for="Input.PhoneNumber" class="form-control"/>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+
+            <div class="form-group">
+                <label asp-for="Input.ProfileGender" class="control-label">Пол</label>
+                <select asp-for="Input.ProfileGender" asp-items="Html.GetEnumSelectList<ProfileGender>()" class="form-control">
+                    @* <option>Мужской</option> *@
+                    @* <option>Женский</option> *@
+                    @* <option>Свой вариант</option> *@
+                    @* <option>Не указывать</option> *@
+                </select>
+            </div>
+            
+            <div class="form-group d-none" id="profile-gender-own">
+                <label asp-for="Input.ProfileGenderOwn"></label>
+                <input asp-for="Input.ProfileGenderOwn" class="form-control"/>
+                <span asp-validation-for="Input.ProfileGenderOwn" class="text-danger"></span>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="btn btn-primary align-self-center">Сохранить</button>
         </form>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
+    <script src="~/js/Identity/profile-preferences.js"></script>
 }
