@@ -100,7 +100,7 @@ namespace WebApp.Areas.Identity.Controllers
         {
             [Phone]
             [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; } = default!;
             
             public string? Username { get; set; }
             public string? StatusMessage { get; set; }
@@ -434,11 +434,11 @@ namespace WebApp.Areas.Identity.Controllers
         }
 
         //EnableAuthenticator
-        public string SharedKey { get; set; }
+        public string? SharedKey { get; set; }
 
-        public string AuthenticatorUri { get; set; }
+        public string? AuthenticatorUri { get; set; }
 
-        [TempData] public string[] RecoveryCodes { get; set; }
+        [TempData] public string[]? RecoveryCodes { get; set; }
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 

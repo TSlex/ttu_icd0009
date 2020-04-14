@@ -157,9 +157,9 @@ namespace WebApp
             using var userManager = serviceScope.ServiceProvider.GetService<UserManager<Profile>>();
             using var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<MRole>>();
             
-            Console.WriteLine(ctx == null);
-            Console.WriteLine(userManager == null);
-            Console.WriteLine(roleManager == null);
+//            Console.WriteLine(ctx == null);
+//            Console.WriteLine(userManager == null);
+//            Console.WriteLine(roleManager == null);
 
             if (configuration["AppDataInitialization:DropDatabase"] == "True")
             {
