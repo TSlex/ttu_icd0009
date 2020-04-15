@@ -14,8 +14,9 @@ using PublicApi.DTO.v1;
 
 namespace WebApp.ApiControllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostsController : ControllerBase
     {

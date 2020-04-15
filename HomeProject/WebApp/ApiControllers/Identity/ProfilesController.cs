@@ -16,7 +16,8 @@ using Microsoft.Extensions.Logging;
 namespace WebApp.ApiControllers.Identity
 {
     [ApiController]
-    [Route("api/account/[action]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/account/[action]")]
     public class ProfilesController : ControllerBase
     {
         private readonly IConfiguration _configuration;

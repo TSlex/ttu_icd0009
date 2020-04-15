@@ -10,18 +10,29 @@ using Domain;
 
 namespace WebApp.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ChatMembersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public ChatMembersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/ChatMembers
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChatMember>>> GetChatMembers()
         {
@@ -29,6 +40,11 @@ namespace WebApp.ApiControllers
         }
 
         // GET: api/ChatMembers/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ChatMember>> GetChatMember(Guid id)
         {
@@ -45,6 +61,12 @@ namespace WebApp.ApiControllers
         // PUT: api/ChatMembers/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chatMember"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutChatMember(Guid id, ChatMember chatMember)
         {
@@ -77,6 +99,11 @@ namespace WebApp.ApiControllers
         // POST: api/ChatMembers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chatMember"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ChatMember>> PostChatMember(ChatMember chatMember)
         {
@@ -87,6 +114,11 @@ namespace WebApp.ApiControllers
         }
 
         // DELETE: api/ChatMembers/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChatMember>> DeleteChatMember(Guid id)
         {

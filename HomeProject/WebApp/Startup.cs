@@ -15,12 +15,15 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApp.Helpers;
 
 namespace WebApp
 {
@@ -39,7 +42,7 @@ namespace WebApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("MySqlConnection")));
-            
+
 //            services.AddDbContext<ApplicationDbContext>(options =>
 //                options.UseSqlServer(
 //                    Configuration.GetConnectionString("MSSql")));
@@ -50,10 +53,10 @@ namespace WebApp
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsAllowAll",
@@ -64,7 +67,7 @@ namespace WebApp
                         builder.AllowAnyMethod();
                     });
             });
-            
+
             // =============== JWT support ===============
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             services
@@ -78,13 +81,16 @@ namespace WebApp
                     {
                         ValidIssuer = Configuration["JWT:Issuer"],
                         ValidAudience = Configuration["JWT:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SigningKey"])),
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SigningKey"])),
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
                     };
                 });
-            
-            services.Configure<RequestLocalizationOptions>(options =>{
-                var supportedCultures = new[]{
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
                     new CultureInfo(name: "en-GB"),
                     new CultureInfo(name: "et-EE"),
                     new CultureInfo(name: "ru-RU")
@@ -100,14 +106,23 @@ namespace WebApp
                 options.SupportedUICultures = supportedCultures;
             });
 
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                // options.DefaultApiVersion = new ApiVersion(1,0);
+                // options.AssumeDefaultVersionWhenUnspecified = false;
+            });
 
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             UpdateDatabase(app, env, Configuration);
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -125,28 +140,41 @@ namespace WebApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
             app.UseCors("CorsAllowAll");
-            
+
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(
+                options =>
+                {
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            description.GroupName.ToUpperInvariant());
+                    }
+                });
+
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {    
+            {
 //                endpoints.MapControllerRoute(
 //                    name: "areas",
 //                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                
+
                 endpoints.MapRazorPages();
             });
         }
-        
+
         private static void UpdateDatabase(IApplicationBuilder app, IWebHostEnvironment env,
             IConfiguration configuration)
         {
@@ -156,7 +184,7 @@ namespace WebApp
             using var ctx = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
             using var userManager = serviceScope.ServiceProvider.GetService<UserManager<Profile>>();
             using var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<MRole>>();
-            
+
 //            Console.WriteLine(ctx == null);
 //            Console.WriteLine(userManager == null);
 //            Console.WriteLine(roleManager == null);
@@ -184,7 +212,6 @@ namespace WebApp
                 Console.WriteLine("SeedData");
                 DAL.Helpers.DataInitializers.SeedData(ctx);
             }
-
         }
     }
 }
