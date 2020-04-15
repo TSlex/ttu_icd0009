@@ -17,11 +17,11 @@ namespace Contracts.DAL.Base.Repositories
         IEnumerable<TEntity> All();
         Task<IEnumerable<TEntity>> AllAsync();
         
-        IEnumerable<TEntity> All(params Expression<Func<TEntity, object>>[]
-            includeProperties);
-        
-        Task<IEnumerable<TEntity>> AllAsync(params Expression<Func<TEntity, object>>[]
-            includeProperties);
+//        IEnumerable<TEntity> All(params Expression<Func<TEntity, object>>[]
+//            includeProperties);
+//        
+//        Task<IEnumerable<TEntity>> AllAsync(params Expression<Func<TEntity, object>>[]
+//            includeProperties);
 
         TEntity Find(params object[] id);
         Task<TEntity> FindAsync(params object[] id);
