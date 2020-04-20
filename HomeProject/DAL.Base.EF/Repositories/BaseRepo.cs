@@ -7,7 +7,7 @@ using Contracts.DAL.Base;
 using Contracts.DAL.Base.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Base.Repositories
+namespace DAL.Base.EF.Repositories
 {
     public class BaseRepo<TEntity, TDbContext> : IBaseRepo<TEntity>
         where TEntity : class, IDomainEntity<Guid>, new()
