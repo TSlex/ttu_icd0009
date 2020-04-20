@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class CommentDTO: DomainEntity
+    public class CommentDTO: DomainEntityBaseMetadata
     {
         [MaxLength(300)][MinLength(1)] public string CommentValue { get; set; } = default!;
         public DateTime CommentDateTime { get; set; } = DateTime.Now;

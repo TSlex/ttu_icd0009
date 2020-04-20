@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ChatRoleDTO: DomainEntity
+    public class ChatRoleDTO: DomainEntityBaseMetadata
     {
         [MaxLength(200)] public string RoleTitle { get; set; } = default!;
     }

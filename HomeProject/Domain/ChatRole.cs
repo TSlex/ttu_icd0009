@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ChatRole: DomainEntity
+    public class ChatRole: DomainEntityBaseMetadata
     {
         [MaxLength(200)] public string RoleTitle { get; set; } = default!;
         

@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Follower: DomainEntity
+    public class Follower: DomainEntityBaseMetadata
     {
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

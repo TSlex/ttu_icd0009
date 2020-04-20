@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Message: DomainEntity
+    public class Message: DomainEntityBaseMetadata
     {
         [MaxLength(2000)] public string MessageValue { get; set; } = default!;
         

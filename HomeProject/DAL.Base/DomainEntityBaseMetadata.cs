@@ -3,9 +3,9 @@ using Contracts.DAL.Base;
 
 namespace DAL.Base
 {
-    public abstract class DomainEntity : IDomainEntity
+    public abstract class DomainEntityBaseMetadata : IDomainEntity
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = default!;
         
         public string? CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; } = default!;

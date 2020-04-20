@@ -6,7 +6,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class BlockedProfileDTO: DomainEntity
+    public class BlockedProfileDTO: DomainEntityBaseMetadata
     {
         // Profile who wants to block BProfile
         public Guid ProfileId { get; set; } = default!;

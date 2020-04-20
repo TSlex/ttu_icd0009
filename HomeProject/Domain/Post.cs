@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Post : DomainEntity
+    public class Post : DomainEntityBaseMetadata
     {
         [MaxLength(100)]
         [Display(Name = nameof(PostTitle), ResourceType = typeof(Resourses.Domain.Post))]

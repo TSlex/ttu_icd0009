@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class GiftDTO: DomainEntity
+    public class GiftDTO: DomainEntityBaseMetadata
     {
         [MaxLength(100)] public string GiftName { get; set; } = default!;
         [MaxLength(300)] public string? GiftImageUrl { get; set; }

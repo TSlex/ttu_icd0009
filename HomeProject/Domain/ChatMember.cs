@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ChatMember: DomainEntity
+    public class ChatMember: DomainEntityBaseMetadata
     {
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

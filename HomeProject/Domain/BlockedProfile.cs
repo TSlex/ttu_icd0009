@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class BlockedProfile: DomainEntity
+    public class BlockedProfile: DomainEntityBaseMetadata
     {
         // Profile who wants to block BProfile
         public Guid ProfileId { get; set; } = default!;

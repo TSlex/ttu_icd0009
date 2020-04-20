@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ProfileGiftDTO: DomainEntity
+    public class ProfileGiftDTO: DomainEntityBaseMetadata
     {
         public Guid ProfileId { get; set; } = default!;
 
