@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Domain.Identity
 {
     [Table("User")]
-    public class MUser: IdentityUser<Guid>, IDomainEntity
+    public class MUser: IdentityUser<Guid>, IDomainEntityBaseMetadata
     {
         [MaxLength(36)] public override Guid Id { get; set; } = default!;
         

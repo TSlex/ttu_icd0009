@@ -20,13 +20,12 @@ namespace DAL.Base.EF.Mappers
 
         public TOutObject Map(TInObject inObject)
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<TInObject, TOutObject>(inObject);
         }
 
-        public TMapOutObject Map<TMapInObject, TMapOutObject>(TMapInObject inObject) where TMapInObject : class
-            where TMapOutObject : class, new()
+        public TInObject MapReverse(TOutObject outObject)
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<TOutObject, TInObject>(outObject);
         }
     }
 }

@@ -10,6 +10,7 @@ using DAL;
 using DAL.Repositories;
 using Domain;
 using Extension;
+using Message = DAL.App.DTO.Message;
 
 namespace WebApp.Controllers
 {
@@ -59,7 +60,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            Message message)
+            DAL.App.DTO.Message message)
         {
             ModelState.Clear();
             message.ProfileId = User.UserId();

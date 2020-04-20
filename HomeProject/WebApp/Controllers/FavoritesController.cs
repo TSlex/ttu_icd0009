@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Favorite = DAL.App.DTO.Favorite;
 
 namespace WebApp.Controllers
 {
@@ -58,7 +59,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            Favorite favorite)
+            DAL.App.DTO.Favorite favorite)
         {
             ModelState.Clear();
             favorite.ProfileId = User.UserId();

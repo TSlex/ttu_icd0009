@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Gift = DAL.App.DTO.Gift;
 
 namespace WebApp.Controllers
 {
@@ -58,7 +59,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            Gift gift)
+            DAL.App.DTO.Gift gift)
         {
             ModelState.Clear();
             gift.ChangedAt = DateTime.Now;

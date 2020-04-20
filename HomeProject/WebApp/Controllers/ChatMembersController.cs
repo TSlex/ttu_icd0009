@@ -10,6 +10,7 @@ using DAL;
 using DAL.Repositories;
 using Domain;
 using Extension;
+using ChatMember = DAL.App.DTO.ChatMember;
 
 namespace WebApp.Controllers
 {
@@ -59,7 +60,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            ChatMember chatMember)
+            DAL.App.DTO.ChatMember chatMember)
         {
             ModelState.Clear();
             chatMember.ChangedAt = DateTime.Now;

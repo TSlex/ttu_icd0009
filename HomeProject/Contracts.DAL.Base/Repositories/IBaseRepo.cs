@@ -5,31 +5,25 @@ using System.Threading.Tasks;
 
 namespace Contracts.DAL.Base.Repositories
 {
-    public interface IBaseRepo<TEntity> : IBaseRepo<TEntity, Guid>
-        where TEntity : class, IDomainEntity<Guid>, new()
+    public interface IBaseRepo<TDALEntity> : IBaseRepo<TDALEntity, Guid>
+        where TDALEntity: class, IDomainEntityBase<Guid>, new()
     {
     }
 
-    public interface IBaseRepo<TEntity, TKey>
-        where TEntity : class, IDomainEntity<TKey>, new()
+    public interface IBaseRepo<TDALEntity, TKey>
+        where TDALEntity: class, IDomainEntityBase<Guid>, new()
         where TKey : struct, IComparable
     {
-        IEnumerable<TEntity> All();
-        Task<IEnumerable<TEntity>> AllAsync();
-        
-//        IEnumerable<TEntity> All(params Expression<Func<TEntity, object>>[]
-//            includeProperties);
-//        
-//        Task<IEnumerable<TEntity>> AllAsync(params Expression<Func<TEntity, object>>[]
-//            includeProperties);
+        IEnumerable<TDALEntity> All();
+        Task<IEnumerable<TDALEntity>> AllAsync();
 
-        TEntity Find(params object[] id);
-        Task<TEntity> FindAsync(params object[] id);
+        TDALEntity Find(params object[] id);
+        Task<TDALEntity> FindAsync(params object[] id);
 
-        TEntity Add(TEntity entity);
-        TEntity Update(TEntity entity);
+        TDALEntity Add(TDALEntity entity);
+        TDALEntity Update(TDALEntity entity);
 
-        TEntity Remove(TEntity entity);
-        TEntity Remove(params object[] id);
+        TDALEntity Remove(TDALEntity entity);
+        TDALEntity Remove(params object[] id);    
     }
 }

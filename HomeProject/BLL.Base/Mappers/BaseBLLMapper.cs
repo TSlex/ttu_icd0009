@@ -3,7 +3,7 @@ using Contracts.BLL.Base.Mappers;
 
 namespace BLL.Base.Mappers
 {
-    public class BaseBLLMapper<TInObject, TOutObject> : IBaseBLLMapper
+    public class BaseBLLMapper<TInObject, TOutObject> : IBaseBLLMapper<TInObject, TOutObject>
         where TInObject : class, new()
         where TOutObject : class, new()
     {
@@ -18,13 +18,14 @@ namespace BLL.Base.Mappers
             }).CreateMapper();
         }
 
-        #pragma warning disable 693
-        public TOutObject Map<TInObject, TOutObject>(TInObject inObject)
-        #pragma warning restore 693
-            where TInObject : class, new()
-            where TOutObject : class, new()
+        public virtual TOutObject Map(TInObject inObject)
         {
             return _mapper.Map<TInObject, TOutObject>(inObject);
+        }
+
+        public virtual TInObject MapReverse(TOutObject outObject)
+        {
+            return _mapper.Map<TOutObject, TInObject>(outObject);
         }
     }
 }

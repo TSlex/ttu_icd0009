@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using BlockedProfile = DAL.App.DTO.BlockedProfile;
 
 namespace WebApp.Controllers
 {
@@ -57,7 +58,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            BlockedProfile blockedProfile)
+            DAL.App.DTO.BlockedProfile blockedProfile)
         {
             ModelState.Clear();
             blockedProfile.ChangedAt = DateTime.Now;

@@ -9,47 +9,43 @@ using Contracts.DAL.Base.Repositories;
 
 namespace BLL.Base.Services
 {
-    public class BaseEntityService<TServiceRepository, TUnitOfWork, TDALEntity, TBLLEntity> : BaseService,
-        IBaseEntityService<TBLLEntity>
-        where TBLLEntity : class, IDomainEntity<Guid>, new()
-        where TDALEntity : class, IDomainEntity<Guid>, new()
-        where TUnitOfWork : IBaseUnitOfWork
+    public class BaseEntityService<TServiceRepository, TDALEntity, TBLLEntity> : BaseService,
+        IBaseEntityService<TDALEntity, TBLLEntity>
+        where TBLLEntity : class, IDomainEntityBaseMetadata<Guid>, new()
+        where TDALEntity : class, IDomainEntityBaseMetadata<Guid>, new()
         where TServiceRepository : IBaseRepo<TDALEntity>
     {
-        protected readonly TUnitOfWork ServiceUnitOfWork;
-        private readonly IBaseBLLMapper _mapper;
+        private readonly IBaseBLLMapper<TDALEntity, TBLLEntity> _mapper;
         protected readonly TServiceRepository ServiceRepository;
 
-        public BaseEntityService(TUnitOfWork serviceUnitOfWork, IBaseBLLMapper mapper,
-            TServiceRepository serviceRepository)
+        public BaseEntityService(TServiceRepository serviceRepository, IBaseBLLMapper<TDALEntity, TBLLEntity> mapper)
         {
-            ServiceUnitOfWork = serviceUnitOfWork;
             ServiceRepository = serviceRepository;
-            _mapper = mapper;
+            _mapper = mapper;    
         }
 
         public virtual IEnumerable<TBLLEntity> All() =>
-            ServiceRepository.All().Select(entity => _mapper.Map<TDALEntity, TBLLEntity>(entity));
+            ServiceRepository.All().Select(entity => _mapper.Map(entity));
 
         public virtual async Task<IEnumerable<TBLLEntity>> AllAsync() =>
-            (await ServiceRepository.AllAsync()).Select(entity => _mapper.Map<TDALEntity, TBLLEntity>(entity));
+            (await ServiceRepository.AllAsync()).Select(entity => _mapper.Map(entity));
 
         public virtual TBLLEntity Find(params object[] id) =>
-            _mapper.Map<TDALEntity, TBLLEntity>(ServiceRepository.Find(id));
+            _mapper.Map(ServiceRepository.Find(id));
 
         public virtual async Task<TBLLEntity> FindAsync(params object[] id) =>
-            _mapper.Map<TDALEntity, TBLLEntity>(await ServiceRepository.FindAsync(id));
+            _mapper.Map(await ServiceRepository.FindAsync(id));
 
         public virtual TBLLEntity Add(TBLLEntity entity) =>
-            _mapper.Map<TDALEntity, TBLLEntity>(ServiceRepository.Add(_mapper.Map<TBLLEntity, TDALEntity>(entity)));
+            _mapper.Map(ServiceRepository.Add(_mapper.MapReverse(entity)));
 
         public virtual TBLLEntity Update(TBLLEntity entity) =>
-            _mapper.Map<TDALEntity, TBLLEntity>(ServiceRepository.Update(_mapper.Map<TBLLEntity, TDALEntity>(entity)));
-        
+            _mapper.Map(ServiceRepository.Update(_mapper.MapReverse(entity)));
+
         public virtual TBLLEntity Remove(TBLLEntity entity) =>
-            _mapper.Map<TDALEntity, TBLLEntity>(ServiceRepository.Remove(_mapper.Map<TBLLEntity, TDALEntity>(entity)));
+            _mapper.Map(ServiceRepository.Remove(_mapper.MapReverse(entity)));
 
         public virtual TBLLEntity Remove(params object[] id) =>
-            _mapper.Map<TDALEntity, TBLLEntity>(ServiceRepository.Remove(id));
+            _mapper.Map(ServiceRepository.Remove(id));
     }
 }

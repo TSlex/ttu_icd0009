@@ -4,98 +4,71 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Contracts.DAL.Base;
+using Contracts.DAL.Base.Mappers;
 using Contracts.DAL.Base.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Base.EF.Repositories
 {
-    public class BaseRepo<TEntity, TDbContext> : IBaseRepo<TEntity>
-        where TEntity : class, IDomainEntity<Guid>, new()
+    public class BaseRepo<TDomainEntity, TDALEntity, TDbContext> : IBaseRepo<TDALEntity>
+        where TDomainEntity : class, IDomainEntityBase<Guid>, new()
+        where TDALEntity : class, IDomainEntityBase<Guid>, new()
         where TDbContext : DbContext
     {
         protected readonly TDbContext RepoDbContext;
-        protected readonly DbSet<TEntity> RepoDbSet;
+        protected readonly DbSet<TDomainEntity> RepoDbSet;
+        protected IBaseDALMapper<TDomainEntity, TDALEntity> Mapper;
 
-        public BaseRepo(TDbContext dbContext)
+        public BaseRepo(TDbContext dbContext, IBaseDALMapper<TDomainEntity, TDALEntity> mapper)
         {
             RepoDbContext = dbContext;
-            RepoDbSet = RepoDbContext.Set<TEntity>();
+            RepoDbSet = RepoDbContext.Set<TDomainEntity>();
+            Mapper = mapper;
 
             if (RepoDbSet == null)
             {
-                throw new ArgumentNullException(typeof(TEntity).Name + " was not found as DBSet!");
+                throw new ArgumentNullException(typeof(TDomainEntity).Name + " was not found as DBSet!");
             }
         }
 
-        public virtual IEnumerable<TEntity> All()
+        public virtual IEnumerable<TDALEntity> All()
         {
-            return RepoDbSet.ToList();
+            return RepoDbSet.ToList().Select(entity => Mapper.Map(entity));
         }
 
-        public virtual async Task<IEnumerable<TEntity>> AllAsync()
+        public virtual async Task<IEnumerable<TDALEntity>> AllAsync()
         {
-            return await RepoDbSet.ToListAsync();
+            return (await RepoDbSet.ToListAsync()).Select(entity => Mapper.Map(entity));
         }
 
-
-        public IEnumerable<TEntity> All(params Expression<Func<TEntity, object>>[] includeProperties)
+        public TDALEntity Find(params object[] id)
         {
-            IQueryable<TEntity> query = RepoDbSet;
-            
-            foreach (var includeProperty in includeProperties) {
-                query = query.Include(includeProperty);
-            }
-            return query.ToList();
+            return Mapper.Map(RepoDbSet.Find(id));
         }
 
-        public async Task<IEnumerable<TEntity>> AllAsync(params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<TDALEntity> FindAsync(params object[] id)
         {
-            IQueryable<TEntity> query = RepoDbSet;
-            
-            foreach (var includeProperty in includeProperties) {
-                query = query.Include(includeProperty);
-            }
-            return await query.ToListAsync();
+            return Mapper.Map(await RepoDbSet.FindAsync(id));
         }
 
-        public virtual TEntity Find(params object[] id)
+        public TDALEntity Add(TDALEntity entity)
         {
-            return RepoDbSet.Find(id);
+            return Mapper.Map(RepoDbSet.Add(Mapper.MapReverse(entity)).Entity);
         }
 
-        public virtual async Task<TEntity> FindAsync(params object[] id)
+        public TDALEntity Update(TDALEntity entity)
         {
-            return await RepoDbSet.FindAsync(id);
+            return Mapper.Map(RepoDbSet.Update(Mapper.MapReverse(entity)).Entity);
         }
 
-        public virtual TEntity Add(TEntity entity)
+        public TDALEntity Remove(TDALEntity entity)
         {
-            return RepoDbSet.Add(entity).Entity;
+            return Mapper.Map(RepoDbSet.Remove(Mapper.MapReverse(entity)).Entity);
         }
 
-        public virtual TEntity Update(TEntity entity)
+        public TDALEntity Remove(params object[] id)
         {
-            return RepoDbSet.Update(entity).Entity;
-        }
-
-        public virtual TEntity Remove(TEntity entity)
-        {
-            return RepoDbSet.Remove(entity).Entity;
-        }
-
-        public virtual TEntity Remove(params object[] id)
-        {
-            return Remove(Find(id));
-        }
-
-        public virtual int SaveChanges()
-        {
-            return RepoDbContext.SaveChanges();
-        }
-
-        public virtual async Task<int> SaveChangesAsync()
-        {
-            return await RepoDbContext.SaveChangesAsync();
+            return Mapper.Map(RepoDbSet.Remove(RepoDbSet.Find(id)).Entity);
         }
     }
 }

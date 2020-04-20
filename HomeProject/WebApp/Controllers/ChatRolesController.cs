@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using ChatRole = DAL.App.DTO.ChatRole;
 
 namespace WebApp.Controllers
 {
@@ -57,7 +58,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            ChatRole chatRole)
+            DAL.App.DTO.ChatRole chatRole)
         {
             ModelState.Clear();
             chatRole.ChangedAt = DateTime.Now;

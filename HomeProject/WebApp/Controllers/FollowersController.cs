@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Follower = DAL.App.DTO.Follower;
 
 namespace WebApp.Controllers
 {
@@ -58,7 +59,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            Follower follower)
+            DAL.App.DTO.Follower follower)
         {
             ModelState.Clear();
             follower.ProfileId = User.UserId();

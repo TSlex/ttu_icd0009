@@ -2,14 +2,13 @@
 
 namespace Contracts.DAL.Base
 {
-    public interface IDomainBaseEntity : IDomainBaseEntity<Guid>
+    public interface IDomainEntityBase : IDomainEntityBase<Guid>
     {
     }
     
-    public interface IDomainBaseEntity<TKey> 
+    public interface IDomainEntityBase<TKey> 
         where TKey : struct, IComparable
     {
         TKey Id { get; set; }
     }
-
 }

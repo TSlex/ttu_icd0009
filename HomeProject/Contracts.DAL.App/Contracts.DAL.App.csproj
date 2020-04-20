@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain\Domain.csproj" />
+      <Folder Include="Mappers" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Mappers" />
+      <ProjectReference Include="..\DAL.App.DTO\DAL.App.DTO.csproj" />
     </ItemGroup>
 
 </Project>

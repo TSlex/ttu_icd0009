@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using ProfileRank = DAL.App.DTO.ProfileRank;
 
 namespace WebApp.Controllers
 {
@@ -58,7 +59,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            ProfileRank profileRank)
+            DAL.App.DTO.ProfileRank profileRank)
         {
             ModelState.Clear();
             profileRank.ProfileId = User.UserId();

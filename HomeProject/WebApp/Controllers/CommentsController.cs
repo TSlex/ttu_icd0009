@@ -10,6 +10,7 @@ using DAL;
 using DAL.Repositories;
 using Domain;
 using Extension;
+using Comment = DAL.App.DTO.Comment;
 
 namespace WebApp.Controllers
 {
@@ -59,7 +60,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            Comment comment)
+            DAL.App.DTO.Comment comment)
         {
             ModelState.Clear();
             comment.ProfileId = User.UserId();

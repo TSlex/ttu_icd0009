@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Rank = DAL.App.DTO.Rank;
 
 namespace WebApp.Controllers
 {
@@ -58,7 +59,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            Rank rank)
+            DAL.App.DTO.Rank rank)
         {
             ModelState.Clear();
             rank.ChangedAt = DateTime.Now;

@@ -1,13 +1,14 @@
 ﻿using Contracts.DAL.App.Repositories;
+using DAL.App.DTO;
+using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
-using Domain;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class BlockedProfileRepo : BaseRepo<BlockedProfile, ApplicationDbContext>, IBlockedProfileRepo
+    public class BlockedProfileRepo : BaseRepo<Domain.BlockedProfile, BlockedProfile, ApplicationDbContext>, IBlockedProfileRepo
     {
-        public BlockedProfileRepo(ApplicationDbContext dbContext) : base(dbContext)
+        public BlockedProfileRepo(ApplicationDbContext dbContext) : 
+            base(dbContext, new BaseDALMapper<Domain.BlockedProfile, BlockedProfile>())
         {
         }
     }

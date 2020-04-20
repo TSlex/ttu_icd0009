@@ -14,14 +14,6 @@ namespace BLL.App
         }
 
         public IProfileService Profiles => GetService<IProfileService>(() => new ProfileService(UnitOfWork));
-
-//        public IAnimalService Animals =>
-//            GetService<IAnimalService>(() => new AnimalService(UnitOfWork));
-//
-//        public IOwnerService Owners =>
-//            GetService<IOwnerService>(() => new OwnerService(UnitOfWork));
-//
-//        public IOwnerAnimalService OwnerAnimals =>
-//            GetService<IOwnerAnimalService>(() => new OwnerAnimalService(UnitOfWork));
+        public IPostService Posts => GetService<IPostService>(() => new PostService(UnitOfWork));
     }
 }
