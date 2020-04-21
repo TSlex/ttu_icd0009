@@ -18,15 +18,5 @@ namespace DAL.Mappers
                 .CreateMapper())
         {
         }
-
-        public override Post Map(Domain.Post inObject)
-        {
-            return base.Map(inObject);
-        }
-
-        public override Domain.Post MapReverse(Post outObject)
-        {
-            return base.MapReverse(outObject);
-        }
     }
 }

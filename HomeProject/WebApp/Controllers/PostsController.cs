@@ -20,6 +20,7 @@ using Post = BLL.App.DTO.Post;
 namespace WebApp.Controllers
 {
     [Authorize]
+//    [Route("posts")]
     public class PostsController : Controller
     {
 //        private readonly ApplicationDbContext _context;
@@ -36,9 +37,19 @@ namespace WebApp.Controllers
         {
             return View(await _bll.Posts.AllAsync());
         }
+        
+        public IActionResult Return(string? returnUrl)
+        {
+            if (returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: Posts/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid? id, string? returnUrl)
         {
             if (id == null)
             {
@@ -56,7 +67,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Posts/Create
-        public IActionResult Create()
+        public IActionResult Create(string? returnUrl)
         {
 //            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
@@ -67,15 +78,12 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            [Bind("PostTitle,PostImageUrl,PostDescription")]
-            Post post)
+        public async Task<IActionResult> Create(Post post, string? returnUrl)
         {
-
             ModelState.Clear();
             post.ProfileId = User.UserId();
-            post.ChangedAt = DateTime.Now;
-            post.CreatedAt = DateTime.Now;
+//            post.ChangedAt = DateTime.Now;
+//            post.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(post))
             {
@@ -83,7 +91,13 @@ namespace WebApp.Controllers
                 _bll.Posts.Add(post);
                 await _bll.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                if (returnUrl != null)
+                {
+                    return Redirect(returnUrl);
+                }
+
+                return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+//                return RedirectToAction(nameof(Index));
             }
 
             return View(post);
@@ -113,10 +127,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            [Bind(
-                "PostTitle,PostImageUrl,PostDescription, Id, ProfileId")]
-            BLL.App.DTO.Post post)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.Post post, string? returnUrl)
         {
             if (id != post.Id || User.UserId() != post.ProfileId)
             {
@@ -130,19 +141,19 @@ namespace WebApp.Controllers
                 oldRecord.PostTitle = post.PostTitle;
                 oldRecord.PostImageUrl = post.PostImageUrl;
                 oldRecord.PostDescription = post.PostDescription;
-                
+
                 _bll.Posts.Update(oldRecord);
                 await _bll.SaveChangesAsync();
 
-
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+//                return RedirectToAction(nameof(Index));
             }
-            
+
             return View(post);
         }
 
         // GET: Posts/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid? id, string? returnUrl)
         {
             if (id == null)
             {
@@ -150,7 +161,7 @@ namespace WebApp.Controllers
             }
 
             var post = await _bll.Posts.FindAsync(id);
-            
+
             if (post == null)
             {
                 return NotFound();
@@ -162,12 +173,13 @@ namespace WebApp.Controllers
         // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, string? returnUrl)
         {
             _bll.Posts.Remove(id);
             await _bll.SaveChangesAsync();
-            
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+//            return RedirectToAction(nameof(Index));
         }
     }
 }

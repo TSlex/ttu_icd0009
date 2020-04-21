@@ -1,23 +1,23 @@
 ﻿using System.Linq;
+using AutoMapper;
 using DAL.App.DTO;
 using DAL.Base.EF.Mappers;
+using Profile = DAL.App.DTO.Profile;
 
 namespace DAL.Mappers
 {
     public class ProfileMapper : BaseDALMapper<Domain.Profile, Profile>
     {
-        /*public override Profile Map(Domain.Profile inObject)
+        public ProfileMapper() : base(
+            new MapperConfiguration(config =>
+                {
+                    config.CreateMap<Domain.Post, Post>();
+                    config.CreateMap<Post, Domain.Post>();
+                    config.CreateMap<Domain.Profile, Profile>();
+                    config.CreateMap<Profile, Domain.Profile>();
+                })
+                .CreateMapper())
         {
-            return new Profile
-            {
-                Comments = inObject.Comments.Select(comment => new CommentMapper().Map(comment)).ToList(),
-                
-            };
-        }*/
-
-        public override Domain.Profile MapReverse(Profile outObject)
-        {
-            return base.MapReverse(outObject);
         }
     }
 }

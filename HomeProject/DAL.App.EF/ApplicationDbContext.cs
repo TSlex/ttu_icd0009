@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Contracts.DAL.Base;
 using Domain;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -28,17 +31,17 @@ namespace DAL
         public DbSet<ChatMember> ChatMembers { get; set; } = default!;
         public DbSet<ChatRole> ChatRoles { get; set; } = default!;
 
-
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        private IUserNameProvider _userNameProvider;
+        
+        public ApplicationDbContext(DbContextOptions options, IUserNameProvider userNameProvider) : base(options)
         {
+            _userNameProvider = userNameProvider;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-//            builder.Ignore<BlockedProfile>();
-            
             builder.Entity<Profile>(b => b.ToTable("Profile"));
             builder.Entity<MRole>(b => b.ToTable("UserRole"));
             
@@ -47,37 +50,51 @@ namespace DAL
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-//            builder.Entity<BlockedProfile>()
-//                .HasOne(m => m.Profile)
-//                .WithMany(p => p.BlockedByProfiles)
-//                .OnDelete(DeleteBehavior.NoAction)
-//                .IsRequired()
-//                .HasForeignKey(p => p.ProfileId);
-//            
-//            builder.Entity<BlockedProfile>()
-//                .HasOne(m => m.BProfile)
-//                .WithMany(p => p.BlockedProfiles)
-//                .OnDelete(DeleteBehavior.NoAction)
-//                .IsRequired()
-//                .HasForeignKey(p => p.BProfileId);
-//
-//
-//            builder.Entity<Follower>()
-//                .HasOne(m => m.Profile)
-//                .WithMany(p => p.Followed)
-//                .OnDelete(DeleteBehavior.NoAction)
-//                .IsRequired()
-//                .HasForeignKey(p => p.ProfileId);
-//            
-//            builder.Entity<Follower>()
-//                .HasOne(m => m.FollowerProfile)
-//                .WithMany(p => p.Followers)
-//                .OnDelete(DeleteBehavior.NoAction)
-//                .IsRequired()
-//                .HasForeignKey(p => p.FollowerProfileId);
-
+        }
+        
+        private void SaveChangesMetadataUpdate()
+        {
+            // update the state of ef tracked objects
+            ChangeTracker.DetectChanges();
             
+            var markedAsAdded = ChangeTracker.Entries().Where(x => x.State == EntityState.Added);
+            
+            foreach (var entityEntry in markedAsAdded)
+            {
+                if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
+
+                entityWithMetaData.CreatedAt = DateTime.Now;
+                entityWithMetaData.CreatedBy = _userNameProvider.CurrentUserName;
+                entityWithMetaData.ChangedAt = entityWithMetaData.CreatedAt;
+                entityWithMetaData.ChangedBy = entityWithMetaData.CreatedBy;
+            }
+
+            var markedAsModified = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
+            
+            foreach (var entityEntry in markedAsModified)
+            {
+                // check for IDomainEntityMetadata
+                if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
+
+                entityWithMetaData.ChangedAt = DateTime.Now;
+                entityWithMetaData.ChangedBy = _userNameProvider.CurrentUserName;
+
+                // do not let changes on these properties get into generated db sentences - db keeps old values
+                entityEntry.Property(nameof(entityWithMetaData.CreatedAt)).IsModified = false;
+                entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            SaveChangesMetadataUpdate();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            SaveChangesMetadataUpdate();
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

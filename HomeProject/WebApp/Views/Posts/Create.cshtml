@@ -1,91 +1,39 @@
 @model BLL.App.DTO.Post
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create new post";
 }
 
-<h1>Create</h1>
-
-<h4>Post</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PostTitle" class="control-label"></label>
-                <input asp-for="PostTitle" class="form-control" />
-                <span asp-validation-for="PostTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostDescription" class="control-label"></label>
-                <input asp-for="PostDescription" class="form-control" />
-                <span asp-validation-for="PostDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostImageUrl" class="control-label"></label>
-                <input asp-for="PostImageUrl" class="form-control" />
-                <span asp-validation-for="PostImageUrl" class="text-danger"></span>
-            </div>
-            
-            @* <div class="form-group"> *@
-            @*     <label asp-for="PostPublicationDateTime" class="control-label"></label> *@
-            @*     <input asp-for="PostPublicationDateTime" class="form-control" /> *@
-            @*     <span asp-validation-for="PostPublicationDateTime" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="PostFavoritesCount" class="control-label"></label> *@
-            @*     <input asp-for="PostFavoritesCount" class="form-control" /> *@
-            @*     <span asp-validation-for="PostFavoritesCount" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="PostCommentsCount" class="control-label"></label> *@
-            @*     <input asp-for="PostCommentsCount" class="form-control" /> *@
-            @*     <span asp-validation-for="PostCommentsCount" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="ProfileId" class="control-label"></label> *@
-            @*     <select asp-for="ProfileId" class ="form-control" asp-items="ViewBag.ProfileId"></select> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="CreatedBy" class="control-label"></label> *@
-            @*     <input asp-for="CreatedBy" class="form-control" /> *@
-            @*     <span asp-validation-for="CreatedBy" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="CreatedAt" class="control-label"></label> *@
-            @*     <input asp-for="CreatedAt" class="form-control" /> *@
-            @*     <span asp-validation-for="CreatedAt" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="ChangedBy" class="control-label"></label> *@
-            @*     <input asp-for="ChangedBy" class="form-control" /> *@
-            @*     <span asp-validation-for="ChangedBy" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="ChangedAt" class="control-label"></label> *@
-            @*     <input asp-for="ChangedAt" class="form-control" /> *@
-            @*     <span asp-validation-for="ChangedAt" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="DeletedBy" class="control-label"></label> *@
-            @*     <input asp-for="DeletedBy" class="form-control" /> *@
-            @*     <span asp-validation-for="DeletedBy" class="text-danger"></span> *@
-            @* </div> *@
-            @* <div class="form-group"> *@
-            @*     <label asp-for="DeletedAt" class="control-label"></label> *@
-            @*     <input asp-for="DeletedAt" class="form-control" /> *@
-            @*     <span asp-validation-for="DeletedAt" class="text-danger"></span> *@
-            @* </div> *@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<h4 class="text-center">@ViewData["Title"]</h4>
+<br>
+<div class="post_create">
+    <div class="row justify-content-center text-center">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PostTitle" class="control-label"></label>
+                    <input asp-for="PostTitle" class="form-control" />
+                    <span asp-validation-for="PostTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostDescription" class="control-label"></label>
+                    <input asp-for="PostDescription" class="form-control" />
+                    <span asp-validation-for="PostDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostImageUrl" class="control-label"></label>
+                    <input asp-for="PostImageUrl" class="form-control" />
+                    <span asp-validation-for="PostImageUrl" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

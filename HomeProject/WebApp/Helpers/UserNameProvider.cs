@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Contracts.DAL.Base;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Helpers
 {
-    public class UserNameProvider
+    public class UserNameProvider: IUserNameProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         

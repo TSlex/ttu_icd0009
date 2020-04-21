@@ -16,5 +16,7 @@ namespace DAL.App.DTO.Identity
         public DateTime ChangedAt { get; set; }
         public string? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
+        
+        public string UserName { get; set; }
     }
 }

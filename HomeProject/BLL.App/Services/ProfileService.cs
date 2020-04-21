@@ -1,23 +1,28 @@
 ﻿using System;
-using BLL.App.DTO;
+using System.Threading.Tasks;
+using AutoMapper;
+using BLL.App.Mappers;
 using BLL.Base.Mappers;
 using BLL.Base.Services;
 using Contracts.BLL.App.Services;
-using Contracts.BLL.Base.Mappers;
 using Contracts.DAL.App;
 using Contracts.DAL.App.Repositories;
+using Profile = BLL.App.DTO.Profile;
 
 namespace BLL.App.Services
 {
-    public class ProfileService : BaseService, IProfileService
+    public class ProfileService : BaseEntityService<IProfileRepo, DAL.App.DTO.Profile, Profile>, IProfileService
     {
-        public ProfileService(IAppUnitOfWork uow) : base()
+        public ProfileService(IAppUnitOfWork uow) : base(uow.Profiles, new ProfileMapper())
         {
         }
         
-        public void GetProfileFull()
+        public async Task<Profile> GetProfileFull(Guid id)
         {
-            throw new System.NotImplementedException();
+            var profile = Mapper.Map(await ServiceRepository.FindAsync(id));
+            profile.PostsCount = profile.Posts.Count;
+            
+            return profile;
         }
     }
 }

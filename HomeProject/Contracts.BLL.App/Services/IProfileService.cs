@@ -1,10 +1,12 @@
-﻿using BLL.App.DTO;
+﻿using System;
+using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.BLL.Base.Services;
 
 namespace Contracts.BLL.App.Services
 {
-    public interface IProfileService: IBaseService
+    public interface IProfileService: IBaseEntityService<global::DAL.App.DTO.Profile, Profile>
     {
-        void GetProfileFull();
+        Task<Profile> GetProfileFull(Guid id);
     }
 }
