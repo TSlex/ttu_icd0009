@@ -8,10 +8,15 @@ namespace BLL.Base.Mappers
         where TOutObject : class, new()
     {
         private readonly IMapper _mapper;
-
-        public BaseBLLMapper()
+        
+        public BaseBLLMapper(): this(null)
         {
-            _mapper = new MapperConfiguration(config =>
+            
+        }
+        
+        public BaseBLLMapper(IMapper? mapper)
+        {
+            _mapper = mapper ?? new MapperConfiguration(config =>
             {
                 config.CreateMap<TInObject, TOutObject>();
                 config.CreateMap<TOutObject, TInObject>();

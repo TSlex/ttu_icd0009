@@ -58,7 +58,14 @@ namespace DAL.Base.EF.Repositories
 
         public TDALEntity Update(TDALEntity entity)
         {
-            return Mapper.Map(RepoDbSet.Update(Mapper.MapReverse(entity)).Entity);
+            var trackEntity = RepoDbSet.Find(entity.Id);
+            var newEntity = Mapper.MapReverse(entity);
+
+            RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
+            
+//            return Mapper.Map(RepoDbSet.Update(Mapper.MapReverse(entity)).Entity);
+            
+            return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
         }
 
         public TDALEntity Remove(TDALEntity entity)

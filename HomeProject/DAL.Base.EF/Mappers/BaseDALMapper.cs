@@ -9,21 +9,28 @@ namespace DAL.Base.EF.Mappers
     {
         private readonly IMapper _mapper;
 
-        public BaseDALMapper()
+        public BaseDALMapper(): this(null)
         {
-            _mapper = new MapperConfiguration(config =>
+            
+        }
+        
+        public BaseDALMapper(IMapper? mapper)
+        {
+            _mapper = mapper ?? new MapperConfiguration(config =>
             {
                 config.CreateMap<TInObject, TOutObject>();
                 config.CreateMap<TOutObject, TInObject>();
+                config.AllowNullDestinationValues = true;
+                
             }).CreateMapper();
         }
 
-        public TOutObject Map(TInObject inObject)
+        public virtual TOutObject Map(TInObject inObject)
         {
             return _mapper.Map<TInObject, TOutObject>(inObject);
         }
 
-        public TInObject MapReverse(TOutObject outObject)
+        public virtual TInObject MapReverse(TOutObject outObject)
         {
             return _mapper.Map<TOutObject, TInObject>(outObject);
         }

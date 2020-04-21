@@ -47,7 +47,7 @@ namespace DAL
             GetRepository<IProfileRankRepo>(() => new ProfileRankRepo(UOWDbContext));
 
         public IProfileRepo Profiles =>
-            GetRepository<IProfileRepo>(() => new ProfileRepo());
+            GetRepository<IProfileRepo>(() => new ProfileRepo(UOWDbContext));
 
         public IRankRepo Ranks => GetRepository<IRankRepo>(() => new RankRepo(UOWDbContext));
     }

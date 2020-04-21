@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
 using DAL.App.DTO;
-using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
+using DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
@@ -13,7 +13,7 @@ namespace DAL.Repositories
     public class PostRepo : BaseRepo<Domain.Post, Post, ApplicationDbContext>, IPostRepo
     {
         public PostRepo(ApplicationDbContext dbContext) : 
-            base(dbContext, new BaseDALMapper<Domain.Post, Post>())
+            base(dbContext, new PostMapper())
         {
         }
 
