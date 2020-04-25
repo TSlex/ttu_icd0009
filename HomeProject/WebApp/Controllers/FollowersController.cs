@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,28 +16,23 @@ namespace WebApp.Controllers
 {
     public class FollowersController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public FollowersController(IAppUnitOfWork uow)
+        public FollowersController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: Followers
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.Followers.AllAsync());
+            return View(await _bll.Followers.AllAsync());
         }
 
         // GET: Followers/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var follower = await _uow.Followers.FindAsync(id);
+            var follower = await _bll.Followers.FindAsync(id);
 
             if (follower == null)
             {
@@ -49,7 +45,7 @@ namespace WebApp.Controllers
         // GET: Followers/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
+
             return View();
         }
 
@@ -59,7 +55,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.Follower follower)
+            BLL.App.DTO.Follower follower)
         {
             ModelState.Clear();
             follower.ProfileId = User.UserId();
@@ -69,8 +65,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(follower))
             {
                 follower.Id = Guid.NewGuid();
-                _uow.Followers.Add(follower);
-                await _uow.SaveChangesAsync();
+                _bll.Followers.Add(follower);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -79,21 +75,17 @@ namespace WebApp.Controllers
         }
 
         // GET: Followers/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var follower = await _uow.Followers.FindAsync(id);
+            var follower = await _bll.Followers.FindAsync(id);
 
             if (follower == null)
             {
                 return NotFound();
             }
 
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", follower.ProfileId);
+
             return View(follower);
         }
 
@@ -103,7 +95,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            Follower follower)
+            BLL.App.DTO.Follower follower)
         {
             if (id != follower.Id || User.UserId() != follower.ProfileId)
             {
@@ -112,8 +104,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.Followers.Update(follower);
-                await _uow.SaveChangesAsync();
+                await _bll.Followers.UpdateAsync(follower);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -123,14 +115,10 @@ namespace WebApp.Controllers
         }
 
         // GET: Followers/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var follower = await _uow.Followers.FindAsync(id);
+            var follower = await _bll.Followers.FindAsync(id);
 
             if (follower == null)
             {
@@ -145,8 +133,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.Followers.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.Followers.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

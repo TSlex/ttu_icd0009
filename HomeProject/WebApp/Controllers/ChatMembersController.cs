@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,28 +17,23 @@ namespace WebApp.Controllers
 {
     public class ChatMembersController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public ChatMembersController(IAppUnitOfWork uow)
+        public ChatMembersController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: ChatMembers
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.ChatMembers.AllAsync());
+            return View(await _bll.ChatMembers.AllAsync());
         }
 
         // GET: ChatMembers/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chatMember = await _uow.ChatMembers.FindAsync(id);
+            var chatMember = await _bll.ChatMembers.FindAsync(id);
 
             if (chatMember == null)
             {
@@ -50,7 +46,6 @@ namespace WebApp.Controllers
         // GET: ChatMembers/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -60,7 +55,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.ChatMember chatMember)
+            BLL.App.DTO.ChatMember chatMember)
         {
             ModelState.Clear();
             chatMember.ChangedAt = DateTime.Now;
@@ -69,8 +64,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(chatMember))
             {
                 chatMember.Id = Guid.NewGuid();
-                _uow.ChatMembers.Add(chatMember);
-                await _uow.SaveChangesAsync();
+                _bll.ChatMembers.Add(chatMember);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -79,14 +74,9 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatMembers/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chatMember = await _uow.ChatMembers.FindAsync(id);
+            var chatMember = await _bll.ChatMembers.FindAsync(id);
 
             if (chatMember == null)
             {
@@ -103,7 +93,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            ChatMember chatMember)
+            BLL.App.DTO.ChatMember chatMember)
         {
             if (id != chatMember.Id)
             {
@@ -112,8 +102,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.ChatMembers.Update(chatMember);
-                await _uow.SaveChangesAsync();
+                await _bll.ChatMembers.UpdateAsync(chatMember);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -123,14 +113,10 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatMembers/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var chatMember = await _uow.ChatMembers.FindAsync(id);
+            var chatMember = await _bll.ChatMembers.FindAsync(id);
 
             if (chatMember == null)
             {
@@ -145,8 +131,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.ChatMembers.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.ChatMembers.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

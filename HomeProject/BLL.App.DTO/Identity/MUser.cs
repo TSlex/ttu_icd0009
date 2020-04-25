@@ -14,6 +14,6 @@ namespace BLL.App.DTO.Identity
         public string? DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
 
-        public string UserName { get; set; }
+        public string UserName { get; set; } = default!;
     }
 }

@@ -2,13 +2,14 @@
 using DAL.App.DTO;
 using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
+using DAL.Mappers;
 
 namespace DAL.Repositories
 {
     public class GiftRepo : BaseRepo<Domain.Gift, Gift, ApplicationDbContext>, IGiftRepo
     {
         public GiftRepo(ApplicationDbContext dbContext) : 
-            base(dbContext, new BaseDALMapper<Domain.Gift, Gift>())
+            base(dbContext, new GiftMapper())
         {
         }
     }

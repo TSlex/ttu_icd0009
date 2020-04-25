@@ -24,7 +24,7 @@ namespace DAL.Repositories
                 .ToListAsync()).Select(post => Mapper.Map(post));
         }
 
-        public async Task<Post> FindAsync(Guid id)
+        public override async Task<Post> FindAsync(Guid id)
         {
             return Mapper.Map(await RepoDbContext.Posts
                 .Include(p => p.Profile)

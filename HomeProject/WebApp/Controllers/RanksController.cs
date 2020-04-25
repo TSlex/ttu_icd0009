@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,28 +16,24 @@ namespace WebApp.Controllers
 {
     public class RanksController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public RanksController(IAppUnitOfWork uow)
+        public RanksController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: Ranks
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.Ranks.AllAsync());
+            return View(await _bll.Ranks.AllAsync());
         }
 
         // GET: Ranks/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var rank = await _uow.Ranks.FindAsync(id);
+            var rank = await _bll.Ranks.FindAsync(id);
 
             if (rank == null)
             {
@@ -59,7 +56,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.Rank rank)
+            BLL.App.DTO.Rank rank)
         {
             ModelState.Clear();
             rank.ChangedAt = DateTime.Now;
@@ -68,8 +65,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(rank))
             {
                 rank.Id = Guid.NewGuid();
-                _uow.Ranks.Add(rank);
-                await _uow.SaveChangesAsync();
+                _bll.Ranks.Add(rank);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -78,14 +75,11 @@ namespace WebApp.Controllers
         }
 
         // GET: Ranks/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var rank = await _uow.Ranks.FindAsync(id);
+
+            var rank = await _bll.Ranks.FindAsync(id);
 
             if (rank == null)
             {
@@ -102,7 +96,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            Rank rank)
+            BLL.App.DTO.Rank rank)
         {
             if (id != rank.Id)
             {
@@ -111,8 +105,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.Ranks.Update(rank);
-                await _uow.SaveChangesAsync();
+                await _bll.Ranks.UpdateAsync(rank);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -122,14 +116,11 @@ namespace WebApp.Controllers
         }
 
         // GET: Ranks/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var rank = await _uow.Ranks.FindAsync(id);
+
+            var rank = await _bll.Ranks.FindAsync(id);
 
             if (rank == null)
             {
@@ -144,8 +135,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.Ranks.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.Ranks.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

@@ -30,22 +30,22 @@ namespace BLL.Base.Services
         public virtual async Task<IEnumerable<TBLLEntity>> AllAsync() =>
             (await ServiceRepository.AllAsync()).Select(entity => Mapper.Map(entity));
 
-        public virtual TBLLEntity Find(params object[] id) =>
+        public virtual TBLLEntity Find(Guid id) =>
             Mapper.Map(ServiceRepository.Find(id));
 
-        public virtual async Task<TBLLEntity> FindAsync(params object[] id) =>
+        public virtual async Task<TBLLEntity> FindAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.FindAsync(id));
 
         public virtual TBLLEntity Add(TBLLEntity entity) =>
             Mapper.Map(ServiceRepository.Add(Mapper.MapReverse(entity)));
 
-        public virtual TBLLEntity Update(TBLLEntity entity) =>
-            Mapper.Map(ServiceRepository.Update(Mapper.MapReverse(entity)));
+        public virtual async Task<TBLLEntity> UpdateAsync(TBLLEntity entity) =>
+            Mapper.Map(await ServiceRepository.UpdateAsync(Mapper.MapReverse(entity)));
 
-        public virtual TBLLEntity Remove(TBLLEntity entity) =>
-            Mapper.Map(ServiceRepository.Remove(Mapper.MapReverse(entity)));
+        public virtual async Task<TBLLEntity> RemoveAsync(TBLLEntity entity) =>
+            Mapper.Map(await ServiceRepository.RemoveAsync(Mapper.MapReverse(entity)));
 
-        public virtual TBLLEntity Remove(params object[] id) =>
-            Mapper.Map(ServiceRepository.Remove(id));
+        public virtual async Task<TBLLEntity> RemoveAsync(Guid id) =>
+            Mapper.Map(await ServiceRepository.RemoveAsync(id));
     }
 }

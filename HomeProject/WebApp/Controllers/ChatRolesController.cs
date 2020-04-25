@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,28 +15,23 @@ namespace WebApp.Controllers
 {
     public class ChatRolesController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public ChatRolesController(IAppUnitOfWork uow)
+        public ChatRolesController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: ChatRoles
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.ChatRoles.AllAsync());
+            return View(await _bll.ChatRoles.AllAsync());
         }
 
         // GET: ChatRoles/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chatRole = await _uow.ChatRoles.FindAsync(id);
+            var chatRole = await _bll.ChatRoles.FindAsync(id);
 
             if (chatRole == null)
             {
@@ -48,7 +44,6 @@ namespace WebApp.Controllers
         // GET: ChatRoles/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -58,7 +53,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.ChatRole chatRole)
+            BLL.App.DTO.ChatRole chatRole)
         {
             ModelState.Clear();
             chatRole.ChangedAt = DateTime.Now;
@@ -67,8 +62,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(chatRole))
             {
                 chatRole.Id = Guid.NewGuid();
-                _uow.ChatRoles.Add(chatRole);
-                await _uow.SaveChangesAsync();
+                _bll.ChatRoles.Add(chatRole);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -77,21 +72,15 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRoles/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chatRole = await _uow.ChatRoles.FindAsync(id);
+            var chatRole = await _bll.ChatRoles.FindAsync(id);
 
             if (chatRole == null)
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatRole.ProfileId);
+            
             return View(chatRole);
         }
 
@@ -101,7 +90,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            ChatRole chatRole)
+            BLL.App.DTO.ChatRole chatRole)
         {
             if (id != chatRole.Id)
             {
@@ -110,8 +99,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.ChatRoles.Update(chatRole);
-                await _uow.SaveChangesAsync();
+                await _bll.ChatRoles.UpdateAsync(chatRole);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -121,14 +110,9 @@ namespace WebApp.Controllers
         }
 
         // GET: ChatRoles/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chatRole = await _uow.ChatRoles.FindAsync(id);
+            var chatRole = await _bll.ChatRoles.FindAsync(id);
 
             if (chatRole == null)
             {
@@ -143,8 +127,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.ChatRoles.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.ChatRoles.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

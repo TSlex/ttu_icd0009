@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,28 +16,23 @@ namespace WebApp.Controllers
 {
     public class FavoritesController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public FavoritesController(IAppUnitOfWork uow)
+        public FavoritesController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: Favorites
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.Favorites.AllAsync());
+            return View(await _bll.Favorites.AllAsync());
         }
 
         // GET: Favorites/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var favorite = await _uow.Favorites.FindAsync(id);
+            var favorite = await _bll.Favorites.FindAsync(id);
 
             if (favorite == null)
             {
@@ -49,7 +45,6 @@ namespace WebApp.Controllers
         // GET: Favorites/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -59,7 +54,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.Favorite favorite)
+            BLL.App.DTO.Favorite favorite)
         {
             ModelState.Clear();
             favorite.ProfileId = User.UserId();
@@ -69,8 +64,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(favorite))
             {
                 favorite.Id = Guid.NewGuid();
-                _uow.Favorites.Add(favorite);
-                await _uow.SaveChangesAsync();
+                _bll.Favorites.Add(favorite);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -79,21 +74,17 @@ namespace WebApp.Controllers
         }
 
         // GET: Favorites/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var favorite = await _uow.Favorites.FindAsync(id);
+
+            var favorite = await _bll.Favorites.FindAsync(id);
 
             if (favorite == null)
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", favorite.ProfileId);
+            
             return View(favorite);
         }
 
@@ -103,7 +94,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            Favorite favorite)
+            BLL.App.DTO.Favorite favorite)
         {
             if (id != favorite.Id || User.UserId() != favorite.ProfileId)
             {
@@ -112,8 +103,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.Favorites.Update(favorite);
-                await _uow.SaveChangesAsync();
+                await _bll.Favorites.UpdateAsync(favorite);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -123,14 +114,11 @@ namespace WebApp.Controllers
         }
 
         // GET: Favorites/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var favorite = await _uow.Favorites.FindAsync(id);
+
+            var favorite = await _bll.Favorites.FindAsync(id);
 
             if (favorite == null)
             {
@@ -145,8 +133,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.Favorites.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.Favorites.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

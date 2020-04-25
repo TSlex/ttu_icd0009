@@ -41,12 +41,12 @@ namespace DAL.Base.EF.Repositories
             return (await RepoDbSet.ToListAsync()).Select(entity => Mapper.Map(entity));
         }
 
-        public virtual TDALEntity Find(params object[] id)
+        public virtual TDALEntity Find(Guid id)
         {
             return Mapper.Map(RepoDbSet.Find(id));
         }
 
-        public virtual async Task<TDALEntity> FindAsync(params object[] id)
+        public virtual async Task<TDALEntity> FindAsync(Guid id)
         {
             return Mapper.Map(await RepoDbSet.FindAsync(id));
         }
@@ -56,7 +56,7 @@ namespace DAL.Base.EF.Repositories
             return Mapper.Map(RepoDbSet.Add(Mapper.MapReverse(entity)).Entity);
         }
 
-        public virtual TDALEntity Update(TDALEntity entity)
+        public virtual async Task<TDALEntity> UpdateAsync(TDALEntity entity)
         {
             var trackEntity = RepoDbSet.Find(entity.Id);
             var newEntity = Mapper.MapReverse(entity);
@@ -68,12 +68,12 @@ namespace DAL.Base.EF.Repositories
             return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
         }
 
-        public virtual TDALEntity Remove(TDALEntity entity)
+        public virtual async Task<TDALEntity> RemoveAsync(TDALEntity entity)
         {
             return Mapper.Map(RepoDbSet.Remove(Mapper.MapReverse(entity)).Entity);
         }
 
-        public virtual TDALEntity Remove(params object[] id)
+        public virtual async Task<TDALEntity> RemoveAsync(Guid id)
         {
             return Mapper.Map(RepoDbSet.Remove(RepoDbSet.Find(id)).Entity);
         }

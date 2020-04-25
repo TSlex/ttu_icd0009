@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,28 +16,25 @@ namespace WebApp.Controllers
 {
     public class ProfileRanksController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public ProfileRanksController(IAppUnitOfWork uow)
+        public ProfileRanksController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: ProfileRanks
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.ProfileRanks.AllAsync());
+            return View(await _bll.ProfileRanks.AllAsync());
         }
 
         // GET: ProfileRanks/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var profileRank = await _uow.ProfileRanks.FindAsync(id);
+
+            var profileRank = await _bll.ProfileRanks.FindAsync(id);
 
             if (profileRank == null)
             {
@@ -59,7 +57,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.ProfileRank profileRank)
+            BLL.App.DTO.ProfileRank profileRank)
         {
             ModelState.Clear();
             profileRank.ProfileId = User.UserId();
@@ -69,8 +67,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(profileRank))
             {
                 profileRank.Id = Guid.NewGuid();
-                _uow.ProfileRanks.Add(profileRank);
-                await _uow.SaveChangesAsync();
+                _bll.ProfileRanks.Add(profileRank);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -79,14 +77,11 @@ namespace WebApp.Controllers
         }
 
         // GET: ProfileRanks/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var profileRank = await _uow.ProfileRanks.FindAsync(id);
+
+            var profileRank = await _bll.ProfileRanks.FindAsync(id);
 
             if (profileRank == null)
             {
@@ -103,7 +98,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            ProfileRank profileRank)
+            BLL.App.DTO.ProfileRank profileRank)
         {
             if (id != profileRank.Id || User.UserId() != profileRank.ProfileId)
             {
@@ -112,8 +107,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.ProfileRanks.Update(profileRank);
-                await _uow.SaveChangesAsync();
+                await _bll.ProfileRanks.UpdateAsync(profileRank);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -123,14 +118,11 @@ namespace WebApp.Controllers
         }
 
         // GET: ProfileRanks/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var profileRank = await _uow.ProfileRanks.FindAsync(id);
+
+            var profileRank = await _bll.ProfileRanks.FindAsync(id);
 
             if (profileRank == null)
             {
@@ -145,8 +137,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.ProfileRanks.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.ProfileRanks.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

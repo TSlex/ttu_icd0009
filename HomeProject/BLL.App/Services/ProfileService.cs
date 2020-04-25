@@ -20,7 +20,7 @@ namespace BLL.App.Services
         public async Task<Profile> GetProfileFull(Guid id)
         {
             var profile = Mapper.Map(await ServiceRepository.FindAsync(id));
-            profile.PostsCount = profile.Posts.Count;
+            profile.PostsCount = profile.Posts!.Count;
             
             return profile;
         }

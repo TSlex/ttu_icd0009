@@ -20,11 +20,8 @@ using Post = BLL.App.DTO.Post;
 namespace WebApp.Controllers
 {
     [Authorize]
-//    [Route("posts")]
     public class PostsController : Controller
     {
-//        private readonly ApplicationDbContext _context;
-//        private readonly PostRepo _postRepo;
         private readonly IAppBLL _bll;
 
         public PostsController(IAppBLL bll)
@@ -49,12 +46,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Posts/Details/5
-        public async Task<IActionResult> Details(Guid? id, string? returnUrl)
+        public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+
 
             var post = await _bll.Posts.FindAsync(id);
 
@@ -82,8 +76,6 @@ namespace WebApp.Controllers
         {
             ModelState.Clear();
             post.ProfileId = User.UserId();
-//            post.ChangedAt = DateTime.Now;
-//            post.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(post))
             {
@@ -104,12 +96,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Posts/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+
 
             var post = await _bll.Posts.FindAsync(id);
 
@@ -142,7 +131,7 @@ namespace WebApp.Controllers
                 oldRecord.PostImageUrl = post.PostImageUrl;
                 oldRecord.PostDescription = post.PostDescription;
 
-                _bll.Posts.Update(oldRecord);
+                await _bll.Posts.UpdateAsync(oldRecord);
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
@@ -153,12 +142,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Posts/Delete/5
-        public async Task<IActionResult> Delete(Guid? id, string? returnUrl)
+        public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+
 
             var post = await _bll.Posts.FindAsync(id);
 
@@ -175,7 +161,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, string? returnUrl)
         {
-            _bll.Posts.Remove(id);
+            await _bll.Posts.RemoveAsync(id);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});

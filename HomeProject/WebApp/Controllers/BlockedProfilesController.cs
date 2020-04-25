@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,28 +15,23 @@ namespace WebApp.Controllers
 {
     public class BlockedProfilesController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public BlockedProfilesController(IAppUnitOfWork uow)
+        public BlockedProfilesController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: BlockedProfiles
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.BlockedProfiles.AllAsync());
+            return View(await _bll.BlockedProfiles.AllAsync());
         }
 
         // GET: BlockedProfiles/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var blockedProfile = await _uow.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
 
             if (blockedProfile == null)
             {
@@ -58,7 +54,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.BlockedProfile blockedProfile)
+            BLL.App.DTO.BlockedProfile blockedProfile)
         {
             ModelState.Clear();
             blockedProfile.ChangedAt = DateTime.Now;
@@ -67,8 +63,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(blockedProfile))
             {
                 blockedProfile.Id = Guid.NewGuid();
-                _uow.BlockedProfiles.Add(blockedProfile);
-                await _uow.SaveChangesAsync();
+                _bll.BlockedProfiles.Add(blockedProfile);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -77,14 +73,9 @@ namespace WebApp.Controllers
         }
 
         // GET: BlockedProfiles/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var blockedProfile = await _uow.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
 
             if (blockedProfile == null)
             {
@@ -101,7 +92,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            BlockedProfile blockedProfile)
+            BLL.App.DTO.BlockedProfile blockedProfile)
         {
             if (id != blockedProfile.Id)
             {
@@ -110,8 +101,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.BlockedProfiles.Update(blockedProfile);
-                await _uow.SaveChangesAsync();
+                await _bll.BlockedProfiles.UpdateAsync(blockedProfile);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -121,14 +112,10 @@ namespace WebApp.Controllers
         }
 
         // GET: BlockedProfiles/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var blockedProfile = await _uow.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
 
             if (blockedProfile == null)
             {
@@ -143,8 +130,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.BlockedProfiles.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.BlockedProfiles.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

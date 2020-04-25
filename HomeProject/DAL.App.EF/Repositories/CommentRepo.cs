@@ -6,6 +6,7 @@ using Contracts.DAL.App.Repositories;
 using DAL.App.DTO;
 using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
+using DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
@@ -13,7 +14,7 @@ namespace DAL.Repositories
     public class CommentRepo : BaseRepo<Domain.Comment, Comment, ApplicationDbContext>, ICommentRepo
     {
         public CommentRepo(ApplicationDbContext dbContext) : 
-            base(dbContext, new BaseDALMapper<Domain.Comment, Comment>())
+            base(dbContext, new CommentMapper())
         {
         }
 

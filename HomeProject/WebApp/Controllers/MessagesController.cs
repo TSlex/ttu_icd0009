@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Contracts.DAL.App;
+using BLL.App.DTO;
+using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
-using Message = DAL.App.DTO.Message;
 
 namespace WebApp.Controllers
 {    
@@ -12,11 +12,11 @@ namespace WebApp.Controllers
     [Route("{controller}/{chatRoomId}/{action=Index}/{id?}")]
     public class MessagesController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public MessagesController(IAppUnitOfWork uow)
+        public MessagesController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: Messages
@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            return View(await _uow.Messages.AllAsync());
+            return View(await _bll.Messages.AllAsync());
         }
 
         // GET: Messages/Create
@@ -47,7 +47,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.Message message)
+            BLL.App.DTO.Message message)
         {
             ModelState.Clear();
 //
@@ -58,8 +58,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(message))
             {
                 message.Id = Guid.NewGuid();
-                _uow.Messages.Add(message);
-                await _uow.SaveChangesAsync();
+                _bll.Messages.Add(message);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -68,14 +68,10 @@ namespace WebApp.Controllers
         }
 
         // GET: Messages/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var message = await _uow.Messages.FindAsync(id);
+            var message = await _bll.Messages.FindAsync(id);
 
             if (message == null)
             {
@@ -92,7 +88,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            Message message)
+            BLL.App.DTO.Message message)
         {
             if (id != message.Id || User.UserId() != message.ProfileId)
             {
@@ -101,8 +97,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.Messages.Update(message);
-                await _uow.SaveChangesAsync();
+                await _bll.Messages.UpdateAsync(message);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -112,14 +108,10 @@ namespace WebApp.Controllers
         }
 
         // GET: Messages/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var message = await _uow.Messages.FindAsync(id);
+            var message = await _bll.Messages.FindAsync(id);
 
             if (message == null)
             {
@@ -134,8 +126,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.Messages.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.Messages.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

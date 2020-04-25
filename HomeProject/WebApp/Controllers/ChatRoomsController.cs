@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,33 +17,28 @@ namespace WebApp.Controllers
 {
     public class ChatRoomsController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public ChatRoomsController(IAppUnitOfWork uow)
+        public ChatRoomsController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: ChatRooms
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.ChatRooms.AllAsync());
+            return View(await _bll.ChatRooms.AllAsync());
         }
 
         public async Task<IActionResult> OpenOrCreate(string username)
         {
-            return View("Index", await _uow.ChatRooms.AllAsync());
+            return View("Index", await _bll.ChatRooms.AllAsync());
         }
 
         // GET: ChatRooms/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chatRoom = await _uow.ChatRooms.FindAsync(id);
+            var chatRoom = await _bll.ChatRooms.FindAsync(id);
 
             if (chatRoom == null)
             {
@@ -57,8 +53,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.ChatRooms.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.ChatRooms.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

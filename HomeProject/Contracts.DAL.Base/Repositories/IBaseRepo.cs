@@ -12,18 +12,19 @@ namespace Contracts.DAL.Base.Repositories
 
     public interface IBaseRepo<TDALEntity, TKey>
         where TDALEntity: class, IDomainEntityBase<Guid>, new()
-        where TKey : struct, IComparable
+        where TKey : struct, IEquatable<TKey>
     {
         IEnumerable<TDALEntity> All();
         Task<IEnumerable<TDALEntity>> AllAsync();
 
-        TDALEntity Find(params object[] id);
-        Task<TDALEntity> FindAsync(params object[] id);
+        TDALEntity Find(TKey id);
+        Task<TDALEntity> FindAsync(TKey id);
 
         TDALEntity Add(TDALEntity entity);
-        TDALEntity Update(TDALEntity entity);
+        
+        Task<TDALEntity> UpdateAsync(TDALEntity entity);
 
-        TDALEntity Remove(TDALEntity entity);
-        TDALEntity Remove(params object[] id);    
+        Task<TDALEntity> RemoveAsync(TDALEntity entity);
+        Task<TDALEntity> RemoveAsync(TKey id);    
     }
 }

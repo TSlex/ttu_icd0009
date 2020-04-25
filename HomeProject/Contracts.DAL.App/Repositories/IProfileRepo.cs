@@ -7,6 +7,6 @@ namespace Contracts.DAL.App.Repositories
 {
     public interface IProfileRepo : IBaseRepo<Profile>
     {
-        Task<Profile> FindAsync(Guid id);
+        new Task<Profile> FindAsync(Guid id);
     }
 }

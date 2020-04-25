@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,28 +16,24 @@ namespace WebApp.Controllers
 {
     public class GiftsController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public GiftsController(IAppUnitOfWork uow)
+        public GiftsController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: Gifts
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.Gifts.AllAsync());
+            return View(await _bll.Gifts.AllAsync());
         }
 
         // GET: Gifts/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var gift = await _uow.Gifts.FindAsync(id);
+            var gift = await _bll.Gifts.FindAsync(id);
 
             if (gift == null)
             {
@@ -49,7 +46,6 @@ namespace WebApp.Controllers
         // GET: Gifts/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -59,7 +55,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.Gift gift)
+            BLL.App.DTO.Gift gift)
         {
             ModelState.Clear();
             gift.ChangedAt = DateTime.Now;
@@ -68,8 +64,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(gift))
             {
                 gift.Id = Guid.NewGuid();
-                _uow.Gifts.Add(gift);
-                await _uow.SaveChangesAsync();
+                _bll.Gifts.Add(gift);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -78,21 +74,16 @@ namespace WebApp.Controllers
         }
 
         // GET: Gifts/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var gift = await _uow.Gifts.FindAsync(id);
+            var gift = await _bll.Gifts.FindAsync(id);
 
             if (gift == null)
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", gift.ProfileId);
+            
             return View(gift);
         }
 
@@ -102,7 +93,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            Gift gift)
+            BLL.App.DTO.Gift gift)
         {
             if (id != gift.Id)
             {
@@ -111,8 +102,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.Gifts.Update(gift);
-                await _uow.SaveChangesAsync();
+                await _bll.Gifts.UpdateAsync(gift);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -122,14 +113,10 @@ namespace WebApp.Controllers
         }
 
         // GET: Gifts/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var gift = await _uow.Gifts.FindAsync(id);
+            var gift = await _bll.Gifts.FindAsync(id);
 
             if (gift == null)
             {
@@ -144,8 +131,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.Gifts.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.Gifts.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

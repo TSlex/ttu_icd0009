@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,28 +16,25 @@ namespace WebApp.Controllers
 {
     public class ProfileGiftsController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public ProfileGiftsController(IAppUnitOfWork uow)
+        public ProfileGiftsController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: ProfileGifts
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.ProfileGifts.AllAsync());
+            return View(await _bll.ProfileGifts.AllAsync());
         }
 
         // GET: ProfileGifts/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var profileGift = await _uow.ProfileGifts.FindAsync(id);
+
+            var profileGift = await _bll.ProfileGifts.FindAsync(id);
 
             if (profileGift == null)
             {
@@ -49,7 +47,6 @@ namespace WebApp.Controllers
         // GET: ProfileGifts/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -59,7 +56,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.ProfileGift profileGift)
+            BLL.App.DTO.ProfileGift profileGift)
         {
             ModelState.Clear();
             profileGift.ProfileId = User.UserId();
@@ -69,8 +66,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(profileGift))
             {
                 profileGift.Id = Guid.NewGuid();
-                _uow.ProfileGifts.Add(profileGift);
-                await _uow.SaveChangesAsync();
+                _bll.ProfileGifts.Add(profileGift);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -79,21 +76,18 @@ namespace WebApp.Controllers
         }
 
         // GET: ProfileGifts/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var profileGift = await _uow.ProfileGifts.FindAsync(id);
+
+            var profileGift = await _bll.ProfileGifts.FindAsync(id);
 
             if (profileGift == null)
             {
                 return NotFound();
             }
 
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileGift.ProfileId);
+
             return View(profileGift);
         }
 
@@ -103,7 +97,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            ProfileGift profileGift)
+            BLL.App.DTO.ProfileGift profileGift)
         {
             if (id != profileGift.Id || User.UserId() != profileGift.ProfileId)
             {
@@ -112,8 +106,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.ProfileGifts.Update(profileGift);
-                await _uow.SaveChangesAsync();
+                await _bll.ProfileGifts.UpdateAsync(profileGift);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -123,14 +117,10 @@ namespace WebApp.Controllers
         }
 
         // GET: ProfileGifts/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var profileGift = await _uow.ProfileGifts.FindAsync(id);
+            var profileGift = await _bll.ProfileGifts.FindAsync(id);
 
             if (profileGift == null)
             {
@@ -145,8 +135,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.ProfileGifts.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.ProfileGifts.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

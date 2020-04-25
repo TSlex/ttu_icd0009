@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,28 +17,23 @@ namespace WebApp.Controllers
 {
     public class CommentsController : Controller
     {
-        private readonly IAppUnitOfWork _uow;
+        private readonly IAppBLL _bll;
 
-        public CommentsController(IAppUnitOfWork uow)
+        public CommentsController(IAppBLL bll)
         {
-            _uow = uow;
+            _bll = bll;
         }
 
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            return View(await _uow.Comments.AllAsync());
+            return View(await _bll.Comments.AllAsync());
         }
 
         // GET: Comments/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _uow.Comments.FindAsync(id);
+            var comment = await _bll.Comments.FindAsync(id);
 
             if (comment == null)
             {
@@ -50,7 +46,6 @@ namespace WebApp.Controllers
         // GET: Comments/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -60,7 +55,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            DAL.App.DTO.Comment comment)
+            BLL.App.DTO.Comment comment)
         {
             ModelState.Clear();
             comment.ProfileId = User.UserId();
@@ -70,8 +65,8 @@ namespace WebApp.Controllers
             if (TryValidateModel(comment))
             {
                 comment.Id = Guid.NewGuid();
-                _uow.Comments.Add(comment);
-                await _uow.SaveChangesAsync();
+                _bll.Comments.Add(comment);
+                await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -80,21 +75,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Comments/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _uow.Comments.FindAsync(id);
+            var comment = await _bll.Comments.FindAsync(id);
 
             if (comment == null)
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", comment.ProfileId);
+            
             return View(comment);
         }
 
@@ -104,7 +93,7 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            Comment comment)
+            BLL.App.DTO.Comment comment)
         {
             if (id != comment.Id || User.UserId() != comment.ProfileId)
             {
@@ -113,8 +102,8 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _uow.Comments.Update(comment);
-                await _uow.SaveChangesAsync();
+                await _bll.Comments.UpdateAsync(comment);
+                await _bll.SaveChangesAsync();
 
 
                 return RedirectToAction(nameof(Index));
@@ -124,14 +113,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Comments/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _uow.Comments.FindAsync(id);
+            var comment = await _bll.Comments.FindAsync(id);
 
             if (comment == null)
             {
@@ -146,8 +130,8 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _uow.Comments.Remove(id);
-            await _uow.SaveChangesAsync();
+            await _bll.Comments.RemoveAsync(id);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

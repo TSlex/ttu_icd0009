@@ -18,13 +18,13 @@ namespace Contracts.BLL.Base.Services
         IEnumerable<TBLLEntity> All();
         Task<IEnumerable<TBLLEntity>> AllAsync();
 
-        TBLLEntity Find(params object[] id);
-        Task<TBLLEntity> FindAsync(params object[] id);
+        TBLLEntity Find(Guid id);
+        Task<TBLLEntity> FindAsync(Guid id);
 
         TBLLEntity Add(TBLLEntity entity);
-        TBLLEntity Update(TBLLEntity entity);
+        Task<TBLLEntity> UpdateAsync(TBLLEntity entity);
 
-        TBLLEntity Remove(TBLLEntity entity);
-        TBLLEntity Remove(params object[] id);    
+        Task<TBLLEntity> RemoveAsync(TBLLEntity entity);
+        Task<TBLLEntity> RemoveAsync(Guid id);    
     }
 }
