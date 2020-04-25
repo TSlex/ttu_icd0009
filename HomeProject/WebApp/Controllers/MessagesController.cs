@@ -1,19 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DAL;
-using DAL.Repositories;
-using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using Message = DAL.App.DTO.Message;
 
 namespace WebApp.Controllers
-{
+{    
+    [Authorize]
+    [Route("{controller}/{chatRoomId}/{action=Index}/{id?}")]
     public class MessagesController : Controller
     {
         private readonly IAppUnitOfWork _uow;
@@ -24,34 +20,25 @@ namespace WebApp.Controllers
         }
 
         // GET: Messages
-        public async Task<IActionResult> Index()
+//        [Route("/{chatRoomId?}")]
+        public async Task<IActionResult> Index(Guid? chatRoomId)
         {
+            if (chatRoomId == null)
+            {
+                return NotFound();
+            }
             return View(await _uow.Messages.AllAsync());
         }
 
-        // GET: Messages/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _uow.Messages.FindAsync(id);
-
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return View(message);
-        }
-
         // GET: Messages/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid chatRoomId)
         {
 //            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
-            return View();
+            var message = new Message()
+            {
+                ChatRoomId = chatRoomId,
+            };
+            return View(message);
         }
 
         // POST: Messages/Create
@@ -63,9 +50,10 @@ namespace WebApp.Controllers
             DAL.App.DTO.Message message)
         {
             ModelState.Clear();
+//
             message.ProfileId = User.UserId();
-            message.ChangedAt = DateTime.Now;
-            message.CreatedAt = DateTime.Now;
+//            message.ChangedAt = DateTime.Now;
+//            message.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(message))
             {

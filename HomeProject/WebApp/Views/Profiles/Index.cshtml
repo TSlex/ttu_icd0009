@@ -11,7 +11,10 @@
                  src=@Model.ProfileAvatarUrl>
         </div>
         <div class="profile_description col-9">
-            <div class="profile_name">@Model.UserName</div>
+            <ul class="profile_meta_section">
+                <li class="profile_name">@Model.UserName</li>
+                <a asp-action="Index" asp-controller="ChatRooms" class="profile_controls">написать</a>
+            </ul>
             <ul class="profile_meta_section">
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.PostsCount</span>

@@ -87,6 +87,11 @@ body {
     font-size: 20px;
 }
 
+.profile_controls{
+    font-size: 20px;
+    margin-left: 5px;
+}
+
 /*preferences*/
 .preferences_section {
     /*margin-top: 4em !important;*/
@@ -161,6 +166,65 @@ form button {
 li form button, nav form button {
     margin-top: 0 !important;
 }
+
+/*chat*/
+.chat_section{
+    border: 1px solid gray;
+    border-radius: 4px;
+    margin-right: 12em !important;
+    margin-left: 12em !important;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.chat_section .active{
+    justify-self: right;
+    align-self: flex-end;
+}
+
+.message{
+    border: 1px solid gray;
+    padding: 10px;
+    width: fit-content;
+    max-width: 50%;
+    margin: 5px;
+    word-break: break-all;
+    border-radius: 5px;
+}
+
+.message + .active{
+    background: #1b6ec2;
+    border: 1px solid #1861ac;
+    color: white;
+}
+
+.chat_create_form{
+    background: red;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+.chat_create_form textarea{
+    flex-grow: 80;
+    height: 4em;
+    border: 1px solid gray;
+    border-radius: 4px;
+    outline: none;
+    resize: none;
+}
+
+.chat_create_form button{
+    flex-grow: 20;
+    height: 3em;
+    line-height: 3em;
+    margin: 0 10px 0 10px !important;
+    border: 1px solid gray;
+    border-radius: 4px;
+    outline: none;
+}
+
 
 /*.form-inline{
     display: flex;
