@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using Gift = DAL.App.DTO.Gift;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class GiftsController : Controller
     {
         private readonly IAppBLL _bll;

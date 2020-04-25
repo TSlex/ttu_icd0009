@@ -13,7 +13,8 @@
         <div class="profile_description col-9">
             <ul class="profile_meta_section">
                 <li class="profile_name">@Model.UserName</li>
-                <a asp-action="Index" asp-controller="ChatRooms" class="profile_controls">написать</a>
+                <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName" 
+                   class="profile_controls">написать</a>
             </ul>
             <ul class="profile_meta_section">
                 <li class="profile_meta">

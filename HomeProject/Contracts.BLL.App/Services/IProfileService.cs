@@ -8,5 +8,7 @@ namespace Contracts.BLL.App.Services
     public interface IProfileService: IBaseEntityService<global::DAL.App.DTO.Profile, Profile>
     {
         Task<Profile> GetProfileFull(Guid id);
+
+        Task<Profile> FindByUsernameAsync(string username);
     }
 }

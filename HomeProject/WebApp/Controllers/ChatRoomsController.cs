@@ -11,10 +11,13 @@ using DAL;
 using DAL.Repositories;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using ChatRoom = DAL.App.DTO.ChatRoom;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class ChatRoomsController : Controller
     {
         private readonly IAppBLL _bll;
@@ -32,7 +35,11 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> OpenOrCreate(string username)
         {
-            return View("Index", await _bll.ChatRooms.AllAsync());
+            var _chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
+
+            return RedirectToAction("Index", "Messages", new {
+                chatRoomId = _chatRoomId
+            });
         }
 
         // GET: ChatRooms/Delete/5

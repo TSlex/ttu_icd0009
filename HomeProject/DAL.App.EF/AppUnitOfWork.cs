@@ -3,13 +3,19 @@ using Contracts.DAL.App.Repositories;
 using DAL.Base;
 using DAL.Base.EF;
 using DAL.Repositories;
+using Domain;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace DAL
 {
     public class AppUnitOfWork : EFBaseUnitOfWork<ApplicationDbContext>, IAppUnitOfWork
-    {
-        public AppUnitOfWork(ApplicationDbContext uowDbContext) : base(uowDbContext)
+    {    
+        private readonly UserManager<Profile> _userManager;
+
+        public AppUnitOfWork(ApplicationDbContext uowDbContext, UserManager<Profile> userManager, IHttpContextAccessor httpContextAccessor) : base(uowDbContext)
         {
+            _userManager = userManager;
         }
 
         public IBlockedProfileRepo BlockedProfiles =>
@@ -47,7 +53,7 @@ namespace DAL
             GetRepository<IProfileRankRepo>(() => new ProfileRankRepo(UOWDbContext));
 
         public IProfileRepo Profiles =>
-            GetRepository<IProfileRepo>(() => new ProfileRepo(UOWDbContext));
+            GetRepository<IProfileRepo>(() => new ProfileRepo(UOWDbContext, _userManager));
 
         public IRankRepo Ranks => GetRepository<IRankRepo>(() => new RankRepo(UOWDbContext));
     }

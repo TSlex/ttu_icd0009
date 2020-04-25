@@ -13,8 +13,12 @@ namespace DAL.Mappers
                 {
                     config.CreateMap<Domain.Post, Post>();
                     config.CreateMap<Post, Domain.Post>();
+                    
                     config.CreateMap<Domain.Profile, Profile>();
                     config.CreateMap<Profile, Domain.Profile>();
+                    
+                    config.CreateMap<Domain.ChatMember, ChatMember>();
+                    config.CreateMap<ChatMember, Domain.ChatMember>();
                 })
                 .CreateMapper())
         {

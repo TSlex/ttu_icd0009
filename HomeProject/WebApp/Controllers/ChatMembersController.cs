@@ -11,10 +11,12 @@ using DAL;
 using DAL.Repositories;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using ChatMember = DAL.App.DTO.ChatMember;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class ChatMembersController : Controller
     {
         private readonly IAppBLL _bll;

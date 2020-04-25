@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using ProfileGift = DAL.App.DTO.ProfileGift;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class ProfileGiftsController : Controller
     {
         private readonly IAppBLL _bll;

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Contracts.DAL.Base.Mappers;
+using DAL.App.DTO;
+using Profile = DAL.App.DTO.Profile;
 
 namespace DAL.Base.EF.Mappers
 {
@@ -16,10 +18,26 @@ namespace DAL.Base.EF.Mappers
         
         public BaseDALMapper(IMapper? mapper)
         {
-            _mapper = mapper ?? new MapperConfiguration(config =>
+            _mapper = new MapperConfiguration(config =>
             {
                 config.CreateMap<TInObject, TOutObject>();
                 config.CreateMap<TOutObject, TInObject>();
+                
+                config.CreateMap<Domain.ChatRoom, ChatRoom>();
+                config.CreateMap<ChatRoom, Domain.ChatRoom>();
+                
+                config.CreateMap<Domain.Profile, Profile>();
+                config.CreateMap<Profile, Domain.Profile>();
+                
+                config.CreateMap<Domain.ChatMember, ChatMember>();
+                config.CreateMap<ChatMember, Domain.ChatMember>();
+                
+                config.CreateMap<Domain.ChatRole, ChatRole>();
+                config.CreateMap<ChatRole, Domain.ChatRole>();
+                
+                config.CreateMap<Domain.Post, Post>();
+                config.CreateMap<Post, Domain.Post>();
+                
                 config.AllowNullDestinationValues = true;
                 
             }).CreateMapper();

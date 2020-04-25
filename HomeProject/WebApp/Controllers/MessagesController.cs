@@ -21,13 +21,9 @@ namespace WebApp.Controllers
 
         // GET: Messages
 //        [Route("/{chatRoomId?}")]
-        public async Task<IActionResult> Index(Guid? chatRoomId)
+        public async Task<IActionResult> Index(Guid chatRoomId)
         {
-            if (chatRoomId == null)
-            {
-                return NotFound();
-            }
-            return View(await _bll.Messages.AllAsync());
+            return View(await _bll.Messages.AllAsync(chatRoomId));
         }
 
         // GET: Messages/Create
@@ -50,10 +46,8 @@ namespace WebApp.Controllers
             BLL.App.DTO.Message message)
         {
             ModelState.Clear();
-//
+            
             message.ProfileId = User.UserId();
-//            message.ChangedAt = DateTime.Now;
-//            message.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(message))
             {

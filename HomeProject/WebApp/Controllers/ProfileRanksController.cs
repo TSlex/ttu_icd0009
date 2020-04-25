@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using ProfileRank = DAL.App.DTO.ProfileRank;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class ProfileRanksController : Controller
     {
         private readonly IAppBLL _bll;

@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using BlockedProfile = DAL.App.DTO.BlockedProfile;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class BlockedProfilesController : Controller
     {
         private readonly IAppBLL _bll;

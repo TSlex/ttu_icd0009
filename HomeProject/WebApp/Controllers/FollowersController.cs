@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using Follower = DAL.App.DTO.Follower;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class FollowersController : Controller
     {
         private readonly IAppBLL _bll;

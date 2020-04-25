@@ -47,7 +47,6 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
-//            return View(await _context.Profiles.ToListAsync());
             return View(userModel);
         }
     }

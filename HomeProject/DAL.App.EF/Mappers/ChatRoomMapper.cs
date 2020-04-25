@@ -11,6 +11,9 @@ namespace DAL.Mappers
                 {
                     config.CreateMap<Domain.ChatRoom, ChatRoom>();
                     config.CreateMap<ChatRoom, Domain.ChatRoom>();
+                    
+                    config.CreateMap<Domain.ChatMember, ChatMember>();
+                    config.CreateMap<ChatMember, Domain.ChatMember>();
                 })
                 .CreateMapper())
         {

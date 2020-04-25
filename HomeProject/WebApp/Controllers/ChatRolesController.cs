@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using ChatRole = DAL.App.DTO.ChatRole;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class ChatRolesController : Controller
     {
         private readonly IAppBLL _bll;

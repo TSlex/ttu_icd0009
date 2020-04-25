@@ -11,10 +11,12 @@ using DAL;
 using DAL.Repositories;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using Comment = DAL.App.DTO.Comment;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class CommentsController : Controller
     {
         private readonly IAppBLL _bll;

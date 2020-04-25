@@ -14,6 +14,15 @@ namespace BLL.App.Mappers
                 {
                     config.CreateMap<DAL.App.DTO.ChatMember, ChatMember>();
                     config.CreateMap<ChatMember, DAL.App.DTO.ChatMember>();
+                        
+                    config.CreateMap<DAL.App.DTO.Profile, Profile>();
+                    config.CreateMap<Profile, DAL.App.DTO.Profile>();
+                    
+                    config.CreateMap<DAL.App.DTO.ChatRole, ChatRole>();
+                    config.CreateMap<ChatRole, DAL.App.DTO.ChatRole>();
+                    
+                    config.CreateMap<DAL.App.DTO.ChatRoom, ChatRoom>();
+                    config.CreateMap<ChatRoom, DAL.App.DTO.ChatRoom>();
                 })
                 .CreateMapper())
         {

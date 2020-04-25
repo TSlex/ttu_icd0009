@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using Favorite = DAL.App.DTO.Favorite;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class FavoritesController : Controller
     {
         private readonly IAppBLL _bll;

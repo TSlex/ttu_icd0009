@@ -1,16 +1,22 @@
 ﻿using System;
+using BLL.App.DTO;
 using BLL.App.Services;
 using BLL.Base;
 using Contracts.BLL.App;
 using Contracts.BLL.App.Services;
 using Contracts.DAL.App;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace BLL.App
 {
     public class AppBLL : BaseBLL<IAppUnitOfWork>, IAppBLL
     {
-        public AppBLL(IAppUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        
+        public AppBLL(IAppUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(unitOfWork)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IBlockedProfileService BlockedProfiles => GetService<IBlockedProfileService>(() => new BlockedProfileService(UnitOfWork));
@@ -19,7 +25,7 @@ namespace BLL.App
 
         public IChatRoleService ChatRoles => GetService<IChatRoleService>(() => new ChatRoleService(UnitOfWork));
 
-        public IChatRoomService ChatRooms => GetService<IChatRoomService>(() => new ChatRoomService(UnitOfWork));
+        public IChatRoomService ChatRooms => GetService<IChatRoomService>(() => new ChatRoomService(UnitOfWork, _httpContextAccessor));
 
         public ICommentService Comments => GetService<ICommentService>(() => new CommentService(UnitOfWork));
 

@@ -10,10 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authorization;
 using Rank = DAL.App.DTO.Rank;
 
 namespace WebApp.Controllers
-{
+{    
+    [Authorize]
     public class RanksController : Controller
     {
         private readonly IAppBLL _bll;
