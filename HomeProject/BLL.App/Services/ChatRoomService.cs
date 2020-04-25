@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -66,6 +67,11 @@ namespace BLL.App.Services
             }
 
             return chatRoom.Id;
+        }
+
+        public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
+        {
+            return (await ServiceRepository.AllAsync(userId)).Select(room => Mapper.Map(room));
         }
     }
 }

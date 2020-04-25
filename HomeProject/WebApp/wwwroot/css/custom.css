@@ -178,11 +178,6 @@ li form button, nav form button {
     padding: 10px;
 }
 
-.chat_section .active{
-    justify-self: right;
-    align-self: flex-end;
-}
-
 .message{
     border: 1px solid gray;
     padding: 10px;
@@ -193,10 +188,11 @@ li form button, nav form button {
     border-radius: 5px;
 }
 
-.message + .active{
+.message.active{
     background: #1b6ec2;
     border: 1px solid #1861ac;
     color: white;
+    align-self: flex-end;
 }
 
 .chat_create_form{

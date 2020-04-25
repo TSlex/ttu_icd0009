@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
@@ -11,7 +12,7 @@ namespace DAL.Repositories
 {
     public class ChatRoomRepo : BaseRepo<Domain.ChatRoom, ChatRoom, ApplicationDbContext>, IChatRoomRepo
     {
-        public ChatRoomRepo(ApplicationDbContext dbContext) : 
+        public ChatRoomRepo(ApplicationDbContext dbContext) :
             base(dbContext, new ChatRoomMapper())
         {
         }
@@ -28,6 +29,13 @@ namespace DAL.Repositories
                     .Select(member => member.ProfileId)
                     .Contains(secondId))
                 .FirstOrDefaultAsync());
+        }
+
+        public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
+        {
+            return (await RepoDbContext.ChatRooms
+                    .Where(room => room.ChatMembers.Select(member => member.ProfileId).Contains(userId)).ToListAsync())
+                .Select(room => Mapper.Map(room));
         }
     }
 }

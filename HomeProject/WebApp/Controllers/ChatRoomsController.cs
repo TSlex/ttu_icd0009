@@ -30,7 +30,7 @@ namespace WebApp.Controllers
         // GET: ChatRooms
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.ChatRooms.AllAsync());
+            return View(await _bll.ChatRooms.AllAsync(User.UserId()));
         }
 
         public async Task<IActionResult> OpenOrCreate(string username)
