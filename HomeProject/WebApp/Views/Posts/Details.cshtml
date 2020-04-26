@@ -1,18 +1,36 @@
+@using Domain
+@using Extension
+@using Microsoft.AspNetCore.Identity
 @model BLL.App.DTO.Post
 
 @{
     ViewData["Title"] = @Model.PostTitle;
 }
-<h4 class="text-center">@ViewData["Title"]</h4>
-<br>
-<div class="post_detail">
+<div class="post_details">
+    <div class="post_details_post">
 
-    <div class="post_image">
-        <img src="@Model.PostImageUrl" alt="">
-    </div>
+        @if (Model.ReturnUrl != null)
+        {
+            <a class="fa fa-angle-double-left post_return" asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl"></a>
+        }
 
-    <div class="post_description">
-        <ul class="post_meta_section">
+        <div class="post_image">
+            @{
+                if (Model.ProfileId == User.UserId())
+                {
+                    <div class="post_controls">
+                        <a class="fa fa-edit" asp-action="Edit" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
+                        <a class="fa fa-times-circle" asp-action="Delete" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
+                    </div>
+                }
+            }
+            <img src="@Model.PostImageUrl" alt="">
+        </div>
+
+        <div class="post_details_meta_section">
+            <p>"@ViewData["Title"]" by @Model.Profile.UserName</p>
+            <span>@Model.PostDescription</span>
+            <ul class="post_meta_section">
                 <li class="post_meta">
                     <span class="meta_title">@Model.PostPublicationDateTime</span>
                 </li>
@@ -24,13 +42,41 @@
                     <span class="meta_counter">@Model.PostCommentsCount</span>
                     <span class="meta_title">комментариев</span>
                 </li>
+                <li>
+                    @{
+                        if (@Model.IsUserFavorite)
+                        {
+                            <form method="post" asp-action="RemoveFromFavorite">
+                                <button type="submit" class="fas fa-heart"></button>
+                                <input type="hidden" asp-for="Id">
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" asp-action="AddToFavorite">
+                                <button type="submit" class="far fa-heart"></button>
+                                <input type="hidden" asp-for="Id">
+                            </form>
+                        }
+                    }
+                </li>
             </ul>
-        <span>@Model.PostDescription</span>
+        </div>
     </div>
-
-    <div class="form-group text-center">
-        <a class="btn btn-primary flex-grow-1" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-        <a class="btn btn-primary flex-grow-1" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-        <a class="btn btn-primary flex-grow-1" asp-action="Return">Return</a>
+    <div class="post_details_comments">
+        <div class="post_comments_section">
+            @foreach (var comment in Model.Comments.OrderBy(comment => comment.CommentDateTime))
+            {
+                <a class="post_comment" asp-controller="Comments" asp-action="Details"
+                   asp-route-id="@comment.Id" asp-route-returnUrl="@Url.ActionLink()">
+                    <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
+                    <span class="comment_username">&#64;@comment.Profile.UserName: </span>
+                    <span class="comment_value">@comment.CommentValue</span>
+                </a>
+            }
+        </div>
+        <div class="row d-flex justify-content-center mt-3">
+            <a asp-action="Create" asp-controller="Comments" asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()" class="btn btn-primary">Create a comment</a>
+        </div>
     </div>
 </div>

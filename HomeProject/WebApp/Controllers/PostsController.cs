@@ -1,21 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using BLL.App;
+using BLL.App.DTO;
 using Contracts.BLL.App;
-using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DAL;
-using DAL.Repositories;
-using Domain;
-using Domain.Identity;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Post = BLL.App.DTO.Post;
 
 namespace WebApp.Controllers
 {
@@ -34,37 +23,83 @@ namespace WebApp.Controllers
         {
             return View(await _bll.Posts.AllAsync());
         }
-        
-        public IActionResult Return(string? returnUrl)
-        {
-            if (returnUrl != null)
-            {
-                return Redirect(returnUrl);
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
 
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
-
-
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetPostFull(id);
 
             if (post == null)
             {
                 return NotFound();
             }
+            
+            var favorite = await _bll.Favorites.FindAsync(id, User.UserId());
+
+            post.IsUserFavorite = favorite != null;
+            
+            post.ReturnUrl = returnUrl;
 
             return View(post);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToFavorite(Guid id, Post post)
+        {
+            var userId = User.UserId();
+            
+            if (id != post.Id)
+            {
+                return RedirectToAction(nameof(Details), post);
+            }
+            
+            var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
+
+            if (favorite == null)
+            {
+                _bll.Favorites.Create(post.Id, userId);
+                await _bll.SaveChangesAsync();
+            }
+            
+            post = await _bll.Posts.GetPostFull(post.Id);
+            
+            return RedirectToAction(nameof(Details), post);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveFromFavorite(Guid id, Post post)
+        {
+            var userId = User.UserId();
+
+            if (id != post.Id)
+            {
+                return RedirectToAction(nameof(Details), post);
+            }
+            
+            var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
+            
+            if (favorite != null)
+            {
+                await _bll.Favorites.RemoveAsync(post.Id, userId);
+                await _bll.SaveChangesAsync();
+            }
+            
+            post = await _bll.Posts.GetPostFull(post.Id);
+
+            return RedirectToAction(nameof(Details), post);
         }
 
         // GET: Posts/Create
         public IActionResult Create(string? returnUrl)
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
-            return View();
+            var post = new Post()
+            {
+                ReturnUrl = returnUrl
+            };
+            
+            return View(post);
         }
 
         // POST: Posts/Create
@@ -72,7 +107,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, string? returnUrl)
+        public async Task<IActionResult> Create(Post post)
         {
             ModelState.Clear();
             post.ProfileId = User.UserId();
@@ -83,31 +118,29 @@ namespace WebApp.Controllers
                 _bll.Posts.Add(post);
                 await _bll.SaveChangesAsync();
 
-                if (returnUrl != null)
+                if (post.ReturnUrl != null)
                 {
-                    return Redirect(returnUrl);
+                    return Redirect(post.ReturnUrl);
                 }
 
                 return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
-//                return RedirectToAction(nameof(Index));
             }
 
             return View(post);
         }
 
         // GET: Posts/Edit/5
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
-
-
             var post = await _bll.Posts.FindAsync(id);
 
-            if (post == null)
+            if (!ValidateUserAccess(post))
             {
                 return NotFound();
             }
 
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", post.ProfileId);
+            post.ReturnUrl = returnUrl;
+            
             return View(post);
         }
 
@@ -116,26 +149,29 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.Post post, string? returnUrl)
+        public async Task<IActionResult> Edit(Guid id, Post post)
         {
-            if (id != post.Id || User.UserId() != post.ProfileId)
+            var record = await _bll.Posts.FindAsync(id);
+
+            if (!ValidateUserAccess(record) || id != post.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            post.ProfileId = User.UserId();
+
+            if (TryValidateModel(post))
             {
-                var oldRecord = await _bll.Posts.FindAsync(id);
-
-                oldRecord.PostTitle = post.PostTitle;
-                oldRecord.PostImageUrl = post.PostImageUrl;
-                oldRecord.PostDescription = post.PostDescription;
-
-                await _bll.Posts.UpdateAsync(oldRecord);
+                await _bll.Posts.UpdateAsync(post);
                 await _bll.SaveChangesAsync();
+                
+                if (post.ReturnUrl != null)
+                {
+                    return Redirect(post.ReturnUrl);
+                }
 
                 return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
-//                return RedirectToAction(nameof(Index));
             }
 
             return View(post);
@@ -144,14 +180,14 @@ namespace WebApp.Controllers
         // GET: Posts/Delete/5
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
-
-
             var post = await _bll.Posts.FindAsync(id);
 
-            if (post == null)
+            if (!ValidateUserAccess(post))
             {
                 return NotFound();
             }
+            
+            post.ReturnUrl = returnUrl;
 
             return View(post);
         }
@@ -159,13 +195,29 @@ namespace WebApp.Controllers
         // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id, string? returnUrl)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, Post post)
         {
-            await _bll.Posts.RemoveAsync(id);
+            var record = await _bll.Posts.FindAsync(id);
+            
+            if (!ValidateUserAccess(record))
+            {
+                return NotFound();
+            }
+
+            _bll.Posts.Remove(id);
             await _bll.SaveChangesAsync();
+            
+            if (post.ReturnUrl != null)
+            {
+                return Redirect(post.ReturnUrl);
+            }
 
             return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
-//            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ValidateUserAccess(Post? record)
+        {
+            return record != null && record.ProfileId == User.UserId();
         }
     }
 }

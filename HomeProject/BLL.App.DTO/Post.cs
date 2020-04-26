@@ -29,5 +29,9 @@ namespace BLL.App.DTO
         public ICollection<Comment>? Comments { get; set; }
 
         public ICollection<Favorite>? Favorites { get; set; }
+        
+        //TODO: split
+        public string? ReturnUrl { get; set; }
+        public bool IsUserFavorite { get; set; }
     }
 }

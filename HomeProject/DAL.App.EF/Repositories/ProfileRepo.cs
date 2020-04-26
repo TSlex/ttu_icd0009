@@ -22,7 +22,10 @@ namespace DAL.Repositories
 
         public override async Task<Profile> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet.Include(profile => profile.Posts)
+            return Mapper.Map(await RepoDbSet
+                .Include(profile => profile.Posts)
+                .Include(profile => profile.Followed)
+                .Include(profile => profile.Followers)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
 

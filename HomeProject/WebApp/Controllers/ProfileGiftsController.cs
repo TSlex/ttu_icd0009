@@ -1,17 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
-using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DAL;
-using Domain;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
-using ProfileGift = DAL.App.DTO.ProfileGift;
 
 namespace WebApp.Controllers
 {
@@ -137,7 +129,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _bll.ProfileGifts.RemoveAsync(id);
+            _bll.ProfileGifts.Remove(id);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

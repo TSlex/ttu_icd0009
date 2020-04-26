@@ -12,7 +12,7 @@ namespace DAL.Repositories
 {
     public class PostRepo : BaseRepo<Domain.Post, Post, ApplicationDbContext>, IPostRepo
     {
-        public PostRepo(ApplicationDbContext dbContext) : 
+        public PostRepo(ApplicationDbContext dbContext) :
             base(dbContext, new PostMapper())
         {
         }
@@ -28,9 +28,10 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbContext.Posts
                 .Include(p => p.Profile)
+                .Include(p => p.Comments)
+                .ThenInclude(comment => comment.Profile)
+                .Include(p => p.Favorites)
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
-        
-        
     }
 }

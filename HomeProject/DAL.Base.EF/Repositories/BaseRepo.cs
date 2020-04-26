@@ -62,20 +62,43 @@ namespace DAL.Base.EF.Repositories
             var newEntity = Mapper.MapReverse(entity);
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
-            
+
 //            return Mapper.Map(RepoDbSet.Update(Mapper.MapReverse(entity)).Entity);
-            
+
             return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
         }
 
-        public virtual async Task<TDALEntity> RemoveAsync(TDALEntity entity)
+        public virtual TDALEntity Remove(TDALEntity entity)
         {
             return Mapper.Map(RepoDbSet.Remove(Mapper.MapReverse(entity)).Entity);
         }
 
-        public virtual async Task<TDALEntity> RemoveAsync(Guid id)
+        public virtual TDALEntity Remove(Guid id)
         {
             return Mapper.Map(RepoDbSet.Remove(RepoDbSet.Find(id)).Entity);
+        }
+
+        public async Task<bool> CanAccess(Guid id, Guid userId)
+        {
+            throw new NotImplementedException();
+//            try
+//            {
+//                var result = await RepoDbSet.FirstOrDefaultAsync(e => Microsoft.EntityFrameworkCore.EF
+//                                                               .Property<Guid>(e, "profileId")
+//                                                               .Equals(userId)
+//                                                           && e.Id == id);
+//
+//                if (result != null)
+//                {
+//                    return true;
+//                }
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//
+//            return false;
         }
     }
 }

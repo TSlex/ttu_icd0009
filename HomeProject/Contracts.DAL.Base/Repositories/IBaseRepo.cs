@@ -24,7 +24,9 @@ namespace Contracts.DAL.Base.Repositories
         
         Task<TDALEntity> UpdateAsync(TDALEntity entity);
 
-        Task<TDALEntity> RemoveAsync(TDALEntity entity);
-        Task<TDALEntity> RemoveAsync(TKey id);    
+        TDALEntity Remove(TDALEntity entity);
+        TDALEntity Remove(TKey id);
+
+        Task<bool> CanAccess(Guid id, Guid userId);
     }
 }

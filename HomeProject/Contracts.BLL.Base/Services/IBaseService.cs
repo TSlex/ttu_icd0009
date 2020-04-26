@@ -24,7 +24,9 @@ namespace Contracts.BLL.Base.Services
         TBLLEntity Add(TBLLEntity entity);
         Task<TBLLEntity> UpdateAsync(TBLLEntity entity);
 
-        Task<TBLLEntity> RemoveAsync(TBLLEntity entity);
-        Task<TBLLEntity> RemoveAsync(Guid id);    
+        TBLLEntity Remove(TBLLEntity entity);
+        TBLLEntity Remove(Guid id);
+
+        Task<bool> CanAccessAsync(Guid id, Guid userId);
     }
 }

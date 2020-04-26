@@ -1,16 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
-using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DAL;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
-using BlockedProfile = DAL.App.DTO.BlockedProfile;
 
 namespace WebApp.Controllers
 {
@@ -132,7 +124,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _bll.BlockedProfiles.RemoveAsync(id);
+            _bll.BlockedProfiles.Remove(id);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

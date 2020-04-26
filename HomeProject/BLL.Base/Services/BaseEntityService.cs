@@ -42,10 +42,15 @@ namespace BLL.Base.Services
         public virtual async Task<TBLLEntity> UpdateAsync(TBLLEntity entity) =>
             Mapper.Map(await ServiceRepository.UpdateAsync(Mapper.MapReverse(entity)));
 
-        public virtual async Task<TBLLEntity> RemoveAsync(TBLLEntity entity) =>
-            Mapper.Map(await ServiceRepository.RemoveAsync(Mapper.MapReverse(entity)));
+        public virtual TBLLEntity Remove(TBLLEntity entity) =>
+            Mapper.Map( ServiceRepository.Remove(Mapper.MapReverse(entity)));
 
-        public virtual async Task<TBLLEntity> RemoveAsync(Guid id) =>
-            Mapper.Map(await ServiceRepository.RemoveAsync(id));
+        public virtual TBLLEntity Remove(Guid id) =>
+            Mapper.Map( ServiceRepository.Remove(id));
+
+        public async Task<bool> CanAccessAsync(Guid id, Guid userId)
+        {
+            return await ServiceRepository.CanAccess(id, userId);
+        }
     }
 }

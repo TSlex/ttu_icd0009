@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
-using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DAL;
-using DAL.Repositories;
-using Domain;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
-using Comment = DAL.App.DTO.Comment;
+using Comment = BLL.App.DTO.Comment;
 
 namespace WebApp.Controllers
 {
@@ -33,51 +25,7 @@ namespace WebApp.Controllers
         }
 
         // GET: Comments/Details/5
-        public async Task<IActionResult> Details(Guid id)
-        {
-            var comment = await _bll.Comments.FindAsync(id);
-
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            return View(comment);
-        }
-
-        // GET: Comments/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Comments/Create
-        // To protect from overcommenting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.Comment comment)
-        {
-            ModelState.Clear();
-            comment.ProfileId = User.UserId();
-            comment.ChangedAt = DateTime.Now;
-            comment.CreatedAt = DateTime.Now;
-
-            if (TryValidateModel(comment))
-            {
-                comment.Id = Guid.NewGuid();
-                _bll.Comments.Add(comment);
-                await _bll.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(comment);
-        }
-
-        // GET: Comments/Edit/5
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
             var comment = await _bll.Comments.FindAsync(id);
 
@@ -86,6 +34,63 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
+            comment.ReturnUrl = returnUrl;
+
+            return View(comment);
+        }
+
+        // GET: Comments/Create
+        public IActionResult Create(Guid postId, string? returnUrl)
+        {
+            var comment = new Comment
+            {
+                PostId = postId, 
+                ReturnUrl = returnUrl
+            };
+
+
+            return View(comment);
+        }
+
+        // POST: Comments/Create
+        // To protect from overcommenting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Comment comment)
+        {
+            ModelState.Clear();
+            comment.ProfileId = User.UserId();
+
+            if (TryValidateModel(comment))
+            {
+                comment.Id = Guid.NewGuid();
+                _bll.Comments.Add(comment);
+                await _bll.SaveChangesAsync();
+                
+                if (comment.ReturnUrl != null)
+                {
+                    return Redirect(comment.ReturnUrl);
+                }
+
+                return RedirectToAction(nameof(Index), "Home");
+            }
+
+            return View(comment);
+        }
+
+        // GET: Comments/Edit/5
+        public async Task<IActionResult> Edit(Guid id, string? returnUrl)
+        {
+            var comment = await _bll.Comments.FindAsync(id);
+
+            if (!ValidateUserAccess(comment))
+            {
+                return NotFound();
+            }
+            
+            comment.ReturnUrl = returnUrl;
+
             return View(comment);
         }
 
@@ -95,9 +100,11 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.Comment comment)
+            Comment comment)
         {
-            if (id != comment.Id || User.UserId() != comment.ProfileId)
+            var record = await _bll.Comments.FindAsync(id);
+            
+            if (!ValidateUserAccess(record) || id != comment.Id)
             {
                 return NotFound();
             }
@@ -108,21 +115,28 @@ namespace WebApp.Controllers
                 await _bll.SaveChangesAsync();
 
 
-                return RedirectToAction(nameof(Index));
+                if (comment.ReturnUrl != null)
+                {
+                    return Redirect(comment.ReturnUrl);
+                }
+
+                return RedirectToAction(nameof(Index), "Home");
             }
 
             return View(comment);
         }
 
         // GET: Comments/Delete/5
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
             var comment = await _bll.Comments.FindAsync(id);
 
-            if (comment == null)
+            if (!ValidateUserAccess(comment))
             {
                 return NotFound();
             }
+            
+            comment.ReturnUrl = returnUrl;
 
             return View(comment);
         }
@@ -130,12 +144,29 @@ namespace WebApp.Controllers
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, Comment comment)
         {
-            await _bll.Comments.RemoveAsync(id);
+            var record = await _bll.Comments.FindAsync(id);
+
+            if (!ValidateUserAccess(record))
+            {
+                return NotFound();
+            }
+            
+            _bll.Comments.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            if (comment.ReturnUrl != null)
+            {
+                return Redirect(comment.ReturnUrl);
+            }
+
+            return RedirectToAction(nameof(Index), "Home");
+        }
+        
+        private bool ValidateUserAccess(Comment? record)
+        {
+            return record != null && record.ProfileId == User.UserId();
         }
     }
 }

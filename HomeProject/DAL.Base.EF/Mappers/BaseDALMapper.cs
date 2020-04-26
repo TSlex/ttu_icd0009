@@ -38,6 +38,12 @@ namespace DAL.Base.EF.Mappers
                 config.CreateMap<Domain.Post, Post>();
                 config.CreateMap<Post, Domain.Post>();
                 
+                config.CreateMap<Domain.Comment, Comment>();
+                config.CreateMap<Comment, Domain.Comment>();
+                
+                config.CreateMap<Domain.Favorite, Favorite>();
+                config.CreateMap<Favorite, Domain.Favorite>();
+                
                 config.AllowNullDestinationValues = true;
                 
             }).CreateMapper();

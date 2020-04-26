@@ -1,19 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
-using Contracts.DAL.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DAL;
-using DAL.Repositories;
-using Domain;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using ChatRoom = DAL.App.DTO.ChatRoom;
 
 namespace WebApp.Controllers
 {
@@ -35,10 +25,10 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> OpenOrCreate(string username)
         {
-            var _chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
+            var chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
 
             return RedirectToAction("Index", "Messages", new {
-                chatRoomId = _chatRoomId
+                chatRoomId = chatRoomId
             });
         }
 
@@ -60,7 +50,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await _bll.ChatRooms.RemoveAsync(id);
+            _bll.ChatRooms.Remove(id);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

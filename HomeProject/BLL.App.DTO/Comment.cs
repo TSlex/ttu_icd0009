@@ -14,5 +14,8 @@ namespace BLL.App.DTO
 
         public Guid PostId { get; set; } = default!;
         public Post? Post { get; set; }
+        
+        //TODO: split
+        public string? ReturnUrl { get; set; }
     }
 }
