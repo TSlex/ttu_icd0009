@@ -1,0 +1,6 @@
+﻿<form class="form-inline navbar-collapse collapse d-sm-inline-flex flex-sm-row" 
+      asp-area="" asp-action="SearchUser" asp-controller="Home" method="post">
+    <input class="form-control mr-sm-2" type="search" placeholder="username" name="username">
+    <input type="hidden" name="returnUrl" value="@Url.ActionLink()"/>
+    <button class="btn btn-primary fas fa-search" type="submit"></button>
+</form>

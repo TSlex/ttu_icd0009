@@ -1,3 +1,4 @@
+@using Extension
 @model IEnumerable<BLL.App.DTO.ChatRoom>
 
 @{
@@ -11,7 +12,10 @@
                 @foreach (var item in Model)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Messages" asp-action="Index" asp-route-chatRoomId="@item.Id">@item.ChatRoomTitle</a>
+                        <a class="nav-link" asp-controller="Messages" asp-action="Index"
+                           asp-route-chatRoomId="@item.Id">
+                            @(item.ChatMembers.FirstOrDefault(member => member.ProfileId == User.UserId())?.ChatRoomTitle ?? item.ChatRoomTitle)
+                        </a>
                     </li>
                 }
             </ul>

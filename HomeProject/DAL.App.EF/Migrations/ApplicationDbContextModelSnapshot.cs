@@ -78,6 +78,10 @@ namespace DAL.Migrations
                     b.Property<Guid>("ChatRoomId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("ChatRoomTitle")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 

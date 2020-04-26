@@ -43,7 +43,7 @@ namespace BLL.App.Services
             {
                 chatRoom = _uow.ChatRooms.Add(new DAL.App.DTO.ChatRoom()
                 {
-                    ChatRoomTitle = "Chat with " + otherProfile.UserName
+                    ChatRoomTitle = "Chat of " + currentUser.UserName + " and " + otherProfile.UserName
                 });
 
                 var memberRole = await _uow.ChatRoles.FindAsync(new Guid("a065b5d2-871b-11ea-bcb9-0a0027000008"));
@@ -53,14 +53,16 @@ namespace BLL.App.Services
                 {
                     ProfileId = currentUser.Id,
                     ChatRoomId = chatRoom.Id,
-                    ChatRoleId = creatorRole!.Id
+                    ChatRoleId = creatorRole!.Id,
+                    ChatRoomTitle = "Chat with " + otherProfile.UserName
                 });
 
                 _uow.ChatMembers.Add(new ChatMember()
                 {
                     ProfileId = otherProfile.Id,
                     ChatRoomId = chatRoom.Id,
-                    ChatRoleId = memberRole!.Id
+                    ChatRoleId = memberRole!.Id,
+                    ChatRoomTitle = "Chat with " + currentUser.UserName
                 });
 
                 await _uow.SaveChangesAsync();
