@@ -55,5 +55,10 @@ namespace BLL.App.DTO
 
         public ICollection<ProfileGift>? ProfileGifts { get; set; } //List of profile gifts
         public ICollection<ProfileRank>? ProfileRanks { get; set; } //List of profile ranks
+        
+        //TODO: split
+        public bool IsUserFollows { get; set; }
+        public bool IsUserBlocks { get; set; }
+        public bool IsUserBlocked { get; set; }
     }
 }

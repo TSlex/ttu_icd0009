@@ -1,4 +1,6 @@
-﻿using BLL.App.DTO;
+﻿using System;
+using System.Threading.Tasks;
+using BLL.App.DTO;
 using BLL.App.Mappers;
 using BLL.Base.Services;
 using Contracts.BLL.App.Services;
@@ -13,6 +15,32 @@ namespace BLL.App.Services
         public BlockedProfileService(IAppUnitOfWork uow) :
             base(uow.BlockedProfiles, new BlockedProfileMapper())
         {
+        }
+
+        public BlockedProfile AddBlockProperty(Guid userId, Guid profileId)
+        {
+            return Mapper.Map(ServiceRepository.Add(new DAL.App.DTO.BlockedProfile()
+            {
+                ProfileId = userId,
+                BProfileId = profileId
+            }));
+        }
+
+        public async Task<BlockedProfile> RemoveBlockPropertyAsync(Guid userId, Guid profileId)
+        {
+            var blockedProperty = await ServiceRepository.FindAsync(userId, profileId);
+
+            if (blockedProperty != null)
+            {
+                return Mapper.Map(ServiceRepository.Remove(blockedProperty));
+            }
+
+            return null;
+        }
+
+        public async Task<BlockedProfile> FindAsync(Guid userId, Guid profileId)
+        {
+            return Mapper.Map(await ServiceRepository.FindAsync(userId, profileId));
         }
     }
 }

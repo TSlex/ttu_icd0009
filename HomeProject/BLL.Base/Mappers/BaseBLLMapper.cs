@@ -42,6 +42,12 @@ namespace BLL.Base.Mappers
                 
                 config.CreateMap<DAL.App.DTO.Favorite, Favorite>();
                 config.CreateMap<Favorite, DAL.App.DTO.Favorite>();
+                
+                config.CreateMap<DAL.App.DTO.Follower, Follower>();
+                config.CreateMap<Follower, DAL.App.DTO.Follower>();
+                
+                config.CreateMap<DAL.App.DTO.BlockedProfile, BlockedProfile>();
+                config.CreateMap<BlockedProfile, DAL.App.DTO.BlockedProfile>();
 
                 config.AllowNullDestinationValues = true;
             }).CreateMapper();

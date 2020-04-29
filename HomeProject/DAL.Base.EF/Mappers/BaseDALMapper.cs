@@ -44,6 +44,12 @@ namespace DAL.Base.EF.Mappers
                 config.CreateMap<Domain.Favorite, Favorite>();
                 config.CreateMap<Favorite, Domain.Favorite>();
                 
+                config.CreateMap<Domain.Follower, Follower>();
+                config.CreateMap<Follower, Domain.Follower>();
+                
+                config.CreateMap<Domain.BlockedProfile, BlockedProfile>();
+                config.CreateMap<BlockedProfile, Domain.BlockedProfile>();
+                
                 config.AllowNullDestinationValues = true;
                 
             }).CreateMapper();

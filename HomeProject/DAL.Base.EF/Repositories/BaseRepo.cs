@@ -29,6 +29,8 @@ namespace DAL.Base.EF.Repositories
             {
                 throw new ArgumentNullException(typeof(TDomainEntity).Name + " was not found as DBSet!");
             }
+            
+            RepoDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         public virtual IEnumerable<TDALEntity> All()
@@ -70,7 +72,12 @@ namespace DAL.Base.EF.Repositories
 
         public virtual TDALEntity Remove(TDALEntity entity)
         {
-            return Mapper.Map(RepoDbSet.Remove(Mapper.MapReverse(entity)).Entity);
+            var trackEntity = RepoDbSet.Find(entity.Id);
+            var newEntity = Mapper.MapReverse(entity);
+
+            RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
+            
+            return Mapper.Map(RepoDbSet.Remove(newEntity).Entity);
         }
 
         public virtual TDALEntity Remove(Guid id)

@@ -17,6 +17,7 @@ namespace DAL
         public DbSet<BlockedProfile> BlockedProfiles { get; set; } = default!;
         public DbSet<ProfileGift> ProfileGifts { get; set; } = default!;
         public DbSet<ProfileRank> ProfileRanks { get; set; } = default!;
+        public DbSet<Follower> Followers { get; set; } = default!;
         
         public DbSet<Gift> Gifts { get; set; } = default!;
         public DbSet<Rank> Ranks { get; set; } = default!;
@@ -25,7 +26,7 @@ namespace DAL
         public DbSet<Post> Posts { get; set; } = default!;
         public DbSet<Comment> Comments { get; set; } = default!;
         public DbSet<Favorite> Favorites { get; set; } = default!;
-        
+
         public DbSet<ChatRoom> ChatRooms { get; set; } = default!;
         public DbSet<Message> Messages { get; set; } = default!;
         public DbSet<ChatMember> ChatMembers { get; set; } = default!;
