@@ -46,5 +46,11 @@ namespace BLL.App
         public IProfileService Profiles => GetService<IProfileService>(() => new ProfileService(UnitOfWork));
         
         public IRankService Ranks => GetService<IRankService>(() => new RankService(UnitOfWork));
+
+        public IFeedService FeedService => GetService<IFeedService>(() => new FeedService(UnitOfWork));
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

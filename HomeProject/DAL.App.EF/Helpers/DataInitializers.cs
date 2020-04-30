@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Domain;
 using Domain.Identity;
@@ -75,8 +76,103 @@ namespace DAL.Helpers
             }
         }
 
-        public static void SeedData(ApplicationDbContext context)
+        public static async void SeedData(ApplicationDbContext ctx)
         {
+            //ChatRoles
+            var chatRoles = new ChatRole[]
+            {
+                new ChatRole()
+                {
+                    RoleTitle = "Member",
+                },
+                new ChatRole()
+                {
+                    RoleTitle = "Creator",
+                },
+                new ChatRole()
+                {
+                    RoleTitle = "Moderator",
+                },
+                new ChatRole()
+                {
+                    RoleTitle = "Left",
+                }
+            };
+            
+            foreach (var chatRole in chatRoles)
+            {
+                if (!ctx.ChatRoles.Any(r => r.RoleTitle == chatRole.RoleTitle))
+                {
+                    ctx.ChatRoles.Add(chatRole);
+                }
+            }
+
+            await ctx.SaveChangesAsync();
+            
+            //Ranks
+            var ranks = new Rank[]
+            {
+                new Rank()
+                {
+                    RankTitle = "New User",
+                    RankCode = "X_00",
+                    RankDescription = "Welcome! We are happy to see new faces C:",
+                    RankTextColor = "#000000",
+                    RankColor = "#CCFFFF",
+                    MaxExperience = 10
+                },
+                new Rank()
+                {
+                    RankTitle = "Newbie",
+                    RankCode = "X_01",
+                    RankDescription = "You are learning a new place",
+                    RankTextColor = "#000000",
+                    RankColor = "#33FFCC",
+                    RankIcon = "star-half-alt;",
+                    MaxExperience = 40
+                },
+                new Rank()
+                {
+                    RankTitle = "Apprentice",
+                    RankCode = "X_02",
+                    RankDescription = "You feel a bit confident. What would wait you in future?",
+                    RankTextColor = "#000000",
+                    RankColor = "#00CCFF",
+                    RankIcon = "star;star;",
+                    MaxExperience = 100
+                }
+            };
+            
+            foreach (var rank in ranks)
+            {
+                if (!ctx.Ranks.Any(r => r.RankCode == rank.RankCode))
+                {
+                    ctx.Ranks.Add(rank);
+                }
+            }
+
+            await ctx.SaveChangesAsync();
+            
+            //Gifts
+            var gifts = new Gift[]
+            {
+                new Gift()
+                {
+                    GiftName = "New Horizon",
+                    GiftCode = "X_00",
+                    GiftImageUrl = "https://sun9-37.userapi.com/c855036/v855036822/224f58/Kuwvm_ds5yQ.jpg"
+                }
+            };
+
+            foreach (var gift in gifts)
+            {
+                if (!ctx.Gifts.Any(g => g.GiftCode == gift.GiftCode))
+                {
+                    ctx.Gifts.Add(gift);
+                }
+            }
+
+            await ctx.SaveChangesAsync();
         }
     }
 

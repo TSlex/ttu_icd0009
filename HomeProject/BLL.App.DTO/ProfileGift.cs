@@ -6,7 +6,7 @@ namespace BLL.App.DTO
     public class ProfileGift: DomainEntityBaseMetadata
     {
         public Guid ProfileId { get; set; } = default!;
-        public Profile? Profile { get; set; }
+        public ProfileFull? Profile { get; set; }
         
         public Guid GiftId { get; set; } = default!;
         public Gift? Gift { get; set; }

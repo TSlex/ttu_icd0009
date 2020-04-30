@@ -1,4 +1,6 @@
-﻿using BLL.App.DTO;
+﻿using System;
+using System.Threading.Tasks;
+using BLL.App.DTO;
 using BLL.App.Mappers;
 using BLL.Base.Services;
 using Contracts.BLL.App.Services;
@@ -13,6 +15,11 @@ namespace BLL.App.Services
         public RankService(IAppUnitOfWork uow) :
             base(uow.Ranks, new RankMapper())
         {
+        }
+
+        public async Task<Rank> FindByCodeAsync(string code)
+        {
+            return Mapper.Map(await ServiceRepository.FindByCodeAsync(code));
         }
     }
 }

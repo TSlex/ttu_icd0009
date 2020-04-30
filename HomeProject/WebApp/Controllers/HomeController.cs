@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Domain;
+using Extension;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -15,16 +17,27 @@ namespace WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<Profile> _userManager;
+        private readonly SignInManager<Profile> _signInManager;
+        private readonly IAppBLL _bll;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<Profile> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<Profile> userManager, IAppBLL bll,
+            SignInManager<Profile> signInManager)
         {
             _logger = logger;
             _userManager = userManager;
+            _bll = bll;
+            _signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            if (_signInManager.IsSignedIn(User))
+            {
+                var result = await _bll.FeedService.GetUserFeedAsync(User.UserId());
+                return View(result);
+            }
+
+            return View(await _bll.FeedService.GetCommonFeedAsync());
         }
 
         public IActionResult Privacy()
@@ -47,11 +60,12 @@ namespace WebApp.Controllers
                     });
                 }
             }
+
             if (returnUrl != null)
             {
                 return Redirect(returnUrl);
             }
-            
+
             return View("Index");
         }
 

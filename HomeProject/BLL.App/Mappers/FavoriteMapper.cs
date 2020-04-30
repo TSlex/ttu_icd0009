@@ -3,7 +3,6 @@ using BLL.App.DTO;
 using BLL.Base.Mappers;
 using Contracts.BLL.Base.Services;
 using Contracts.DAL.App.Repositories;
-using Profile = BLL.App.DTO.Profile;
 
 namespace BLL.App.Mappers
 {

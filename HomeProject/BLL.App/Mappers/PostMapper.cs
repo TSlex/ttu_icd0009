@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BLL.Base.Mappers;
 using BLL.App.DTO;
-using Profile = BLL.App.DTO.Profile;
 
 namespace BLL.App.Mappers
 {
@@ -12,8 +11,8 @@ namespace BLL.App.Mappers
                 {
                     config.CreateMap<DAL.App.DTO.Post, Post>();
                     config.CreateMap<Post, DAL.App.DTO.Post>();
-                    config.CreateMap<DAL.App.DTO.Profile, Profile>();
-                    config.CreateMap<Profile, DAL.App.DTO.Profile>();
+                    config.CreateMap<DAL.App.DTO.Profile, ProfileFull>();
+                    config.CreateMap<ProfileFull, DAL.App.DTO.Profile>();
                 })
                 .CreateMapper())
         {

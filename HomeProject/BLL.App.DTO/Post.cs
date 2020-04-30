@@ -24,7 +24,7 @@ namespace BLL.App.DTO
         
         public Guid ProfileId { get; set; }
         
-        public Profile? Profile { get; set; }
+        public ProfileFull? Profile { get; set; }
         
         public ICollection<Comment>? Comments { get; set; }
 

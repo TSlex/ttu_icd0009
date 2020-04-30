@@ -26,9 +26,11 @@ namespace DAL.App.DTO
         [MaxLength(20)]
         public string? ProfileGenderOwn { get; set; }
 
-        public int FollowersCount { get; set; } = 0;
-        public int FollowedCount { get; set; } = 0;
-        public int PostsCount { get; set; } = 0;
+        public int FollowersCount { get; set; }
+        public int FollowedCount { get; set; }
+        public int PostsCount { get; set; }
+        
+        public int Experience { get; set; }
 
         //References
         //Black list

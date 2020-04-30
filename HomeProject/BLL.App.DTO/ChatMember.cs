@@ -15,6 +15,6 @@ namespace BLL.App.DTO
         public ChatRole? ChatRole { get; set; }
         
         public Guid ProfileId { get; set; } = default!;
-        public Profile? Profile { get; set; }
+        public ProfileFull? Profile { get; set; }
     }
 }

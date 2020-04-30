@@ -20,12 +20,21 @@ namespace DAL.Repositories
             _userManager = userManager;
         }
 
-        public override async Task<Profile> FindAsync(Guid id)
+        public async Task<Profile> FindFullIncludeAsync(Guid id)
         {
             return Mapper.Map(await RepoDbSet
                 .Include(profile => profile.Posts)
                 .Include(profile => profile.Followed)
                 .Include(profile => profile.Followers)
+                .FirstOrDefaultAsync(profile => profile.Id == id));
+        }
+        
+        public async Task<Profile> FindNoIncludeAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Include(profile => profile.Posts.Count)
+                .Include(profile => profile.Followed.Count)
+                .Include(profile => profile.Followers.Count)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
 

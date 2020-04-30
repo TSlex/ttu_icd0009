@@ -11,7 +11,7 @@ namespace BLL.App.DTO
         public DateTime MessageDateTime { get; set; } = DateTime.Now;
         
         public Guid ProfileId { get; set; } = default!;
-        public Profile? Profile { get; set; }
+        public ProfileFull? Profile { get; set; }
         
         public Guid ChatRoomId { get; set; } = default!;
         public ChatRoom? ChatRoom { get; set; }

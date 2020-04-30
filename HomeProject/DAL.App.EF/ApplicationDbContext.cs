@@ -51,6 +51,22 @@ namespace DAL
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            //rank relation to itself (previous -> current -> next)
+            builder.Entity<Rank>()
+                .HasOne(rank => rank.NextRank)
+                .WithOne()
+                .HasForeignKey<Rank>(rank => rank.NextRankId);
+            
+            builder.Entity<Rank>()
+                .HasOne(rank => rank.PreviousRank)
+                .WithOne()
+                .HasForeignKey<Rank>(rank => rank.PreviousRankId);
+            
+            //create unique indexes
+            builder.Entity<ChatRole>().HasIndex(role => role.RoleTitle).IsUnique();
+            builder.Entity<Rank>().HasIndex(rank => rank.RankCode).IsUnique();
+            builder.Entity<Gift>().HasIndex(gift => gift.GiftCode).IsUnique();
         }
         
         private void SaveChangesMetadataUpdate()

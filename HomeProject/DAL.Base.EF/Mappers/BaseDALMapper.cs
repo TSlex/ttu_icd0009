@@ -35,6 +35,18 @@ namespace DAL.Base.EF.Mappers
                 config.CreateMap<Domain.ChatRole, ChatRole>();
                 config.CreateMap<ChatRole, Domain.ChatRole>();
                 
+                config.CreateMap<Domain.Gift, Gift>();
+                config.CreateMap<Gift, Domain.Gift>();
+                
+                config.CreateMap<Domain.Rank, Rank>();
+                config.CreateMap<Rank, Domain.Rank>();
+                
+                config.CreateMap<Domain.ProfileRank, ProfileRank>();
+                config.CreateMap<ProfileRank, Domain.ProfileRank>();
+                
+                config.CreateMap<Domain.ProfileGift, ProfileGift>();
+                config.CreateMap<ProfileGift, Domain.ProfileGift>();
+                
                 config.CreateMap<Domain.Post, Post>();
                 config.CreateMap<Post, Domain.Post>();
                 

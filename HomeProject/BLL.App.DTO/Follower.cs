@@ -6,9 +6,9 @@ namespace BLL.App.DTO
     public class Follower: DomainEntityBaseMetadata
     {
         public Guid ProfileId { get; set; } = default!;
-        public Profile? Profile { get; set; }
+        public ProfileFull? Profile { get; set; }
         
         public Guid FollowerProfileId { get; set; } = default!;
-        public Profile? FollowerProfile { get; set; }
+        public ProfileFull? FollowerProfile { get; set; }
     }
 }

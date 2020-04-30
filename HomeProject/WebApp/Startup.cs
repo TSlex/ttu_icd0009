@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BLL.App;
 using Contracts.BLL.App;
 using Contracts.DAL.App;
@@ -14,9 +11,7 @@ using Domain;
 using Domain.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
@@ -54,7 +49,7 @@ namespace WebApp
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddScoped<IUserNameProvider, UserNameProvider>();
             services.AddScoped<IAppUnitOfWork, AppUnitOfWork>();
             services.AddScoped<IAppBLL, AppBLL>();
@@ -208,16 +203,16 @@ namespace WebApp
                 DAL.Helpers.DataInitializers.MigrateDatabase(ctx);
             }
 
-            if (configuration["AppDataInitialization:SeedIdentity"] == "True")
-            {
-                Console.WriteLine("SeedIdentity");
-                DAL.Helpers.DataInitializers.SeedIdentity(userManager, roleManager);
-            }
-
             if (configuration.GetValue<bool>("AppDataInitialization:SeedData"))
             {
                 Console.WriteLine("SeedData");
                 DAL.Helpers.DataInitializers.SeedData(ctx);
+            }
+
+            if (configuration["AppDataInitialization:SeedIdentity"] == "True")
+            {
+                Console.WriteLine("SeedIdentity");
+                DAL.Helpers.DataInitializers.SeedIdentity(userManager, roleManager);
             }
         }
     }

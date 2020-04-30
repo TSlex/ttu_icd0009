@@ -1,4 +1,5 @@
-@model BLL.App.DTO.Profile
+@using Extension
+@model BLL.App.DTO.ProfileFull
 
 @{
     ViewData["Title"] = "Index";
@@ -13,8 +14,9 @@
         <div class="profile_description col-9">
             <ul class="profile_meta_section">
                 <li class="profile_name">@Model.UserName</li>
+
                 @{
-                    if (!@Model.IsUserBlocked)
+                    if (@Model.Id != User.UserId())
                     {
                         <div class="profile_controls dropdown show">
                             <a class="btn fa fa-bars" href="#" role="button" id="profile_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,25 +87,16 @@
         </div>
     </div>
     <hr>
-    @{
-        if (!@Model.IsUserBlocked)
-        {
-            <div class="posts_section">
-                <div class="post_row card-columns">
-                    @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
-                    {
-                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
-                            <div class="post_item card">
-                                <img alt="" src="@post.PostImageUrl" class="post_image card-img">
-                            </div>
-                        </a>
-                    }
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="text-danger font-weight-bold text-center">Данный пользователь внес вас в свой черный список!</div>
-        }
-    }
+    <div class="posts_section">
+        <div class="post_row card-columns">
+            @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
+            {
+                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
+                    <div class="post_item card">
+                        <img alt="" src="@post.PostImageUrl" class="post_image card-img">
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
 </div>

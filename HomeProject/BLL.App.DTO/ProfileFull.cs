@@ -7,7 +7,7 @@ using Domain.Enums;
 
 namespace BLL.App.DTO
 {
-    public class Profile : MUser
+    public class ProfileFull : MUser
     {
         public DateTime? LastLoginDateTime { get; set; }
 
@@ -26,23 +26,21 @@ namespace BLL.App.DTO
         [MaxLength(20)]
         public string? ProfileGenderOwn { get; set; }
 
-        public int FollowersCount { get; set; } = 0;
-        public int FollowedCount { get; set; } = 0;
-        public int PostsCount { get; set; } = 0;
+        public int FollowersCount { get; set; }
+        public int FollowedCount { get; set; }
+        public int PostsCount { get; set; }
+        
+        public int Experience { get; set; }
 
         //References
         //Black list
-        [InverseProperty(nameof(BlockedProfile.Profile))]
         public ICollection<BlockedProfile>? BlockedProfiles { get; set; }
-
-        [InverseProperty(nameof(BlockedProfile.BProfile))]
+        
         public ICollection<BlockedProfile>? BlockedByProfiles { get; set; }
 
         //Black list
-        [InverseProperty(nameof(Follower.Profile))]
         public ICollection<Follower>? Followers { get; set; } //profile followers list
-
-        [InverseProperty(nameof(Follower.FollowerProfile))]
+        
         public ICollection<Follower>? Followed { get; set; } //profile followed profiles list
 
         //Chat
@@ -60,5 +58,25 @@ namespace BLL.App.DTO
         public bool IsUserFollows { get; set; }
         public bool IsUserBlocks { get; set; }
         public bool IsUserBlocked { get; set; }
+    }
+
+    public class ProfileLimited
+    {
+        public string UserName { get; set; } = default!;
+        
+        public DateTime? LastLoginDateTime { get; set; }
+        
+        public string? ProfileFullName { get; set; }
+        public string? ProfileWorkPlace { get; set; }
+        public string? ProfileStatus { get; set; }
+        public string? ProfileAvatarUrl { get; set; }
+        public string? ProfileAbout { get; set; }
+        
+        public int FollowersCount { get; set; }
+        public int FollowedCount { get; set; }
+        public int PostsCount { get; set; }
+        
+        public int Experience { get; set; }
+        public ProfileRank Rank { get; set; }
     }
 }

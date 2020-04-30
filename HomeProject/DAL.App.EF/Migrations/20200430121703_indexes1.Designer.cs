@@ -3,14 +3,16 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200430121703_indexes1")]
+    partial class indexes1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,8 +141,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleTitle")
-                        .IsUnique();
+                    b.HasIndex("RoleTitle");
 
                     b.ToTable("ChatRoles");
                 });
@@ -351,8 +352,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GiftCode")
-                        .IsUnique();
+                    b.HasIndex("GiftCode");
 
                     b.ToTable("Gifts");
                 });
@@ -527,9 +527,6 @@ namespace DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("Experience")
-                        .HasColumnType("int");
-
                     b.Property<int>("FollowedCount")
                         .HasColumnType("int");
 
@@ -680,6 +677,9 @@ namespace DAL.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ProfileId")
                         .HasColumnType("char(36)");
 
@@ -728,11 +728,6 @@ namespace DAL.Migrations
                     b.Property<Guid?>("PreviousRankId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("RankCode")
-                        .IsRequired()
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
-                        .HasMaxLength(100);
-
                     b.Property<string>("RankColor")
                         .IsRequired()
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
@@ -743,6 +738,7 @@ namespace DAL.Migrations
                         .HasMaxLength(300);
 
                     b.Property<string>("RankIcon")
+                        .IsRequired()
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
                         .HasMaxLength(20);
 
@@ -764,8 +760,7 @@ namespace DAL.Migrations
                     b.HasIndex("PreviousRankId")
                         .IsUnique();
 
-                    b.HasIndex("RankCode")
-                        .IsUnique();
+                    b.HasIndex("RankTitle");
 
                     b.ToTable("Ranks");
                 });

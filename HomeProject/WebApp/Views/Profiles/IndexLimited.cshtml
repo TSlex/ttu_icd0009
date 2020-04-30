@@ -1,0 +1,41 @@
+@model BLL.App.DTO.ProfileLimited
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="profile_container">
+    <div class="profile_section">
+        <div class="profile_image col-3 d-flex justify-content-center">
+            <img alt="" width="150px" height="150px"
+                 src=@Model.ProfileAvatarUrl>
+        </div>
+        <div class="profile_description col-9">
+            <ul class="profile_meta_section">
+                <li class="profile_name">@Model.UserName</li>
+            </ul>
+            <ul class="profile_meta_section">
+                <li class="profile_meta">
+                    <span class="meta_counter">@Model.PostsCount</span>
+                    <span class="meta_title">публикаций</span>
+                </li>
+                <li class="profile_meta">
+                    <span class="meta_counter">@Model.FollowersCount</span>
+                    <span class="meta_title">подписчиков</span>
+                </li>
+                <li class="profile_meta">
+                    <span class="meta_counter">@Model.FollowedCount</span>
+                    <span class="meta_title">подписок</span>
+                </li>
+            </ul>
+            <div class="profile_about">
+                <h1>@Model.ProfileFullName</h1>
+                <span>@Model.ProfileAbout</span>
+                <br>
+                <a href="">@Model.ProfileWorkPlace</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="text-danger font-weight-bold text-center">Данный пользователь внес Вас в свой черный список!</div>
+</div>

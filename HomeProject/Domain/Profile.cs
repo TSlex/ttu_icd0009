@@ -34,6 +34,8 @@ namespace Domain
         public int FollowedCount { get; set; } = 0;
         public int PostsCount { get; set; } = 0;
 
+        public int Experience { get; set; } = 0;
+
         //References
         //Black list
         [InverseProperty(nameof(BlockedProfile.Profile))]
