@@ -1,4 +1,8 @@
-﻿/*shared*/
+﻿html{
+    user-select: none !important;
+}
+
+/*shared*/
 .alert {
     margin-bottom: 0 !important;
 }
@@ -56,18 +60,30 @@ body {
     padding: 10px;
 }
 
+.profile_image {
+    border: 4px solid #e4606d;
+    border-radius: 50%;
+    background-color: #005cbf;
+    padding: 5px;
+    /*transform: rotate(45deg);*/
+    width: fit-content;
+    height: fit-content;
+}
 
 .profile_image img {
     align-content: center;
-    border: 4px solid #e4606d;
+    /*border: 4px solid #e4606d;*/
+    /*border: 2px solid gray;*/
     border-radius: 50%;
+    /*transform: rotate(-45deg);*/
 }
 
 .profile_meta_section {
     list-style-type: none;
     display: flex;
     padding: 0;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
+    margin: 0 !important;
 }
 
 .profile_meta {
@@ -90,6 +106,61 @@ body {
 .profile_controls{
     font-size: 20px;
     margin-left: 5px;
+}
+
+/*profile rank*/
+.profile_rank{
+    position: relative;
+    height: 30px;
+    width: 400px;
+    border: 2px solid #000000AA;
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.profile_rank *{
+    height: 30px !important;
+    line-height: 30px;
+}
+
+.profile_rank .rank_title {
+    position: absolute;
+    left: 10px;
+    z-index: 1;
+    font-weight: bold;
+    font-family: Consolas, serif;
+}
+
+.profile_rank .rank_score{
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.profile_rank .rank_bar{
+    position: absolute;
+    background: #e4606d;
+    min-width: 2%;
+    width: 50%;
+    max-width: 100%;
+    z-index: -1;
+    outline: gold 5px double;
+}
+
+.profile_rank .rank_bar_back{
+    position: absolute;
+    background: #00000033;
+    width: 100%;
+    z-index: -2;
+}
+
+.profile_rank .rank_icons{
+    position: absolute;
+    right: 10px;
+    z-index: 0;
 }
 
 /*preferences*/

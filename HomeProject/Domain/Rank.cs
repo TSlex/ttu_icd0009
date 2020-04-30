@@ -19,6 +19,7 @@ namespace Domain
         [MaxLength(300)] public string? RankDescription { get; set; }
 
         public int MaxExperience { get; set; } = default!;
+        public int MinExperience { get; set; } = default!;
 
         [ForeignKey(nameof(Id))]
         public Guid? PreviousRankId { get; set; }

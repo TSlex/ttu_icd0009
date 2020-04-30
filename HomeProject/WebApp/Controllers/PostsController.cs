@@ -60,6 +60,8 @@ namespace WebApp.Controllers
             {
                 _bll.Favorites.Create(post.Id, userId);
                 await _bll.SaveChangesAsync();
+                
+                _bll.Ranks.IncreaseUserExperience(User.UserId(), 1);
             }
             
             post = await _bll.Posts.GetPostFull(post.Id);

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DAL.App.DTO;
 using Contracts.DAL.App.Repositories;
 using DAL.Base.EF.Repositories;
+using DAL.Helpers;
 using DAL.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +14,8 @@ namespace DAL.Repositories
     public class ProfileRepo : BaseRepo<Domain.Profile, Profile, ApplicationDbContext>, IProfileRepo
     {
         private readonly UserManager<Domain.Profile> _userManager;
-        
-        public ProfileRepo(ApplicationDbContext dbContext, UserManager<Domain.Profile> userManager) 
+
+        public ProfileRepo(ApplicationDbContext dbContext, UserManager<Domain.Profile> userManager)
             : base(dbContext, new ProfileMapper())
         {
             _userManager = userManager;
@@ -22,13 +23,36 @@ namespace DAL.Repositories
 
         public async Task<Profile> FindFullIncludeAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet
+//            return Mapper.Map(await RepoDbSet
+//                .Include(profile => profile.Posts)
+//                .Include(profile => profile.Followed)
+//                .ThenInclude(follower => follower.Profile).Select(profile => new Domain.Profile()
+//                {
+//                    UserName = profile.UserName,
+//                    ProfileAvatarUrl = profile.ProfileAvatarUrl
+//                })
+//                .Include(profile => profile.Followers)
+//                .ThenInclude(follower => follower.Profile).Select(profile => new Domain.Profile()
+//                {
+//                    UserName = profile.UserName,
+//                    ProfileAvatarUrl = profile.ProfileAvatarUrl
+//                })
+//                .Include(profile => profile.ProfileRanks)
+//                .ThenInclude(rank => rank.Rank)
+//                .FirstOrDefaultAsync(profile => profile.Id == id));
+
+            return Mapper.Map(await _userManager.Users/*.AsTracking()*/
                 .Include(profile => profile.Posts)
                 .Include(profile => profile.Followed)
+//                .ThenInclude(follower => follower.Profile)
                 .Include(profile => profile.Followers)
+//                .ThenInclude(follower => follower.Profile)
+                .Include(profile => profile.ProfileRanks)
+                .ThenInclude(rank => rank.Rank)
+                .ThenInclude(rank => rank.NextRank)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
-        
+
         public async Task<Profile> FindNoIncludeAsync(Guid id)
         {
             return Mapper.Map(await RepoDbSet
@@ -41,6 +65,34 @@ namespace DAL.Repositories
         public async Task<Profile> FindByUsernameAsync(string username)
         {
             return Mapper.Map(await _userManager.FindByNameAsync(username));
+        }
+
+        public async Task IncreaseExperience(Guid userId, int amount)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+            {
+                return;
+            }
+            
+            user.Experience += amount;
+            
+            await _userManager.UpdateAsync(user);
+        }
+
+        public override async Task<Profile> UpdateAsync(Profile entity)
+        {
+            throw new NotImplementedException();
+            
+            var stamp = (await _userManager.FindByIdAsync(entity.Id.ToString())).SecurityStamp;
+            var mappedEntity = Mapper.MapReverse(entity);
+            
+            mappedEntity.SecurityStamp = stamp;
+            
+            var result = await _userManager.UpdateAsync(mappedEntity);
+
+            return result.Succeeded ? entity : null;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ namespace DAL.Helpers
             return context.Database.EnsureDeleted();
         }
 
-        public static async void SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
+        public static async Task SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
         {
             var roleNames = new[] {new Role {Name = "User"}, new Role {Name = "Admin"}};
 
@@ -76,7 +77,7 @@ namespace DAL.Helpers
             }
         }
 
-        public static async void SeedData(ApplicationDbContext ctx)
+        public static void SeedData(ApplicationDbContext ctx)
         {
             //ChatRoles
             var chatRoles = new ChatRole[]
@@ -107,7 +108,7 @@ namespace DAL.Helpers
                 }
             }
 
-            await ctx.SaveChangesAsync();
+            ctx.SaveChanges();
             
             //Ranks
             var ranks = new Rank[]
@@ -119,6 +120,7 @@ namespace DAL.Helpers
                     RankDescription = "Welcome! We are happy to see new faces C:",
                     RankTextColor = "#000000",
                     RankColor = "#CCFFFF",
+                    MinExperience = int.MinValue,
                     MaxExperience = 10
                 },
                 new Rank()
@@ -127,19 +129,43 @@ namespace DAL.Helpers
                     RankCode = "X_01",
                     RankDescription = "You are learning a new place",
                     RankTextColor = "#000000",
-                    RankColor = "#33FFCC",
+                    RankColor = "#99CCFF",
                     RankIcon = "star-half-alt;",
+                    MinExperience = 11,
                     MaxExperience = 40
                 },
                 new Rank()
                 {
-                    RankTitle = "Apprentice",
+                    RankTitle = "Amateur",
                     RankCode = "X_02",
                     RankDescription = "You feel a bit confident. What would wait you in future?",
                     RankTextColor = "#000000",
-                    RankColor = "#00CCFF",
-                    RankIcon = "star;star;",
+                    RankColor = "#3399FF",
+                    RankIcon = "star;",
+                    MinExperience = 41,
                     MaxExperience = 100
+                },
+                new Rank()
+                {
+                    RankTitle = "Apprentice",
+                    RankCode = "X_03",
+                    RankDescription = "You have already learned the basics, but are you ready to move to the next level?",
+                    RankTextColor = "#000000",
+                    RankColor = "#0066FF",
+                    RankIcon = "star;star-half-alt;",
+                    MinExperience = 101,
+                    MaxExperience = 500
+                },
+                new Rank()
+                {
+                    RankTitle = "Master",
+                    RankCode = "X_04",
+                    RankDescription = "Yes, you feel confidence and even can teach the basics to Newbies. However, there is no limit to perfection C:",
+                    RankTextColor = "#000000",
+                    RankColor = "#6633FF",
+                    RankIcon = "star;star;",
+                    MinExperience = 501,
+                    MaxExperience = 2000
                 }
             };
             
@@ -151,7 +177,27 @@ namespace DAL.Helpers
                 }
             }
 
-            await ctx.SaveChangesAsync();
+            ctx.SaveChanges();
+
+            var dbRanks = ctx.Ranks.AsNoTracking().Where(rank => rank.RankCode.Contains("X_")).ToList()
+                .OrderBy(rank => rank.RankCode).ToArray();
+
+            for (int index = 0; index < dbRanks.Length; index++)
+            {
+                if (index > 0)
+                {
+                    dbRanks[index].PreviousRankId = dbRanks[index - 1].Id;
+                }
+
+                if (index < dbRanks.Length - 1)
+                {
+                    dbRanks[index].NextRankId = dbRanks[index + 1].Id;
+                }
+
+                ctx.Ranks.Update(dbRanks[index]);
+            }
+            
+            ctx.SaveChanges();
             
             //Gifts
             var gifts = new Gift[]
@@ -172,7 +218,7 @@ namespace DAL.Helpers
                 }
             }
 
-            await ctx.SaveChangesAsync();
+            ctx.SaveChanges();
         }
     }
 

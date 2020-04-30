@@ -3,18 +3,26 @@
 
 @{
     ViewData["Title"] = "Index";
+    var profileRank = Model.ProfileRanks
+        .OrderByDescending(rank => rank.Rank.MaxExperience)
+        .Where(rank => rank.Rank.MinExperience <= Model.Experience)
+        .Take(1).ToList()[0].Rank;
+
+    float currentExp = Model.Experience - (profileRank.MinExperience >= 0 ? profileRank.MinExperience : 0);
+    float needExp = profileRank.MaxExperience - (profileRank.MinExperience >= 0 ? profileRank.MinExperience : 0);
 }
 
 <div class="profile_container">
     <div class="profile_section">
-        <div class="profile_image col-3 d-flex justify-content-center">
-            <img alt="" width="150px" height="150px"
-                 src=@Model.ProfileAvatarUrl>
+        <div class="col-3 d-flex justify-content-center">
+            <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
+                <img alt="" width="150px" height="150px"
+                     src=@Model.ProfileAvatarUrl>
+            </div>
         </div>
         <div class="profile_description col-9">
             <ul class="profile_meta_section">
                 <li class="profile_name">@Model.UserName</li>
-
                 @{
                     if (@Model.Id != User.UserId())
                     {
@@ -64,6 +72,26 @@
                     }
                 }
             </ul>
+            <div class="profile_rank">
+                <span class="rank_title">@profileRank.RankTitle</span>
+                <div class="rank_bar_back"></div>
+                <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.RankColor">
+                </div>
+                <span class="rank_score">@Model.Experience/@profileRank.MaxExperience</span>
+                <div class="rank_icons">
+                    @{
+                        var icons = profileRank.RankIcon?.Split(";").Where(s => s != "").ToList();
+                        if (icons != null)
+                        {
+                            foreach (var icon in icons)
+                            {
+                                <icon class="fa fa-@icon"></icon>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+
             <ul class="profile_meta_section">
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.PostsCount</span>
@@ -78,6 +106,7 @@
                     <span class="meta_title">подписок</span>
                 </li>
             </ul>
+
             <div class="profile_about">
                 <h1>@Model.ProfileFullName</h1>
                 <span>@Model.ProfileAbout</span>

@@ -9,5 +9,6 @@ namespace Contracts.BLL.App.Services
     public interface IRankService: IBaseEntityService<global::DAL.App.DTO.Rank, Rank>
     {
         Task<Rank> FindByCodeAsync(string s);
+        Task IncreaseUserExperience(Guid userId, int amount);
     }
 }

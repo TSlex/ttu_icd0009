@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BLL.App.DTO;
@@ -45,7 +46,9 @@ namespace BLL.App.Services
                 ProfileWorkPlace = profile.ProfileWorkPlace,
                 FollowedCount = profile.FollowedCount,
                 FollowersCount = profile.FollowersCount,
-                PostsCount = profile.PostsCount
+                PostsCount = profile.PostsCount,
+                Experience = profile.Experience,
+                Rank = profile.ProfileRanks.OrderBy(rank => rank.Rank.MaxExperience).ToList()[0]
             };
         }
 

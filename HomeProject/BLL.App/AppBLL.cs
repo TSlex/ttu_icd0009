@@ -48,9 +48,5 @@ namespace BLL.App
         public IRankService Ranks => GetService<IRankService>(() => new RankService(UnitOfWork));
 
         public IFeedService FeedService => GetService<IFeedService>(() => new FeedService(UnitOfWork));
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

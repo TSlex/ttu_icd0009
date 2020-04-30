@@ -17,6 +17,7 @@ namespace BLL.App.DTO
         [MaxLength(300)] public string? RankDescription { get; set; }
 
         public int MaxExperience { get; set; } = default!;
+        public int MinExperience { get; set; } = default!;
         
         public Guid? PreviousRankId { get; set; }
         public Rank? PreviousRank { get; set; }

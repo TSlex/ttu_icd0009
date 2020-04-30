@@ -68,6 +68,8 @@ namespace WebApp.Controllers
                 _bll.Comments.Add(comment);
                 await _bll.SaveChangesAsync();
                 
+                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 2);
+                
                 if (comment.ReturnUrl != null)
                 {
                     return Redirect(comment.ReturnUrl);

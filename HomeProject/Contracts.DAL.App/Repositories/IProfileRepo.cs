@@ -9,7 +9,8 @@ namespace Contracts.DAL.App.Repositories
     {
         Task<Profile> FindFullIncludeAsync(Guid id);
         Task<Profile> FindNoIncludeAsync(Guid id);
-        
         Task<Profile> FindByUsernameAsync(string username);
+        
+        Task IncreaseExperience(Guid userId, int amount);
     }
 }
