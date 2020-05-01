@@ -201,6 +201,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Areas\Admin" />
         <Folder Include="wwwroot\lib\font-awesome" />
     </ItemGroup>
 
