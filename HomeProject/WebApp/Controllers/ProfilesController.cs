@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
 using BLL.App.DTO;
+using Domain;
 using Extension;
 using Microsoft.AspNetCore.Identity;
 
@@ -11,25 +12,30 @@ namespace WebApp.Controllers
     [Route("/{username}/{action=Index}")]
     public class ProfilesController : Controller
     {
-        private readonly UserManager<Domain.Profile> _userManager;
+        private readonly UserManager<Profile> _userManager;
+        private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
 
-        public ProfilesController(UserManager<Domain.Profile> userManager, IAppBLL bll)
+        public ProfilesController(UserManager<Profile> userManager, IAppBLL bll, SignInManager<Profile> signInManager)
         {
             _userManager = userManager;
             _bll = bll;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
+            var isAuthorized = _signInManager.IsSignedIn(User);
 
             if (user == null)
             {
                 return NotFound();
             }
             
-            var isUserBlocked = user.Id != User.UserId() && await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
+            var isUserBlocked = isAuthorized && 
+                                user.Id != User.UserId() && 
+                                await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
 
             if (isUserBlocked)
             {
@@ -45,9 +51,11 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
-
-            profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;
+            if (isAuthorized)
+            {
+                profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
+                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;   
+            }
 
             return View(profileModel);
         }

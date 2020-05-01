@@ -49,6 +49,9 @@ namespace WebApp.Controllers
         public async Task<IActionResult> CreateConfirm(string username, Guid giftId, string? returnUrl)
         {
             var gift = await _bll.Gifts.FindAsync(giftId);
+
+            await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
+            
             return View(new ProfileGift
             {
                 Profile = new ProfileFull{UserName = username},
@@ -75,7 +78,7 @@ namespace WebApp.Controllers
             }
             
             ModelState.Clear();
-            profileGift.ProfileId = User.UserId();
+            profileGift.ProfileId = user.Id;
 
             if (TryValidateModel(profileGift))
             {
