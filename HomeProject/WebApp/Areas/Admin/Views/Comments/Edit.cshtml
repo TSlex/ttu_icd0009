@@ -1,0 +1,25 @@
+@model BLL.App.DTO.Comment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="chat_section">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4 text-center">
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="Id">
+                <partial name="_CommentCreateEdit"/>
+
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary"/>
+                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

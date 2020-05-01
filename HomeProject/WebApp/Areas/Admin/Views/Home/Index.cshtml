@@ -1,0 +1,41 @@
+﻿@using Extension
+@model BLL.App.DTO.Feed
+
+@{
+    ViewData["Title"] = "ArtNetwork";
+}
+
+<h3 class="text-center">Last twenty posts:</h3>
+<hr>
+<div class="feed text-center">
+    @{
+        foreach (var post in @Model.Posts.OrderByDescending(post => post.PostPublicationDateTime).Take(20))
+        {
+            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
+                <div class="feed_post">
+                    <div class="post_image">
+                        <img src="@post.PostImageUrl" alt="">
+                    </div>
+
+                    <div class="post_details_meta_section">
+                        <p>"@post.PostTitle" by @post.Profile.UserName</p>
+                        <span>@post.PostDescription</span>
+                        <ul class="post_meta_section">
+                            <li class="post_meta">
+                                <span class="meta_title">@post.PostPublicationDateTime</span>
+                            </li>
+                            <li class="post_meta">
+                                <span class="meta_counter">@post.PostFavoritesCount</span>
+                                <span class="meta_title">лайков</span>
+                            </li>
+                            <li class="post_meta">
+                                <span class="meta_counter">@post.PostCommentsCount</span>
+                                <span class="meta_title">комментариев</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>
