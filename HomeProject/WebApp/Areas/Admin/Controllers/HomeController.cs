@@ -31,59 +31,11 @@ namespace WebApp.Areas.Admin.Controllers
             _bll = bll;
             _signInManager = signInManager;
         }
-
-        public async Task<IActionResult> Index()
+        
+        [Route("admin/panel")]
+        public IActionResult Index()
         {
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SearchUser(string? username, string? returnUrl)
-        {
-            if (username != null)
-            {
-                var user = await _userManager.FindByNameAsync(username);
-
-                if (user != null)
-                {
-                    return RedirectToAction("Index", "Profiles", new
-                    {
-                        username = username
-                    });
-                }
-            }
-
-            if (returnUrl != null)
-            {
-                return Redirect(returnUrl);
-            }
-
-            return View("Index");
-        }
-
-        public IActionResult SetLanguage(string culture, string returnUrl)
-        {
-            Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions()
-                {
-                    Expires = DateTimeOffset.UtcNow.AddYears(1)
-                }
-            );
-            return LocalRedirect(returnUrl);
-        }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
     }
 }
