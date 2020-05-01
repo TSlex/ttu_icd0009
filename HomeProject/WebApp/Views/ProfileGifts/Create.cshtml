@@ -1,67 +1,24 @@
-@model BLL.App.DTO.ProfileGift
+@model BLL.App.DTO.ProfileGiftCreate
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Send gift to " + @Model.Profile.UserName;
 }
 
-<h1>Create</h1>
-
-<h4>ProfileGift</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProfileId" class="control-label"></label>
-                <select asp-for="ProfileId" class ="form-control" asp-items="ViewBag.ProfileId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="GiftId" class="control-label"></label>
-                <input asp-for="GiftId" class="form-control" />
-                <span asp-validation-for="GiftId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChangedBy" class="control-label"></label>
-                <input asp-for="ChangedBy" class="form-control" />
-                <span asp-validation-for="ChangedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChangedAt" class="control-label"></label>
-                <input asp-for="ChangedAt" class="form-control" />
-                <span asp-validation-for="ChangedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedBy" class="control-label"></label>
-                <input asp-for="DeletedBy" class="form-control" />
-                <span asp-validation-for="DeletedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedAt" class="control-label"></label>
-                <input asp-for="DeletedAt" class="form-control" />
-                <span asp-validation-for="DeletedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+<div class="row text-center d-flex justify-content-center">
+    <div class="gift_gallery">
+        @{
+            foreach (var gift in Model.GiftGallery)
+            {
+                <a class="profile_gift" asp-action="CreateConfirm"
+                   asp-route-username="@Model.Profile.UserName"
+                   asp-route-returnUrl="@Model.ReturnUrl"
+                   asp-route-giftId="@gift.Id">
+                    <img src="@gift.GiftImageUrl" class="card-img-top" alt="..." height="150px" width="150px">
+                </a>
+            }
+        }
     </div>
+    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary mt-4">Cancel</a>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

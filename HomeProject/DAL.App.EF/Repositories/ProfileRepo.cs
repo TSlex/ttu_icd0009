@@ -41,12 +41,12 @@ namespace DAL.Repositories
 //                .ThenInclude(rank => rank.Rank)
 //                .FirstOrDefaultAsync(profile => profile.Id == id));
 
-            return Mapper.Map(await _userManager.Users/*.AsTracking()*/
+            return Mapper.Map(await _userManager.Users
                 .Include(profile => profile.Posts)
                 .Include(profile => profile.Followed)
-//                .ThenInclude(follower => follower.Profile)
                 .Include(profile => profile.Followers)
-//                .ThenInclude(follower => follower.Profile)
+                .Include(profile => profile.ProfileGifts)
+                .ThenInclude(gift => gift.Gift)
                 .Include(profile => profile.ProfileRanks)
                 .ThenInclude(rank => rank.Rank)
                 .ThenInclude(rank => rank.NextRank)

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -47,12 +48,9 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.Gift gift)
+        public async Task<IActionResult> Create(Gift gift)
         {
             ModelState.Clear();
-            gift.ChangedAt = DateTime.Now;
-            gift.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(gift))
             {
@@ -85,8 +83,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.Gift gift)
+        public async Task<IActionResult> Edit(Guid id, Gift gift)
         {
             if (id != gift.Id)
             {

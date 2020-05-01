@@ -28,10 +28,10 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            
+            var isUserBlocked = user.Id != User.UserId() && await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
 
-            var isUserBlocked = await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId());
-
-            if (isUserBlocked != null)
+            if (isUserBlocked)
             {
                 var profileLimited = await _bll.Profiles.GetProfileLimited(user.Id);
                 

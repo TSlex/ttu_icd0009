@@ -81,8 +81,7 @@ namespace WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.Message message)
+        public async Task<IActionResult> Edit(Guid id, Message message)
         {
             if (id != message.Id || User.UserId() != message.ProfileId)
             {

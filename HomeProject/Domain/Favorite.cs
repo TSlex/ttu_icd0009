@@ -11,5 +11,10 @@ namespace Domain
         
         public Guid PostId { get; set; } = default!;
         public Post? Post { get; set; }
+        
+        //what content user actually likes
+        public string PostTitle { get; set; }
+        public string? PostImageUrl { get; set; }
+        public string? PostDescription { get; set; }
     }
 }

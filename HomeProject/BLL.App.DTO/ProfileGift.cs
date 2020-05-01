@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DAL.Base;
 
 namespace BLL.App.DTO
@@ -10,5 +11,16 @@ namespace BLL.App.DTO
         
         public Guid GiftId { get; set; } = default!;
         public Gift? Gift { get; set; }
+        
+        public DateTime GiftDateTime { get; set; } = DateTime.Now;
+        
+        //what price was
+        public int Price { get; set; }
+        public string? ReturnUrl { get; set; }
+    }
+
+    public class ProfileGiftCreate : ProfileGift
+    {
+        public IEnumerable<Gift> GiftGallery { get; set; }
     }
 }

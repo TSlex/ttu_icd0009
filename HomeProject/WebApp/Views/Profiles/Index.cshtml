@@ -1,3 +1,4 @@
+@using Domain
 @using Extension
 @model BLL.App.DTO.ProfileFull
 
@@ -114,6 +115,22 @@
                 <a href="">@Model.ProfileWorkPlace</a>
             </div>
         </div>
+    </div>
+    <hr>
+    <div class="profile_gift_section">
+        @{
+            foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
+            {
+                <div class="profile_gift">
+                    <img src="@gift.Gift.GiftImageUrl" alt="..." height="150px" width="150px">
+                </div>
+            }
+            
+            <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
+               asp-controller="ProfileGifts" 
+               asp-route-username="@Model.UserName"
+               asp-route-returnUrl="@Url.ActionLink()"></a>
+        }
     </div>
     <hr>
     <div class="posts_section">

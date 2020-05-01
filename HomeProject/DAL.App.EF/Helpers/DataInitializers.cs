@@ -43,8 +43,9 @@ namespace DAL.Helpers
                 }
             }
 
-            var users = new[] {new User{Email = "admin@admin.com", Password = "Admin_123", RolesNames = new []{"User", "Admin"}}};
-            
+            var users = new[]
+                {new User {Email = "admin@admin.com", Password = "Admin_123", RolesNames = new[] {"User", "Admin"}}};
+
             foreach (var user in users)
             {
                 var newUser = await userManager.FindByEmailAsync(user.Email);
@@ -52,7 +53,7 @@ namespace DAL.Helpers
                 {
                     newUser = new Profile
                     {
-                        Email = user.Email, 
+                        Email = user.Email,
                         UserName = user.Email,
                         EmailConfirmed = true
                     };
@@ -61,13 +62,12 @@ namespace DAL.Helpers
                     if (!result.Succeeded)
                     {
                         throw new ApplicationException("User creation failed!");
-
                     }
 
                     foreach (var roleName in user.RolesNames!)
                     {
                         var roleResult = userManager.AddToRoleAsync(newUser, roleName).Result;
-                        
+
                         if (!roleResult.Succeeded)
                         {
                             throw new ApplicationException("User role assigment failed!");
@@ -99,7 +99,7 @@ namespace DAL.Helpers
                     RoleTitle = "Left",
                 }
             };
-            
+
             foreach (var chatRole in chatRoles)
             {
                 if (!ctx.ChatRoles.Any(r => r.RoleTitle == chatRole.RoleTitle))
@@ -109,7 +109,7 @@ namespace DAL.Helpers
             }
 
             ctx.SaveChanges();
-            
+
             //Ranks
             var ranks = new Rank[]
             {
@@ -149,7 +149,8 @@ namespace DAL.Helpers
                 {
                     RankTitle = "Apprentice",
                     RankCode = "X_03",
-                    RankDescription = "You have already learned the basics, but are you ready to move to the next level?",
+                    RankDescription =
+                        "You have already learned the basics, but are you ready to move to the next level?",
                     RankTextColor = "#000000",
                     RankColor = "#0066FF",
                     RankIcon = "star;star-half-alt;",
@@ -160,7 +161,8 @@ namespace DAL.Helpers
                 {
                     RankTitle = "Master",
                     RankCode = "X_04",
-                    RankDescription = "Yes, you feel confidence and even can teach the basics to Newbies. However, there is no limit to perfection C:",
+                    RankDescription =
+                        "Yes, you feel confidence and even can teach the basics to Newbies. However, there is no limit to perfection C:",
                     RankTextColor = "#000000",
                     RankColor = "#6633FF",
                     RankIcon = "star;star;",
@@ -168,7 +170,7 @@ namespace DAL.Helpers
                     MaxExperience = 2000
                 }
             };
-            
+
             foreach (var rank in ranks)
             {
                 if (!ctx.Ranks.Any(r => r.RankCode == rank.RankCode))
@@ -196,9 +198,9 @@ namespace DAL.Helpers
 
                 ctx.Ranks.Update(dbRanks[index]);
             }
-            
+
             ctx.SaveChanges();
-            
+
             //Gifts
             var gifts = new Gift[]
             {
@@ -207,6 +209,30 @@ namespace DAL.Helpers
                     GiftName = "New Horizon",
                     GiftCode = "X_00",
                     GiftImageUrl = "https://sun9-37.userapi.com/c855036/v855036822/224f58/Kuwvm_ds5yQ.jpg"
+                },
+                new Gift()
+                {
+                    GiftName = "1'st of May",
+                    GiftCode = "X_01",
+                    GiftImageUrl = "https://vk.com/images/gift/1086/256.jpg"
+                },
+                new Gift()
+                {
+                    GiftName = "Tasty",
+                    GiftCode = "X_02",
+                    GiftImageUrl = "https://vk.com/images/gift/1069/256.jpg"
+                },
+                new Gift()
+                {
+                    GiftName = "Bananas",
+                    GiftCode = "X_03",
+                    GiftImageUrl = "https://vk.com/images/gift/1063/256.jpg"
+                },
+                new Gift()
+                {
+                    GiftName = "LoveOfLove",
+                    GiftCode = "X_04",
+                    GiftImageUrl = "https://vk.com/images/gift/1005/256.jpg"
                 }
             };
 
@@ -226,7 +252,7 @@ namespace DAL.Helpers
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        
+
         public ICollection<string>? RolesNames { get; set; }
     }
 

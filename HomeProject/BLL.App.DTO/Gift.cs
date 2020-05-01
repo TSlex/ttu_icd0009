@@ -10,6 +10,8 @@ namespace BLL.App.DTO
         [MaxLength(100)] public string GiftCode { get; set; } = default!;
         [MaxLength(300)] public string? GiftImageUrl { get; set; }
         
+        public int Price { get; set; }
+        
         public ICollection<ProfileGift>? ProfileGifts { get; set; }
     }
 }
