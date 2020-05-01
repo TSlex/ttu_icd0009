@@ -8,13 +8,13 @@
 <h4>@ViewData["Title"]</h4>
 
 <div class="alert alert-warning" role="alert">
-    <p>
+    <span>
         <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-    </p>
+    </span>
 </div>
 
 <div>
-    <form id="delete-user" method="post" class="form-group">
+    <form id="delete-user" method="post" class="form-group mt-2">
         <div asp-validation-summary="All" class="text-danger"></div>
         @if (Model.RequirePassword)
         {

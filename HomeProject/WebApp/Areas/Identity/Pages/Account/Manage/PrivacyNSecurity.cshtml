@@ -59,17 +59,18 @@ else
 
 
 <div class="">
-    <p>Your account contains personal data that you have given us. <br>This page allows you to download or delete that data.</p>
+    <span>Your account contains personal data that you have given us. <br>This page allows you to download or delete that data.</span>
+    <form method="post" class="form-group" asp-page="DownloadPersonalData">
+        <button class="btn btn-primary" type="submit">Download</button>
+    </form>
     <p>
         <strong class="alert-danger">Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
     </p>
-    <div class="d-flex">
-        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-            <button class="btn btn-primary" type="submit">Download</button>
-            <button id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</button>
-        </form>
-        
-    </div>
+    <form method="post" class="form-inline d-inline" asp-page="DeletePersonalData">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="password" asp-for="Input.Password" placeholder="Password" class="form-control mt-2" >
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
 </div>
 
 

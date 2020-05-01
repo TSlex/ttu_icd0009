@@ -7,14 +7,18 @@ using Contracts.BLL.App.Services;
 using Contracts.BLL.Base.Services;
 using Contracts.DAL.App;
 using Contracts.DAL.App.Repositories;
+using Post = Domain.Post;
 
 namespace BLL.App.Services
 {
     public class FavoriteService : BaseEntityService<IFavoriteRepo, DAL.App.DTO.Favorite, Favorite>, IFavoriteService
     {
+        private readonly IAppUnitOfWork _uow;
+        
         public FavoriteService(IAppUnitOfWork uow) :
             base(uow.Favorites, new FavoriteMapper())
         {
+            _uow = uow;
         }
 
         public async Task<Favorite> FindAsync(Guid id, Guid userId)
@@ -24,10 +28,20 @@ namespace BLL.App.Services
 
         public Favorite Create(Guid id, Guid userId)
         {
+            var post = _uow.Posts.Find(id);
+
+            if (post == null)
+            {
+                return null;
+            }
+            
             return Mapper.Map(ServiceRepository.Add(new DAL.App.DTO.Favorite()
             {
                 PostId = id,
-                ProfileId = userId
+                ProfileId = userId,
+                PostTitle = post.PostTitle,
+                PostDescription = post.PostDescription,
+                PostImageUrl = post.PostImageUrl
             }));
         }
 

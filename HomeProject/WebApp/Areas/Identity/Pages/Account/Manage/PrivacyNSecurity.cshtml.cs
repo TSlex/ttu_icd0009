@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,16 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         
         [BindProperty]
         public bool Is2faEnabled { get; set; } = default!;
+        
+        [BindProperty]
+        public InputModel Input { get; set; } = default!;
+        
+        public class InputModel
+        {
+            [Required]
+            [DataType(DataType.Password)]
+            public string Password { get; set; } = default!;
+        }
         
         [TempData]
         public string? StatusMessage { get; set; }
