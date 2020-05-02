@@ -37,7 +37,7 @@ namespace DAL.Repositories
         public async Task<IEnumerable<Post>> GetUserFollowsPostsAsync(Guid userId)
         {
             return (await RepoDbContext.Posts
-                .Where(post => post.Profile.Followers
+                .Where(post => post.Profile!.Followers
                     .Select(follower => follower.FollowerProfileId)
                     .Contains(userId) || post.ProfileId == userId).Select(post => new Domain.Post()
                 {
@@ -46,8 +46,8 @@ namespace DAL.Repositories
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageUrl = post.PostImageUrl,
-                    PostCommentsCount = post.Comments.Count,
-                    PostFavoritesCount = post.Favorites.Count,
+                    PostCommentsCount = post.Comments!.Count,
+                    PostFavoritesCount = post.Favorites!.Count,
                     PostPublicationDateTime = post.PostPublicationDateTime,
                     Profile = post.Profile
                 }).ToListAsync()).Select(post => Mapper.Map(post));
@@ -62,8 +62,8 @@ namespace DAL.Repositories
                 PostTitle = post.PostTitle,
                 PostDescription = post.PostDescription,
                 PostImageUrl = post.PostImageUrl,
-                PostCommentsCount = post.Comments.Count,
-                PostFavoritesCount = post.Favorites.Count,
+                PostCommentsCount = post.Comments!.Count,
+                PostFavoritesCount = post.Favorites!.Count,
                 PostPublicationDateTime = post.PostPublicationDateTime,
                 Profile = post.Profile
             }).ToListAsync()).Select(post => Mapper.Map(post));

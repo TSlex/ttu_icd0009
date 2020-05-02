@@ -5,6 +5,7 @@ using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WebApp.Controllers
 {
@@ -50,13 +51,12 @@ namespace WebApp.Controllers
         {
             var gift = await _bll.Gifts.FindAsync(giftId);
 
-            await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
-            
             return View(new ProfileGift
             {
                 Profile = new ProfileFull{UserName = username},
                 Gift = gift,
                 GiftId = giftId,
+                Price = gift.Price,
                 ReturnUrl = returnUrl
             });
         }
@@ -65,7 +65,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateConfirm(ProfileGift profileGift)
         {
-            var user = await _bll.Profiles.FindByUsernameAsync(profileGift.Profile.UserName);
+            var user = await _bll.Profiles.FindByUsernameAsync(profileGift.Profile!.UserName);
 
             if (user == null)
             {
@@ -82,6 +82,7 @@ namespace WebApp.Controllers
 
             if (TryValidateModel(profileGift))
             {
+                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
                 profileGift.Id = Guid.NewGuid();
                 profileGift.Profile = null;
                 
@@ -94,6 +95,12 @@ namespace WebApp.Controllers
                 }
 
                 return RedirectToAction("Index", "Home");
+            }
+            
+            foreach (var modelState in ViewData.ModelState.Values) {
+                foreach (ModelError error in modelState.Errors) {
+                    Console.WriteLine(error.ErrorMessage);
+                }
             }
 
             return View(profileGift);

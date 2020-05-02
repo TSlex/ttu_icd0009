@@ -21,6 +21,6 @@ namespace BLL.App.DTO
 
     public class ProfileGiftCreate : ProfileGift
     {
-        public IEnumerable<Gift> GiftGallery { get; set; }
+        public IEnumerable<Gift> GiftGallery { get; set; } = default!;
     }
 }

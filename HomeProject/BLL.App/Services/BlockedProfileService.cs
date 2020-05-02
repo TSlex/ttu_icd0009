@@ -30,12 +30,7 @@ namespace BLL.App.Services
         {
             var blockedProperty = await ServiceRepository.FindAsync(userId, profileId);
 
-            if (blockedProperty != null)
-            {
-                return Mapper.Map(ServiceRepository.Remove(blockedProperty));
-            }
-
-            return null;
+            return blockedProperty != null ? Mapper.Map(ServiceRepository.Remove(blockedProperty)) : null;
         }
 
         public async Task<BlockedProfile> FindAsync(Guid userId, Guid profileId)

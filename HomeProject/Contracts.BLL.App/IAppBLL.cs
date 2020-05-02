@@ -21,5 +21,6 @@ namespace Contracts.BLL.App
         IProfileService Profiles { get; }
         IRankService Ranks { get; }
         IFeedService FeedService { get; }
+        IImageService ImageService { get; }
     }
 }

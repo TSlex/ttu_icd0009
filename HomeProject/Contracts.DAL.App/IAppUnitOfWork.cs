@@ -20,5 +20,6 @@ namespace Contracts.DAL.App
         IProfileRankRepo ProfileRanks { get; }
         IProfileRepo Profiles { get; }
         IRankRepo Ranks { get; }
+        IImageRepo Images { get; }
     }
 }

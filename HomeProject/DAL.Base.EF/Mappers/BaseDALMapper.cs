@@ -64,6 +64,9 @@ namespace DAL.Base.EF.Mappers
 
                 config.CreateMap<Domain.Message, Message>();
                 config.CreateMap<Message, Domain.Message>();
+                
+                config.CreateMap<Domain.Image, Image>();
+                config.CreateMap<Image, Domain.Image>();
 
                 config.AllowNullDestinationValues = true;
                 

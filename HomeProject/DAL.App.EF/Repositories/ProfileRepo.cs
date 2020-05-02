@@ -49,16 +49,16 @@ namespace DAL.Repositories
                 .ThenInclude(gift => gift.Gift)
                 .Include(profile => profile.ProfileRanks)
                 .ThenInclude(rank => rank.Rank)
-                .ThenInclude(rank => rank.NextRank)
+                .ThenInclude(rank => rank!.NextRank)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
 
         public async Task<Profile> FindNoIncludeAsync(Guid id)
         {
             return Mapper.Map(await RepoDbSet
-                .Include(profile => profile.Posts.Count)
-                .Include(profile => profile.Followed.Count)
-                .Include(profile => profile.Followers.Count)
+                .Include(profile => profile.Posts!.Count)
+                .Include(profile => profile.Followed!.Count)
+                .Include(profile => profile.Followers!.Count)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
 
@@ -81,18 +81,18 @@ namespace DAL.Repositories
             await _userManager.UpdateAsync(user);
         }
 
-        public override async Task<Profile> UpdateAsync(Profile entity)
+        public override Task<Profile> UpdateAsync(Profile entity)
         {
             throw new NotImplementedException();
             
-            var stamp = (await _userManager.FindByIdAsync(entity.Id.ToString())).SecurityStamp;
+            /*var stamp = (await _userManager.FindByIdAsync(entity.Id.ToString())).SecurityStamp;
             var mappedEntity = Mapper.MapReverse(entity);
             
             mappedEntity.SecurityStamp = stamp;
             
             var result = await _userManager.UpdateAsync(mappedEntity);
 
-            return result.Succeeded ? entity : null;
+            return result.Succeeded ? entity : null;*/
         }
     }
 }

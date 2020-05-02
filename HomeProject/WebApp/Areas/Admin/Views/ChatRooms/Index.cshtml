@@ -38,10 +38,10 @@
                 @Html.DisplayFor(modelItem => item.ChatRoomTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Messages.Count)
+                @Html.DisplayFor(modelItem => item.Messages!.Count)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ChatMembers.Count)
+                @Html.DisplayFor(modelItem => item.ChatMembers!.Count)
             </td>
             <td>
                 @(item.DeletedAt != default)

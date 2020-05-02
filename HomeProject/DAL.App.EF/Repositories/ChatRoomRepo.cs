@@ -32,7 +32,7 @@ namespace DAL.Repositories
 
             return Mapper.Map(await RepoDbContext.ChatRooms
                 .Include(room => room.ChatMembers)
-                .Where(room => room.ChatMembers.Count == 2
+                .Where(room => room.ChatMembers!.Count == 2
                                && room.ChatMembers
                                    .Select(member => member.ProfileId)
                                    .Contains(firstId)

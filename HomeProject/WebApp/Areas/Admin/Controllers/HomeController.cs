@@ -37,5 +37,29 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View();
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> SearchUser(string? username, string? returnUrl)
+        {
+            if (username != null)
+            {
+                var user = await _userManager.FindByNameAsync(username);
+
+                if (user != null)
+                {
+                    return RedirectToAction("Index", "Profiles", new
+                    {
+                        username = username
+                    });
+                }
+            }
+
+            if (returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
+
+            return View("Index");
+        }
     }
 }

@@ -26,13 +26,13 @@
             @Html.DisplayNameFor(model => model.Messages)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Messages.Count)
+            @Html.DisplayFor(model => model.Messages!.Count)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ChatMembers)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ChatMembers.Count)
+            @Html.DisplayFor(model => model.ChatMembers!.Count)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedBy)

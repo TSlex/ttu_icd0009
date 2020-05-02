@@ -7,14 +7,14 @@
 @{
     ViewData["Title"] = "Index";
     var profileRank = Model.ProfileRanks
-        .OrderByDescending(rank => rank.Rank.MaxExperience)
-        .Where(rank => rank.Rank.MinExperience <= Model.Experience)
+        .OrderByDescending(rank => rank.Rank!.MaxExperience)
+        .Where(rank => rank.Rank!.MinExperience <= Model.Experience)
         .Take(1).ToList()[0].Rank;
 
     var isAuthorized = SignInManager.IsSignedIn(User);
 
-    float currentExp = Model.Experience - (profileRank.MinExperience >= 0 ? profileRank.MinExperience : 0);
-    float needExp = profileRank.MaxExperience - (profileRank.MinExperience >= 0 ? profileRank.MinExperience : 0);
+    float currentExp = Model.Experience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
+    float needExp = profileRank.MaxExperience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
 }
 
 <div class="profile_container">
@@ -126,7 +126,7 @@
             foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
             {
                 <div class="profile_gift">
-                    <img src="@gift.Gift.GiftImageUrl" alt="..." height="150px" width="150px">
+                    <img src="@(gift.Gift!.GiftImageUrl)" alt="..." height="150px" width="150px">
                 </div>
             }
 

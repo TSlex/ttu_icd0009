@@ -66,7 +66,7 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateConfirm(ProfileGift profileGift)
         {
-            var user = await _bll.Profiles.FindByUsernameAsync(profileGift.Profile.UserName);
+            var user = await _bll.Profiles.FindByUsernameAsync(profileGift.Profile!.UserName);
 
             if (user == null)
             {

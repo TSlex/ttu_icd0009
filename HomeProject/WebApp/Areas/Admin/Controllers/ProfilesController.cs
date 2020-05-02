@@ -269,14 +269,14 @@ namespace WebApp.Areas.Admin.Controllers
             return View(profile);
         }
         
-        public async Task<IActionResult> Delete(Guid id)
+        public Task<IActionResult> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public Task<IActionResult> DeleteConfirmed(Guid id)
         {
             throw new NotImplementedException();
         }

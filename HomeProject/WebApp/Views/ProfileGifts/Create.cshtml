@@ -1,7 +1,7 @@
 @model BLL.App.DTO.ProfileGiftCreate
 
 @{
-    ViewData["Title"] = "Send gift to " + @Model.Profile.UserName;
+    ViewData["Title"] = "Send gift to " + @Model.Profile!.UserName;
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>

@@ -28,7 +28,7 @@
         </div>
 
         <div class="post_details_meta_section">
-            <p>"@ViewData["Title"]" by @Model.Profile.UserName</p>
+            <p>"@ViewData["Title"]" by @Model.Profile!.UserName</p>
             <span>@Model.PostDescription</span>
             <ul class="post_meta_section">
                 <li class="post_meta">
@@ -70,7 +70,7 @@
                 <a class="post_comment" asp-controller="Comments" asp-action="Details"
                    asp-route-id="@comment.Id" asp-route-returnUrl="@Url.ActionLink()">
                     <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
-                    <span class="comment_username">&#64;@comment.Profile.UserName: </span>
+                    <span class="comment_username">&#64;@comment.Profile!.UserName: </span>
                     <span class="comment_value">@comment.CommentValue</span>
                 </a>
             }

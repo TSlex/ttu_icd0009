@@ -77,7 +77,7 @@ namespace BLL.App.DTO
         public int PostsCount { get; set; }
         
         public int Experience { get; set; }
-        public ProfileRank Rank { get; set; }
+        public ProfileRank Rank { get; set; } = default!;
     }
 
     public class ProfileEdit: MUser

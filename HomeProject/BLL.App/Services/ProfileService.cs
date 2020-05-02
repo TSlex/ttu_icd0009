@@ -48,7 +48,7 @@ namespace BLL.App.Services
                 FollowersCount = profile.FollowersCount,
                 PostsCount = profile.PostsCount,
                 Experience = profile.Experience,
-                Rank = profile.ProfileRanks.OrderBy(rank => rank.Rank.MaxExperience).ToList()[0]
+                Rank = profile.ProfileRanks.OrderBy(rank => rank.Rank!.MaxExperience).ToList()[0]
             };
         }
 

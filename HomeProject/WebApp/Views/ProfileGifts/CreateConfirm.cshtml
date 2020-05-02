@@ -1,7 +1,7 @@
 ﻿@model BLL.App.DTO.ProfileGift
 
 @{
-    ViewData["Title"] = "Send gift to " + @Model.Profile.UserName;
+    ViewData["Title"] = "Send gift to " + @Model.Profile!.UserName;
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
@@ -11,15 +11,17 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <span>The following gift will be send to <b>@Model.Profile.UserName</b></span>
-        <img src="@Model.Gift.GiftImageUrl" alt="" height="200px" width="200px" class="m-3">
+        <img src="@(Model.Gift!.GiftImageUrl)" alt="" height="200px" width="200px" class="m-3">
         <span class="text-danger font-weight-bold">Price: @Model.Price</span>
 
         <span>Are you sure?</span>
         <br>
         <form method="post" asp-action="CreateConfirm">
-            <input type="hidden" asp-for="Profile.UserName">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Profile!.UserName">
             <input type="hidden" asp-for="ReturnUrl">
             <input type="hidden" asp-for="GiftId">
+            <input type="hidden" asp-for="Price">
             <div class="form-group">
                 <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Cancel</a>
                 <input type="submit" value="Send" class="btn btn-primary"/>
