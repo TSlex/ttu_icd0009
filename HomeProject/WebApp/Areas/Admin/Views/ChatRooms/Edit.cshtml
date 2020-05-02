@@ -1,4 +1,4 @@
-@model BLL.App.DTO.ProfileGift
+﻿@model BLL.App.DTO.ChatRoom
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,14 +11,9 @@
         <form asp-action="Edit">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProfileId" class="control-label"></label>
-                <input asp-for="ProfileId" class="form-control"/>
-                <span asp-validation-for="ProfileId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GiftId" class="control-label"></label>
-                <input asp-for="GiftId" class="form-control"/>
-                <span asp-validation-for="GiftId" class="text-danger"></span>
+                <label asp-for="ChatRoomTitle" class="control-label"></label>
+                <input asp-for="ChatRoomTitle" class="form-control"/>
+                <span asp-validation-for="ChatRoomTitle" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id"/>
             <div class="form-group">

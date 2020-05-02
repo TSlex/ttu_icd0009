@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.BLL.App;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +32,45 @@ namespace WebApp.Areas.Admin.Controllers
             return RedirectToAction("Index", "Messages", new {
                 chatRoomId = chatRoomId
             });
+        }
+        
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var chatRoom = await _bll.ChatRooms.FindAsync(id);
+
+            if (chatRoom == null)
+            {
+                return NotFound();
+            }
+
+            return View(chatRoom);
+        }
+        
+        public async Task<IActionResult> Edit(Guid id, string? returnUrl)
+        {
+            var chatRoom = await _bll.ChatRooms.FindAsync(id);
+
+            return View(chatRoom);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, ChatRoom chatRoom)
+        {
+            if (id != chatRoom.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _bll.ChatRooms.UpdateAsync(chatRoom);
+                await _bll.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index), "Home");
+            }
+
+            return View(chatRoom);
         }
 
         // GET: ChatRooms/Delete/5

@@ -53,8 +53,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             ModelState.Clear();
             favorite.ProfileId = User.UserId();
-            favorite.ChangedAt = DateTime.Now;
-            favorite.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(favorite))
             {
@@ -91,7 +89,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(Guid id,
             BLL.App.DTO.Favorite favorite)
         {
-            if (id != favorite.Id || User.UserId() != favorite.ProfileId)
+            if (id != favorite.Id)
             {
                 return NotFound();
             }

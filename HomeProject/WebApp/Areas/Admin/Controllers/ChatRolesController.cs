@@ -51,8 +51,6 @@ namespace WebApp.Areas.Admin.Controllers
             BLL.App.DTO.ChatRole chatRole)
         {
             ModelState.Clear();
-            chatRole.ChangedAt = DateTime.Now;
-            chatRole.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(chatRole))
             {

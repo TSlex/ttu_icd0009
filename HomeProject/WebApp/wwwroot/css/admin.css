@@ -1,4 +1,8 @@
-﻿.admin_panel{
+﻿html{
+    user-select: inherit !important;
+}
+
+.admin_panel{
     display: flex;
     flex-direction: column;
     align-items: center;

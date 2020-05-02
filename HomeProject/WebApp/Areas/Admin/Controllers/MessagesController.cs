@@ -10,7 +10,6 @@ namespace WebApp.Areas.Admin.Controllers
 {    
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("{area}/{controller}/{chatRoomId}/{action=Index}/{id?}")]
     public class MessagesController : Controller
     {
         private readonly IAppBLL _bll;
@@ -22,15 +21,26 @@ namespace WebApp.Areas.Admin.Controllers
 
         // GET: Messages
 //        [Route("/{chatRoomId?}")]
-        public async Task<IActionResult> Index(Guid chatRoomId)
+        public async Task<IActionResult> Index()
         {
-            return View(await _bll.Messages.AllAsync(chatRoomId));
+            return View(await _bll.Messages.AllAsync());
+        }
+        
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var post = await _bll.Messages.FindAsync(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
         }
 
         // GET: Messages/Create
         public IActionResult Create(Guid chatRoomId)
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             var message = new Message()
             {
                 ChatRoomId = chatRoomId,
@@ -72,8 +82,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
+            
             return View(message);
         }
 
@@ -84,7 +93,7 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Message message)
         {
-            if (id != message.Id || User.UserId() != message.ProfileId)
+            if (id != message.Id)
             {
                 return NotFound();
             }

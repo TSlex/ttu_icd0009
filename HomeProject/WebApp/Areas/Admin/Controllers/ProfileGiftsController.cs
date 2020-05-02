@@ -119,7 +119,7 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProfileGift profileGift)
         {
-            if (id != profileGift.Id || User.UserId() != profileGift.ProfileId)
+            if (id != profileGift.Id)
             {
                 return NotFound();
             }

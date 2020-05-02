@@ -1,124 +1,52 @@
-@using Domain
-@using Extension
-@using Microsoft.AspNetCore.Identity
-@model BLL.App.DTO.ProfileFull
-@inject SignInManager<Profile> SignInManager
+@model IEnumerable<BLL.App.DTO.ProfileFull>
 
 @{
     ViewData["Title"] = "Index";
-    var profileRank = Model.ProfileRanks
-        .OrderByDescending(rank => rank.Rank.MaxExperience)
-        .Where(rank => rank.Rank.MinExperience <= Model.Experience)
-        .Take(1).ToList()[0].Rank;
-
-    var isAuthorized = SignInManager.IsSignedIn(User);
-
-    float currentExp = Model.Experience - (profileRank.MinExperience >= 0 ? profileRank.MinExperience : 0);
-    float needExp = profileRank.MaxExperience - (profileRank.MinExperience >= 0 ? profileRank.MinExperience : 0);
 }
 
-<div class="profile_container">
-    <div class="profile_section">
-        <div class="col-3 d-flex justify-content-center">
-            <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
-                <img alt="" width="150px" height="150px"
-                     src=@Model.ProfileAvatarUrl>
-            </div>
-        </div>
-        <div class="profile_description col-9">
-            <ul class="profile_meta_section">
-                <li class="profile_name">@Model.UserName</li>
-                @{
-                    if (isAuthorized && @Model.Id != User.UserId())
-                    {
-                        <div class="profile_controls dropdown show">
-                            <a class="btn fa fa-bars" href="#" role="button" id="profile_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            </a>
+<h1>Index</h1>
 
-                            <div class="dropdown-menu" aria-labelledby="profile_more">
-                                <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName"
-                                   class="dropdown-item text-center">
-                                    Написать
-                                </a>
-                            </div>
-                        </div>
-                    }
-                }
-            </ul>
-            <div class="profile_rank">
-                <span class="rank_title">@profileRank.RankTitle</span>
-                <div class="rank_bar_back"></div>
-                <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.RankColor">
-                </div>
-                <span class="rank_score">@Model.Experience/@profileRank.MaxExperience</span>
-                <div class="rank_icons">
-                    @{
-                        var icons = profileRank.RankIcon?.Split(";").Where(s => s != "").ToList();
-                        if (icons != null)
-                        {
-                            foreach (var icon in icons)
-                            {
-                                <icon class="fa fa-@icon"></icon>
-                            }
-                        }
-                    }
-                </div>
-            </div>
-
-            <ul class="profile_meta_section">
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.PostsCount</span>
-                    <span class="meta_title">публикаций</span>
-                </li>
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.FollowersCount</span>
-                    <span class="meta_title">подписчиков</span>
-                </li>
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.FollowedCount</span>
-                    <span class="meta_title">подписок</span>
-                </li>
-            </ul>
-
-            <div class="profile_about">
-                <h1>@Model.ProfileFullName</h1>
-                <span>@Model.ProfileAbout</span>
-                <br>
-                <a href="">@Model.ProfileWorkPlace</a>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="profile_gift_section">
-        @{
-            foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
-            {
-                <div class="profile_gift">
-                    <img src="@gift.Gift.GiftImageUrl" alt="..." height="150px" width="150px">
-                </div>
-            }
-
-            if (isAuthorized)
-            {
-                <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
-                   asp-controller="ProfileGifts"
-                   asp-route-username="@Model.UserName"
-                   asp-route-returnUrl="@Url.ActionLink()">
-                </a>
-            }
-        }
-    </div>
-    <hr>
-    <div class="posts_section">
-        <div class="post_row card-columns">
-            @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
-            {
-                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
-                    <div class="post_item card">
-                        <img alt="" src="@post.PostImageUrl" class="post_image card-img">
-                    </div>
-                </a>
-            }
-        </div>
-    </div>
-</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            IS DELETED?
+        </th>
+        <th>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @(item.DeletedAt != default)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

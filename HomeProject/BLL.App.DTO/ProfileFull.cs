@@ -79,4 +79,25 @@ namespace BLL.App.DTO
         public int Experience { get; set; }
         public ProfileRank Rank { get; set; }
     }
+
+    public class ProfileEdit: MUser
+    {
+        [MinLength(1)] [MaxLength(100)] public string? ProfileFullName { get; set; }
+
+        [MaxLength(300)] public string? ProfileWorkPlace { get; set; }
+        
+        [MaxLength(300)] public string? ProfileStatus { get; set; }
+
+        [MaxLength(300)] public string? ProfileAvatarUrl { get; set; }
+
+        [MaxLength(1000)] public string? ProfileAbout { get; set; }
+
+        [Range(0, int.MaxValue)] public ProfileGender ProfileGender { get; set; } = ProfileGender.Undefined;
+        
+        [MaxLength(20)]
+        public string? ProfileGenderOwn { get; set; }
+        
+        public int Experience { get; set; }
+        public string? Password { get; set; }
+    }
 }

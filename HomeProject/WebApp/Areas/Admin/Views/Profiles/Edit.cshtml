@@ -1,0 +1,109 @@
+﻿@using Domain.Enums
+@model BLL.App.DTO.ProfileEdit
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">Edit</h1>
+<hr/>
+<div class="row text-center justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id">
+
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control"/>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control"/>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label text-danger"></label>
+                <input asp-for="Password" class="form-control"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProfileFullName" class="control-label"></label>
+                <input asp-for="ProfileFullName" class="form-control"/>
+                <span asp-validation-for="ProfileFullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileWorkPlace" class="control-label"></label>
+                <input asp-for="ProfileWorkPlace" class="form-control"/>
+                <span asp-validation-for="ProfileWorkPlace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Experience" class="control-label"></label>
+                <input asp-for="Experience" class="form-control"/>
+                <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileAbout" class="control-label"></label>
+                <input asp-for="ProfileAbout" class="form-control"/>
+                <span asp-validation-for="ProfileAbout" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileAvatarUrl" class="control-label"></label>
+                <input asp-for="ProfileAvatarUrl" class="form-control"/>
+                <span asp-validation-for="ProfileAvatarUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileGender" class="control-label">Пол</label>
+                <select asp-for="ProfileGender" id="Input_ProfileGender" asp-items="Html.GetEnumSelectList<ProfileGender>()" class="form-control"></select>
+                <span asp-validation-for="ProfileGender" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none" id="profile-gender-own">
+                <label asp-for="ProfileGenderOwn"></label>
+                <input asp-for="ProfileGenderOwn" class="form-control"/>
+                <span asp-validation-for="ProfileGenderOwn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileStatus" class="control-label"></label>
+                <input asp-for="ProfileStatus" class="form-control"/>
+                <span asp-validation-for="ProfileStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumberConfirmed" class="control-label"></label>
+                <input type="checkbox" asp-for="PhoneNumberConfirmed" class="form-control"/>
+                <span asp-validation-for="PhoneNumberConfirmed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LockoutEnabled" class="control-label"></label>
+                <input type="checkbox" asp-for="LockoutEnabled" class="form-control"/>
+                <span asp-validation-for="LockoutEnabled" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailConfirmed" class="control-label"></label>
+                <input type="checkbox" asp-for="EmailConfirmed" class="form-control"/>
+                <span asp-validation-for="EmailConfirmed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccessFailedCount" class="control-label"></label>
+                <input asp-for="AccessFailedCount" class="form-control"/>
+                <span asp-validation-for="AccessFailedCount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/Identity/profile-preferences.js"></script>
+}

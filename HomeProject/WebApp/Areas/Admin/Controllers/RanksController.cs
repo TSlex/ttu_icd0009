@@ -40,7 +40,6 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Ranks/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -71,16 +70,13 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Ranks/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
-
-
             var rank = await _bll.Ranks.FindAsync(id);
 
             if (rank == null)
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", rank.ProfileId);
+            
             return View(rank);
         }
 

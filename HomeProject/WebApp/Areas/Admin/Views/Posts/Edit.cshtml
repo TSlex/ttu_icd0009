@@ -1,25 +1,49 @@
 @model BLL.App.DTO.Post
 
 @{
-    ViewData["Title"] = "Edit " + Model.PostTitle;
+    ViewData["Title"] = "Edit";
 }
 
-<h4 class="text-center">@ViewData["Title"]</h4>
-<br>
-<div class="post_create">
-    <div class="row justify-content-center text-center">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <input type="hidden" asp-for="Id"/>
-                <partial name="_PostCreateEdit"/>
-                <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary"/>
-                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Cancel</a>
-                </div>
-            </form>
-        </div>
+<h1 class="text-center">Edit</h1>
+<hr/>
+<div class="row text-center justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProfileId" class="control-label"></label>
+                <input asp-for="ProfileId" class="form-control"/>
+                <span asp-validation-for="ProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostImageUrl" class="control-label"></label>
+                <input asp-for="PostImageUrl" class="form-control"/>
+                <span asp-validation-for="PostImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostTitle" class="control-label"></label>
+                <input asp-for="PostTitle" class="form-control"/>
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostDescription" class="control-label"></label>
+                <input asp-for="PostDescription" class="form-control"/>
+                <span asp-validation-for="PostDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostPublicationDateTime" class="control-label"></label>
+                <input asp-for="PostPublicationDateTime" class="form-control"/>
+                <span asp-validation-for="PostPublicationDateTime" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+        </form>
     </div>
 </div>
+
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

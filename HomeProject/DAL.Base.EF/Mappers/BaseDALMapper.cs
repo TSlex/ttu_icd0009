@@ -61,7 +61,10 @@ namespace DAL.Base.EF.Mappers
                 
                 config.CreateMap<Domain.BlockedProfile, BlockedProfile>();
                 config.CreateMap<BlockedProfile, Domain.BlockedProfile>();
-                
+
+                config.CreateMap<Domain.Message, Message>();
+                config.CreateMap<Message, Domain.Message>();
+
                 config.AllowNullDestinationValues = true;
                 
             }).CreateMapper();

@@ -51,8 +51,6 @@ namespace WebApp.Areas.Admin.Controllers
             BLL.App.DTO.ChatMember chatMember)
         {
             ModelState.Clear();
-            chatMember.ChangedAt = DateTime.Now;
-            chatMember.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(chatMember))
             {
@@ -75,8 +73,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatMember.ProfileId);
+            
             return View(chatMember);
         }
 

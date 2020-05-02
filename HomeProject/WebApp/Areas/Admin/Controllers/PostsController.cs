@@ -137,11 +137,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var post = await _bll.Posts.FindAsync(id);
 
-            if (!ValidateUserAccess(post))
-            {
-                return NotFound();
-            }
-
             post.ReturnUrl = returnUrl;
             
             return View(post);
@@ -156,7 +151,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var record = await _bll.Posts.FindAsync(id);
 
-            if (!ValidateUserAccess(record) || id != post.Id)
+            if (id != post.Id)
             {
                 return NotFound();
             }
@@ -185,11 +180,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var post = await _bll.Posts.FindAsync(id);
 
-            if (!ValidateUserAccess(post))
-            {
-                return NotFound();
-            }
-            
             post.ReturnUrl = returnUrl;
 
             return View(post);
@@ -200,12 +190,6 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, Post post)
         {
-            var record = await _bll.Posts.FindAsync(id);
-            
-            if (!ValidateUserAccess(record))
-            {
-                return NotFound();
-            }
 
             _bll.Posts.Remove(id);
             await _bll.SaveChangesAsync();
@@ -216,11 +200,6 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
-        }
-
-        private bool ValidateUserAccess(Post? record)
-        {
-            return record != null && record.ProfileId == User.UserId();
         }
     }
 }

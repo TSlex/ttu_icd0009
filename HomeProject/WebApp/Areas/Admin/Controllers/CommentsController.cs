@@ -87,11 +87,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var comment = await _bll.Comments.FindAsync(id);
 
-            if (!ValidateUserAccess(comment))
-            {
-                return NotFound();
-            }
-            
             comment.ReturnUrl = returnUrl;
 
             return View(comment);
@@ -107,7 +102,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var record = await _bll.Comments.FindAsync(id);
             
-            if (!ValidateUserAccess(record) || id != comment.Id)
+            if (id != comment.Id)
             {
                 return NotFound();
             }
@@ -134,11 +129,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var comment = await _bll.Comments.FindAsync(id);
 
-            if (!ValidateUserAccess(comment))
-            {
-                return NotFound();
-            }
-            
             comment.ReturnUrl = returnUrl;
 
             return View(comment);
@@ -151,11 +141,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var record = await _bll.Comments.FindAsync(id);
 
-            if (!ValidateUserAccess(record))
-            {
-                return NotFound();
-            }
-            
             _bll.Comments.Remove(id);
             await _bll.SaveChangesAsync();
 
@@ -165,11 +150,6 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(Index), "Home");
-        }
-        
-        private bool ValidateUserAccess(Comment? record)
-        {
-            return record != null && record.ProfileId == User.UserId();
         }
     }
 }

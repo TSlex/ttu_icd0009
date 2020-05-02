@@ -3,6 +3,7 @@ let genderOwn = document.getElementById('profile-gender-own');
 
 // console.log(genderInput);
 // console.log(genderOwn);
+
 if (parseInt(genderInput.value) === 127){
     genderOwn.classList.remove('d-none')
 }

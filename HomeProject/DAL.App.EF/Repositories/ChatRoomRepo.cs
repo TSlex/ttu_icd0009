@@ -46,6 +46,7 @@ namespace DAL.Repositories
         {
             return (await RepoDbContext.ChatRooms
                     .Include(room => room.ChatMembers)
+                    .Include(room => room.Messages)
                     .Where(room => room.ChatMembers
                         .Select(member => member.ProfileId)
                         .Contains(userId))

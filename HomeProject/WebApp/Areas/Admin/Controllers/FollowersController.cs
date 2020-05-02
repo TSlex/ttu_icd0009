@@ -54,8 +54,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             ModelState.Clear();
             follower.ProfileId = User.UserId();
-            follower.ChangedAt = DateTime.Now;
-            follower.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(follower))
             {
@@ -92,7 +90,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(Guid id,
             BLL.App.DTO.Follower follower)
         {
-            if (id != follower.Id || User.UserId() != follower.ProfileId)
+            if (id != follower.Id)
             {
                 return NotFound();
             }

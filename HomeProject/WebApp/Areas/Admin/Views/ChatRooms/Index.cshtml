@@ -1,27 +1,57 @@
-@using Extension
 @model IEnumerable<BLL.App.DTO.ChatRoom>
 
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = "Index";
 }
 
-<div class="preferences_section">
-    <div class="row">
-        <div class="col-md-4">
-            <ul class="nav nav-pills flex-column">
-                @foreach (var item in Model)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Messages" asp-action="Index"
-                           asp-route-chatRoomId="@item.Id">
-                            @(item.ChatMembers.FirstOrDefault(member => member.ProfileId == User.UserId())?.ChatRoomTitle ?? item.ChatRoomTitle)
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
-        <div class="col-md-8">
-            Here will be JS-rendered messages
-        </div>
-    </div>
-</div>
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChatRoomTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Messages)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChatMembers)
+        </th>
+        <th>
+            IS DELETED?
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChatRoomTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Messages.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChatMembers.Count)
+            </td>
+            <td>
+                @(item.DeletedAt != default)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

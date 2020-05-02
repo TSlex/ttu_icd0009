@@ -60,6 +60,9 @@ namespace BLL.Base.Mappers
                 config.CreateMap<DAL.App.DTO.BlockedProfile, BlockedProfile>();
                 config.CreateMap<BlockedProfile, DAL.App.DTO.BlockedProfile>();
 
+                config.CreateMap<DAL.App.DTO.Message, Message>();
+                config.CreateMap<Message, DAL.App.DTO.Message>();
+
                 config.AllowNullDestinationValues = true;
             }).CreateMapper();
         }

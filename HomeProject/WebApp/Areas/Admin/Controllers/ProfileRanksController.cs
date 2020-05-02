@@ -27,8 +27,6 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: ProfileRanks/Details/5
         public async Task<IActionResult> Details(Guid id)
         {
-
-
             var profileRank = await _bll.ProfileRanks.FindAsync(id);
 
             if (profileRank == null)
@@ -42,7 +40,6 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: ProfileRanks/Create
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
@@ -56,8 +53,6 @@ namespace WebApp.Areas.Admin.Controllers
         {
             ModelState.Clear();
             profileRank.ProfileId = User.UserId();
-            profileRank.ChangedAt = DateTime.Now;
-            profileRank.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(profileRank))
             {
@@ -82,8 +77,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", profileRank.ProfileId);
+            
             return View(profileRank);
         }
 
@@ -95,7 +89,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(Guid id,
             BLL.App.DTO.ProfileRank profileRank)
         {
-            if (id != profileRank.Id || User.UserId() != profileRank.ProfileId)
+            if (id != profileRank.Id)
             {
                 return NotFound();
             }

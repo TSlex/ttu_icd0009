@@ -5,28 +5,28 @@
 <div class="admin_panel">
     <div class="panel_section">
         <h4>Profile:</h4>
-        <a class="btn btn-primary">Profiles</a>
-        <a class="btn btn-primary">Profile gifts</a>
-        <a class="btn btn-primary">Profile ranks</a>
-        <a class="btn btn-primary">Favorites</a>
-        <a class="btn btn-primary">Followers</a>
-        <a class="btn btn-primary">Blocked profiles</a>
+        <a class="btn btn-primary" asp-controller="Profiles" asp-action="Index" asp-area="Admin">Profiles</a>
+        <a class="btn btn-primary" asp-controller="ProfileGifts" asp-action="Index" asp-area="Admin">Profile gifts</a>
+        <a class="btn btn-primary" asp-controller="ProfileRanks" asp-action="Index" asp-area="Admin">Profile ranks</a>
+        <a class="btn btn-primary" asp-controller="Favorites" asp-action="Index" asp-area="Admin">Favorites</a>
+        <a class="btn btn-primary" asp-controller="Followers" asp-action="Index" asp-area="Admin">Followers</a>
+        <a class="btn btn-primary" asp-controller="BlockedProfiles" asp-action="Index" asp-area="Admin">Blocked profiles</a>
     </div>
     <div class="panel_section">
         <h4>Chat:</h4>
-        <a class="btn btn-primary">Chat rooms</a>
-        <a class="btn btn-primary">Chat members</a>
-        <a class="btn btn-primary">Messages</a>
+        <a class="btn btn-primary" asp-controller="ChatRooms" asp-action="Index" asp-area="Admin">Chat rooms</a>
+        <a class="btn btn-primary" asp-controller="ChatMembers" asp-action="Index" asp-area="Admin">Chat members</a>
+        <a class="btn btn-primary" asp-controller="Messages" asp-action="Index" asp-area="Admin">Messages</a>
     </div>
     <div class="panel_section">
         <h4>Post:</h4>
-        <a class="btn btn-primary">Posts</a>
-        <a class="btn btn-primary">Comments</a>
+        <a class="btn btn-primary" asp-controller="Posts" asp-action="Index" asp-area="Admin">Posts</a>
+        <a class="btn btn-primary" asp-controller="Comments" asp-action="Index" asp-area="Admin">Comments</a>
     </div>
     <div class="panel_section">
         <h4>Misc:</h4>
-        <a class="btn btn-primary">Chat roles</a>
-        <a class="btn btn-primary">Ranks</a>
-        <a class="btn btn-primary">Gifts</a>
+        <a class="btn btn-primary" asp-controller="ChatRoles" asp-action="Index" asp-area="Admin">Chat roles</a>
+        <a class="btn btn-primary" asp-controller="Ranks" asp-action="Index" asp-area="Admin">Ranks</a>
+        <a class="btn btn-primary" asp-controller="Gifts" asp-action="Index" asp-area="Admin">Gifts</a>
     </div>
 </div>

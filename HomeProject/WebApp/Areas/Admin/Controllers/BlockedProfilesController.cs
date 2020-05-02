@@ -52,8 +52,6 @@ namespace WebApp.Areas.Admin.Controllers
             BLL.App.DTO.BlockedProfile blockedProfile)
         {
             ModelState.Clear();
-            blockedProfile.ChangedAt = DateTime.Now;
-            blockedProfile.CreatedAt = DateTime.Now;
 
             if (TryValidateModel(blockedProfile))
             {
@@ -76,8 +74,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", blockedProfile.ProfileId);
+            
             return View(blockedProfile);
         }
 

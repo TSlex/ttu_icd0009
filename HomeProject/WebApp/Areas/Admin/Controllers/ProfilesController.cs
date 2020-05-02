@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
@@ -25,9 +26,14 @@ namespace WebApp.Areas.Admin.Controllers
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Index(string username)
+        public async Task<IActionResult> Index()
         {
-            var user = await _userManager.FindByNameAsync(username);
+            return View(await _bll.Profiles.AllAsync());
+        }
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
             var isAuthorized = _signInManager.IsSignedIn(User);
 
             if (user == null)
@@ -62,7 +68,7 @@ namespace WebApp.Areas.Admin.Controllers
             return View(profileModel);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> FollowProfile(ProfileFull profileFullModel)
         {
             var userId = User.UserId();
@@ -157,6 +163,122 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+        }*/
+        
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var profile = await _bll.Profiles.FindAsync(id);
+
+            if (profile == null)
+            {
+                return NotFound();
+            }
+            
+            return View(new ProfileEdit()
+            {
+                Email = profile.Email,
+                Id = profile.Id,
+                UserName = profile.UserName,
+                ProfileFullName = profile.ProfileFullName,
+                ProfileWorkPlace = profile.ProfileWorkPlace,
+                Experience = profile.Experience,
+                ProfileAbout = profile.ProfileAbout,
+                ProfileAvatarUrl = profile.ProfileAvatarUrl,
+                ProfileGender = profile.ProfileGender,
+                ProfileGenderOwn = profile.ProfileGenderOwn,
+                ProfileStatus = profile.ProfileStatus,
+                PhoneNumber = profile.PhoneNumber,
+                PhoneNumberConfirmed = profile.PhoneNumberConfirmed,
+                LockoutEnabled = profile.LockoutEnabled,
+                EmailConfirmed = profile.EmailConfirmed,
+                AccessFailedCount = profile.AccessFailedCount
+            });
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, ProfileEdit profile)
+        {
+            if (id != profile.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                var record = await _userManager.FindByIdAsync(id.ToString());
+
+                if (record == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Profile does not exist");
+                    return View(profile);
+                }
+
+                if (record.UserName != profile.UserName)
+                {
+                    var result = await _userManager.SetUserNameAsync(record, profile.UserName);
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError(string.Empty, "Cannot change username");
+                        return View(profile);
+                    }
+                }
+                if (record.Email != profile.Email)
+                {
+                    var result = await _userManager.SetEmailAsync(record, profile.Email);
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError(string.Empty, "Cannot change email");
+                        return View(profile);
+                    }
+                }
+                if (profile.Password != null)
+                {
+                    var resetToken = await _userManager.GeneratePasswordResetTokenAsync(record);
+                    var changePasswordResult = await _userManager.ResetPasswordAsync(record, resetToken,profile.Password);
+                    if (!changePasswordResult.Succeeded)
+                    {
+                        foreach (var error in changePasswordResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return View(profile);
+                    }
+                }
+                
+                record.ProfileFullName = profile.ProfileFullName;
+                record.ProfileWorkPlace = profile.ProfileWorkPlace;
+                record.Experience = profile.Experience;
+                record.ProfileAbout = profile.ProfileAbout;
+                record.ProfileAvatarUrl = profile.ProfileAvatarUrl;
+                record.ProfileGender = profile.ProfileGender;
+                record.ProfileGenderOwn = profile.ProfileGenderOwn;
+                record.ProfileStatus = profile.ProfileStatus;
+                record.PhoneNumber = profile.PhoneNumber;
+                record.PhoneNumberConfirmed = profile.PhoneNumberConfirmed;
+                record.LockoutEnabled = profile.LockoutEnabled;
+                record.EmailConfirmed = profile.EmailConfirmed;
+                record.AccessFailedCount = profile.AccessFailedCount;
+
+                await _userManager.UpdateAsync(record);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(profile);
+        }
+        
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

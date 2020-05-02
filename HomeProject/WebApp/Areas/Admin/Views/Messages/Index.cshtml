@@ -1,22 +1,58 @@
-@using Extension
 @model IEnumerable<BLL.App.DTO.Message>
 
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = "Index";
 }
 
-<div class="chat_section">
-    @foreach (var item in Model.OrderBy(message => message.MessageDateTime))
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChatRoomId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MessageValue)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MessageDateTime)
+        </th>
+        <th>
+            IS DELETED?
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
     {
-        <div class="message @(User.UserId() == item.ProfileId ? "active": "")">@item.MessageValue</div>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfileId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChatRoomId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageDateTime)
+            </td>
+            <td>
+                @(item.DeletedAt != default)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+            </td>
+        </tr>
     }
-
-    <div class="row d-flex justify-content-center">
-        <a asp-action="Create" class="btn btn-primary">Create</a>
-    </div>
-
-    @*     @Html.Partial("_CreatePartial", new DAL.App.DTO.Message() *@
-    @*     { *@
-    @*     }) *@
-
-</div>    
+    </tbody>
+</table>
