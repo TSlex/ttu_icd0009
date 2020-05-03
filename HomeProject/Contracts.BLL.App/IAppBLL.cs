@@ -20,7 +20,7 @@ namespace Contracts.BLL.App
         IProfileRankService ProfileRanks { get; }
         IProfileService Profiles { get; }
         IRankService Ranks { get; }
+        IImageService Images { get; }
         IFeedService FeedService { get; }
-        IImageService ImageService { get; }
     }
 }

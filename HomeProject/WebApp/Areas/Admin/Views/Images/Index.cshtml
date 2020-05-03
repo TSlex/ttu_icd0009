@@ -1,4 +1,4 @@
-@model IEnumerable<BLL.App.DTO.Follower>
+@model IEnumerable<BLL.App.DTO.Image>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,16 +6,23 @@
 
 <h1>Index</h1>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FollowerProfileId)
+            @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProfileId)
+            Resolution
+        </th>
+        <th>
+            Padding
         </th>
         <th>
             IS DELETED?
@@ -28,13 +35,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FollowerProfileId)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                ->
+                @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProfileId)
+                @(item.WidthPx)x@(item.HeightPx)
+            </td>
+            <td>
+                @(item.PaddingTop);@(item.PaddingRight);@(item.PaddingBottom);@(item.PaddingLeft)
             </td>
             <td>
                 @(item.DeletedAt != default)

@@ -6,14 +6,13 @@ using Contracts.BLL.App;
 using Contracts.BLL.App.Services;
 using Contracts.DAL.App;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 
 namespace BLL.App
 {
     public class AppBLL : BaseBLL<IAppUnitOfWork>, IAppBLL
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        
+
         public AppBLL(IAppUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(unitOfWork)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -47,8 +46,8 @@ namespace BLL.App
         
         public IRankService Ranks => GetService<IRankService>(() => new RankService(UnitOfWork));
 
-        public IFeedService FeedService => GetService<IFeedService>(() => new FeedService(UnitOfWork));
+        public IImageService Images => GetService<IImageService>(() => new ImageService(UnitOfWork));
         
-        public IImageService ImageService => GetService<IImageService>(() => new ImageService(UnitOfWork));
+        public IFeedService FeedService => GetService<IFeedService>(() => new FeedService(UnitOfWork));
     }
 }

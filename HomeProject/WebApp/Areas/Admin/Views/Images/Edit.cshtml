@@ -1,0 +1,56 @@
+@model BLL.App.DTO.Image
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">Edit</h1>
+<hr/>
+<div class="row text-center align-items-center d-flex flex-column">
+    <div class="card" style="width: 40rem;" id="image-miniature">
+        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img">
+    </div>
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control"/>
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="custom-file">
+                <input type="file" asp-for="ImageFile" class="custom-file-input">
+                <label class="custom-file-label" style="overflow: hidden"></label>
+            </div>
+
+            <input type="hidden" asp-for="Id"/>
+            <input type="hidden" asp-for="HeightPx"/>
+            <input type="hidden" asp-for="WidthPx"/>
+            <input type="hidden" asp-for="PaddingTop"/>
+            <input type="hidden" asp-for="PaddingRight"/>
+            <input type="hidden" asp-for="PaddingBottom"/>
+            <input type="hidden" asp-for="PaddingLeft"/>
+
+            <div class="form-group mt-2">
+                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+                $('#ImageFile').on('change',function(){
+                    //get the file name
+                    var fileName = $(this).val().replace('C:\\fakepath\\', "");
+                    //replace the "Choose a file" label
+                    $(this).next('.custom-file-label').html(fileName);
+                })
+    </script>
+    <script type="text/javascript" src="~/js/image-miniature.js"></script>
+}
