@@ -7,8 +7,8 @@
 <h1 class="text-center">Edit</h1>
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
-    <div class="card" style="width: 40rem;" id="image-miniature">
-        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img">
+    <div class="card" style="width: 40rem; user-select: none;" draggable="false" id="image-miniature">
+        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img" id="render_image">
     </div>
     <div class="col-md-4">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
@@ -52,5 +52,5 @@
                     $(this).next('.custom-file-label').html(fileName);
                 })
     </script>
-    <script type="text/javascript" src="~/js/image-miniature.js"></script>
+    <script type="text/javascript" src="~/js/images/image-miniature.js"></script>
 }

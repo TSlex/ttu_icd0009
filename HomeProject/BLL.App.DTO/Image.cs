@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using DAL.Base;
+using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace BLL.App.DTO
@@ -16,5 +18,8 @@ namespace BLL.App.DTO
         public int PaddingLeft { get; set; }
         
         public IFormFile? ImageFile { get; set; }
+        
+        public ImageType ImageType { get; set; } = default!;
+        public Guid ImageFor { get; set; } = default!;
     }
 }

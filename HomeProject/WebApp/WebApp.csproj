@@ -203,6 +203,9 @@
 
     <ItemGroup>
         <Folder Include="wwwroot\lib\font-awesome" />
+        <Folder Include="wwwroot\localstorage\images\gifts" />
+        <Folder Include="wwwroot\localstorage\images\posts" />
+        <Folder Include="wwwroot\localstorage\images\profiles" />
     </ItemGroup>
 
 </Project>

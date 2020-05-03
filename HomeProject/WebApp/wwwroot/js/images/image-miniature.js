@@ -1,9 +1,39 @@
-﻿let PaddingTop = document.getElementById("PaddingTop");
-let PaddingRight = document.getElementById("PaddingRight");
-let PaddingBottom = document.getElementById("PaddingBottom");
-let PaddingLeft = document.getElementById("PaddingLeft");
-let WidthPx = document.getElementById("WidthPx");
-let HeightPx = document.getElementById("HeightPx");
+﻿function init(){
+    container.style.position = "relative";
+    cover.style.width = "100%";
+    cover.style.height = "100%";
+
+    coverWidth = cover.offsetWidth;
+    coverHeight = cover.offsetHeight;
+    
+    canvasWidth = container.offsetWidth;
+    canvasHeight = container.offsetHeight;
+    
+    zoomY = WidthPx.value / coverWidth;
+    zoomX = HeightPx.value / coverHeight;
+    
+    box1.style.left = PaddingLeft.value / zoomX + 'px';
+    box1.style.top = PaddingTop.value / zoomY + 'px';
+    
+    box2.style.right = PaddingRight.value / zoomX + 'px';
+    box2.style.top = PaddingTop.value / zoomY + 'px';
+    
+    box3.style.left = PaddingLeft.value / zoomX + 'px';
+    box3.style.bottom = PaddingBottom.value / zoomY + 'px';
+    
+    box4.style.right = PaddingRight.value / zoomX + 'px';
+    box4.style.bottom = PaddingBottom.value / zoomY + 'px';
+
+    console.log(zoomY);
+
+    cover.style.marginTop = PaddingTop.value / zoomY + 'px';
+    cover.style.marginRight = PaddingRight.value / zoomX + 'px';
+    cover.style.marginBottom = PaddingBottom.value / zoomY + 'px';
+    cover.style.marginLeft = PaddingLeft.value / zoomX + 'px';
+
+    cover.style.width = (WidthPx.value - PaddingRight.value - PaddingLeft.value) / zoomY + 'px';
+    cover.style.height = (HeightPx.value - PaddingTop.value - PaddingBottom.value) / zoomX + 'px';
+}
 
 let fixRation = false;
 
@@ -19,40 +49,41 @@ document.addEventListener("keyup", ev => {
     }
 });
 
+let image = document.getElementById("render_image");
+image.addEventListener("load", ev => {
+    init();
+});
+
+let PaddingTop = document.getElementById("PaddingTop");
+let PaddingRight = document.getElementById("PaddingRight");
+let PaddingBottom = document.getElementById("PaddingBottom");
+let PaddingLeft = document.getElementById("PaddingLeft");
+let WidthPx = document.getElementById("WidthPx");
+let HeightPx = document.getElementById("HeightPx");
+
 let container = document.getElementById("image-miniature");
-
-container.style.position = "relative";
-console.log(container);
-
 let cover = createElement("miniature-cover");
+let box1 = createElement("miniature-control");
+let box2 = createElement("miniature-control");
+let box3 = createElement("miniature-control");
+let box4 = createElement("miniature-control");
+
+box1.dataset.id = 1;
+box2.dataset.id = 2;
+box3.dataset.id = 3;
+box4.dataset.id = 4;
 
 container.append(cover);
 let coverWidth = cover.offsetWidth;
 let coverHeight = cover.offsetHeight;
 
-let box1 = createElement("miniature-control");
-box1.style.left = PaddingLeft.value + 'px';
-box1.style.top = PaddingTop.value + 'px';
+let canvasWidth = container.offsetWidth;
+let canvasHeight = container.offsetHeight;
 
-let box2 = createElement("miniature-control");
-box2.style.right = PaddingRight.value + 'px';
-box2.style.top = PaddingTop.value + 'px';
+let zoomY = WidthPx.value / canvasWidth;
+let zoomX = HeightPx.value / canvasHeight;
 
-let box3 = createElement("miniature-control");
-box3.style.left = PaddingLeft.value + 'px';
-box3.style.bottom = PaddingBottom.value + 'px';
-
-let box4 = createElement("miniature-control");
-box4.style.right = PaddingRight.value + 'px';
-box4.style.bottom = PaddingBottom.value + 'px';
-
-cover.style.marginTop = PaddingTop.value + 'px';
-cover.style.marginRight = PaddingRight.value + 'px';
-cover.style.marginBottom = PaddingBottom.value + 'px';
-cover.style.marginLeft = PaddingLeft.value + 'px';
-
-cover.style.width = WidthPx.value + 'px';
-cover.style.height = HeightPx.value + 'px';
+init();
 
 setResizeEvent(box1);
 setResizeEvent(box2);
@@ -79,12 +110,7 @@ function setResizeEvent(item) {
 }
 
 function resize(item, event) {
-
-    // console.log(event.x);
-    // console.log(container.x);
-
     let offset = container.getBoundingClientRect();
-    // console.log(fixRation);
 
     if (fixRation) {
         switch (item) {
@@ -181,25 +207,32 @@ function resize(item, event) {
     cover.style.width = coverWidth - parse(cover.style.marginLeft) - parse(cover.style.marginRight) + "px";
     cover.style.height = coverHeight - parse(cover.style.marginTop) - parse(cover.style.marginBottom) + "px";
 
-    HeightPx.value = parse(cover.style.height);
-    WidthPx.value = parse(cover.style.width);
+    // HeightPx.value = parse(cover.style.height) * zoomX;
+    // WidthPx.value = parse(cover.style.width) * zoomY;
 
-    PaddingTop.value = parse(cover.style.marginTop);
-    PaddingRight.value = parse(cover.style.marginRight);
-    PaddingBottom.value = parse(cover.style.marginBottom);
-    PaddingLeft.value = parse(cover.style.marginLeft);
+    PaddingTop.value = Math.floor(parse(cover.style.marginTop) * zoomY);
+    PaddingRight.value = Math.floor(parse(cover.style.marginRight) * zoomX);
+    PaddingBottom.value = Math.floor(parse(cover.style.marginBottom) * zoomY);
+    PaddingLeft.value = Math.floor(parse(cover.style.marginLeft) * zoomX);
 }
 
 function getPosition(event, position, offset) {
+    let y = Math.floor(event.y);
+    let x = Math.floor(event.x);
+    let width = Math.floor(offset.width);
+    let height = Math.floor(offset.height);
+    let oY = Math.floor(offset.y);
+    let oX = Math.floor(offset.x);
+    
     switch (position) {
         case 'top':
-            return isFit(event.y - offset.y - 5, coverHeight) + "px";
+            return isFit(y - oY - 5, coverHeight) + "px";
         case 'right':
-            return isFit(offset.x + offset.width - event.x - 5, coverWidth) + "px";
+            return isFit(oX + width - event.x - 5, coverWidth) + "px";
         case 'bottom':
-            return isFit(offset.y + offset.height - event.y - 5, coverHeight) + "px";
+            return isFit(oY + height - event.y - 5, coverHeight) + "px";
         case 'left':
-            return isFit(event.x - offset.x - 5, coverWidth) + "px";
+            return isFit(x - oX - 5, coverWidth) + "px";
     }
 }
 

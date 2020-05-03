@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
+using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,11 @@ namespace WebApp.Areas.Admin.Controllers
     public class ImagesController : Controller
     {
         private readonly IAppBLL _bll;
-        
-        private readonly IWebHostEnvironment _hostEnvironment;
 
         public ImagesController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
-            _hostEnvironment = hostEnvironment;
+            _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
 
         // GET: Images
@@ -68,7 +67,21 @@ namespace WebApp.Areas.Admin.Controllers
             if (result != null && ModelState.IsValid)
             {
                 result.Id = Guid.NewGuid();
-                await _bll.Images.AddAsync(result, _hostEnvironment.WebRootPath);
+                switch (result.ImageType)
+                {
+                    case ImageType.ProfileAvatar:
+                        await _bll.Images.AddProfileAsync(result.ImageFor, result);
+                        break;
+                    case ImageType.Post:
+                        await _bll.Images.AddPostAsync(result.ImageFor, result);
+                        break;
+                    case ImageType.Gift:
+                        await _bll.Images.AddGiftAsync(result.ImageFor, result);
+                        break;
+                    default:
+                        await _bll.Images.AddUndefinedAsync(result);
+                        break;
+                }
                 await _bll.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -114,7 +127,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (result != null && ModelState.IsValid)
             {
-                await _bll.Images.UpdateAsync(result, _hostEnvironment.WebRootPath);
+//                await _bll.Images.UpdateAsync(result, _hostEnvironment.WebRootPath);
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));

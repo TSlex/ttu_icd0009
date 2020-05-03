@@ -9,11 +9,15 @@
 <div>
     <h4>Image</h4>
     <hr/>
-    <div class="card" style="width: @(Model.WidthPx)px; height: @(Model.HeightPx)px; position: relative; overflow: hidden">
-        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img" 
-             style="position: absolute; top: -@(Model.PaddingTop)px; 
-             right: -@(Model.PaddingRight)px; bottom: -@(Model.PaddingBottom)px; 
-             left: -@(Model.PaddingLeft)px; width: initial; height: initial">
+    <div class="card" style="width: 20rem">
+        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img" id="render_image"
+             data-pt="@Model.PaddingTop"
+             data-pr="@Model.PaddingRight"
+             data-pb="@Model.PaddingBottom"
+             data-pl="@Model.PaddingLeft"
+             data-oheight="@Model.HeightPx"
+             data-owidth="@Model.WidthPx"
+             style="display: none"/>
     </div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -100,3 +104,7 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/images/image-render.js"></script>
+}

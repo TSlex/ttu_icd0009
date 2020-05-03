@@ -1,4 +1,5 @@
 @using System.Threading
+@using Domain.Enums
 @model BLL.App.DTO.Image
 
 @{
@@ -8,14 +9,45 @@
 <h1>Create</h1>
 
 <hr/>
-<div class="row text-center justify-content-center">
+<div class="row text-center align-items-center d-flex flex-column">
+    <div class="card mb-2" id="image-miniature" style="width: 40rem; user-select: none">
+        <img src="#" alt="" class="card-img" id="render_image"/>
+    </div>
     <div class="col-md-6">
         <form asp-action="Create" method="post" enctype="multipart/form-data" class="custom-file">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="custom-file">
-                <input type="file" asp-for="ImageFile" required class="custom-file-input">
-                <label class="custom-file-label" style="overflow: hidden"></label>
+                <input type="file" asp-for="ImageFile" accept=".jpeg, .png, .jpg" required class="custom-file-input">
+                <label class="custom-file-label" style="overflow: hidden"> </label>
             </div>
+
+            <div class="d-flex flex-column">
+                <div class="form-grop">
+                    <lable>@ImageType.ProfileAvatar</lable>
+                    <input type="radio" asp-for="ImageType" value="@ImageType.ProfileAvatar"/>
+                </div>
+                <div class="form-grop">
+                    <lable>@ImageType.Post</lable>
+                    <input type="radio" asp-for="ImageType" value="@ImageType.Post"/>
+                </div>
+                <div class="form-grop">
+                    <lable>@ImageType.Gift</lable>
+                    <input type="radio" asp-for="ImageType" value="@ImageType.Gift"/>
+                </div>
+                <div class="form-grop">
+                    <lable>@ImageType.Undefined</lable>
+                    <input type="radio" asp-for="ImageType" value="@ImageType.Undefined"/>
+                </div>
+                <input asp-for="ImageFor" class="form-control"/>
+            </div>
+
+            <input type="hidden" asp-for="PaddingTop" value="0"/>
+            <input type="hidden" asp-for="PaddingRight" value="0"/>
+            <input type="hidden" asp-for="PaddingBottom" value="0">
+            <input type="hidden" asp-for="PaddingLeft" value="0"/>
+            <input type="hidden" asp-for="HeightPx" value="0"/>
+            <input type="hidden" asp-for="WidthPx" value="0"/>
+
             <div class="form-group mt-2">
                 <a class="btn btn-primary" asp-action="Index">Back to List</a>
                 <input type="submit" value="Create" class="btn btn-primary"/>
@@ -26,12 +58,40 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script type="text/javascript" src="~/js/images/image-miniature.js"></script>
     <script>
+                $('#image-miniature').css('visibility', 'hidden');
+                
                 $('#ImageFile').on('change',function(){
                     //get the file name
-                    var fileName = $(this).val().replace('C:\\fakepath\\', "");
+                    let fileName = $(this).val().replace('C:\\fakepath\\', "");
                     //replace the "Choose a file" label
                     $(this).next('.custom-file-label').html(fileName);
                 })
+                
+                function readURL(input) {
+                  if (input.files && input.files[0]) {
+                    let reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        let image = new Image();
+                        image.src = e.target.result;
+                        
+                        image.onload = function(){
+                            $('#HeightPx').attr('value', image.height);
+                            $('#WidthPx').attr('value', image.width);  
+                        }
+
+                        $('#render_image').attr('src', e.target.result);
+                        $('#image-miniature').css('visibility', 'visible');
+    }
+
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+    }
+
+    $("#ImageFile").change(function() {
+    readURL(this);
+    });
     </script>
 }

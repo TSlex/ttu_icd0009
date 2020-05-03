@@ -442,9 +442,9 @@ li form button, nav form button {
 
 .miniature-control{
     position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
+    width: 10px;
+    height: 10px;
+    /*border-radius: 10px;*/
     background: #e0a800;
 }
 
