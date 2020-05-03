@@ -432,22 +432,25 @@ li form button, nav form button {
     outline: none;
 }
 
-/*image*/
-.miniature-cover{
-    width: 100%;
-    height: 100%;
-    border: #ff5c6c 4px dashed;
-    position: absolute;
+
+/*.form-inline{
+    display: flex;
+    !*flex-direction: row;*!
+    !*flex-flow: inherit !important;*!
+    justify-content: space-between !important;
+    flex-wrap: nowrap;
 }
 
-.miniature-control{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background: #e0a800;
+.form-inline label{
+    margin-right: 1em;
+    flex-grow: 1;
+    display: inline;
+    text-align: right;
 }
 
-.miniature-control:hover{
-    background: #fdc400;
-}
+.form-inline label + *{
+    width: 200px !important;
+}*/
+/*.form-inline *{*/
+/*    flex-grow: 1;*/
+/*}*/

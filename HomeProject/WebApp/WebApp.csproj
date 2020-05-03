@@ -29,7 +29,6 @@
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />
-        <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -203,7 +202,6 @@
 
     <ItemGroup>
         <Folder Include="wwwroot\lib\font-awesome" />
-        <Folder Include="wwwroot\localstorage\images" />
     </ItemGroup>
 
 </Project>
