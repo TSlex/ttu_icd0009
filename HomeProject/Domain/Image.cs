@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Base;
 using Domain.Enums;
@@ -20,5 +21,9 @@ namespace Domain
         public int PaddingRight { get; set; }
         public int PaddingBottom { get; set; }
         public int PaddingLeft { get; set; }
+
+        private ICollection<Profile>? Profiles { get; set; }
+        private ICollection<Post>? Posts { get; set; }
+        private ICollection<Gift>? Gifts { get; set; }
     }
 }

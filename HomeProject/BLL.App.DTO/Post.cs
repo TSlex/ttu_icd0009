@@ -12,6 +12,9 @@ namespace BLL.App.DTO
 
         [MaxLength(300)]
         public string? PostImageUrl { get; set; }
+        
+        public Guid? PostImageId { get; set; }
+        public Image? PostImage { get; set; }
 
         [MaxLength(500)]
         public string? PostDescription { get; set; }

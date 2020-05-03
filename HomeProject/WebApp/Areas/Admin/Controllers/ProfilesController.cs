@@ -12,7 +12,7 @@ namespace WebApp.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("{area}/{username}/{action=Index}")]
+    [Route("{area}/{id}/{action=Index}")]
     public class ProfilesController : Controller
     {
         private readonly UserManager<Profile> _userManager;
@@ -34,6 +34,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
+            
             var isAuthorized = _signInManager.IsSignedIn(User);
 
             if (user == null)

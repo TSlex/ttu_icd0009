@@ -8,7 +8,12 @@ namespace Domain
     public class Post : DomainEntityBaseMetadata
     {
         [MaxLength(100)] public string PostTitle { get; set; } = default!;
+        
         [MaxLength(300)] public string? PostImageUrl { get; set; }
+        
+        public Guid? PostImageId { get; set; }
+        public Image? PostImage { get; set; }
+        
         [MaxLength(500)] public string? PostDescription { get; set; }
 
         public DateTime PostPublicationDateTime { get; set; } = DateTime.Now;

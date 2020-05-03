@@ -18,6 +18,9 @@ namespace BLL.App.DTO
         [MaxLength(300)] public string? ProfileStatus { get; set; }
 
         [MaxLength(300)] public string? ProfileAvatarUrl { get; set; }
+        
+        public Guid? ProfileAvatarId { get; set; }
+        public Image? ProfileAvatar { get; set; }
 
         [MaxLength(1000)] public string? ProfileAbout { get; set; }
 

@@ -14,7 +14,9 @@ namespace Domain
         
         //what content user actually likes
         public string PostTitle { get; set; } = default!;
+        
         public string? PostImageUrl { get; set; }
+
         public string? PostDescription { get; set; }
     }
 }

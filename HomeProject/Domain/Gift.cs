@@ -9,7 +9,11 @@ namespace Domain
     {
         [MaxLength(100)] public string GiftName { get; set; } = default!;
         [MaxLength(100)] public string GiftCode { get; set; } = default!;
+        
         [MaxLength(300)] public string? GiftImageUrl { get; set; }
+        
+        public Guid? GiftImageId { get; set; }
+        public Image? GiftImage { get; set; }
 
         public int Price { get; set; }
         

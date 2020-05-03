@@ -23,6 +23,9 @@ namespace Domain
 
         [MaxLength(300)] public string? ProfileAvatarUrl { get; set; }
 
+        public Guid? ProfileAvatarId { get; set; }
+        public Image? ProfileAvatar { get; set; }
+
         [MaxLength(1000)] public string? ProfileAbout { get; set; }
 
         [Range(0, int.MaxValue)] public ProfileGender ProfileGender { get; set; } = ProfileGender.Undefined;

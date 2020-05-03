@@ -3,14 +3,16 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200503180131_ImageDepe")]
+    partial class ImageDepe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -263,6 +265,9 @@ namespace DAL.Migrations
                     b.Property<Guid>("PostId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("PostImageId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("PostImageUrl")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -276,6 +281,8 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("PostImageId");
 
                     b.HasIndex("ProfileId");
 
@@ -1027,6 +1034,11 @@ namespace DAL.Migrations
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Image", "PostImage")
+                        .WithMany()
+                        .HasForeignKey("PostImageId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("Favorites")

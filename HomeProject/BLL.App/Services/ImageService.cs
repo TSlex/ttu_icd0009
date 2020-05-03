@@ -23,6 +23,11 @@ namespace BLL.App.Services
         {
         }
 
+//        public async Task<string> GetProfileAsync(Guid profileId)
+//        {
+//            return 
+//        }
+
         public async Task<Image> AddProfileAsync(Guid profileId, Image entity)
         {
             string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
