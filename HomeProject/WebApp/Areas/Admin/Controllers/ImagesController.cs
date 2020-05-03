@@ -60,6 +60,12 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(imageModel);
             }
             
+            if (imageModel.ImageType != ImageType.Undefined && imageModel.ImageFor == null)
+            {
+                ModelState.AddModelError(string.Empty, "Id should be specified if not misc image type");
+                return View(imageModel);
+            }
+            
             ModelState.Clear();
             
             var result = ValidateImage(imageModel);
@@ -70,13 +76,13 @@ namespace WebApp.Areas.Admin.Controllers
                 switch (result.ImageType)
                 {
                     case ImageType.ProfileAvatar:
-                        await _bll.Images.AddProfileAsync(result.ImageFor, result);
+                        await _bll.Images.AddProfileAsync(result.ImageFor?? Guid.Empty, result);
                         break;
                     case ImageType.Post:
-                        await _bll.Images.AddPostAsync(result.ImageFor, result);
+                        await _bll.Images.AddPostAsync(result.ImageFor?? Guid.Empty, result);
                         break;
                     case ImageType.Gift:
-                        await _bll.Images.AddGiftAsync(result.ImageFor, result);
+                        await _bll.Images.AddGiftAsync(result.ImageFor?? Guid.Empty, result);
                         break;
                     default:
                         await _bll.Images.AddUndefinedAsync(result);
@@ -115,6 +121,12 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             Image? result;
+
+            if (imageModel.ImageType != ImageType.Undefined && imageModel.ImageFor == null)
+            {
+                ModelState.AddModelError(string.Empty, "Id should be specified if not misc image type");
+                return View(imageModel);
+            }
             
             if (imageModel.ImageFile != null)
             {
@@ -127,7 +139,21 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (result != null && ModelState.IsValid)
             {
-//                await _bll.Images.UpdateAsync(result, _hostEnvironment.WebRootPath);
+                switch (result.ImageType)
+                {
+                    case ImageType.ProfileAvatar:
+                        await _bll.Images.UpdateProfileAsync(result.ImageFor?? Guid.Empty, result);
+                        break;
+                    case ImageType.Post:
+                        await _bll.Images.UpdatePostAsync(result.ImageFor?? Guid.Empty, result);
+                        break;
+                    case ImageType.Gift:
+                        await _bll.Images.UpdateGiftAsync(result.ImageFor?? Guid.Empty, result);
+                        break;
+                    default:
+                        await _bll.Images.UpdateUndefinedAsync(result);
+                        break;
+                }
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -154,7 +180,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var image = await _bll.Images.FindAsync(id);
-            _bll.Images.Remove(image, _hostEnvironment.WebRootPath);
+            _bll.Images.Remove(image);
             await _bll.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

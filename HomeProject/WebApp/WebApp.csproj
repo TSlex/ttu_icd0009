@@ -205,6 +205,7 @@
         <Folder Include="wwwroot\lib\font-awesome" />
         <Folder Include="wwwroot\localstorage\images\gifts" />
         <Folder Include="wwwroot\localstorage\images\posts" />
+        <Folder Include="wwwroot\localstorage\images\posts\05ab7c1a-25e0-47f9-968d-aab9855ae3fa" />
         <Folder Include="wwwroot\localstorage\images\profiles" />
     </ItemGroup>
 

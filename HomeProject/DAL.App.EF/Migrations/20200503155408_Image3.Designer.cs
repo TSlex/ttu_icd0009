@@ -3,14 +3,16 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200503155408_Image3")]
+    partial class Image3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -428,9 +430,6 @@ namespace DAL.Migrations
                     b.Property<Guid>("ImageFor")
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("ImageType")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
@@ -451,6 +450,9 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("PaddingTop")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProfileGender")
                         .HasColumnType("int");
 
                     b.Property<int>("WidthPx")

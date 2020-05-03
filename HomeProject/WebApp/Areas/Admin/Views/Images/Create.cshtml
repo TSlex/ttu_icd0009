@@ -10,7 +10,7 @@
 
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
-    <div class="card mb-2" id="image-miniature" style="width: 40rem; user-select: none">
+    <div class="card mb-2" id="image-miniature" style="width: 40rem; user-select: none" draggable="false">
         <img src="#" alt="" class="card-img" id="render_image"/>
     </div>
     <div class="col-md-6">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-grop">
                     <lable>@ImageType.Undefined</lable>
-                    <input type="radio" asp-for="ImageType" value="@ImageType.Undefined"/>
+                    <input type="radio" asp-for="ImageType" value="@ImageType.Undefined" checked/>
                 </div>
                 <input asp-for="ImageFor" class="form-control"/>
             </div>

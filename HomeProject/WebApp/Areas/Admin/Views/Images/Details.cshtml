@@ -9,15 +9,8 @@
 <div>
     <h4>Image</h4>
     <hr/>
-    <div class="card" style="width: 20rem">
-        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img" id="render_image"
-             data-pt="@Model.PaddingTop"
-             data-pr="@Model.PaddingRight"
-             data-pb="@Model.PaddingBottom"
-             data-pl="@Model.PaddingLeft"
-             data-oheight="@Model.HeightPx"
-             data-owidth="@Model.WidthPx"
-             style="display: none"/>
+    <div class="card" style="width: 40rem; user-select: none;" draggable="false" id="image-miniature">
+        <img src="~/localstorage/@Model.ImageUrl" alt="" class="card-img" id="render_image">
     </div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -25,6 +18,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OriginalImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OriginalImageUrl)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.HeightPx)
@@ -106,5 +105,4 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript" src="~/js/images/image-render.js"></script>
 }

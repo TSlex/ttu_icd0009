@@ -3,14 +3,16 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200503133357_Image2")]
+    partial class Image2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -423,12 +425,6 @@ namespace DAL.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("HeightPx")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ImageFor")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("ImageType")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
