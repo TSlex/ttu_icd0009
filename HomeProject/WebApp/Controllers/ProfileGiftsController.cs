@@ -83,8 +83,10 @@ namespace WebApp.Controllers
             if (TryValidateModel(profileGift))
             {
                 await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
+                
                 profileGift.Id = Guid.NewGuid();
                 profileGift.Profile = null;
+                profileGift.GiftDateTime = DateTime.Now;
                 
                 _bll.ProfileGifts.Add(profileGift);
                 await _bll.SaveChangesAsync();

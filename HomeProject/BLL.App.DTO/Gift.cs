@@ -18,4 +18,9 @@ namespace BLL.App.DTO
         
         public ICollection<ProfileGift>? ProfileGifts { get; set; }
     }
+    
+    public class GiftsCount
+    {
+        public int Count { get; set; }
+    }
 }

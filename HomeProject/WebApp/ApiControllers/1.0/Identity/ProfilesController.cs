@@ -1,27 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using DAL;
 using Domain;
 using Extension;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PublicApi.DTO.v1;
 using PublicApi.DTO.v1.Identity;
 using PublicApi.DTO.v1.Response;
 
-namespace WebApp.ApiControllers.Identity
+namespace WebApp.ApiControllers._1._0.Identity
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/account/[action]")]
+    [Route("api/v{version:apiVersion}/[controller]/[action]")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProfilesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -38,6 +36,7 @@ namespace WebApp.ApiControllers.Identity
         }
         
         [HttpPost]
+        [AllowAnonymous]
         [Produces( "application/json" )]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JwtResponseDTO))]
@@ -73,6 +72,7 @@ namespace WebApp.ApiControllers.Identity
         }
         
         [HttpPost]
+        [AllowAnonymous]
         [Produces( "application/json" )]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

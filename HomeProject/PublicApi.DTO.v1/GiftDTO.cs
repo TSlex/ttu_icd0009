@@ -1,12 +1,26 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using DAL.Base;
+﻿using System;
 
 namespace PublicApi.DTO.v1
 {
-    public class GiftDTO: DomainEntityBaseMetadata
+    /// <summary>
+    /// Get only
+    /// </summary>
+    public class GiftDTO
     {
-        [MaxLength(100)] public string GiftName { get; set; } = default!;
-        [MaxLength(300)] public string? GiftImageUrl { get; set; }
+        public string GiftName { get; set; } = default!;
+        public string GiftCode { get; set; } = default!;
+
+        public Guid? GiftImageId { get; set; }
+        public string? GiftImageUrl { get; set; }
+        
+        public int Price { get; set; }
+    }
+
+    /// <summary>
+    /// Get only
+    /// </summary>
+    public class GiftsCountDTO
+    {
+        public int Count { get; set; }
     }
 }

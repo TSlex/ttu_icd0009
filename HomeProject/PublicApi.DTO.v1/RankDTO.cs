@@ -6,6 +6,9 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
+    /// <summary>
+    /// Get only
+    /// </summary>
     public class RankDTO
     {
         public string RankTitle { get; set; } = default!;
