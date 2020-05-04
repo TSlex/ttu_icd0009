@@ -35,6 +35,21 @@ namespace DAL.Repositories
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
 
+        public async Task<Post> GetNoIncludes(Guid id)
+        {
+            var query = RepoDbContext.Posts.Where(post => post.Id == id).AsQueryable();
+
+            var favoritesCount = await query.SelectMany(post => post.Favorites).CountAsync();
+            var commentsCount = await query.SelectMany(post => post.Comments).CountAsync();
+
+            var record = Mapper.Map(query.FirstOrDefault());
+            
+            record.PostFavoritesCount = favoritesCount;
+            record.PostCommentsCount = commentsCount;
+
+            return record;
+        }
+
         public async Task<IEnumerable<Post>> GetUserFollowsPostsAsync(Guid userId)
         {
             return (await RepoDbContext.Posts
@@ -68,6 +83,49 @@ namespace DAL.Repositories
                 PostPublicationDateTime = post.PostPublicationDateTime,
                 Profile = post.Profile
             }).ToListAsync()).Select(post => Mapper.Map(post));
+        }
+
+        public async Task<int> GetByUserCount(Guid userId)
+        {
+            return await RepoDbContext.Posts.CountAsync(post => post.ProfileId == userId);
+        }
+
+        public async Task<IEnumerable<Post>> GetUserByPage(Guid userId, int pageNumber, int onPageCount)
+        {
+            var pageIndex = pageNumber - 1;
+            var startIndex = pageIndex * onPageCount;
+
+            if (pageIndex < 0)
+            {
+                return new Post[]{};
+            }
+
+            return (await RepoDbContext.Posts
+                .Where(post => post.ProfileId == userId)
+                .OrderByDescending(post => post.PostPublicationDateTime)
+                .Select(post => new Domain.Post()
+                {
+                    Id = post.Id,
+                    PostTitle = post.PostTitle,
+                    PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
+                    PostImageUrl = post.PostImageUrl,
+                    PostCommentsCount = post.Comments.Count,
+                    PostFavoritesCount = post.Favorites.Count
+                })
+                .Skip(startIndex).Take(onPageCount).ToListAsync()).Select(post => Mapper.Map(post));
+        }
+
+        public async Task<int> GetCommentsCount(Guid id)
+        {
+            return (await GetNoIncludes(id)).PostCommentsCount;
+        }
+
+
+        public async Task<int> GetFavoritesCount(Guid id)
+        {
+            return (await GetNoIncludes(id)).PostFavoritesCount;
         }
     }
 }
