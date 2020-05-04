@@ -43,7 +43,7 @@ namespace DAL.Repositories
             var commentsCount = await query.SelectMany(post => post.Comments).CountAsync();
 
             var record = Mapper.Map(query.FirstOrDefault());
-            
+
             record.PostFavoritesCount = favoritesCount;
             record.PostCommentsCount = commentsCount;
 
@@ -53,36 +53,42 @@ namespace DAL.Repositories
         public async Task<IEnumerable<Post>> GetUserFollowsPostsAsync(Guid userId)
         {
             return (await RepoDbContext.Posts
-                .Where(post => post.Profile!.Followers
-                    .Select(follower => follower.FollowerProfileId)
-                    .Contains(userId) || post.ProfileId == userId).Select(post => new Domain.Post()
-                {
-                    Id = post.Id,
-//                    ProfileId = post.ProfileId,
-                    PostTitle = post.PostTitle,
-                    PostDescription = post.PostDescription,
-                    PostImageUrl = post.PostImageUrl,
-                    PostCommentsCount = post.Comments!.Count,
-                    PostFavoritesCount = post.Favorites!.Count,
-                    PostPublicationDateTime = post.PostPublicationDateTime,
-                    Profile = post.Profile
-                }).ToListAsync()).Select(post => Mapper.Map(post));
+                    .Where(post => post.Profile!.Followers
+                                       .Select(follower => follower.FollowerProfileId)
+                                       .Contains(userId) || post.ProfileId == userId)
+                    .Select(post => new Domain.Post()
+                    {
+                        Id = post.Id,
+                        Profile = post.Profile,
+                        PostTitle = post.PostTitle,
+                        PostDescription = post.PostDescription,
+                        PostImageId = post.PostImageId,
+                        PostPublicationDateTime = post.PostPublicationDateTime,
+                        PostImageUrl = post.PostImageUrl,
+                        PostCommentsCount = post.Comments!.Count,
+                        PostFavoritesCount = post.Favorites!.Count
+                    })
+                    .ToListAsync())
+                .Select(post => Mapper.Map(post));
         }
 
         public async Task<IEnumerable<Post>> GetCommonFeedAsync()
         {
-            return (await RepoDbContext.Posts.Select(post => new Domain.Post()
-            {
-                Id = post.Id,
-//                ProfileId = post.ProfileId,
-                PostTitle = post.PostTitle,
-                PostDescription = post.PostDescription,
-                PostImageUrl = post.PostImageUrl,
-                PostCommentsCount = post.Comments!.Count,
-                PostFavoritesCount = post.Favorites!.Count,
-                PostPublicationDateTime = post.PostPublicationDateTime,
-                Profile = post.Profile
-            }).ToListAsync()).Select(post => Mapper.Map(post));
+            return (await RepoDbContext.Posts
+                    .Select(post => new Domain.Post()
+                    {
+                        Id = post.Id,
+                        Profile = post.Profile,
+                        PostTitle = post.PostTitle,
+                        PostDescription = post.PostDescription,
+                        PostImageId = post.PostImageId,
+                        PostPublicationDateTime = post.PostPublicationDateTime,
+                        PostImageUrl = post.PostImageUrl,
+                        PostCommentsCount = post.Comments!.Count,
+                        PostFavoritesCount = post.Favorites!.Count
+                    })
+                    .ToListAsync())
+                .Select(post => Mapper.Map(post));
         }
 
         public async Task<int> GetByUserCount(Guid userId)
@@ -97,24 +103,28 @@ namespace DAL.Repositories
 
             if (pageIndex < 0)
             {
-                return new Post[]{};
+                return new Post[] { };
             }
 
             return (await RepoDbContext.Posts
-                .Where(post => post.ProfileId == userId)
-                .OrderByDescending(post => post.PostPublicationDateTime)
-                .Select(post => new Domain.Post()
-                {
-                    Id = post.Id,
-                    PostTitle = post.PostTitle,
-                    PostDescription = post.PostDescription,
-                    PostImageId = post.PostImageId,
-                    PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostImageUrl = post.PostImageUrl,
-                    PostCommentsCount = post.Comments.Count,
-                    PostFavoritesCount = post.Favorites.Count
-                })
-                .Skip(startIndex).Take(onPageCount).ToListAsync()).Select(post => Mapper.Map(post));
+                    .Where(post => post.ProfileId == userId)
+                    .OrderByDescending(post => post.PostPublicationDateTime)
+//                    .Select(post => LimitPost(post))
+                    .Select(post => new Domain.Post()
+                    {
+                        Id = post.Id,
+                        PostTitle = post.PostTitle,
+                        PostDescription = post.PostDescription,
+                        PostImageId = post.PostImageId,
+                        PostPublicationDateTime = post.PostPublicationDateTime,
+                        PostImageUrl = post.PostImageUrl,
+                        PostCommentsCount = post.Comments!.Count,
+                        PostFavoritesCount = post.Favorites!.Count
+                    })
+                    .Skip(startIndex)
+                    .Take(onPageCount)
+                    .ToListAsync())
+                .Select(post => Mapper.Map(post));
         }
 
         public async Task<int> GetCommentsCount(Guid id)
@@ -127,5 +137,96 @@ namespace DAL.Repositories
         {
             return (await GetNoIncludes(id)).PostFavoritesCount;
         }
+
+        public async Task<int> GetUserFollowsPostsCount(Guid userId)
+        {
+            return await RepoDbContext.Posts
+                .CountAsync(post => post.Favorites
+                    .Select(favorite => favorite.ProfileId)
+                    .Contains(userId));
+        }
+
+        public async Task<int> GetCommonPostsCount()
+        {
+            return await RepoDbContext.Posts.CountAsync();
+        }
+
+        public async Task<IEnumerable<Post>> GetUserFollowsPostsByPage(Guid userId, int pageNumber, int onPageCount)
+        {
+            var pageIndex = pageNumber - 1;
+            var startIndex = pageIndex * onPageCount;
+
+            if (pageIndex < 0)
+            {
+                return new Post[] { };
+            }
+
+            return (await RepoDbContext.Posts
+                    .Where(post => post.Profile!.Followers
+                                       .Select(follower => follower.FollowerProfileId)
+                                       .Contains(userId) || post.ProfileId == userId)
+                    .OrderByDescending(post => post.PostPublicationDateTime)
+                    .Select(post => new Domain.Post()
+                    {
+                        Id = post.Id,
+                        PostTitle = post.PostTitle,
+                        PostDescription = post.PostDescription,
+                        PostImageId = post.PostImageId,
+                        PostPublicationDateTime = post.PostPublicationDateTime,
+                        PostImageUrl = post.PostImageUrl,
+                        PostCommentsCount = post.Comments!.Count,
+                        PostFavoritesCount = post.Favorites!.Count
+                    })
+                    .Skip(startIndex)
+                    .Take(onPageCount)
+                    .ToListAsync())
+                .Select(post => Mapper.Map(post));
+        }
+
+        public async Task<IEnumerable<Post>> GetCommonFeedByPage(int pageNumber, int onPageCount)
+        {
+            var pageIndex = pageNumber - 1;
+            var startIndex = pageIndex * onPageCount;
+
+            if (pageIndex < 0)
+            {
+                return new Post[] { };
+            }
+
+            return (await RepoDbContext.Posts
+                    .OrderByDescending(post => post.PostPublicationDateTime)
+                    .Select(post => new Domain.Post()
+                    {
+                        Id = post.Id,
+                        PostTitle = post.PostTitle,
+                        PostDescription = post.PostDescription,
+                        PostImageId = post.PostImageId,
+                        PostPublicationDateTime = post.PostPublicationDateTime,
+                        PostImageUrl = post.PostImageUrl,
+                        PostCommentsCount = post.Comments!.Count,
+                        PostFavoritesCount = post.Favorites!.Count
+                    })
+                    .Skip(startIndex)
+                    .Take(onPageCount)
+                    .ToListAsync())
+                .Select(post => Mapper.Map(post));
+        }
+
+        /*private static Domain.Post LimitPost(Domain.Post post)
+        {
+            var result = new Domain.Post
+            {
+                Id = post.Id,
+                PostTitle = post.PostTitle,
+                PostDescription = post.PostDescription,
+                PostImageId = post.PostImageId,
+                PostPublicationDateTime = post.PostPublicationDateTime,
+                PostImageUrl = post.PostImageUrl,
+                PostCommentsCount = post.Comments?.Count ?? 0,
+                PostFavoritesCount = post.Favorites?.Count ?? 0
+            };
+            
+            return result;
+        }*/
     }
 }

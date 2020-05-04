@@ -9,5 +9,10 @@ namespace Contracts.BLL.App.Services
     {
         Task<Feed> GetUserFeedAsync(Guid userId);
         Task<Feed> GetCommonFeedAsync();
+        
+        Task<int> GetUserCount(Guid userId);
+        Task<int> GetCount();
+        Task<Feed> GetUser10ByPage(Guid userId, int pageNumber);
+        Task<Feed> Get10ByPage(int pageNumber);
     }
 }

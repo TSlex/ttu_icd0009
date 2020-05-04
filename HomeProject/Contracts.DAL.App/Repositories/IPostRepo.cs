@@ -17,5 +17,11 @@ namespace Contracts.DAL.App.Repositories
         Task<int> GetCommentsCount(Guid id);
         Task<int> GetFavoritesCount(Guid id);
         Task<Post> GetNoIncludes(Guid id);
+        
+        Task<int> GetUserFollowsPostsCount(Guid userId);
+        Task<int> GetCommonPostsCount();
+        
+        Task<IEnumerable<Post>> GetUserFollowsPostsByPage(Guid userId, int pageNumber, int i);
+        Task<IEnumerable<Post>> GetCommonFeedByPage(int pageNumber, int i);
     }
 }

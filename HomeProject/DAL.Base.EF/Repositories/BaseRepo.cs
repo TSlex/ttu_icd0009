@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.DAL.Base;
 using Contracts.DAL.Base.Mappers;
 using Contracts.DAL.Base.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DAL.Base.EF.Repositories
 {
@@ -29,7 +31,7 @@ namespace DAL.Base.EF.Repositories
             {
                 throw new ArgumentNullException(typeof(TDomainEntity).Name + " was not found as DBSet!");
             }
-            
+
             RepoDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
@@ -76,7 +78,7 @@ namespace DAL.Base.EF.Repositories
             var newEntity = Mapper.MapReverse(entity);
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
-            
+
             return Mapper.Map(RepoDbSet.Remove(newEntity).Entity);
         }
 
@@ -85,27 +87,107 @@ namespace DAL.Base.EF.Repositories
             return Mapper.Map(RepoDbSet.Remove(RepoDbSet.Find(id)).Entity);
         }
 
-        public async Task<bool> CanAccess(Guid id, Guid userId)
+        public virtual async Task<IEnumerable<TDALEntity>> AllByPageAsync(int pageNumber, int count, bool order = false,
+            bool reversed = false, string? orderProperty = null)
         {
-            throw new NotImplementedException();
-//            try
-//            {
-//                var result = await RepoDbSet.FirstOrDefaultAsync(e => Microsoft.EntityFrameworkCore.EF
-//                                                               .Property<Guid>(e, "profileId")
-//                                                               .Equals(userId)
-//                                                           && e.Id == id);
-//
-//                if (result != null)
-//                {
-//                    return true;
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                return false;
-//            }
-//
-//            return false;
+            var pageIndex = pageNumber - 1;
+            var startIndex = pageIndex * count;
+
+            if (pageIndex < 0)
+            {
+                return new TDALEntity[] { };
+            }
+
+            var query = RepoDbSet.AsQueryable();
+
+            if (order && orderProperty != null)
+            {
+                PropertyDescriptor prop = TypeDescriptor.GetProperties(typeof(TDALEntity)).Find(orderProperty, true);
+
+                if (!reversed)
+                {
+                    query = RepoDbSet.OrderByDescending(x => prop.GetValue(x));
+                }
+                else
+                {
+                    query = RepoDbSet.OrderBy(x => prop.GetValue(x));
+                }
+            }
+
+            return (await query.Skip(startIndex).Take(count).ToListAsync()).Select(x => Mapper.Map(x));
+        }
+
+        public virtual async Task<IEnumerable<TDALEntity>> AllByIdPageAsync(int pageNumber, int count,
+            string filterProperty, Guid id, bool order = false,
+            bool reversed = false, string orderProperty = null)
+        {
+            var filterProp = TypeDescriptor.GetProperties(typeof(TDALEntity)).Find(filterProperty, true);
+
+            var pageIndex = pageNumber - 1;
+            var startIndex = pageIndex * count;
+
+            if (pageIndex < 0)
+            {
+                return new TDALEntity[] { };
+            }
+
+            var query = RepoDbSet.Where(x => filterProp.GetValue(x).ToString() == id.ToString()).AsQueryable();
+
+            if (order && orderProperty != null)
+            {
+                PropertyDescriptor prop = TypeDescriptor.GetProperties(typeof(TDALEntity)).Find(orderProperty, true);
+
+                if (!reversed)
+                {
+                    query = RepoDbSet.OrderByDescending(x => prop.GetValue(x));
+                }
+                else
+                {
+                    query = RepoDbSet.OrderBy(x => prop.GetValue(x));
+                }
+            }
+
+            return (await query.Skip(startIndex).Take(count).ToListAsync()).Select(x => Mapper.Map(x));
+        }
+
+        public virtual async Task<int> CountByIdAsync(string filterProperty, Guid id)
+        {
+//            var prop = TypeDescriptor.GetProperties(typeof(TDALEntity)).Find(filterProperty, true);
+
+//            var prop = typeof(TDALEntity).GetProperty(filterProperty);
+
+//            return (await RepoDbSet
+//                .Select(item => new {value = item, prop = (string) prop.GetValue(item)})
+//                .Where(item => string.Equals(id.ToString(), item.prop)).ToListAsync()).Count;
+
+//            var query = RepoDbSet.AsQueryable().Where(x => (Guid) prop.GetValue(x) == id);
+
+//            var all = await RepoDbSet.ToListAsync();
+
+//            var query = RepoDbSet.AsEnumerable().Select(item => new {value = item, lol = prop.GetValue(item)}).ToList();
+//            var query = all.Select(e => prop.GetValue(e, null));
+
+
+            var query = RepoDbSet.First();
+
+            object value = query.GetType().GetProperty(filterProperty).GetValue(query, null);
+
+            var test = RepoDbSet.Select(e => e.GetType().GetProperty(filterProperty).GetValue(e, null));
+
+            var test2 = RepoDbSet.Where(e => e.GetType().GetProperty(filterProperty).GetValue(e, null) != null);
+
+//            return await RepoDbSet.CountAsync(e => (Guid)e.GetType().GetProperty(filterProperty).GetValue(e, null) == id);
+
+//            var test3 = RepoDbContext.Set<TDomainEntity>().Where("propertyName == @0", id);
+
+            var hui = (RepoDbContext as DbContext).Set<Favorite>().S
+            
+            return 1;
+        }
+
+        public virtual async Task<int> CountAsync()
+        {
+            return await RepoDbSet.CountAsync();
         }
     }
 }

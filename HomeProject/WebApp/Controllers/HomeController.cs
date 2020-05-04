@@ -33,11 +33,11 @@ namespace WebApp.Controllers
         {
             if (_signInManager.IsSignedIn(User))
             {
-                var result = await _bll.FeedService.GetUserFeedAsync(User.UserId());
+                var result = await _bll.Feeds.GetUserFeedAsync(User.UserId());
                 return View(result);
             }
 
-            return View(await _bll.FeedService.GetCommonFeedAsync());
+            return View(await _bll.Feeds.GetCommonFeedAsync());
         }
 
         public IActionResult Privacy()

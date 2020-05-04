@@ -48,6 +48,6 @@ namespace BLL.App
 
         public IImageService Images => GetService<IImageService>(() => new ImageService(UnitOfWork));
         
-        public IFeedService FeedService => GetService<IFeedService>(() => new FeedService(UnitOfWork));
+        public IFeedService Feeds => GetService<IFeedService>(() => new FeedService(UnitOfWork));
     }
 }

@@ -115,7 +115,9 @@ namespace WebApp
 
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            services.AddSwaggerGen(options => options.ResolveConflictingActions(enumerable => enumerable.First()));
+            services.AddSwaggerGen(
+                options => options.ResolveConflictingActions(enumerable => enumerable.First())
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

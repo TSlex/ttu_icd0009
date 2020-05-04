@@ -36,5 +36,31 @@ namespace BLL.App.Services
                 Posts = (await _uow.Posts.GetCommonFeedAsync()).Select(post => _mapper.Map(post)).ToList()
             };
         }
+
+        public async Task<int> GetUserCount(Guid userId)
+        {
+            return await _uow.Posts.GetUserFollowsPostsCount(userId);
+        }
+
+        public async Task<int> GetCount()
+        {
+            return await _uow.Posts.GetCommonPostsCount();
+        }
+
+        public async Task<Feed> GetUser10ByPage(Guid userId, int pageNumber)
+        {
+            return new Feed()
+            {
+                Posts = (await _uow.Posts.GetUserFollowsPostsByPage(userId, pageNumber, 10)).Select(post => _mapper.Map(post)).ToList()
+            };
+        }
+
+        public async Task<Feed> Get10ByPage(int pageNumber)
+        {
+            return new Feed()
+            {
+                Posts = (await _uow.Posts.GetCommonFeedByPage(pageNumber, 10)).Select(post => _mapper.Map(post)).ToList()
+            };
+        }
     }
 }

@@ -10,9 +10,9 @@ namespace Contracts.BLL.Base.Services
     {
         // add common base methods here
     }
-    
+
     public interface IBaseEntityService<TDALEntity, TBLLEntity> : IBaseService
-        where TDALEntity: class, IDomainEntityBase<Guid>, new()
+        where TDALEntity : class, IDomainEntityBase<Guid>, new()
         where TBLLEntity : class, IDomainEntityBase<Guid>, new()
     {
         IEnumerable<TBLLEntity> All();
@@ -27,6 +27,14 @@ namespace Contracts.BLL.Base.Services
         TBLLEntity Remove(TBLLEntity entity);
         TBLLEntity Remove(Guid id);
 
-        Task<bool> CanAccessAsync(Guid id, Guid userId);
+        Task<IEnumerable<TBLLEntity>> AllByPageAsync(int pageNumber, int count, bool order = false,
+            bool reversed = false, string? orderProperty = null);
+
+        Task<IEnumerable<TBLLEntity>> AllByIdPageAsync(int pageNumber, int count, string filterProperty, Guid id,
+            bool order = false, bool reversed = false, string orderProperty = null);
+
+        Task<int> CountByIdAsync(string filterProperty, Guid id);
+
+        Task<int> CountAsync();
     }
 }
