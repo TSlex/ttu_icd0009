@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Mappers;
 using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
@@ -27,34 +29,45 @@ namespace WebApp.ApiControllers._1._0
         {
             _bll = bll;
         }
-        
+
         [AllowAnonymous]
-        [HttpGet("/{postId}/count")]
+        [HttpGet("{postId}/count")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostFavoritesCount(Guid postId)
         {
             var post = _bll.Posts.GetNoIncludes(postId);
 
             if (post == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
             return Ok(new CountResponseDTO()
-                {Count = await _bll.Favorites.CountByIdAsync(nameof(Favorite.PostId), postId)});
+                {Count = await _bll.Favorites.CountByIdAsync(postId)});
         }
-        
+
         [AllowAnonymous]
-        [HttpGet("/{postId}/{pageNumber}")]
+        [HttpGet("{postId}/{pageNumber}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FavoriteProfileDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostFavorites(Guid postId, int pageNumber)
         {
             var post = _bll.Posts.GetNoIncludes(postId);
 
             if (post == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
-            return Ok(await _bll.Favorites.AllByIdPageAsync(pageNumber, 10, nameof(Favorite.PostId), postId));
+            return Ok((await _bll.Favorites.AllByIdPageAsync(postId, pageNumber, 10)).Select(favorite =>
+                new FavoriteProfileDTO
+                {
+                    UserName = favorite.Profile.UserName,
+                    ProfileAvatarUrl = favorite.Profile.ProfileAvatarUrl
+                }));
         }
     }
 }

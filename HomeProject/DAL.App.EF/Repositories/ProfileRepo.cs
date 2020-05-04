@@ -64,7 +64,21 @@ namespace DAL.Repositories
 
         public async Task<Profile> FindByUsernameAsync(string username)
         {
-            return Mapper.Map(await _userManager.FindByNameAsync(username));
+            var result = await _userManager.Users
+                .Where(profile => profile.UserName == username)
+                .Select(profile => new
+                {
+                    value = profile,
+                    postsCount = profile.Posts.Count,
+                    followedCount = profile.Followed.Count,
+                    followersCount = profile.Followers.Count
+                }).FirstOrDefaultAsync();
+
+            result.value.PostsCount = result.postsCount;
+            result.value.FollowedCount = result.followedCount;
+            result.value.FollowersCount = result.followersCount;
+            
+            return Mapper.Map(result.value);
         }
 
         public async Task IncreaseExperience(Guid userId, int amount)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using BLL.App.Mappers;
@@ -14,7 +16,7 @@ namespace BLL.App.Services
     public class FavoriteService : BaseEntityService<IFavoriteRepo, DAL.App.DTO.Favorite, Favorite>, IFavoriteService
     {
         private readonly IAppUnitOfWork _uow;
-        
+
         public FavoriteService(IAppUnitOfWork uow) :
             base(uow.Favorites, new FavoriteMapper())
         {
@@ -34,7 +36,7 @@ namespace BLL.App.Services
             {
                 return null;
             }
-            
+
             return Mapper.Map(ServiceRepository.Add(new DAL.App.DTO.Favorite()
             {
                 PostId = id,
@@ -48,6 +50,17 @@ namespace BLL.App.Services
         public async Task<Favorite> RemoveAsync(Guid id, Guid userId)
         {
             return Mapper.Map(ServiceRepository.Remove(Mapper.MapReverse(await FindAsync(id, userId))));
+        }
+
+        public async Task<int> CountByIdAsync(Guid postId)
+        {
+            return await ServiceRepository.CountByIdAsync(postId);
+        }
+
+        public async Task<IEnumerable<Favorite>> AllByIdPageAsync(Guid postId, int pageNumber, int count)
+        {
+            return (await ServiceRepository.AllByIdPageAsync(postId, pageNumber, count)).Select(favorite =>
+                Mapper.Map(favorite));
         }
     }
 }

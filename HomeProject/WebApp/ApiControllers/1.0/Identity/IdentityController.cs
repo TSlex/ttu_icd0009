@@ -20,14 +20,14 @@ namespace WebApp.ApiControllers._1._0.Identity
     [Route("api/v{version:apiVersion}/[controller]/[action]")]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class ProfilesController : ControllerBase
+    public class IdentityController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger<ProfilesController> _logger;
+        private readonly ILogger<IdentityController> _logger;
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
 
-        public ProfilesController(ILogger<ProfilesController> logger, IConfiguration configuration, SignInManager<Profile> signInManager, UserManager<Profile> userManager)
+        public IdentityController(ILogger<IdentityController> logger, IConfiguration configuration, SignInManager<Profile> signInManager, UserManager<Profile> userManager)
         {
             _logger = logger;
             _configuration = configuration;

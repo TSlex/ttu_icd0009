@@ -72,8 +72,9 @@ namespace WebApp.Controllers
             }
 
             var subscription = await _bll.Followers.FindAsync(userId, profile.Id);
+            var property = await _bll.BlockedProfiles.FindAsync(userId, profile.Id);
 
-            if (subscription == null)
+            if (property == null && subscription == null)
             {
                 _bll.Followers.AddSubscription(userId, profile.Id);
                 await _bll.SaveChangesAsync();

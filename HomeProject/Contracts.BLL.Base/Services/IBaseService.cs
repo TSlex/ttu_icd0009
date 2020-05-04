@@ -27,14 +27,6 @@ namespace Contracts.BLL.Base.Services
         TBLLEntity Remove(TBLLEntity entity);
         TBLLEntity Remove(Guid id);
 
-        Task<IEnumerable<TBLLEntity>> AllByPageAsync(int pageNumber, int count, bool order = false,
-            bool reversed = false, string? orderProperty = null);
-
-        Task<IEnumerable<TBLLEntity>> AllByIdPageAsync(int pageNumber, int count, string filterProperty, Guid id,
-            bool order = false, bool reversed = false, string orderProperty = null);
-
-        Task<int> CountByIdAsync(string filterProperty, Guid id);
-
         Task<int> CountAsync();
     }
 }

@@ -47,23 +47,7 @@ namespace BLL.Base.Services
 
         public virtual TBLLEntity Remove(Guid id) =>
             Mapper.Map( ServiceRepository.Remove(id));
-
-        public virtual async Task<IEnumerable<TBLLEntity>> AllByPageAsync(int pageNumber, int count, bool order = false, bool reversed = false, string orderProperty = null)
-        {
-            return (await ServiceRepository.AllByPageAsync(pageNumber, count, order, reversed, orderProperty))
-                .Select(entity => Mapper.Map(entity));
-        }
         
-        public virtual async Task<IEnumerable<TBLLEntity>> AllByIdPageAsync(int pageNumber, int count, string filterProperty, Guid id, bool order = false, bool reversed = false, string orderProperty = null)
-        {
-            return (await ServiceRepository.AllByIdPageAsync(pageNumber, count, filterProperty, id, order, reversed, orderProperty))
-                .Select(entity => Mapper.Map(entity));
-        }
-        
-        public virtual async Task<int> CountByIdAsync(string filterProperty, Guid id)
-        {
-            return await ServiceRepository.CountByIdAsync(filterProperty, id);
-        }
 
         public virtual async Task<int> CountAsync()
         {

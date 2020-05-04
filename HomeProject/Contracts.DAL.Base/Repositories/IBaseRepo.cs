@@ -27,14 +27,6 @@ namespace Contracts.DAL.Base.Repositories
         TDALEntity Remove(TDALEntity entity);
         TDALEntity Remove(TKey id);
 
-        Task<IEnumerable<TDALEntity>> AllByPageAsync(int pageNumber, int count, bool order = false,
-            bool reversed = false, string? orderProperty = null);
-        
-        Task<IEnumerable<TDALEntity>> AllByIdPageAsync(int pageNumber, int count, string filterProperty, Guid id,
-            bool order = false, bool reversed = false, string orderProperty = null);
-
-        Task<int> CountByIdAsync(string filterProperty, Guid id);
-
         Task<int> CountAsync();
     }
 }
