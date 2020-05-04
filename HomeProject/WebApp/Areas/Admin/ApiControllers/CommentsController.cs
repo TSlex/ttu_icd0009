@@ -14,7 +14,7 @@ namespace WebApp.Areas.Admin.ApiControllers
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/admin/{controller}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     public class CommentsController : ControllerBase
     {

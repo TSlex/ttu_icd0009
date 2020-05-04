@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Text;
 using BLL.App;
 using Contracts.BLL.App;
@@ -41,10 +42,6 @@ namespace WebApp
                 options
                     .EnableSensitiveDataLogging()
                     .UseMySql(Configuration.GetConnectionString("MySqlConnection")));
-
-//            services.AddDbContext<ApplicationDbContext>(options =>
-//                options.UseSqlServer(
-//                    Configuration.GetConnectionString("MSSql")));
 
             services.AddIdentity<Profile, MRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddDefaultUI()
@@ -118,7 +115,7 @@ namespace WebApp
 
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options => options.ResolveConflictingActions(enumerable => enumerable.First()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

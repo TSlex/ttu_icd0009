@@ -2,109 +2,87 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class RanksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public RanksController(ApplicationDbContext context)
+        public RanksController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
-
-        // GET: api/Ranks
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Rank>>> GetRanks()
+        
+        [AllowAnonymous]
+        [HttpGet("{username}/all")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RankDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetUserRanks(string username)
         {
-            return await _context.Ranks.ToListAsync();
-        }
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
 
-        // GET: api/Ranks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Rank>> GetRank(Guid id)
-        {
-            var rank = await _context.Ranks.FindAsync(id);
-
-            if (rank == null)
+            if (user == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("User is not found!"));
             }
-
-            return rank;
-        }
-
-        // PUT: api/Ranks/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRank(Guid id, Rank rank)
-        {
-            if (id != rank.Id)
+            
+            return Ok((await _bll.ProfileRanks.AllUserAsync(user.Id)).Select(rank => new RankDTO()
             {
-                return BadRequest();
-            }
-
-            _context.Entry(rank).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RankExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+                RankTitle = rank.Rank.RankTitle,
+                RankDescription = rank.Rank.RankDescription,
+                RankIcon = rank.Rank.RankIcon,
+                RankColor = rank.Rank.RankColor,
+                RankTextColor = rank.Rank.RankTextColor,
+                MinExperience = rank.Rank.MinExperience,
+                MaxExperience = rank.Rank.MaxExperience,
+            }));
         }
-
-        // POST: api/Ranks
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Rank>> PostRank(Rank rank)
+        
+        [AllowAnonymous]
+        [HttpGet("{username}/active")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RankDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetUserActiveRank(string username)
         {
-            _context.Ranks.Add(rank);
-            await _context.SaveChangesAsync();
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
 
-            return CreatedAtAction("GetRank", new { id = rank.Id }, rank);
-        }
-
-        // DELETE: api/Ranks/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Rank>> DeleteRank(Guid id)
-        {
-            var rank = await _context.Ranks.FindAsync(id);
-            if (rank == null)
+            if (user == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("User is not found!"));
             }
-
-            _context.Ranks.Remove(rank);
-            await _context.SaveChangesAsync();
-
-            return rank;
-        }
-
-        private bool RankExists(Guid id)
-        {
-            return _context.Ranks.Any(e => e.Id == id);
+            
+            return Ok((await _bll.ProfileRanks.AllUserAsync(user.Id))
+                .Select(rank => rank.Rank)
+                .OrderByDescending(rank => rank.MaxExperience)
+                .Where(rank => rank.MinExperience <= user.Experience)
+                .Take(1)
+                .Select(rank => new RankDTO()
+            {
+                RankTitle = rank.RankTitle,
+                RankDescription = rank.RankDescription,
+                RankIcon = rank.RankIcon,
+                RankColor = rank.RankColor,
+                RankTextColor = rank.RankTextColor,
+                MinExperience = rank.MinExperience,
+                MaxExperience = rank.MaxExperience,
+            }));
         }
     }
 }
