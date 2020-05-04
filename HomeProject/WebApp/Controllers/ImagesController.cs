@@ -22,10 +22,15 @@ namespace WebApp.Controllers
             _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
         
-        [Route("{controller}/{id}")]
-        public async Task<IActionResult> GetImage(Guid id)
+        [Route("{controller}/{id?}")]
+        public async Task<IActionResult> GetImage(Guid? id)
         {
-            var image = await _bll.Images.FindAsync(id);
+            if (id == null)
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+            
+            var image = await _bll.Images.FindAsync(id?? Guid.Empty);
 
             if (image == null)
             {

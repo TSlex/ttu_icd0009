@@ -2,7 +2,10 @@ using System;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
+using Domain.Enums;
+using Extension;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
@@ -13,9 +16,10 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly IAppBLL _bll;
 
-        public GiftsController(IAppBLL bll)
+        public GiftsController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
+            _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
 
         // GET: Gifts
@@ -51,12 +55,28 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Gift gift)
         {
+            if (gift.GiftImage.ImageFile == null)
+            {
+                ModelState.AddModelError(string.Empty, "Image should be specified");
+                return View(gift);
+            }
+            
             ModelState.Clear();
 
             if (TryValidateModel(gift))
             {
                 gift.Id = Guid.NewGuid();
+                
+                var imageModel = gift.GiftImage;
+                imageModel.Id = Guid.NewGuid();
+                imageModel.ImageType = ImageType.Gift;
+                imageModel.ImageFor = gift.Id;
+
+                gift.GiftImageId = imageModel.Id;
+                gift.GiftImage = null;
+                    
                 _bll.Gifts.Add(gift);
+                await _bll.Images.AddGiftAsync(gift.Id, imageModel);
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -91,12 +111,27 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (gift.GiftImage.ImageFile == null && gift.GiftImageId == null)
             {
+                ModelState.AddModelError(string.Empty, "Image should be specified");
+                return View(gift);
+            }
+            
+            ModelState.Clear();
+
+            var imageModel = gift.GiftImage;
+            imageModel.ImageType = ImageType.Gift;
+            imageModel.ImageFor = gift.Id;
+
+            if (TryValidateModel(gift))
+            {
+                gift.GiftImage = null;
+                gift.GiftImageId = imageModel.Id;
+
+                await _bll.Images.UpdateGiftAsync(gift.Id, imageModel);
                 await _bll.Gifts.UpdateAsync(gift);
                 await _bll.SaveChangesAsync();
-
-
+                
                 return RedirectToAction(nameof(Index));
             }
 

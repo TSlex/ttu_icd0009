@@ -20,5 +20,9 @@ namespace Contracts.BLL.App.Services
 
         Task<Image> AddUndefinedAsync(Image entity);
         Task<Image> UpdateUndefinedAsync(Image entity);
+        
+        Task<Image> FindProfileAsync(Guid userId);
+        Task<Image> FindPostAsync(Guid userId);
+        Task<Image> FindGiftAsync(Guid userId);
     }
 }

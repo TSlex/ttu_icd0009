@@ -22,12 +22,13 @@ namespace BLL.App.Services
             base(uow.Images, new BaseBLLMapper<DAL.App.DTO.Image, Image>())
         {
         }
+        
 
-//        public async Task<string> GetProfileAsync(Guid profileId)
-//        {
-//            return 
-//        }
-
+        public async Task<Image> FindProfileAsync(Guid userId)
+        {
+            return Mapper.Map(await ServiceRepository.FindProfileAsync(userId));
+        }
+        
         public async Task<Image> AddProfileAsync(Guid profileId, Image entity)
         {
             string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
@@ -46,6 +47,11 @@ namespace BLL.App.Services
             directory.Directory?.Create();
 
             return await UpdateAsync(entity, folderPath);
+        }
+        
+        public async Task<Image> FindPostAsync(Guid postId)
+        {
+            return Mapper.Map(await ServiceRepository.FindPostAsync(postId));
         }
 
         public async Task<Image> AddPostAsync(Guid postId, Image entity)
@@ -66,6 +72,11 @@ namespace BLL.App.Services
             directory.Directory?.Create();
 
             return await UpdateAsync(entity, folderPath);
+        }
+        
+        public async Task<Image> FindGiftAsync(Guid giftId)
+        {
+            return Mapper.Map(await ServiceRepository.FindPostAsync(giftId));
         }
 
         public async Task<Image> AddGiftAsync(Guid giftId, Image entity)
@@ -137,13 +148,13 @@ namespace BLL.App.Services
 
                 Bitmap newImage;
 
-                using (var file = File.OpenRead(RootPath + "\\localstorage\\" + entity.OriginalImageUrl))
+                await using (var file = File.OpenRead(RootPath + "\\localstorage\\" + entity.OriginalImageUrl))
                 {
                     newImage = CropImageStreamByPaddings(file, entity.PaddingTop,
                         entity.PaddingRight, entity.PaddingBottom, entity.PaddingLeft, entity.WidthPx, entity.HeightPx);
                 }
 
-                using (var stream = File.Create(filename))
+                await using (var stream = File.Create(filename))
                 {
                     newImage.Save(stream, ImageFormat.Png);
                 }

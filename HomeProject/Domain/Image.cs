@@ -22,8 +22,8 @@ namespace Domain
         public int PaddingBottom { get; set; }
         public int PaddingLeft { get; set; }
 
-        private ICollection<Profile>? Profiles { get; set; }
-        private ICollection<Post>? Posts { get; set; }
-        private ICollection<Gift>? Gifts { get; set; }
+        public ICollection<Profile>? Profiles { get; set; }
+        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Gift>? Gifts { get; set; }
     }
 }

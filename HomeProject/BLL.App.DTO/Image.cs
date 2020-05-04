@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Base;
+using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 
@@ -23,5 +25,9 @@ namespace BLL.App.DTO
         
         public ImageType ImageType { get; set; } = default!;
         public Guid? ImageFor { get; set; }
+        
+        public ICollection<Profile>? Profiles { get; set; }
+        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Gift>? Gifts { get; set; }
     }
 }

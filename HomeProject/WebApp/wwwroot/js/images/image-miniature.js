@@ -62,6 +62,7 @@ let WidthPx = document.getElementById("WidthPx");
 let HeightPx = document.getElementById("HeightPx");
 
 let container = document.getElementById("image-miniature");
+console.log(container);
 let cover = createElement("miniature-cover");
 let box1 = createElement("miniature-control");
 let box2 = createElement("miniature-control");
@@ -111,50 +112,49 @@ function setResizeEvent(item) {
 
 function resize(item, event) {
     let offset = container.getBoundingClientRect();
+    let width = WidthPx.value / zoomX - parse(box1.style.left) - parse(box2.style.right);
 
     if (fixRation) {
         switch (item) {
             case box1:
-                box1.style.top = getPosition(event, 'top', offset);
-                box1.style.left = box1.style.top.valueOf();
-
+                box1.style.left = getPosition(event, 'left', offset);
+                box3.style.left = box1.style.left.valueOf();
+                
+                box1.style.top = HeightPx.value / zoomY - width - parse(box3.style.bottom) + "px";
                 box2.style.top = box1.style.top.valueOf();
-                box3.style.left = box1.style.top.valueOf();
 
                 cover.style.marginLeft = parse(box1.style.left) + "px";
                 cover.style.marginTop = parse(box1.style.top) + "px";
                 break;
             case box2:
-                box2.style.top = getPosition(event, 'top', offset);
-                box2.style.right = box2.style.top.valueOf();
+                box2.style.right = getPosition(event, 'right', offset);
+                box4.style.right = box2.style.right.valueOf();
 
-                box1.style.top = box2.style.top.valueOf();
-                box4.style.right = box2.style.top.valueOf();
-
+                box1.style.top = HeightPx.value / zoomY - width - parse(box4.style.bottom) + "px";
+                box2.style.top = box1.style.top.valueOf();
+                
                 cover.style.marginRight = parse(box2.style.right) + "px";
                 cover.style.marginTop = parse(box2.style.top) + "px";
                 break;
             case box3:
-                box3.style.left = getPosition(event, 'bottom', offset);
-                box3.style.bottom = box3.style.left.valueOf();
+                box1.style.left = getPosition(event, 'left', offset);
+                box3.style.left = box1.style.left.valueOf();
 
-                box1.style.left = box3.style.left.valueOf();
-                box4.style.bottom = box3.style.left.valueOf();
+                box3.style.bottom = HeightPx.value / zoomY - width - parse(box2.style.top) + "px";
+                box4.style.bottom = box3.style.bottom.valueOf();
 
                 cover.style.marginLeft = parse(box3.style.left) + "px";
                 cover.style.marginBottom = parse(box3.style.bottom) + "px";
-
                 break;
             case box4:
-                box4.style.right = getPosition(event, 'bottom', offset);
-                box4.style.bottom = box4.style.right.valueOf();
-
+                box4.style.right = getPosition(event, 'right', offset);
                 box2.style.right = box4.style.right.valueOf();
-                box3.style.bottom = box4.style.right.valueOf();
+
+                box3.style.bottom = HeightPx.value / zoomY - width - parse(box2.style.top) + "px";
+                box4.style.bottom = box3.style.bottom.valueOf();
 
                 cover.style.marginRight = parse(box4.style.right) + "px";
                 cover.style.marginBottom = parse(box4.style.bottom) + "px";
-
                 break;
         }
     } else {
@@ -203,6 +203,23 @@ function resize(item, event) {
                 break;
         }
     }
+    
+    box1.style.top = isFit(box1.style.top, HeightPx) + 'px';
+    box1.style.left = isFit(box1.style.left, WidthPx) + 'px';
+
+    box2.style.top = isFit(box2.style.top, HeightPx) + 'px';
+    box2.style.right = isFit(box2.style.right, WidthPx) + 'px';
+
+    box3.style.bottom = isFit(box3.style.bottom, HeightPx) + 'px';
+    box3.style.left = isFit(box3.style.left, WidthPx) + 'px';
+
+    box4.style.bottom = isFit(box4.style.bottom, HeightPx) + 'px';
+    box4.style.right = isFit(box4.style.right, WidthPx) + 'px';
+
+    cover.style.marginTop = isFit(cover.style.marginTop, HeightPx) + 'px';
+    cover.style.marginRight = isFit(cover.style.marginRight, WidthPx) + 'px';
+    cover.style.marginBottom = isFit(cover.style.marginBottom, HeightPx) + 'px';
+    cover.style.marginLeft = isFit(cover.style.marginLeft, WidthPx) + 'px';
 
     cover.style.width = coverWidth - parse(cover.style.marginLeft) - parse(cover.style.marginRight) + "px";
     cover.style.height = coverHeight - parse(cover.style.marginTop) - parse(cover.style.marginBottom) + "px";
@@ -216,7 +233,7 @@ function resize(item, event) {
     PaddingLeft.value = Math.floor(parse(cover.style.marginLeft) * zoomX);
 }
 
-function getPosition(event, position, offset) {
+function getPosition(event, position, offset, ration = 1) {
     let y = Math.floor(event.y);
     let x = Math.floor(event.x);
     let width = Math.floor(offset.width);
@@ -226,20 +243,20 @@ function getPosition(event, position, offset) {
     
     switch (position) {
         case 'top':
-            return isFit(y - oY - 5, coverHeight) + "px";
+            return isFit(y - oY - 5, coverHeight) * ration + "px";
         case 'right':
-            return isFit(oX + width - event.x - 5, coverWidth) + "px";
+            return isFit(oX + width - event.x - 5, coverWidth) * ration  + "px";
         case 'bottom':
-            return isFit(oY + height - event.y - 5, coverHeight) + "px";
+            return isFit(oY + height - event.y - 5, coverHeight) * ration  + "px";
         case 'left':
-            return isFit(x - oX - 5, coverWidth) + "px";
+            return isFit(x - oX - 5, coverWidth) * ration  + "px";
     }
 }
 
 function isFit(value, max) {
-    if (value < 0) {
+    if (parse(value) < 0) {
         return 0
-    } else if (value > max) {
+    } else if (parse(value) > max) {
         return max
     }
     return value

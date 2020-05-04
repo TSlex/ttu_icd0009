@@ -8,6 +8,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {
+        public static string Avatar => "Avatar";
+        
         public static string Index => "Index";
 
         public static string Email => "Email";
@@ -22,6 +24,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         
         public static string PrivacyNSecurity => "PrivacyNSecurity";
 
+        public static string AvatarNavClass(ViewContext viewContext) => PageNavClass(viewContext, Avatar);
+        
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);

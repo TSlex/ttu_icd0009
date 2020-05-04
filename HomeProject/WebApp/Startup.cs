@@ -38,8 +38,9 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("MySqlConnection")));
+                options
+                    .EnableSensitiveDataLogging()
+                    .UseMySql(Configuration.GetConnectionString("MySqlConnection")));
 
 //            services.AddDbContext<ApplicationDbContext>(options =>
 //                options.UseSqlServer(

@@ -4,6 +4,7 @@ using BLL.App.DTO;
 using Contracts.BLL.App;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
@@ -14,9 +15,10 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly IAppBLL _bll;
 
-        public PostsController(IAppBLL bll)
+        public PostsController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
+            _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
 
         // GET: Posts

@@ -28,6 +28,7 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbContext.Posts
                 .Include(p => p.Profile)
+                .Include(p => p.PostImage)
                 .Include(p => p.Comments)
                 .ThenInclude(comment => comment.Profile)
                 .Include(p => p.Favorites)

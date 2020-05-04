@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Base;
 using Domain.Enums;
@@ -20,5 +21,9 @@ namespace DAL.App.DTO
         
         public ImageType ImageType { get; set; } = default!;
         public Guid ImageFor { get; set; } = default!;
+        
+        public ICollection<Profile>? Profiles { get; set; }
+        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Gift>? Gifts { get; set; }
     }
 }
