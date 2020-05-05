@@ -74,11 +74,14 @@ namespace DAL.Repositories
                     followersCount = profile.Followers.Count
                 }).FirstOrDefaultAsync();
 
-            result.value.PostsCount = result.postsCount;
-            result.value.FollowedCount = result.followedCount;
-            result.value.FollowersCount = result.followersCount;
-            
-            return Mapper.Map(result.value);
+            if (result?.value != null)
+            {
+                result.value.PostsCount = result.postsCount;
+                result.value.FollowedCount = result.followedCount;
+                result.value.FollowersCount = result.followersCount;
+            }
+
+            return Mapper.Map(result?.value);
         }
 
         public async Task IncreaseExperience(Guid userId, int amount)
@@ -89,16 +92,16 @@ namespace DAL.Repositories
             {
                 return;
             }
-            
+
             user.Experience += amount;
-            
+
             await _userManager.UpdateAsync(user);
         }
 
         public override Task<Profile> UpdateAsync(Profile entity)
         {
             throw new NotImplementedException();
-            
+
             /*var stamp = (await _userManager.FindByIdAsync(entity.Id.ToString())).SecurityStamp;
             var mappedEntity = Mapper.MapReverse(entity);
             

@@ -30,7 +30,7 @@ namespace WebApp.Controllers
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
             
-            var image = await _bll.Images.FindAsync(id?? Guid.Empty);
+            var image = await _bll.Images.FindAsync((Guid) id);
 
             if (image == null)
             {
