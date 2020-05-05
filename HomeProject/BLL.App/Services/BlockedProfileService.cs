@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using BLL.App.Mappers;
@@ -36,6 +38,16 @@ namespace BLL.App.Services
         public async Task<BlockedProfile> FindAsync(Guid userId, Guid profileId)
         {
             return Mapper.Map(await ServiceRepository.FindAsync(userId, profileId));
+        }
+
+        public async Task<int> CountByIdAsync(Guid userId)
+        {
+            return await ServiceRepository.CountByIdAsync(userId);
+        }
+
+        public async Task<IEnumerable<BlockedProfile>> AllByIdPageAsync(Guid userId, int pageNumber, int count)
+        {
+            return (await ServiceRepository.AllByIdPageAsync(userId, pageNumber, count)).Select(profile => Mapper.Map(profile));
         }
     }
 }

@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL;
 using Domain;
+using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
-    /// <summary>
-    /// 
-    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -22,126 +23,33 @@ namespace WebApp.ApiControllers._1._0
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BlockedProfilesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="context"></param>
-        public BlockedProfilesController(ApplicationDbContext context)
+        public BlockedProfilesController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: api/BlockedProfiles
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BlockedProfile>>> GetBlockedProfiles()
+        [HttpGet("blacklist/count")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
+        public async Task<IActionResult> GetUserFollowedCount()
         {
-            return await _context.BlockedProfiles.ToListAsync();
+            return Ok(new CountResponseDTO()
+                {Count = await _bll.BlockedProfiles.CountByIdAsync(User.UserId())});
         }
 
-        // GET: api/BlockedProfiles/5
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BlockedProfile>> GetBlockedProfile(Guid id)
+        [HttpGet("blacklist/{pageNumber}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BlockedProfileDTO>))]
+        public async Task<IActionResult> GetUserFollowed(int pageNumber)
         {
-            var blockedProfile = await _context.BlockedProfiles.FindAsync(id);
-
-            if (blockedProfile == null)
-            {
-                return NotFound();
-            }
-
-            return blockedProfile;
-        }
-
-        // PUT: api/BlockedProfiles/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="blockedProfile"></param>
-        /// <returns></returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBlockedProfile(Guid id, BlockedProfile blockedProfile)
-        {
-            if (id != blockedProfile.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(blockedProfile).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BlockedProfileExists(id))
+            return Ok((await _bll.BlockedProfiles.AllByIdPageAsync(User.UserId(), pageNumber, 10)).Select(favorite =>
+                new BlockedProfileDTO
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/BlockedProfiles
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="blockedProfile"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult<BlockedProfile>> PostBlockedProfile(BlockedProfile blockedProfile)
-        {
-            _context.BlockedProfiles.Add(blockedProfile);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBlockedProfile", new { id = blockedProfile.Id }, blockedProfile);
-        }
-
-        // DELETE: api/BlockedProfiles/5
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<BlockedProfile>> DeleteBlockedProfile(Guid id)
-        {
-            var blockedProfile = await _context.BlockedProfiles.FindAsync(id);
-            if (blockedProfile == null)
-            {
-                return NotFound();
-            }
-
-            _context.BlockedProfiles.Remove(blockedProfile);
-            await _context.SaveChangesAsync();
-
-            return blockedProfile;
-        }
-
-        private bool BlockedProfileExists(Guid id)
-        {
-            return _context.BlockedProfiles.Any(e => e.Id == id);
+                    UserName = favorite.BProfile.UserName,
+                    ProfileAvatarUrl = favorite.BProfile.ProfileAvatarUrl
+                }));
         }
     }
 }
