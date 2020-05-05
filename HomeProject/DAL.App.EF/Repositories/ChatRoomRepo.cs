@@ -46,12 +46,30 @@ namespace DAL.Repositories
         {
             return (await RepoDbContext.ChatRooms
                     .Include(room => room.ChatMembers)
-                    .Include(room => room.Messages)
+/*                    .Include(room => room.Messages
+                        .OrderByDescending(message => message.MessageDateTime)
+                        .Take(1))*/
                     .Where(room => room.ChatMembers
                         .Select(member => member.ProfileId)
                         .Contains(userId))
+/*                    .Select(room => new RoomWithMessage
+                    {
+                        Value = room, 
+                        LastMessage = room.Messages.OrderBy(message => message.MessageDateTime).FirstOrDefault()
+                    })*/
                     .ToListAsync())
                 .Select(room => Mapper.Map(room));
         }
+
+/*        private static ChatRoom packRoom(RoomWithMessage room)
+        {
+            room.Value.M
+        }
+
+        private struct RoomWithMessage
+        {
+            public Domain.ChatRoom Value;
+            public Domain.Message LastMessage;
+        }*/
     }
 }

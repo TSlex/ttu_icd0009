@@ -28,5 +28,7 @@ namespace Contracts.BLL.Base.Services
         TBLLEntity Remove(Guid id);
 
         Task<int> CountAsync();
+
+        Task<bool> Exist(Guid id);
     }
 }

@@ -5,11 +5,14 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ChatRoomDTO: DomainEntityBaseMetadata
+    public class ChatRoomDTO
     {
-        [MaxLength(100)] public string ChatRoomTitle { get; set; } = default!;
-        [MaxLength(100)] public string? LastMessageValue { get; set; }
+        public string ChatRoomTitle { get; set; } = default!;
 
+        public string? ChatRoomImageUrl { get; set; }
+        public Guid? ChatRoomImageId { get; set; }
+
+        public string? LastMessageValue { get; set; }
         public DateTime? LastMessageDateTime { get; set; }
     }
 }

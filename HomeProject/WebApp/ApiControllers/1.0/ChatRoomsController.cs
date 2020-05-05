@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL;
 using Domain;
+using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Mappers;
 
 namespace WebApp.ApiControllers._1._0
 {
@@ -19,97 +23,82 @@ namespace WebApp.ApiControllers._1._0
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatRoomsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public ChatRoomsController(ApplicationDbContext context)
+        public ChatRoomsController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: api/ChatRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRooms()
+        public async Task<IActionResult> GetRooms()
         {
-            return await _context.ChatRooms.ToListAsync();
+            return Ok((await _bll.ChatRooms.AllAsync(User.UserId()))
+                .Select(room => new ChatRoomDTO()
+            {
+                ChatRoomTitle = room.ChatRoomTitle,
+                
+            }));
         }
 
-        // GET: api/ChatRooms/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ChatRoom>> GetChatRoom(Guid id)
+        [HttpGet("{id}/last")]
+        public async Task<IActionResult> GetLastMessage(Guid chatRoomId)
         {
-            var chatRoom = await _context.ChatRooms.FindAsync(id);
+            var exist = await _bll.ChatRooms.Exist(chatRoomId);
 
-            if (chatRoom == null)
+            if (!exist)
             {
                 return NotFound();
             }
 
-            return chatRoom;
-        }
+            var result = await _bll.Messages.GetLastMessage(chatRoomId);
 
-        // PUT: api/ChatRooms/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutChatRoom(Guid id, ChatRoom chatRoom)
-        {
-            if (id != chatRoom.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(chatRoom).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ChatRoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/ChatRooms
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<ChatRoom>> PostChatRoom(ChatRoom chatRoom)
-        {
-            _context.ChatRooms.Add(chatRoom);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetChatRoom", new { id = chatRoom.Id }, chatRoom);
-        }
-
-        // DELETE: api/ChatRooms/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ChatRoom>> DeleteChatRoom(Guid id)
-        {
-            var chatRoom = await _context.ChatRooms.FindAsync(id);
-            if (chatRoom == null)
+            if (result == null)
             {
                 return NotFound();
             }
 
-            _context.ChatRooms.Remove(chatRoom);
-            await _context.SaveChangesAsync();
-
-            return chatRoom;
+            return Ok(result);
         }
 
-        private bool ChatRoomExists(Guid id)
+        [HttpGet("{id}/last")]
+        public async Task<IActionResult> GetMessagesCount(Guid chatRoomId)
         {
-            return _context.ChatRooms.Any(e => e.Id == id);
+            var exist = await _bll.ChatRooms.Exist(chatRoomId);
+
+            if (!exist)
+            {
+                return NotFound();
+            }
+
+            return Ok(_bll.Messages.CountByRoomAsync(chatRoomId));
+        }
+
+        [HttpGet("{id}/{pageNumber}")]
+        public async Task<IActionResult> GetRoom(Guid chatRoomId, int pageNumber)
+        {
+            var exist = await _bll.ChatRooms.Exist(chatRoomId);
+
+            if (!exist)
+            {
+                return NotFound();
+            }
+
+            return Ok(await _bll.Messages.AllByIdPageAsync(chatRoomId, pageNumber, 10));
+        }
+
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetRoomWithUser(string username)
+        {
+            var chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
+
+            return Ok(chatRoomId);
+        }
+
+        [HttpDelete("{id}/delete")]
+        public Task<IActionResult> DeleteRoom(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
