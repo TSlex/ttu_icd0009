@@ -21,9 +21,6 @@ namespace PublicApi.DTO.v1
 
     public class PostCreateDTO
     {
-        public Guid Id { get; set; } = default!;
-        public Guid ProfileId { get; set; } = default!;
-        
         public string PostTitle { get; set; } = default!;
         public string? PostDescription { get; set; }
 

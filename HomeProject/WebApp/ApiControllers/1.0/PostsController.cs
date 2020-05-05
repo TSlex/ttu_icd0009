@@ -30,7 +30,7 @@ namespace WebApp.ApiControllers._1._0
             _bll = bll;
             _postGetMapper = new DTOMapper<Post, PostGetDTO>();
         }
-        
+
         [AllowAnonymous]
         [HttpGet("{id}/fav_count")]
         [Produces("application/json")]
@@ -46,7 +46,7 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetFavoritesCount(id)});
         }
-        
+
         [AllowAnonymous]
         [HttpGet("{id}/comments_count")]
         [Produces("application/json")]
@@ -59,7 +59,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
-            
+
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetCommentsCount(id)});
         }
 
@@ -76,10 +76,10 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("User was not found!"));
             }
-            
+
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetByUserCount(user.Id)});
         }
-        
+
         //crud========================================================
 
         [AllowAnonymous]
@@ -95,7 +95,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("User was not found!"));
             }
-            
+
             return Ok((await _bll.Posts.GetUser10ByPage(user.Id, pageNumber))
                 .Select(post => _postGetMapper.Map(post)));
         }
@@ -113,10 +113,10 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
-            
+
             return Ok(_postGetMapper.Map(post));
         }
-        
+
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -137,12 +137,12 @@ namespace WebApp.ApiControllers._1._0
 
                 await _bll.SaveChangesAsync();
 
-                return Ok(_postGetMapper.Map(result));
+                return CreatedAtAction("GetPost", _postGetMapper.Map(result));
             }
-            
+
             return BadRequest(new ErrorResponseDTO("Post is invalid"));
         }
-        
+
         [HttpPut("{id}")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -152,12 +152,12 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> PutPost(Guid id, [FromBody] PostEditDTO post)
         {
             var record = await _bll.Posts.GetNoIncludes(id);
-            
+
             if (post.Id != id)
             {
                 return NotFound(new ErrorResponseDTO("Ids should math!"));
             }
-            
+
             if (record == null)
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
@@ -167,7 +167,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 return BadRequest(new ErrorResponseDTO("Access denied!"));
             }
-            
+
             if (TryValidateModel(post))
             {
                 record.PostTitle = post.PostTitle;
@@ -178,10 +178,10 @@ namespace WebApp.ApiControllers._1._0
 
                 return NoContent();
             }
-            
+
             return BadRequest(new ErrorResponseDTO("Post is invalid"));
         }
-        
+
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostGetDTO))]
@@ -195,12 +195,12 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
-            
+
             throw new NotImplementedException();
         }
-        
+
         //============================================================
-        
+
         [HttpPost("{id}/favorite")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -214,9 +214,9 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
-            
+
             var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
-            
+
             if (favorite == null)
             {
                 _bll.Favorites.Create(post.Id, userId);
@@ -224,10 +224,10 @@ namespace WebApp.ApiControllers._1._0
 
                 return Ok(new OkResponseDTO() {Status = "Post in now favorited"});
             }
-            
+
             return Ok(new OkResponseDTO() {Status = "Post in already favorited"});
         }
-        
+
         [HttpPost("{id}/unfavorite")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -241,9 +241,9 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
-            
+
             var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
-            
+
             if (favorite != null)
             {
                 await _bll.Favorites.RemoveAsync(post.Id, userId);
@@ -251,7 +251,7 @@ namespace WebApp.ApiControllers._1._0
 
                 return Ok(new OkResponseDTO() {Status = "Post is no longer favorited"});
             }
-            
+
             return Ok(new OkResponseDTO() {Status = "Post is not favorited"});
         }
     }

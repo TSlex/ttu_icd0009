@@ -31,5 +31,25 @@ namespace DAL.Repositories
                 .Include(p => p.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
+
+        public async Task<IEnumerable<Comment>> AllByIdPageAsync(Guid postId, int pageNumber, int count)
+        {
+            var pageIndex = pageNumber - 1;
+            var startIndex = pageIndex * count;
+
+            if (pageIndex < 0)
+            {
+                return new Comment[] { };
+            }
+
+            return (await RepoDbContext.Comments
+                    .Where(comment => comment.PostId == postId)
+                    .Include(comment => comment.Profile)
+                    .OrderBy(comment => comment.CommentDateTime)
+                    .Skip(startIndex)
+                    .Take(count)
+                    .ToListAsync())
+                .Select(post => Mapper.Map(post));
+        }
     }
 }
