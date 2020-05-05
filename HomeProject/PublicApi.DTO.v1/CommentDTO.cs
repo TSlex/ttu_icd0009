@@ -6,6 +6,8 @@ namespace PublicApi.DTO.v1
 {
     public class CommentGetDTO
     {
+        public Guid Id { get; set; } = default!;
+        
         public string UserName { get; set; }
         public string? ProfileAvatarUrl { get; set; }
 
@@ -23,7 +25,6 @@ namespace PublicApi.DTO.v1
     public class CommentEditDTO
     {
         public Guid Id { get; set; } = default!;
-        public Guid PostId { get; set; } = default!;
 
         [MaxLength(300)] [MinLength(1)] public string CommentValue { get; set; } = default!;
     }

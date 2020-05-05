@@ -5,8 +5,9 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ChatRoomDTO
+    public class ChatRoomGetDTO
     {
+        public Guid Id { get; set; } = default!;
         public string ChatRoomTitle { get; set; } = default!;
 
         public string? ChatRoomImageUrl { get; set; }
@@ -14,5 +15,11 @@ namespace PublicApi.DTO.v1
 
         public string? LastMessageValue { get; set; }
         public DateTime? LastMessageDateTime { get; set; }
+    }
+    
+    public class ChatRoomEditDTO
+    {
+        public Guid Id { get; set; }
+        public string ChatRoomTitle { get; set; } = default!;
     }
 }

@@ -10,5 +10,8 @@ namespace Contracts.BLL.App.Services
     {
         Task<Guid?> OpenOrCreateAsync(string username);
         Task<IEnumerable<ChatRoom>> AllAsync(Guid userId);
+        
+        Task<bool> IsRoomMemberAsync(Guid chatRoomId, Guid userId);
+        Task<bool> IsRoomAdministratorAsync(Guid id, Guid userId);
     }
 }

@@ -6,7 +6,7 @@ namespace DAL.App.DTO
 {
     public class Message: DomainEntityBaseMetadata
     {
-        [MaxLength(2000)] public string MessageValue { get; set; } = default!;
+        [MaxLength(3000)] public string MessageValue { get; set; } = default!;
         
         public DateTime MessageDateTime { get; set; } = DateTime.Now;
         

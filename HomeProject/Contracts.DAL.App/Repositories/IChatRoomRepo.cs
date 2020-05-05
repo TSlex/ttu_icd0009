@@ -10,5 +10,8 @@ namespace Contracts.DAL.App.Repositories
     {
         Task<ChatRoom> GetRoomWithUserAsync(Guid firstId, Guid secondId);
         Task<IEnumerable<ChatRoom>> AllAsync(Guid userId);
+        
+        Task<bool> IsRoomMemberAsync(Guid chatRoomId, Guid userId);
+        Task<bool> IsRoomAdministratorAsync(Guid chatRoomId, Guid userId);
     }
 }

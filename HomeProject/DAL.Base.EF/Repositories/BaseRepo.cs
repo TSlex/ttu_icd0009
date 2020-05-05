@@ -94,7 +94,7 @@ namespace DAL.Base.EF.Repositories
 
         public async Task<bool> Exist(Guid id)
         {
-            return (await RepoDbSet.FirstOrDefaultAsync(x => (x as IDomainEntityBase).Id == id)) != null;
+            return (await RepoDbSet.FirstOrDefaultAsync(x => x.Id == id)) != null;
         }
     }
 }

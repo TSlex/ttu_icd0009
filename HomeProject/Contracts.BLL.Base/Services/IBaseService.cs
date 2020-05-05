@@ -29,6 +29,6 @@ namespace Contracts.BLL.Base.Services
 
         Task<int> CountAsync();
 
-        Task<bool> Exist(Guid id);
+        Task<bool> ExistAsync(Guid id);
     }
 }

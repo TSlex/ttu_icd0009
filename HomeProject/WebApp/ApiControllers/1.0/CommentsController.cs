@@ -63,6 +63,13 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PostComment([FromBody] CommentCreateDTO comment)
         {
+            var post = await _bll.Posts.FindAsync(comment.PostId);
+
+            if (post == null)
+            {
+                return NotFound(new ErrorResponseDTO("Post was not found!"));
+            }
+            
             if (TryValidateModel(comment))
             {
                 var result = _bll.Comments.Add(new Comment()
@@ -93,13 +100,6 @@ namespace WebApp.ApiControllers._1._0
             if (record == null)
             {
                 return NotFound(new ErrorResponseDTO("Comment was not found!"));
-            }
-
-            var post = await _bll.Posts.FindAsync(comment.PostId);
-            
-            if (post == null)
-            {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
             if (comment.Id != id)

@@ -46,30 +46,39 @@ namespace DAL.Repositories
         {
             return (await RepoDbContext.ChatRooms
                     .Include(room => room.ChatMembers)
-/*                    .Include(room => room.Messages
-                        .OrderByDescending(message => message.MessageDateTime)
-                        .Take(1))*/
+                    .Include(room => room.Messages)
                     .Where(room => room.ChatMembers
                         .Select(member => member.ProfileId)
                         .Contains(userId))
-/*                    .Select(room => new RoomWithMessage
+                    .Select(room => new Domain.ChatRoom()
                     {
-                        Value = room, 
-                        LastMessage = room.Messages.OrderBy(message => message.MessageDateTime).FirstOrDefault()
-                    })*/
+                        Id = room.Id,
+                        ChatMembers = room.ChatMembers,
+                        ChatRoomTitle = room.ChatRoomTitle,
+                        Messages = room.Messages.OrderByDescending(message => message.MessageDateTime).Take(1).ToList()
+                    })
                     .ToListAsync())
                 .Select(room => Mapper.Map(room));
         }
 
-/*        private static ChatRoom packRoom(RoomWithMessage room)
+        public async Task<bool> IsRoomMemberAsync(Guid chatRoomId, Guid userId)
         {
-            room.Value.M
+            return (await RepoDbContext.ChatRooms.FirstOrDefaultAsync(room =>
+                       room.Id == chatRoomId &&
+                       room.ChatMembers.Select(member => member.ProfileId).Contains(userId))) != null;
         }
 
-        private struct RoomWithMessage
+        public async Task<bool> IsRoomAdministratorAsync(Guid chatRoomId, Guid userId)
         {
-            public Domain.ChatRoom Value;
-            public Domain.Message LastMessage;
-        }*/
+
+            return (await RepoDbContext.ChatRooms.FirstOrDefaultAsync((room =>
+                           room.Id == chatRoomId &&
+                           room.ChatMembers.Select(member => member.ProfileId).Contains(userId) &&
+                           (
+                               room.ChatMembers.Select(member => member.ChatRole.RoleTitle).Contains("Creator") ||
+                               room.ChatMembers.Select(member => member.ChatRole.RoleTitle).Contains("Administrator")
+                           )
+                       ))) != null;
+        }
     }
 }

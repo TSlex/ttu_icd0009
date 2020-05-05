@@ -54,7 +54,7 @@ namespace BLL.Base.Services
             return await ServiceRepository.CountAsync();
         }
 
-        public async Task<bool> Exist(Guid id)
+        public async Task<bool> ExistAsync(Guid id)
         {
             return await ServiceRepository.Exist(id);
         }

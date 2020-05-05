@@ -35,7 +35,8 @@ namespace BLL.App.Services
                 return null;
             }
 
-            var currentUser = await _uow.Profiles.FindByUsernameAsync(_httpContextAccessor.HttpContext.User!.Identity!.Name);
+            var currentUser =
+                await _uow.Profiles.FindByUsernameAsync(_httpContextAccessor.HttpContext.User!.Identity!.Name);
 
             var chatRoom = await _uow.ChatRooms.GetRoomWithUserAsync(otherProfile.Id, currentUser.Id);
 
@@ -46,8 +47,10 @@ namespace BLL.App.Services
                     ChatRoomTitle = "Chat of " + currentUser.UserName + " and " + otherProfile.UserName
                 });
 
-                var memberRole = await _uow.ChatRoles.FindAsync(new Guid("a065b5d2-871b-11ea-bcb9-0a0027000008"));
-                var creatorRole = await _uow.ChatRoles.FindAsync(new Guid("a065ed3d-871b-11ea-bcb9-0a0027000008"));
+                var memberRole = await _uow.ChatRoles.FindAsync("Member");
+                var creatorRole = await _uow.ChatRoles.FindAsync("Creator");
+//                var memberRole = await _uow.ChatRoles.FindAsync(new Guid("a065b5d2-871b-11ea-bcb9-0a0027000008"));
+//                var creatorRole = await _uow.ChatRoles.FindAsync(new Guid("a065ed3d-871b-11ea-bcb9-0a0027000008"));
 
                 _uow.ChatMembers.Add(new ChatMember()
                 {
@@ -74,6 +77,16 @@ namespace BLL.App.Services
         public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
         {
             return (await ServiceRepository.AllAsync(userId)).Select(room => Mapper.Map(room));
+        }
+
+        public async Task<bool> IsRoomMemberAsync(Guid chatRoomId, Guid userId)
+        {
+            return await ServiceRepository.IsRoomMemberAsync(chatRoomId, userId);
+        }
+
+        public async Task<bool> IsRoomAdministratorAsync(Guid chatRoomId, Guid userId)
+        {
+            return await ServiceRepository.IsRoomAdministratorAsync(chatRoomId, userId);
         }
     }
 }

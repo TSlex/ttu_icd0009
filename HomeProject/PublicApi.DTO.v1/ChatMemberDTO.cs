@@ -4,12 +4,11 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ChatMemberDTO: DomainEntityBaseMetadata
+    public class ChatMemberDTO
     {
-        public Guid ProfileId { get; set; } = default!;
-
-        public Guid ChatRoleId { get; set; } = default!;
-
-        public Guid ChatRoomId { get; set; } = default!;
+        public Guid Id { get; set; } = default!;
+        public string UserName { get; set; } = default!;
+        public string? ProfileAvatarUrl { get; set; }
+        public string ChatRole { get; set; } = default!;
     }
 }

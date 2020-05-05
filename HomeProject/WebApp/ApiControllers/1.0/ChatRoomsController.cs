@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PublicApi.DTO.v1;
 using PublicApi.DTO.v1.Mappers;
+using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
@@ -31,73 +32,181 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentGetDTO>))]
         public async Task<IActionResult> GetRooms()
         {
-            return Ok((await _bll.ChatRooms.AllAsync(User.UserId()))
-                .Select(room => new ChatRoomDTO()
+            return Ok((await _bll.ChatRooms.AllAsync(User.UserId())).Select(room => new ChatRoomGetDTO()
             {
+                Id = room.Id,
                 ChatRoomTitle = room.ChatRoomTitle,
-                
+                LastMessageDateTime = room.Messages.Count > 0 ? room.Messages.First()?.MessageDateTime : null,
+                LastMessageValue = room.Messages.Count > 0 ? room.Messages.First()?.MessageValue : null,
             }));
         }
 
         [HttpGet("{id}/last")]
-        public async Task<IActionResult> GetLastMessage(Guid chatRoomId)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageGetDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetLastMessage(Guid id)
         {
-            var exist = await _bll.ChatRooms.Exist(chatRoomId);
+            var exist = await _bll.ChatRooms.ExistAsync(id);
 
             if (!exist)
             {
                 return NotFound();
             }
 
-            var result = await _bll.Messages.GetLastMessage(chatRoomId);
+            var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
+
+            if (!canAccess)
+            {
+                return BadRequest(new ErrorResponseDTO("Access denied!"));
+            }
+
+            var result = await _bll.Messages.GetLastMessage(id);
 
             if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(result);
+            return Ok(new MessageGetDTO()
+            {
+                Id = result.Id,
+                MessageValue = result.MessageValue,
+                UserName = result.Profile.UserName,
+                MessageDateTime = result.MessageDateTime
+            });
         }
 
-        [HttpGet("{id}/last")]
-        public async Task<IActionResult> GetMessagesCount(Guid chatRoomId)
+        [HttpGet("{id}/count")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetMessagesCount(Guid id)
         {
-            var exist = await _bll.ChatRooms.Exist(chatRoomId);
+            var exist = await _bll.ChatRooms.ExistAsync(id);
 
             if (!exist)
             {
                 return NotFound();
             }
 
-            return Ok(_bll.Messages.CountByRoomAsync(chatRoomId));
+            var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
+
+            if (!canAccess)
+            {
+                return BadRequest(new ErrorResponseDTO("Access denied!"));
+            }
+
+            return Ok(_bll.Messages.CountByRoomAsync(id));
         }
 
         [HttpGet("{id}/{pageNumber}")]
-        public async Task<IActionResult> GetRoom(Guid chatRoomId, int pageNumber)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MessageGetDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetRoom(Guid id, int pageNumber)
         {
-            var exist = await _bll.ChatRooms.Exist(chatRoomId);
+            var exist = await _bll.ChatRooms.ExistAsync(id);
 
             if (!exist)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
             }
 
-            return Ok(await _bll.Messages.AllByIdPageAsync(chatRoomId, pageNumber, 10));
+            var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
+
+            if (!canAccess)
+            {
+                return BadRequest(new ErrorResponseDTO("Access denied!"));
+            }
+
+            return Ok((await _bll.Messages.AllByIdPageAsync(id, pageNumber, 10)).Select(message =>
+                new MessageGetDTO()
+                {
+                    Id = message.Id,
+                    MessageValue = message.MessageValue,
+                    UserName = message.Profile.UserName,
+                    MessageDateTime = message.MessageDateTime
+                }));
         }
 
         [HttpGet("{username}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Guid))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetRoomWithUser(string username)
         {
             var chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
 
+            if (chatRoomId == null)
+            {
+                return NotFound(new ErrorResponseDTO("User was not found!"));
+            }
+
             return Ok(chatRoomId);
         }
 
-        [HttpDelete("{id}/delete")]
-        public Task<IActionResult> DeleteRoom(Guid id)
+        [HttpPut("{id}/rename")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> PutRoom(Guid id, [FromBody] ChatRoomEditDTO chatRoom)
         {
+            var record = await _bll.ChatRooms.FindAsync(id);
+
+            if (record == null)
+            {
+                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
+            }
+
+            if (chatRoom.Id != id)
+            {
+                return NotFound(new ErrorResponseDTO("Ids should math!"));
+            }
+
+            var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
+
+            if (!canAccess)
+            {
+                return BadRequest(new ErrorResponseDTO("Access denied!"));
+            }
+
+            if (TryValidateModel(chatRoom))
+            {
+                record.ChatRoomTitle = chatRoom.ChatRoomTitle;
+
+                await _bll.ChatRooms.UpdateAsync(record);
+                await _bll.SaveChangesAsync();
+
+                return NoContent();
+            }
+
+            return BadRequest(new ErrorResponseDTO("Chat room is invalid"));
+        }
+
+        [HttpDelete("{id}/delete")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> DeleteRoom(Guid id)
+        {
+            var exist = await _bll.ChatRooms.ExistAsync(id);
+
+            if (!exist)
+            {
+                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
+            }
+
             throw new NotImplementedException();
         }
     }

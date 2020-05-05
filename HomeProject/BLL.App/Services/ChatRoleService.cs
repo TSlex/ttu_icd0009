@@ -1,4 +1,5 @@
-﻿using BLL.App.DTO;
+﻿using System.Threading.Tasks;
+using BLL.App.DTO;
 using BLL.App.Mappers;
 using BLL.Base.Services;
 using Contracts.BLL.App.Services;
@@ -13,6 +14,11 @@ namespace BLL.App.Services
         public ChatRoleService(IAppUnitOfWork uow) :
             base(uow.ChatRoles, new ChatRoleMapper())
         {
+        }
+
+        public async Task<ChatRole> FindAsync(string chatRoleTitle)
+        {
+            return Mapper.Map(await ServiceRepository.FindAsync(chatRoleTitle));
         }
     }
 }

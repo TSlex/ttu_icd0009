@@ -40,6 +40,16 @@ namespace DAL.Repositories
                     .OrderBy(message => message.MessageDateTime)
                     .Skip(startIndex)
                     .Take(count)
+                    .Select(message => new Domain.Message()
+                    {
+                        Id = message.Id,
+                        MessageValue = message.MessageValue,
+                        Profile = new Domain.Profile()
+                        {
+                            UserName = message.Profile.UserName
+                        },
+                        MessageDateTime = message.MessageDateTime
+                    })
                     .ToListAsync())
                 .Select(post => Mapper.Map(post));
         }
@@ -54,7 +64,18 @@ namespace DAL.Repositories
             return Mapper.Map(await RepoDbContext.Messages
                 .Where(message => message.ChatRoomId == chatRoomId)
                 .Include(message => message.Profile)
-                .OrderBy(message => message.MessageDateTime)
+                .OrderByDescending(message => message.MessageDateTime)
+                .Take(1)
+                .Select(message => new Domain.Message()
+                {
+                    Id = message.Id,
+                    MessageValue = message.MessageValue,
+                    Profile = new Domain.Profile()
+                    {
+                        UserName = message.Profile.UserName
+                    },
+                    MessageDateTime = message.MessageDateTime
+                })
                 .FirstOrDefaultAsync());
         }
     }
