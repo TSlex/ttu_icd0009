@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL;
 using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
@@ -19,97 +22,91 @@ namespace WebApp.ApiControllers._1._0
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FollowersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public FollowersController(ApplicationDbContext context)
+        public FollowersController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: api/Followers
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Follower>>> GetWatchers()
+        [AllowAnonymous]
+        [HttpGet("{username}/followed/count")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetUserFollowedCount(string username)
         {
-            return await _context.Watchers.ToListAsync();
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
+
+            if (user == null)
+            {
+                return NotFound(new ErrorResponseDTO("User was not found!"));
+            }
+
+            return Ok(new CountResponseDTO()
+                {Count = await _bll.Followers.CountByIdAsync(user.Id, true)});
         }
 
-        // GET: api/Followers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Follower>> GetFollower(Guid id)
+        [AllowAnonymous]
+        [HttpGet("{username}/followed/{pageNumber}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FollowerProfileDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetUserFollowed(string username, int pageNumber)
         {
-            var follower = await _context.Watchers.FindAsync(id);
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
 
-            if (follower == null)
+            if (user == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("User was not found!"));
             }
 
-            return follower;
-        }
-
-        // PUT: api/Followers/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFollower(Guid id, Follower follower)
-        {
-            if (id != follower.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(follower).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FollowerExists(id))
+            return Ok((await _bll.Followers.AllByIdPageAsync(user.Id, true, pageNumber, 10)).Select(favorite =>
+                new FollowerProfileDTO
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+                    UserName = favorite.Profile.UserName,
+                    ProfileAvatarUrl = favorite.Profile.ProfileAvatarUrl
+                }));
         }
 
-        // POST: api/Followers
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Follower>> PostFollower(Follower follower)
+        [AllowAnonymous]
+        [HttpGet("{username}/followers/count")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetUserFollowersCount(string username)
         {
-            _context.Watchers.Add(follower);
-            await _context.SaveChangesAsync();
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
 
-            return CreatedAtAction("GetFollower", new { id = follower.Id }, follower);
-        }
-
-        // DELETE: api/Followers/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Follower>> DeleteFollower(Guid id)
-        {
-            var follower = await _context.Watchers.FindAsync(id);
-            if (follower == null)
+            if (user == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("User was not found!"));
             }
 
-            _context.Watchers.Remove(follower);
-            await _context.SaveChangesAsync();
-
-            return follower;
+            return Ok(new CountResponseDTO()
+                {Count = await _bll.Followers.CountByIdAsync(user.Id, false)});
         }
 
-        private bool FollowerExists(Guid id)
+        [AllowAnonymous]
+        [HttpGet("{username}/followers/{pageNumber}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FollowerProfileDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetUserFollowers(string username, int pageNumber)
         {
-            return _context.Watchers.Any(e => e.Id == id);
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
+
+            if (user == null)
+            {
+                return NotFound(new ErrorResponseDTO("User was not found!"));
+            }
+
+            return Ok((await _bll.Followers.AllByIdPageAsync(user.Id, false, pageNumber, 10)).Select(favorite =>
+                new FollowerProfileDTO
+                {
+                    UserName = favorite.Profile.UserName,
+                    ProfileAvatarUrl = favorite.Profile.ProfileAvatarUrl
+                }));
         }
     }
 }

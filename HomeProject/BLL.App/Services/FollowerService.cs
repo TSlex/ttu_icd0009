@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using BLL.App.Mappers;
@@ -41,6 +43,16 @@ namespace BLL.App.Services
         public async Task<Follower> FindAsync(Guid userId, Guid profileId)
         {
             return Mapper.Map(await ServiceRepository.FindAsync(userId, profileId));
+        }
+
+        public async Task<int> CountByIdAsync(Guid userId, bool reversed)
+        {
+            return await ServiceRepository.CountByIdAsync(userId, reversed);
+        }
+
+        public async Task<IEnumerable<Follower>> AllByIdPageAsync(Guid userId, bool reversed, int pageNumber, int count)
+        {
+            return (await ServiceRepository.AllByIdPageAsync(userId, reversed, pageNumber, count)).Select(follower => Mapper.Map(follower));
         }
     }
 }
