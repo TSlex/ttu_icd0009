@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UserSecretsId>aspnet-WebApp-42F190DF-6723-45FB-9156-3C70866594DD</UserSecretsId>
+        <Configurations>Debug;Release;TEST</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <PropertyGroup>

@@ -11,10 +11,10 @@
         .Where(rank => rank.Rank!.MinExperience <= Model.Experience)
         .Take(1).ToList()[0].Rank;
 
-    var isAuthorized = SignInManager.IsSignedIn(User);
-
     float currentExp = Model.Experience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
     float needExp = profileRank.MaxExperience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
+    
+    var isAuthorized = SignInManager.IsSignedIn(User);
 }
 
 <div class="profile_container">

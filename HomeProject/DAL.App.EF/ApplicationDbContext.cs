@@ -8,6 +8,8 @@ using Domain;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace DAL
 {
@@ -48,7 +50,7 @@ namespace DAL
             builder.Entity<Profile>(b => b.ToTable("Profile"));
             builder.Entity<MRole>(b => b.ToTable("UserRole"));
 
-            //remove cascade delete
+//            //remove cascade delete - no longer needs, as SOFT-DELETE is supported 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
@@ -102,7 +104,57 @@ namespace DAL
                 entityEntry.Property(nameof(entityWithMetaData.CreatedAt)).IsModified = false;
                 entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
             }
+
+            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+
+            foreach (var entityEntry in markedAsDeleted)
+            {
+                // check for IDomainEntityMetadata
+                if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
+
+                entityWithMetaData.DeletedAt = DateTime.Now;
+                entityWithMetaData.DeletedBy = _userNameProvider.CurrentUserName;
+
+                entityEntry.Property(nameof(entityWithMetaData.CreatedAt)).IsModified = false;
+                entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
+                entityEntry.Property(nameof(entityWithMetaData.ChangedAt)).IsModified = false;
+                entityEntry.Property(nameof(entityWithMetaData.ChangedBy)).IsModified = false;
+
+                entityEntry.State = EntityState.Modified;
+
+//                SoftCascadeDelete(entityEntry);
+            }
         }
+
+//        private void SoftCascadeDelete(EntityEntry entry)
+//        {
+//            if (entry.Entity is IDomainEntityMetadata meta)
+//            {
+//                meta.DeletedAt = DateTime.Now;
+//                meta.DeletedBy = _userNameProvider.CurrentUserName;
+//
+//                entry.Property(nameof(meta.CreatedAt)).IsModified = false;
+//                entry.Property(nameof(meta.CreatedBy)).IsModified = false;
+//                entry.Property(nameof(meta.ChangedAt)).IsModified = false;
+//                entry.Property(nameof(meta.ChangedBy)).IsModified = false;
+//
+//                entry.State = EntityState.Modified;
+//
+//                foreach (var navigationEntry in entry.Navigations.Where(n => !n.Metadata.IsDependentToPrincipal()))
+//                {
+//                    if (navigationEntry is CollectionEntry collectionEntry && collectionEntry.CurrentValue != null)
+//                    {
+//                        foreach (var dependentEntry in collectionEntry.CurrentValue)
+//                        {
+//                            if (dependentEntry != null)
+//                            {
+//                                SoftCascadeDelete(Entry(dependentEntry));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         public override int SaveChanges()
         {

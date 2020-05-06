@@ -1,3 +1,7 @@
 ﻿<a class="btn btn-primary fa fa-edit" asp-action="Edit" asp-route-id="@Model.Id"></a>
 <a class="btn btn-primary fa fa-eye" asp-action="Details" asp-route-id="@Model.Id"></a>
-<a class="btn btn-danger fa fa-times" asp-action="Delete" asp-route-id="@Model.Id"></a>
+@* <a class="btn btn-danger fa fa-times" asp-action="Delete" asp-route-id="@Model.Id"></a> *@
+<form method="post" asp-action="Delete">
+    <input type="hidden" name="id" value="@Model.Id">
+    <button type="submit" class="btn btn-danger fa fa-times"/>
+</form>
