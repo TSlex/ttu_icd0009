@@ -30,7 +30,7 @@ namespace WebApp.ApiControllers._1._0
             _bll = bll;
         }
 
-        [HttpGet("blacklist/count")]
+        [HttpGet("count")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
         public async Task<IActionResult> GetUserFollowedCount()
@@ -39,7 +39,7 @@ namespace WebApp.ApiControllers._1._0
                 {Count = await _bll.BlockedProfiles.CountByIdAsync(User.UserId())});
         }
 
-        [HttpGet("blacklist/{pageNumber}")]
+        [HttpGet("{pageNumber}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BlockedProfileDTO>))]
         public async Task<IActionResult> GetUserFollowed(int pageNumber)

@@ -6,6 +6,7 @@ using BLL.App.DTO;
 using Domain;
 using Extension;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace WebApp.Controllers
 {
@@ -36,6 +37,17 @@ namespace WebApp.Controllers
             var isUserBlocked = isAuthorized && 
                                 user.Id != User.UserId() && 
                                 await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
+            
+            if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
+            {
+                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
+                {
+                    ProfileId = user.Id,
+                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
+                });
+                
+                await _bll.SaveChangesAsync();
+            };
 
             if (isUserBlocked)
             {

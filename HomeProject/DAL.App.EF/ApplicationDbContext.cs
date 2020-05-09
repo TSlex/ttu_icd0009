@@ -85,7 +85,12 @@ namespace DAL
                 if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
 
                 entityWithMetaData.CreatedAt = DateTime.Now;
-                entityWithMetaData.CreatedBy = _userNameProvider.CurrentUserName;
+
+                if (entityWithMetaData.CreatedBy == null)
+                {
+                    entityWithMetaData.CreatedBy = _userNameProvider.CurrentUserName;
+                }
+                
                 entityWithMetaData.ChangedAt = entityWithMetaData.CreatedAt;
                 entityWithMetaData.ChangedBy = entityWithMetaData.CreatedBy;
             }

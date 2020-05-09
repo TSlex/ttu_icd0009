@@ -38,8 +38,21 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("User is not found!"));
             }
+
+            var ranks = (await _bll.ProfileRanks.AllUserAsync(user.Id)).ToList();
             
-            return Ok((await _bll.ProfileRanks.AllUserAsync(user.Id)).Select(rank => new RankDTO()
+            if (!ranks.Any())
+            {
+                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
+                {
+                    ProfileId = user.Id,
+                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
+                });
+                
+                await _bll.SaveChangesAsync();
+            };
+            
+            return Ok(ranks.Select(rank => new RankDTO()
             {
                 RankTitle = rank.Rank.RankTitle,
                 RankDescription = rank.Rank.RankDescription,
@@ -65,8 +78,20 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("User is not found!"));
             }
             
-            return Ok((await _bll.ProfileRanks.AllUserAsync(user.Id))
-                .Select(rank => rank.Rank)
+            var ranks = (await _bll.ProfileRanks.AllUserAsync(user.Id)).ToList();
+            
+            if (!ranks.Any())
+            {
+                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
+                {
+                    ProfileId = user.Id,
+                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
+                });
+                
+                await _bll.SaveChangesAsync();
+            };
+            
+            return Ok(ranks.Select(rank => rank.Rank)
                 .OrderByDescending(rank => rank.MaxExperience)
                 .Where(rank => rank.MinExperience <= user.Experience)
                 .Take(1)

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.BLL.App;
 using DAL;
-using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -31,23 +31,32 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("{id?}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetImage(Guid? id)
+        public async Task<IActionResult> GetImage(string? id)
         {
             if (id == null)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
 
-            var image = await _bll.Images.FindAsync((Guid) id);
+            Image image;
 
-            if (image == null)
+            try
+            {
+                image = await _bll.Images.FindAsync(new Guid(id));
+
+                if (image == null)
+                {
+                    return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                }
+            }
+            catch (Exception)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
-            
+
             Request.Headers.Add("imageId", id.ToString());
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
@@ -70,9 +79,9 @@ namespace WebApp.ApiControllers._1._0
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
-            
-            var image = await _bll.Images.FindAsync((Guid)user.ProfileAvatarId);
-            
+
+            var image = await _bll.Images.FindAsync((Guid) user.ProfileAvatarId);
+
             if (image == null)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
@@ -94,14 +103,14 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
-            
+
             if (post.PostImageId == null)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
-            
-            var image = await _bll.Images.FindAsync((Guid)post.PostImageId);
-            
+
+            var image = await _bll.Images.FindAsync((Guid) post.PostImageId);
+
             if (image == null)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
@@ -123,14 +132,14 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Gift was not found!"));
             }
-            
+
             if (gift.GiftImageId == null)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
-            
-            var image = await _bll.Images.FindAsync((Guid)gift.GiftImageId);
-            
+
+            var image = await _bll.Images.FindAsync((Guid) gift.GiftImageId);
+
             if (image == null)
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");

@@ -33,7 +33,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentGetDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChatRoomGetDTO>))]
         public async Task<IActionResult> GetRooms()
         {
             return Ok((await _bll.ChatRooms.AllAsync(User.UserId())).Select(room => new ChatRoomGetDTO()

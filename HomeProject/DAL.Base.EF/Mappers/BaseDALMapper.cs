@@ -30,7 +30,7 @@ namespace DAL.Base.EF.Mappers
                 config.CreateMap<Profile, Domain.Profile>();
                 
                 config.CreateMap<Domain.ChatMember, ChatMember>();
-                config.CreateMap<ChatMember, Domain.ChatMember>();
+                config.CreateMap<ChatMember, Domain.ChatMember>();    
                 
                 config.CreateMap<Domain.ChatRole, ChatRole>();
                 config.CreateMap<ChatRole, Domain.ChatRole>();

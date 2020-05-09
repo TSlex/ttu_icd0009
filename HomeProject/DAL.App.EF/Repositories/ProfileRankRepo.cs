@@ -28,6 +28,12 @@ namespace DAL.Repositories
                 .Select(rank => Mapper.Map(rank)).ToListAsync();
         }
 
+        public override ProfileRank Add(ProfileRank entity)
+        {
+            entity.CreatedBy = "system";
+            return base.Add(entity);
+        }
+
         public Task<ProfileRank> ActiveUserAsync(Guid profileId)
         {
             throw new NotImplementedException();

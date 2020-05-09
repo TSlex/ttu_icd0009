@@ -93,7 +93,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                     //add default rank
                     _bll.ProfileRanks.Add(new ProfileRank()
                     {
-                        Id = user.Id,
+                        ProfileId = user.Id,
                         RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
                     });
 

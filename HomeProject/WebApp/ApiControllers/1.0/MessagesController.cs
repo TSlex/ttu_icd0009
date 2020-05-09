@@ -37,7 +37,7 @@ namespace WebApp.ApiControllers._1._0
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CommentGetDTO))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MessageGetDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PostMessage([FromBody] MessageCreateDTO message)
@@ -106,7 +106,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpDelete("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentGetDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageGetDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> DeleteMessage(Guid id)

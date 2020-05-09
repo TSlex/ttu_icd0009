@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
@@ -21,12 +22,14 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IAppBLL _bll;
 
         public LoginModel(SignInManager<Profile> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<Profile> userManager)
+            UserManager<Profile> userManager, IAppBLL bll)
         {
             _userManager = userManager;
+            _bll = bll;
             _signInManager = signInManager;
             _logger = logger;
         }

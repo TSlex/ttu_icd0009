@@ -39,7 +39,7 @@ namespace WebApp.ApiControllers._1._0
             
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO("User was not found!"));
             }
 
             if (User.Identity.IsAuthenticated && User.UserId() != user.Id)

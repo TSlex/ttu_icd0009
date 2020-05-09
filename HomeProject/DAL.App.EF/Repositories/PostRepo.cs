@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
-using DAL.App.DTO;
 using DAL.Base.EF.Repositories;
 using DAL.Mappers;
+using Domain;
 using Microsoft.EntityFrameworkCore;
+using Post = DAL.App.DTO.Post;
 
 namespace DAL.Repositories
 {
@@ -59,14 +60,18 @@ namespace DAL.Repositories
                     .Select(post => new Domain.Post()
                     {
                         Id = post.Id,
-                        Profile = post.Profile,
+//                        Profile = post.Profile,
                         PostTitle = post.PostTitle,
                         PostDescription = post.PostDescription,
                         PostImageId = post.PostImageId,
                         PostPublicationDateTime = post.PostPublicationDateTime,
                         PostImageUrl = post.PostImageUrl,
                         PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count
+                        PostFavoritesCount = post.Favorites!.Count,
+                        Profile = new Profile()
+                        {
+                            UserName = post.Profile.UserName
+                        }
                     })
                     .ToListAsync())
                 .Select(post => Mapper.Map(post));
@@ -78,14 +83,17 @@ namespace DAL.Repositories
                     .Select(post => new Domain.Post()
                     {
                         Id = post.Id,
-                        Profile = post.Profile,
                         PostTitle = post.PostTitle,
                         PostDescription = post.PostDescription,
                         PostImageId = post.PostImageId,
                         PostPublicationDateTime = post.PostPublicationDateTime,
                         PostImageUrl = post.PostImageUrl,
                         PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count
+                        PostFavoritesCount = post.Favorites!.Count,
+                        Profile = new Profile()
+                        {
+                            UserName = post.Profile.UserName
+                        }
                     })
                     .ToListAsync())
                 .Select(post => Mapper.Map(post));
@@ -119,7 +127,11 @@ namespace DAL.Repositories
                         PostPublicationDateTime = post.PostPublicationDateTime,
                         PostImageUrl = post.PostImageUrl,
                         PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count
+                        PostFavoritesCount = post.Favorites!.Count,
+                        Profile = new Profile()
+                        {
+                            UserName = post.Profile.UserName
+                        }
                     })
                     .Skip(startIndex)
                     .Take(onPageCount)
@@ -175,7 +187,11 @@ namespace DAL.Repositories
                         PostPublicationDateTime = post.PostPublicationDateTime,
                         PostImageUrl = post.PostImageUrl,
                         PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count
+                        PostFavoritesCount = post.Favorites!.Count,
+                        Profile = new Profile()
+                        {
+                            UserName = post.Profile.UserName
+                        }
                     })
                     .Skip(startIndex)
                     .Take(onPageCount)
@@ -204,7 +220,11 @@ namespace DAL.Repositories
                         PostPublicationDateTime = post.PostPublicationDateTime,
                         PostImageUrl = post.PostImageUrl,
                         PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count
+                        PostFavoritesCount = post.Favorites!.Count,
+                        Profile = new Profile()
+                        {
+                            UserName = post.Profile.UserName
+                        }
                     })
                     .Skip(startIndex)
                     .Take(onPageCount)
