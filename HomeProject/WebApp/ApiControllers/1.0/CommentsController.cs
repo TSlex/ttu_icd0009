@@ -49,6 +49,7 @@ namespace WebApp.ApiControllers._1._0
             return Ok((await _bll.Comments.AllByIdPageAsync(post.Id, pageNumber, 10)).Select(comment =>
                 new CommentGetDTO
                 {
+                    Id = comment.Id,
                     UserName = comment.Profile.UserName,
                     ProfileAvatarUrl = comment.Profile.ProfileAvatarUrl,
                     CommentValue = comment.CommentValue,

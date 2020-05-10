@@ -37,7 +37,7 @@ namespace DAL.Repositories
             return (await RepoDbContext.Messages
                     .Where(message => message.ChatRoomId == chatRoomId)
                     .Include(message => message.Profile)
-                    .OrderBy(message => message.MessageDateTime)
+                    .OrderByDescending(message => message.MessageDateTime)
                     .Skip(startIndex)
                     .Take(count)
                     .Select(message => new Domain.Message()

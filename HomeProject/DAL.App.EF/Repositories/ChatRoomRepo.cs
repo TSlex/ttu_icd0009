@@ -70,7 +70,6 @@ namespace DAL.Repositories
 
         public async Task<bool> IsRoomAdministratorAsync(Guid chatRoomId, Guid userId)
         {
-
             return (await RepoDbContext.ChatRooms.FirstOrDefaultAsync((room =>
                            room.Id == chatRoomId &&
                            room.ChatMembers.Select(member => member.ProfileId).Contains(userId) &&

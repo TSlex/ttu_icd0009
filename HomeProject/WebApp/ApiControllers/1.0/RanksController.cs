@@ -24,7 +24,7 @@ namespace WebApp.ApiControllers._1._0
         {
             _bll = bll;
         }
-        
+
         [AllowAnonymous]
         [HttpGet("{username}/all")]
         [Produces("application/json")]
@@ -40,7 +40,7 @@ namespace WebApp.ApiControllers._1._0
             }
 
             var ranks = (await _bll.ProfileRanks.AllUserAsync(user.Id)).ToList();
-            
+
             if (!ranks.Any())
             {
                 _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
@@ -48,10 +48,12 @@ namespace WebApp.ApiControllers._1._0
                     ProfileId = user.Id,
                     RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
                 });
-                
+
                 await _bll.SaveChangesAsync();
-            };
-            
+            }
+
+            ;
+
             return Ok(ranks.Select(rank => new RankDTO()
             {
                 RankTitle = rank.Rank.RankTitle,
@@ -63,7 +65,7 @@ namespace WebApp.ApiControllers._1._0
                 MaxExperience = rank.Rank.MaxExperience,
             }));
         }
-        
+
         [AllowAnonymous]
         [HttpGet("{username}/active")]
         [Produces("application/json")]
@@ -77,9 +79,9 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("User is not found!"));
             }
-            
+
             var ranks = (await _bll.ProfileRanks.AllUserAsync(user.Id)).ToList();
-            
+
             if (!ranks.Any())
             {
                 _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
@@ -87,24 +89,25 @@ namespace WebApp.ApiControllers._1._0
                     ProfileId = user.Id,
                     RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
                 });
-                
+
                 await _bll.SaveChangesAsync();
-            };
-            
+            }
+
+            ;
+
             return Ok(ranks.Select(rank => rank.Rank)
                 .OrderByDescending(rank => rank.MaxExperience)
                 .Where(rank => rank.MinExperience <= user.Experience)
-                .Take(1)
                 .Select(rank => new RankDTO()
-            {
-                RankTitle = rank.RankTitle,
-                RankDescription = rank.RankDescription,
-                RankIcon = rank.RankIcon,
-                RankColor = rank.RankColor,
-                RankTextColor = rank.RankTextColor,
-                MinExperience = rank.MinExperience,
-                MaxExperience = rank.MaxExperience,
-            }));
+                {
+                    RankTitle = rank.RankTitle,
+                    RankDescription = rank.RankDescription,
+                    RankIcon = rank.RankIcon,
+                    RankColor = rank.RankColor,
+                    RankTextColor = rank.RankTextColor,
+                    MinExperience = rank.MinExperience,
+                    MaxExperience = rank.MaxExperience,
+                }).FirstOrDefault());
         }
     }
 }

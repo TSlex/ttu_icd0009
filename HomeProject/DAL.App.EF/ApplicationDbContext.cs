@@ -110,9 +110,9 @@ namespace DAL
                 entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
             }
 
-            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+//            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
 
-            foreach (var entityEntry in markedAsDeleted)
+            /*foreach (var entityEntry in markedAsDeleted)
             {
                 // check for IDomainEntityMetadata
                 if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
@@ -128,7 +128,7 @@ namespace DAL
                 entityEntry.State = EntityState.Modified;
 
 //                SoftCascadeDelete(entityEntry);
-            }
+            }*/
         }
 
 //        private void SoftCascadeDelete(EntityEntry entry)

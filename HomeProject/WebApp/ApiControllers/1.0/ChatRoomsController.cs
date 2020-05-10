@@ -42,7 +42,7 @@ namespace WebApp.ApiControllers._1._0
                 ChatRoomTitle = room.ChatRoomTitle,
                 LastMessageDateTime = room.Messages.Count > 0 ? room.Messages.First()?.MessageDateTime : null,
                 LastMessageValue = room.Messages.Count > 0 ? room.Messages.First()?.MessageValue : null,
-            }));
+            }).OrderByDescending(room => room.LastMessageDateTime));
         }
 
         [HttpGet("{id}/last")]
