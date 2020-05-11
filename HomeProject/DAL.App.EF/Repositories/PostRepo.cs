@@ -40,26 +40,11 @@ namespace DAL.Repositories
 
         public async Task<Post> GetNoIncludes(Guid id, Guid? requesterId)
         {
-//            var query = RepoDbContext.Posts.Where(post => post.Id == id).AsQueryable();
-//
-//            var favoritesCount = await query.SelectMany(post => post.Favorites).CountAsync();
-//            var commentsCount = await query.SelectMany(post => post.Comments).CountAsync();
-//            var isUserFavorite = requesterId != null && query.SelectMany(post => post.Favorites)
-//                                     .Select(favorite => favorite.ProfileId).Contains((Guid) requesterId);
-//
-//            var record = Mapper.Map(query.FirstOrDefault());
-//
-//            record.PostFavoritesCount = favoritesCount;
-//            record.PostCommentsCount = commentsCount;
-//            record.IsUserFavorite = isUserFavorite;
-//
-//            return record;
-
-
             return (await RepoDbContext.Posts
                 .Where(post => post.Id == id).Select(post => new Post()
                 {
                     Id = post.Id,
+                    ProfileId = post.ProfileId,
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
@@ -85,6 +70,7 @@ namespace DAL.Repositories
                 .Select(post => new Post()
                 {
                     Id = post.Id,
+                    ProfileId = post.ProfileId,
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
@@ -107,6 +93,7 @@ namespace DAL.Repositories
                     .Select(post => new Domain.Post()
                     {
                         Id = post.Id,
+                        ProfileId = post.ProfileId,
                         PostTitle = post.PostTitle,
                         PostDescription = post.PostDescription,
                         PostImageId = post.PostImageId,
@@ -145,6 +132,7 @@ namespace DAL.Repositories
                 .Select(post => new Post()
                 {
                     Id = post.Id,
+                    ProfileId = post.ProfileId,
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
@@ -206,6 +194,7 @@ namespace DAL.Repositories
                 .Select(post => new Post()
                 {
                     Id = post.Id,
+                    ProfileId = post.ProfileId,
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
@@ -239,6 +228,7 @@ namespace DAL.Repositories
                 .Select(post => new Domain.Post()
                 {
                     Id = post.Id,
+                    ProfileId = post.ProfileId,
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,

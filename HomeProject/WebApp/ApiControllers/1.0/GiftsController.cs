@@ -106,13 +106,13 @@ namespace WebApp.ApiControllers._1._0
             });
         }
 
-        [HttpPost("{username}/send")]
+        [HttpPost("{username}/{giftCode}/send")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> SendGiftToUser(string username, [Required] string giftCode)
+        public async Task<IActionResult> SendGiftToUser(string username, string giftCode)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
 

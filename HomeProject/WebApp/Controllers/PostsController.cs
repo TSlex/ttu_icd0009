@@ -165,7 +165,7 @@ namespace WebApp.Controllers
 
             if (TryValidateModel(post))
             {
-                await _bll.Posts.UpdateAsync(post);
+                await _bll.Posts.UpdateAsync(record);
                 await _bll.SaveChangesAsync();
                 
                 if (post.ReturnUrl != null)

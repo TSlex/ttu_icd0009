@@ -165,7 +165,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PutPost(Guid id, [FromBody] PostEditDTO post)
         {
-            var record = await _bll.Posts.GetNoIncludes(id, null);
+            var record = await _bll.Posts.FindAsync(id);
 
             if (post.Id != id)
             {
