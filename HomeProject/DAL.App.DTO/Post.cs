@@ -32,5 +32,7 @@ namespace DAL.App.DTO
         public ICollection<Comment>? Comments { get; set; }
 
         public ICollection<Favorite>? Favorites { get; set; }
+        
+        public bool IsUserFavorite { get; set; }
     }
 }

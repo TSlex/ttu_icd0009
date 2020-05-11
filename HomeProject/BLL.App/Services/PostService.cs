@@ -27,9 +27,9 @@ namespace BLL.App.Services
             return post;
         }
 
-        public async Task<Post> GetNoIncludes(Guid id)
+        public async Task<Post> GetNoIncludes(Guid id, Guid? requesterId)
         {
-            return Mapper.Map(await ServiceRepository.GetNoIncludes(id));
+            return Mapper.Map(await ServiceRepository.GetNoIncludes(id, requesterId));
         }
 
         public async Task<int> GetFavoritesCount(Guid id)
@@ -47,9 +47,14 @@ namespace BLL.App.Services
             return await ServiceRepository.GetByUserCount(userId);
         }
 
-        public async Task<IEnumerable<Post>> GetUser10ByPage(Guid userId, int pageNumber)
+        public async Task<IEnumerable<Post>> GetUser10ByPage(Guid userId, int pageNumber, Guid? requesterId)
         {
-            return (await ServiceRepository.GetUserByPage(userId, pageNumber, 10)).Select(post => Mapper.Map(post));
+            return (await ServiceRepository.GetUserByPage(userId, pageNumber, 10, requesterId)).Select(post => Mapper.Map(post));
+        }
+        
+        public async Task<bool> IsUserFavorite(Guid postId, Guid userId)
+        {
+            return (await ServiceRepository.IsUserFavorite(postId, userId));
         }
     }
 }

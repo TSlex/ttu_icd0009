@@ -246,18 +246,18 @@ namespace DAL.Helpers
 
             ctx.SaveChanges();
         }
-    }
+        
+        struct User
+        {
+            public string Email { get; set; }
+            public string Password { get; set; }
 
-    struct User
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
+            public ICollection<string>? RolesNames { get; set; }
+        }
 
-        public ICollection<string>? RolesNames { get; set; }
-    }
-
-    struct Role
-    {
-        public string Name { get; set; }
+        struct Role
+        {
+            public string Name { get; set; }
+        }
     }
 }

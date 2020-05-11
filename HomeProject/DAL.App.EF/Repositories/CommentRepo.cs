@@ -45,7 +45,7 @@ namespace DAL.Repositories
             return (await RepoDbContext.Comments
                     .Where(comment => comment.PostId == postId)
                     .Include(comment => comment.Profile)
-                    .OrderBy(comment => comment.CommentDateTime)
+                    .OrderByDescending(comment => comment.CommentDateTime)
                     .Skip(startIndex)
                     .Take(count)
                     .ToListAsync())

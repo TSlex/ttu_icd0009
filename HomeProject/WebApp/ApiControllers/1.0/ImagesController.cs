@@ -97,7 +97,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostImage(Guid postId)
         {
-            var post = await _bll.Posts.GetNoIncludes(postId);
+            var post = await _bll.Posts.GetNoIncludes(postId, null);
 
             if (post == null)
             {

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
 using DAL.Base.EF.Repositories;
+using DAL.Helpers;
 using DAL.Mappers;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Post = DAL.App.DTO.Post;
 
@@ -36,45 +38,67 @@ namespace DAL.Repositories
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
 
-        public async Task<Post> GetNoIncludes(Guid id)
+        public async Task<Post> GetNoIncludes(Guid id, Guid? requesterId)
         {
-            var query = RepoDbContext.Posts.Where(post => post.Id == id).AsQueryable();
+//            var query = RepoDbContext.Posts.Where(post => post.Id == id).AsQueryable();
+//
+//            var favoritesCount = await query.SelectMany(post => post.Favorites).CountAsync();
+//            var commentsCount = await query.SelectMany(post => post.Comments).CountAsync();
+//            var isUserFavorite = requesterId != null && query.SelectMany(post => post.Favorites)
+//                                     .Select(favorite => favorite.ProfileId).Contains((Guid) requesterId);
+//
+//            var record = Mapper.Map(query.FirstOrDefault());
+//
+//            record.PostFavoritesCount = favoritesCount;
+//            record.PostCommentsCount = commentsCount;
+//            record.IsUserFavorite = isUserFavorite;
+//
+//            return record;
 
-            var favoritesCount = await query.SelectMany(post => post.Favorites).CountAsync();
-            var commentsCount = await query.SelectMany(post => post.Comments).CountAsync();
 
-            var record = Mapper.Map(query.FirstOrDefault());
-
-            record.PostFavoritesCount = favoritesCount;
-            record.PostCommentsCount = commentsCount;
-
-            return record;
+            return (await RepoDbContext.Posts
+                .Where(post => post.Id == id).Select(post => new Post()
+                {
+                    Id = post.Id,
+                    PostTitle = post.PostTitle,
+                    PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
+                    PostImageUrl = post.PostImageUrl,
+                    PostCommentsCount = post.Comments!.Count,
+                    PostFavoritesCount = post.Favorites!.Count,
+                    IsUserFavorite = requesterId != null && post.Favorites.Select(favorite => favorite.ProfileId)
+                                         .Contains((Guid) requesterId),
+                    Profile = new DAL.App.DTO.Profile()
+                    {
+                        UserName = post.Profile.UserName
+                    }
+                }).FirstOrDefaultAsync());
         }
 
         public async Task<IEnumerable<Post>> GetUserFollowsPostsAsync(Guid userId)
         {
             return (await RepoDbContext.Posts
-                    .Where(post => post.Profile!.Followers
-                                       .Select(follower => follower.FollowerProfileId)
-                                       .Contains(userId) || post.ProfileId == userId)
-                    .Select(post => new Domain.Post()
+                .Where(post => post.Profile!.Followers
+                                   .Select(follower => follower.FollowerProfileId)
+                                   .Contains(userId) || post.ProfileId == userId)
+                .Select(post => new Post()
+                {
+                    Id = post.Id,
+                    PostTitle = post.PostTitle,
+                    PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
+                    PostImageUrl = post.PostImageUrl,
+                    PostCommentsCount = post.Comments!.Count,
+                    PostFavoritesCount = post.Favorites!.Count,
+                    IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
+                    Profile = new DAL.App.DTO.Profile()
                     {
-                        Id = post.Id,
-//                        Profile = post.Profile,
-                        PostTitle = post.PostTitle,
-                        PostDescription = post.PostDescription,
-                        PostImageId = post.PostImageId,
-                        PostPublicationDateTime = post.PostPublicationDateTime,
-                        PostImageUrl = post.PostImageUrl,
-                        PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count,
-                        Profile = new Profile()
-                        {
-                            UserName = post.Profile.UserName
-                        }
-                    })
-                    .ToListAsync())
-                .Select(post => Mapper.Map(post));
+                        UserName = post.Profile.UserName
+                    }
+                })
+                .ToListAsync());
         }
 
         public async Task<IEnumerable<Post>> GetCommonFeedAsync()
@@ -104,7 +128,8 @@ namespace DAL.Repositories
             return await RepoDbContext.Posts.CountAsync(post => post.ProfileId == userId);
         }
 
-        public async Task<IEnumerable<Post>> GetUserByPage(Guid userId, int pageNumber, int onPageCount)
+        public async Task<IEnumerable<Post>> GetUserByPage(Guid userId, int pageNumber, int onPageCount,
+            Guid? requesterId)
         {
             var pageIndex = pageNumber - 1;
             var startIndex = pageIndex * onPageCount;
@@ -115,39 +140,39 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
-                    .Where(post => post.ProfileId == userId)
-                    .OrderByDescending(post => post.PostPublicationDateTime)
-//                    .Select(post => LimitPost(post))
-                    .Select(post => new Domain.Post()
+                .Where(post => post.ProfileId == userId)
+                .OrderByDescending(post => post.PostPublicationDateTime)
+                .Select(post => new Post()
+                {
+                    Id = post.Id,
+                    PostTitle = post.PostTitle,
+                    PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
+                    PostImageUrl = post.PostImageUrl,
+                    PostCommentsCount = post.Comments!.Count,
+                    PostFavoritesCount = post.Favorites!.Count,
+                    IsUserFavorite = requesterId != null && post.Favorites.Select(favorite => favorite.ProfileId)
+                                         .Contains((Guid) requesterId),
+                    Profile = new DAL.App.DTO.Profile()
                     {
-                        Id = post.Id,
-                        PostTitle = post.PostTitle,
-                        PostDescription = post.PostDescription,
-                        PostImageId = post.PostImageId,
-                        PostPublicationDateTime = post.PostPublicationDateTime,
-                        PostImageUrl = post.PostImageUrl,
-                        PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count,
-                        Profile = new Profile()
-                        {
-                            UserName = post.Profile.UserName
-                        }
-                    })
-                    .Skip(startIndex)
-                    .Take(onPageCount)
-                    .ToListAsync())
-                .Select(post => Mapper.Map(post));
+                        UserName = post.Profile.UserName
+                    }
+                })
+                .Skip(startIndex)
+                .Take(onPageCount)
+                .ToListAsync());
         }
 
         public async Task<int> GetCommentsCount(Guid id)
         {
-            return (await GetNoIncludes(id)).PostCommentsCount;
+            return (await GetNoIncludes(id, null)).PostCommentsCount;
         }
 
 
         public async Task<int> GetFavoritesCount(Guid id)
         {
-            return (await GetNoIncludes(id)).PostFavoritesCount;
+            return (await GetNoIncludes(id, null)).PostFavoritesCount;
         }
 
         public async Task<int> GetUserFollowsPostsCount(Guid userId)
@@ -174,29 +199,29 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
-                    .Where(post => post.Profile!.Followers
-                                       .Select(follower => follower.FollowerProfileId)
-                                       .Contains(userId) || post.ProfileId == userId)
-                    .OrderByDescending(post => post.PostPublicationDateTime)
-                    .Select(post => new Domain.Post()
+                .Where(post => post.Profile!.Followers
+                                   .Select(follower => follower.FollowerProfileId)
+                                   .Contains(userId) || post.ProfileId == userId)
+                .OrderByDescending(post => post.PostPublicationDateTime)
+                .Select(post => new Post()
+                {
+                    Id = post.Id,
+                    PostTitle = post.PostTitle,
+                    PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
+                    PostImageUrl = post.PostImageUrl,
+                    PostCommentsCount = post.Comments!.Count,
+                    PostFavoritesCount = post.Favorites!.Count,
+                    IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
+                    Profile = new DAL.App.DTO.Profile()
                     {
-                        Id = post.Id,
-                        PostTitle = post.PostTitle,
-                        PostDescription = post.PostDescription,
-                        PostImageId = post.PostImageId,
-                        PostPublicationDateTime = post.PostPublicationDateTime,
-                        PostImageUrl = post.PostImageUrl,
-                        PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count,
-                        Profile = new Profile()
-                        {
-                            UserName = post.Profile.UserName
-                        }
-                    })
-                    .Skip(startIndex)
-                    .Take(onPageCount)
-                    .ToListAsync())
-                .Select(post => Mapper.Map(post));
+                        UserName = post.Profile.UserName
+                    }
+                })
+                .Skip(startIndex)
+                .Take(onPageCount)
+                .ToListAsync());
         }
 
         public async Task<IEnumerable<Post>> GetCommonFeedByPage(int pageNumber, int onPageCount)
@@ -210,43 +235,32 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
-                    .OrderByDescending(post => post.PostPublicationDateTime)
-                    .Select(post => new Domain.Post()
+                .OrderByDescending(post => post.PostPublicationDateTime)
+                .Select(post => new Domain.Post()
+                {
+                    Id = post.Id,
+                    PostTitle = post.PostTitle,
+                    PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
+                    PostImageUrl = post.PostImageUrl,
+                    PostCommentsCount = post.Comments!.Count,
+                    PostFavoritesCount = post.Favorites!.Count,
+                    Profile = new Profile()
                     {
-                        Id = post.Id,
-                        PostTitle = post.PostTitle,
-                        PostDescription = post.PostDescription,
-                        PostImageId = post.PostImageId,
-                        PostPublicationDateTime = post.PostPublicationDateTime,
-                        PostImageUrl = post.PostImageUrl,
-                        PostCommentsCount = post.Comments!.Count,
-                        PostFavoritesCount = post.Favorites!.Count,
-                        Profile = new Profile()
-                        {
-                            UserName = post.Profile.UserName
-                        }
-                    })
-                    .Skip(startIndex)
-                    .Take(onPageCount)
-                    .ToListAsync())
-                .Select(post => Mapper.Map(post));
+                        UserName = post.Profile.UserName
+                    }
+                })
+                .Skip(startIndex)
+                .Take(onPageCount)
+                .ToListAsync()).Select(post => Mapper.Map(post));
         }
 
-        /*private static Domain.Post LimitPost(Domain.Post post)
+        public async Task<bool> IsUserFavorite(Guid postId, Guid userId)
         {
-            var result = new Domain.Post
-            {
-                Id = post.Id,
-                PostTitle = post.PostTitle,
-                PostDescription = post.PostDescription,
-                PostImageId = post.PostImageId,
-                PostPublicationDateTime = post.PostPublicationDateTime,
-                PostImageUrl = post.PostImageUrl,
-                PostCommentsCount = post.Comments?.Count ?? 0,
-                PostFavoritesCount = post.Favorites?.Count ?? 0
-            };
-            
-            return result;
-        }*/
+            return (await RepoDbSet.FirstOrDefaultAsync(post => post.Id == postId &&
+                                                                post.Favorites.Select(favorite => favorite.ProfileId)
+                                                                    .Contains(userId))) != null;
+        }
     }
 }

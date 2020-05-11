@@ -95,9 +95,15 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("User was not found!"));
             }
+            
+            if (User.Identity.IsAuthenticated)
+            {
+                return Ok((await _bll.Posts.GetUser10ByPage(user.Id, pageNumber, User.UserId()))
+                    .Select(Map));
+            }
 
-            return Ok((await _bll.Posts.GetUser10ByPage(user.Id, pageNumber))
-                .Select(post => _postGetMapper.Map(post)));
+            return Ok((await _bll.Posts.GetUser10ByPage(user.Id, pageNumber, null))
+                .Select(Map));
         }
 
         [AllowAnonymous]
@@ -107,14 +113,22 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPost(Guid id)
         {
-            var post = await _bll.Posts.GetNoIncludes(id);
-
+            Post post;
+            if (User.Identity.IsAuthenticated)
+            {
+                post = await _bll.Posts.GetNoIncludes(id, User.UserId());
+            }
+            else
+            {
+                post = await _bll.Posts.GetNoIncludes(id, null);
+            }
+            
             if (post == null)
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
-            return Ok(_postGetMapper.Map(post));
+            return Ok(Map(post));
         }
 
         [HttpPost]
@@ -151,7 +165,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PutPost(Guid id, [FromBody] PostEditDTO post)
         {
-            var record = await _bll.Posts.GetNoIncludes(id);
+            var record = await _bll.Posts.GetNoIncludes(id, null);
 
             if (post.Id != id)
             {
@@ -253,6 +267,23 @@ namespace WebApp.ApiControllers._1._0
             }
 
             return Ok(new OkResponseDTO() {Status = "Post is not favorited"});
+        }
+        
+        private static PostGetDTO Map(Post inObj)
+        {
+            return new PostGetDTO()
+            {
+                Id = inObj.Id,
+                IsFavorite = inObj.IsUserFavorite,
+                PostDescription = inObj.PostDescription,
+                PostTitle = inObj.PostTitle,
+                ProfileUsername = inObj.Profile.UserName,
+                PostCommentsCount = inObj.PostCommentsCount,
+                PostFavoritesCount = inObj.PostFavoritesCount,
+                PostImageId = inObj.PostImageId,
+                PostImageUrl = inObj.PostImageUrl,
+                PostPublicationDateTime = inObj.PostPublicationDateTime
+            };
         }
     }
 }

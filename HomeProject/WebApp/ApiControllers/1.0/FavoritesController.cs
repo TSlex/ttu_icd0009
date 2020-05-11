@@ -37,7 +37,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostFavoritesCount(Guid postId)
         {
-            var post = _bll.Posts.GetNoIncludes(postId);
+            var post = _bll.Posts.GetNoIncludes(postId, null);
 
             if (post == null)
             {
@@ -55,7 +55,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostFavorites(Guid postId, int pageNumber)
         {
-            var post = _bll.Posts.GetNoIncludes(postId);
+            var post = _bll.Posts.GetNoIncludes(postId, null);
 
             if (post == null)
             {

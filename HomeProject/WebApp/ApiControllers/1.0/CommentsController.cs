@@ -46,7 +46,7 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
-            return Ok((await _bll.Comments.AllByIdPageAsync(post.Id, pageNumber, 10)).Select(comment =>
+            return Ok((await _bll.Comments.AllByIdPageAsync(post.Id, pageNumber, 20)).Select(comment =>
                 new CommentGetDTO
                 {
                     Id = comment.Id,
