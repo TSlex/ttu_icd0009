@@ -85,18 +85,22 @@ namespace DAL.Helpers
                 new ChatRole()
                 {
                     RoleTitle = "Member",
+                    RoleTitleValue = "Member",
                 },
                 new ChatRole()
                 {
                     RoleTitle = "Creator",
+                    RoleTitleValue = "Creator",
                 },
                 new ChatRole()
                 {
                     RoleTitle = "Moderator",
+                    RoleTitleValue = "Moderator",
                 },
                 new ChatRole()
                 {
                     RoleTitle = "Left",
+                    RoleTitleValue = "Left",
                 }
             };
 

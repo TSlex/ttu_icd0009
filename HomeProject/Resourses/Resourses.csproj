@@ -7,15 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="BLL.App.DTO" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Posts\" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Domain\Post.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Domain\Post.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Shared\_Layout.en.resx">

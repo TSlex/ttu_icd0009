@@ -47,15 +47,20 @@ namespace DAL.Migrations
                     b.Property<Guid>("ProfileId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Reason")
+                    b.Property<string>("ReasonId")
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
+
+                    b.Property<Guid?>("ReasonId1")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BProfileId");
 
                     b.HasIndex("ProfileId");
+
+                    b.HasIndex("ReasonId1");
 
                     b.ToTable("BlockedProfiles");
                 });
@@ -137,10 +142,15 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<Guid>("RoleTitleValueId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleTitle")
                         .IsUnique();
+
+                    b.HasIndex("RoleTitleValueId");
 
                     b.ToTable("ChatRoles");
                 });
@@ -357,10 +367,8 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
                         .HasMaxLength(300);
 
-                    b.Property<string>("GiftName")
-                        .IsRequired()
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
-                        .HasMaxLength(100);
+                    b.Property<Guid>("GiftNameId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -371,6 +379,8 @@ namespace DAL.Migrations
                         .IsUnique();
 
                     b.HasIndex("GiftImageId");
+
+                    b.HasIndex("GiftNameId");
 
                     b.ToTable("Gifts");
                 });
@@ -838,9 +848,8 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
                         .HasMaxLength(20);
 
-                    b.Property<string>("RankDescription")
-                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
-                        .HasMaxLength(300);
+                    b.Property<Guid?>("RankDescriptionId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("RankIcon")
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
@@ -851,10 +860,8 @@ namespace DAL.Migrations
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
                         .HasMaxLength(20);
 
-                    b.Property<string>("RankTitle")
-                        .IsRequired()
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
-                        .HasMaxLength(100);
+                    b.Property<Guid>("RankTitleId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -867,7 +874,84 @@ namespace DAL.Migrations
                     b.HasIndex("RankCode")
                         .IsUnique();
 
+                    b.HasIndex("RankDescriptionId");
+
+                    b.HasIndex("RankTitleId");
+
                     b.ToTable("Ranks");
+                });
+
+            modelBuilder.Entity("Domain.Translation.LangString", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ChangedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LangString");
+                });
+
+            modelBuilder.Entity("Domain.Translation.Translation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ChangedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Culture")
+                        .IsRequired()
+                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasMaxLength(5);
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<Guid>("LangStringId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(10240);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LangStringId");
+
+                    b.ToTable("Translation");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -982,6 +1066,11 @@ namespace DAL.Migrations
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Translation.LangString", "Reason")
+                        .WithMany()
+                        .HasForeignKey("ReasonId1")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Domain.ChatMember", b =>
@@ -1001,6 +1090,15 @@ namespace DAL.Migrations
                     b.HasOne("Domain.Profile", "Profile")
                         .WithMany("ChatMembers")
                         .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.ChatRole", b =>
+                {
+                    b.HasOne("Domain.Translation.LangString", "RoleTitleValue")
+                        .WithMany()
+                        .HasForeignKey("RoleTitleValueId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -1056,6 +1154,12 @@ namespace DAL.Migrations
                         .WithMany("Gifts")
                         .HasForeignKey("GiftImageId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Translation.LangString", "GiftName")
+                        .WithMany()
+                        .HasForeignKey("GiftNameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
@@ -1135,6 +1239,26 @@ namespace DAL.Migrations
                     b.HasOne("Domain.Rank", "PreviousRank")
                         .WithOne()
                         .HasForeignKey("Domain.Rank", "PreviousRankId");
+
+                    b.HasOne("Domain.Translation.LangString", "RankDescription")
+                        .WithMany()
+                        .HasForeignKey("RankDescriptionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Translation.LangString", "RankTitle")
+                        .WithMany()
+                        .HasForeignKey("RankTitleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Translation.Translation", b =>
+                {
+                    b.HasOne("Domain.Translation.LangString", "LangString")
+                        .WithMany("Translations")
+                        .HasForeignKey("LangStringId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

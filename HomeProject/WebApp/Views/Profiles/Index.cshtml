@@ -1,3 +1,4 @@
+@using System.Text.RegularExpressions
 @using Domain
 @using Extension
 @using Microsoft.AspNetCore.Identity
@@ -15,6 +16,8 @@
     float needExp = profileRank.MaxExperience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
     
     var isAuthorized = SignInManager.IsSignedIn(User);
+    
+    var workPlaceUrlPattern = new Regex("(?:http(?:s)?:\\/\\/)?[A-z]*\\.[A-z]*(?:\\/.*)?");
 }
 
 <div class="profile_container">
@@ -130,7 +133,16 @@
                 <h1>@Model.ProfileFullName</h1>
                 <span>@Model.ProfileAbout</span>
                 <br>
-                <a href="">@Model.ProfileWorkPlace</a>
+                @{
+                    if (workPlaceUrlPattern.IsMatch(Model.ProfileWorkPlace))
+                    {
+                        <a href="@Model.ProfileWorkPlace" >@Model.ProfileWorkPlace</a>
+                    }
+                    else
+                    {
+                        <a>@Model.ProfileWorkPlace</a>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -144,7 +156,7 @@
                 </div>
             }
 
-            if (isAuthorized)
+            if (isAuthorized && Model.Id != User.UserId())
             {
                 <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
                    asp-controller="ProfileGifts"

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Base;
+using Domain.Translation;
 
 namespace Domain
 {
@@ -15,6 +16,9 @@ namespace Domain
         public Guid BProfileId { get; set; } = default!;
         public Profile? BProfile { get; set; }
 
-        [MaxLength(200)] public string? Reason { get; set; } //filed by enum
+//        [MaxLength(200)] public string? Reason { get; set; } //filed by enum
+
+        [MaxLength(200)] public string? ReasonId { get; set; } //filed by enum
+        [MaxLength(200)] public LangString? Reason { get; set; } //filed by enum
     }
 }

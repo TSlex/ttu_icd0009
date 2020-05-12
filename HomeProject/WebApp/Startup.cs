@@ -97,7 +97,7 @@ namespace WebApp
                 };
 
                 // State what the default culture for your application is. 
-                options.DefaultRequestCulture = new RequestCulture(culture: "ru-RU", uiCulture: "ru-RU");
+                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
 
                 // You must explicitly state which cultures your application supports.
                 options.SupportedCultures = supportedCultures;
