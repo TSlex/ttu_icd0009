@@ -36,4 +36,19 @@
     <data name="DeleteButton">
         <value>Удалить</value>
     </data>
+    <data name="CreateHeader">
+        <value>Создание</value>
+    </data>
+    <data name="DetailsHeader">
+        <value>Детали</value>
+    </data>
+    <data name="EditHeader">
+        <value>Изменение</value>
+    </data>
+    <data name="DeleteHeader">
+        <value>Удаление</value>
+    </data>
+    <data name="SendButton">
+        <value>Отправить</value>
+    </data>
 </root>

@@ -23,24 +23,6 @@ namespace DAL.Repositories
 
         public async Task<Profile> FindFullIncludeAsync(Guid id)
         {
-//            return Mapper.Map(await RepoDbSet
-//                .Include(profile => profile.Posts)
-//                .Include(profile => profile.Followed)
-//                .ThenInclude(follower => follower.Profile).Select(profile => new Domain.Profile()
-//                {
-//                    UserName = profile.UserName,
-//                    ProfileAvatarUrl = profile.ProfileAvatarUrl
-//                })
-//                .Include(profile => profile.Followers)
-//                .ThenInclude(follower => follower.Profile).Select(profile => new Domain.Profile()
-//                {
-//                    UserName = profile.UserName,
-//                    ProfileAvatarUrl = profile.ProfileAvatarUrl
-//                })
-//                .Include(profile => profile.ProfileRanks)
-//                .ThenInclude(rank => rank.Rank)
-//                .FirstOrDefaultAsync(profile => profile.Id == id));
-
             return Mapper.Map(await _userManager.Users
                 .Include(profile => profile.Posts)
                 .Include(profile => profile.Followed)
@@ -49,7 +31,15 @@ namespace DAL.Repositories
                 .ThenInclude(gift => gift.Gift)
                 .Include(profile => profile.ProfileRanks)
                 .ThenInclude(rank => rank.Rank)
-                .ThenInclude(rank => rank!.NextRank)
+                .ThenInclude(rank => rank.RankTitle)
+                .ThenInclude(title => title.Translations)
+                .Include(profile => profile.ProfileRanks)
+                .ThenInclude(rank => rank.Rank)
+                .ThenInclude(rank => rank.RankDescription)
+                .ThenInclude(desc => desc.Translations)
+//                .Include(profile => profile.ProfileRanks)
+//                .ThenInclude(rank => rank.Rank)
+//                .ThenInclude(rank => rank!.NextRank)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
 

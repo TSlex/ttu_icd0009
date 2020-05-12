@@ -18,4 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="ErrorMessage_MaxLength">
+        <value>Значение {0} должно быть строкой или массивом с длинной до '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_MinLength">
+        <value>Значение {0} должно быть строкой или массивом с длинной от '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_Required">
+        <value>Поле {0} обязательное.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMax">
+        <value>Значение {0} должно быть строкой с длинной до {1}.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMinMax">
+        <value>Значение {0} должно быть строкой с длинной от {2} до {1}.</value>
+    </data>
+    <data name="ErrorMessage_Range">
+        <value>Значение {0} должно быть между {1} и {2}.</value>
+    </data>
 </root>

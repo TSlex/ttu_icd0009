@@ -12,10 +12,10 @@
             <form asp-action="Create">
                 <partial name="_PostCreateEdit"/>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">@Resourses.Views.Common.CreateButton</button>
-                    <button asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary">
+                    <input type="submit" class="btn btn-success" value="@Resourses.Views.Common.CreateButton">
+                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary">
                         @Resourses.Views.Common.CancelButton
-                    </button>
+                    </a>
                 </div>
             </form>
         </div>

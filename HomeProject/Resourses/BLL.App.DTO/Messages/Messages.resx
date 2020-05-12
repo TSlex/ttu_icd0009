@@ -127,7 +127,7 @@
     <value />
   </data>
   <data name="MessageValue" xml:space="preserve">
-    <value />
+    <value>Message</value> 
   </data>
   <data name="Profile" xml:space="preserve">
     <value />

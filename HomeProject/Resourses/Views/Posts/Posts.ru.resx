@@ -21,4 +21,19 @@
     <data name="CreateHeader">
         <value>Сделать пост</value>
     </data>
+    <data name="EditHeader">
+        <value>Изменить</value>
+    </data>
+    <data name="OfComments">
+        <value>комментариев</value>
+    </data>
+    <data name="OfFavorites">
+        <value>лайков</value>
+    </data>
+    <data name="ByUsername">
+        <value>-</value>
+    </data>
+    <data name="CommentCreate">
+        <value>Оставить комментарий</value>
+    </data>
 </root>

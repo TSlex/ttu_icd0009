@@ -147,6 +147,11 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Home.resx</DependentUpon>
         </Compile>
+        <Compile Update="Views\Identity\Identity.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Identity.resx</DependentUpon>
+        </Compile>
         <Compile Update="Views\Images\Images.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -171,6 +176,11 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>Profiles.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Profilez\Profiles.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Profiles.resx</DependentUpon>
         </Compile>
         <Compile Update="Views\Ranks\Ranks.Designer.cs">
             <DesignTime>True</DesignTime>
@@ -458,6 +468,16 @@
         <EmbeddedResource Update="Views\Home\Home.ru.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
+        <EmbeddedResource Update="Views\Identity\Identity.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Identity\Identity.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>Identity.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Identity\Identity.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
         <EmbeddedResource Update="Views\Images\Images.et.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
@@ -507,6 +527,16 @@
         </EmbeddedResource>
         <EmbeddedResource Update="Views\Profiles\Profiles.ru.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Profilez\Profiles.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Profilez\Profiles.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>Profiles.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Profilez\Profiles.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
         <EmbeddedResource Update="Views\Ranks\Ranks.et.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

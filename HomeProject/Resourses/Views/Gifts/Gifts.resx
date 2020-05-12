@@ -18,4 +18,16 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="SendGiftHeader">
+        <value>Send a gift to</value>
+    </data>
+    <data name="SendGiftTitle">
+        <value>The following gift will be send to</value>
+    </data>
+    <data name="Price">
+        <value>Price</value>
+    </data>
+    <data name="AreSure">
+        <value>Are you sure?</value>
+    </data>
 </root>

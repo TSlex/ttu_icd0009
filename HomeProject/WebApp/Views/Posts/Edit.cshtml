@@ -1,7 +1,7 @@
 @model BLL.App.DTO.Post
 
 @{
-    ViewData["Title"] = "Edit " + Model.PostTitle;
+    ViewData["Title"] = @Resourses.Views.Posts.Posts.EditHeader + " \"" + Model.PostTitle + "\"";
 }
 
 <h4 class="text-center">@ViewData["Title"]</h4>
@@ -13,8 +13,9 @@
                 <input type="hidden" asp-for="Id"/>
                 <partial name="_PostCreateEdit"/>
                 <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary"/>
-                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Cancel</a>
+                    <input type="submit" value="@Resourses.Views.Common.SaveButton" class="btn btn-success"/>
+                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" 
+                       class="btn btn-secondary">@Resourses.Views.Common.CancelButton</a>
                 </div>
             </form>
         </div>

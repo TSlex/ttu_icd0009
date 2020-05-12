@@ -41,4 +41,19 @@
     <data name="DeleteButton">
         <value>Kustuta</value>
     </data>
+    <data name="CreateHeader">
+        <value>Loomine</value>
+    </data>
+    <data name="DetailsHeader">
+        <value>Detailid</value>
+    </data>
+    <data name="EditHeader">
+        <value>Muutus</value>
+    </data>
+    <data name="DeleteHeader">
+        <value>Kustutamine</value>
+    </data>
+    <data name="SendButton">
+        <value>Saada</value>
+    </data>
 </root>

@@ -18,4 +18,16 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="Email" xml:space="preserve">
+    <value>E-post</value> 
+  </data>
+    <data name="Password" xml:space="preserve">
+    <value>Salasõna</value> 
+  </data>
+    <data name="UserName" xml:space="preserve">
+    <value>Kasutajanimi</value> 
+  </data>
+    <data name="PasswordConfirm" xml:space="preserve">
+    <value>Kinnita salasõna</value> 
+  </data>
 </root>

@@ -21,4 +21,19 @@
     <data name="CreateHeader">
         <value>Loo uus postitus</value>
     </data>
+    <data name="EditHeader">
+        <value>Muuda</value>
+    </data>
+    <data name="OfComments">
+        <value>komantaarid</value>
+    </data>
+    <data name="OfFavorites">
+        <value>lemmikud</value>
+    </data>
+    <data name="ByUsername">
+        <value>-</value>
+    </data>
+    <data name="CommentCreate">
+        <value>Jäta kommentaar</value>
+    </data>
 </root>

@@ -18,7 +18,12 @@ namespace DAL.Repositories
 
         public async Task<Rank> FindByCodeAsync(string code)
         {
-            return Mapper.Map(await RepoDbContext.Ranks.FirstOrDefaultAsync(rank => rank.RankCode == code));
+            return Mapper.Map(await RepoDbContext.Ranks
+                .Include(rank => rank.RankTitle)
+                .ThenInclude(s => s.Translations)
+                .Include(rank => rank.RankDescription)
+                .ThenInclude(s => s.Translations)
+                .FirstOrDefaultAsync(rank => rank.RankCode == code));
         }
     }
 }

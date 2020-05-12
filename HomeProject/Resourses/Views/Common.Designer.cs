@@ -79,6 +79,15 @@ namespace Resourses.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string CreateHeader {
+            get {
+                return ResourceManager.GetString("CreateHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string DeleteButton {
@@ -88,11 +97,38 @@ namespace Resourses.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteHeader {
+            get {
+                return ResourceManager.GetString("DeleteHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string DetailsHeader {
+            get {
+                return ResourceManager.GetString("DetailsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string EditButton {
             get {
                 return ResourceManager.GetString("EditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string EditHeader {
+            get {
+                return ResourceManager.GetString("EditHeader", resourceCulture);
             }
         }
         
@@ -111,6 +147,15 @@ namespace Resourses.Views {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string SendButton {
+            get {
+                return ResourceManager.GetString("SendButton", resourceCulture);
             }
         }
     }

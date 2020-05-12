@@ -61,11 +61,56 @@ namespace Resourses.Views.Posts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by.
+        /// </summary>
+        public static string ByUsername {
+            get {
+                return ResourceManager.GetString("ByUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave a comment.
+        /// </summary>
+        public static string CommentCreate {
+            get {
+                return ResourceManager.GetString("CommentCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create a new post.
         /// </summary>
         public static string CreateHeader {
             get {
                 return ResourceManager.GetString("CreateHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string EditHeader {
+            get {
+                return ResourceManager.GetString("EditHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to comments.
+        /// </summary>
+        public static string OfComments {
+            get {
+                return ResourceManager.GetString("OfComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to favorites.
+        /// </summary>
+        public static string OfFavorites {
+            get {
+                return ResourceManager.GetString("OfFavorites", resourceCulture);
             }
         }
     }

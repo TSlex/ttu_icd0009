@@ -21,4 +21,19 @@
     <data name="CreateHeader">
         <value>Create a new post</value>
     </data>
+    <data name="EditHeader">
+        <value>Edit</value>
+    </data>
+    <data name="OfComments">
+        <value>comments</value>
+    </data>
+    <data name="OfFavorites">
+        <value>favorites</value>
+    </data>
+    <data name="ByUsername">
+        <value>by</value>
+    </data>
+    <data name="CommentCreate">
+        <value>Leave a comment</value>
+    </data>
 </root>

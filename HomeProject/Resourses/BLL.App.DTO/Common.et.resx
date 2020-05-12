@@ -18,4 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="ErrorMessage_MaxLength">
+        <value>Väli {0} ei saa olla pikem kui '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_MinLength">
+        <value>Väli {0} ei saa olla lühem kui '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_Required">
+        <value>Väli {0} on kohustuslik.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMax">
+        <value>Väli {0} peab olema string, mille maksimaalne pikkus {1}.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMinMax">
+        <value>Väli {0} peab olema string minimaalse pikkusega {2} ja maksimaalse pikkusega {1}.</value>
+    </data>
+    <data name="ErrorMessage_Range">
+        <value>Väli {0} peab olema vahemikus {1} kuni {2}.</value>
+    </data>
 </root>

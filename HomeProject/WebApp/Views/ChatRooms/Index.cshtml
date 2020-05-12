@@ -5,10 +5,9 @@
     ViewData["Title"] = "Messages";
 }
 
-<div class="preferences_section">
-    <div class="row">
-        <div class="col-md-4">
-            <ul class="nav nav-pills flex-column">
+<div class="chat_rooms">
+    <div class="row justify-content-center">
+        <ul class="nav nav-pills flex-column">
                 @foreach (var item in Model)
                 {
                     <li class="nav-item">
@@ -19,9 +18,5 @@
                     </li>
                 }
             </ul>
-        </div>
-        <div class="col-md-8">
-            Here will be JS-rendered messages
-        </div>
     </div>
 </div>

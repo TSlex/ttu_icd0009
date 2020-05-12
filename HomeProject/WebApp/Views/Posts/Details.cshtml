@@ -28,7 +28,7 @@
         </div>
 
         <div class="post_details_meta_section">
-            <p>"@ViewData["Title"]" by @Model.Profile!.UserName</p>
+            <p>"@ViewData["Title"]" @Resourses.Views.Posts.Posts.ByUsername @Model.Profile!.UserName</p>
             <span>@Model.PostDescription</span>
             <ul class="post_meta_section">
                 <li class="post_meta">
@@ -36,25 +36,25 @@
                 </li>
                 <li class="post_meta">
                     <span class="meta_counter">@Model.PostFavoritesCount</span>
-                    <span class="meta_title">лайков</span>
+                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
                 </li>
                 <li class="post_meta">
                     <span class="meta_counter">@Model.PostCommentsCount</span>
-                    <span class="meta_title">комментариев</span>
+                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfComments</span>
                 </li>
                 <li>
                     @{
                         if (@Model.IsUserFavorite)
                         {
                             <form method="post" asp-action="RemoveFromFavorite">
-                                <button type="submit" class="fas fa-heart"></button>
+                                <button type="submit" class="fas fa-heart btn-link"></button>
                                 <input type="hidden" asp-for="Id">
                             </form>
                         }
                         else
                         {
                             <form method="post" asp-action="AddToFavorite">
-                                <button type="submit" class="far fa-heart"></button>
+                                <button type="submit" class="far fa-heart btn-link"></button>
                                 <input type="hidden" asp-for="Id">
                             </form>
                         }
@@ -76,7 +76,8 @@
             }
         </div>
         <div class="row d-flex justify-content-center mt-3">
-            <a asp-action="Create" asp-controller="Comments" asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()" class="btn btn-primary">Create a comment</a>
+            <a asp-action="Create" asp-controller="Comments" 
+               asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()" class="btn btn-primary">@Resourses.Views.Posts.Posts.CommentCreate</a>
         </div>
     </div>
 </div>

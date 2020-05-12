@@ -2,21 +2,16 @@
 @model IEnumerable<BLL.App.DTO.Message>
 
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = Resourses.Views.Messages.Messages.Header;
 }
 
 <div class="chat_section">
     @foreach (var item in Model.OrderBy(message => message.MessageDateTime))
     {
-        <div class="message @(User.UserId() == item.ProfileId ? "active": "")">@item.MessageValue</div>
+        <div class="message @(User.UserId() == item.ProfileId ? "active" : "")">@item.MessageValue</div>
     }
 
     <div class="row d-flex justify-content-center">
-        <a asp-action="Create" class="btn btn-primary">Create</a>
+        <a asp-action="Create" class="btn btn-primary">@Resourses.Views.Common.CreateButton</a>
     </div>
-
-    @*     @Html.Partial("_CreatePartial", new DAL.App.DTO.Message() *@
-    @*     { *@
-    @*     }) *@
-
-</div>    
+</div>

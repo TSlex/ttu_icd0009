@@ -1,7 +1,7 @@
 ﻿@model BLL.App.DTO.ProfileGift
 
 @{
-    ViewData["Title"] = "Send gift to " + @Model.Profile!.UserName;
+    ViewData["Title"] = Resourses.Views.Gifts.Gifts.SendGiftHeader + " " + Model.Profile!.UserName;
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
@@ -10,11 +10,11 @@
     <div class="d-flex flex-column align-items-center">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <span>The following gift will be send to <b>@Model.Profile.UserName</b></span>
+        <span>@Resourses.Views.Gifts.Gifts.SendGiftTitle <b>@Model.Profile.UserName</b></span>
         <img src="@(Model.Gift!.GiftImageUrl)" alt="" height="200px" width="200px" class="m-3">
-        <span class="text-danger font-weight-bold">Price: @Model.Price</span>
+        <span class="text-danger font-weight-bold">@Resourses.Views.Gifts.Gifts.Price: @Model.Price</span>
 
-        <span>Are you sure?</span>
+        <span>@Resourses.Views.Gifts.Gifts.AreSure</span>
         <br>
         <form method="post" asp-action="CreateConfirm">
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -23,8 +23,8 @@
             <input type="hidden" asp-for="GiftId">
             <input type="hidden" asp-for="Price">
             <div class="form-group">
-                <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Cancel</a>
-                <input type="submit" value="Send" class="btn btn-primary"/>
+                <input type="submit" value="@Resourses.Views.Common.SendButton" class="btn btn-success"/>
+                <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary">@Resourses.Views.Common.CancelButton</a>
             </div>
         </form>
     </div>

@@ -55,20 +55,20 @@
                             <div class="dropdown-menu" aria-labelledby="profile_more">
                                 <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName"
                                    class="dropdown-item text-center">
-                                    Написать
+                                    @Resourses.Views.Profilez.Profiles.WriteMessage
                                 </a>
                                 @{
                                     if (@Model.IsUserFollows)
                                     {
                                         <form method="post" asp-action="UnfollowProfile">
-                                            <button type="submit" class="dropdown-item"><i class="fas fa-bell-slash"></i> Отписаться</button>
+                                            <button type="submit" class="dropdown-item"><i class="fas fa-bell-slash"></i> @Resourses.Views.Profilez.Profiles.Unfollow</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
                                     else
                                     {
                                         <form method="post" asp-action="FollowProfile">
-                                            <button type="submit" class="dropdown-item"><i class="far fa-bell"></i> Подписаться</button>
+                                            <button type="submit" class="dropdown-item"><i class="far fa-bell"></i> @Resourses.Views.Profilez.Profiles.Follow</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
@@ -77,14 +77,14 @@
                                     if (@Model.IsUserBlocks)
                                     {
                                         <form method="post" asp-action="UnblockProfile">
-                                            <button type="submit" class="dropdown-item"><i class="fas fa-user-slash"></i> Разблокировать</button>
+                                            <button type="submit" class="dropdown-item"><i class="fas fa-user-slash"></i> @Resourses.Views.Profilez.Profiles.Unblock</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
                                     else
                                     {
                                         <form method="post" asp-action="BlockProfile">
-                                            <button type="submit" class="dropdown-item"><i class="far fa-user"></i> Заблокировать</button>
+                                            <button type="submit" class="dropdown-item"><i class="far fa-user"></i> @Resourses.Views.Profilez.Profiles.Block</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
@@ -117,15 +117,15 @@
             <ul class="profile_meta_section">
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.PostsCount</span>
-                    <span class="meta_title">публикаций</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfPosts</span>
                 </li>
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.FollowersCount</span>
-                    <span class="meta_title">подписчиков</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
                 </li>
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.FollowedCount</span>
-                    <span class="meta_title">подписок</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
                 </li>
             </ul>
 

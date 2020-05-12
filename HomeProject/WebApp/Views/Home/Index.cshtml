@@ -5,7 +5,7 @@
     ViewData["Title"] = "ArtNetwork";
 }
 
-<h3 class="text-center">Last twenty posts:</h3>
+<h3 class="text-center">@Resourses.Views.Home.Home.FeedHeader</h3>
 <hr>
 <div class="feed text-center">
     @{
@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="post_details_meta_section">
-                        <p>"@post.PostTitle" by @post.Profile!.UserName</p>
+                        <p>"@post.PostTitle" @Resourses.Views.Posts.Posts.ByUsername @post.Profile!.UserName</p>
                         <span>@post.PostDescription</span>
                         <ul class="post_meta_section">
                             <li class="post_meta">
@@ -26,11 +26,11 @@
                             </li>
                             <li class="post_meta">
                                 <span class="meta_counter">@post.PostFavoritesCount</span>
-                                <span class="meta_title">лайков</span>
+                                <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
                             </li>
                             <li class="post_meta">
                                 <span class="meta_counter">@post.PostCommentsCount</span>
-                                <span class="meta_title">комментариев</span>
+                                <span class="meta_title">@Resourses.Views.Posts.Posts.OfComments</span>
                             </li>
                         </ul>
                     </div>

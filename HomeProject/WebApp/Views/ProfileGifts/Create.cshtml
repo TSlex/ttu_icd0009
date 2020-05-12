@@ -1,7 +1,7 @@
 @model BLL.App.DTO.ProfileGiftCreate
 
 @{
-    ViewData["Title"] = "Send gift to " + @Model.Profile!.UserName;
+    ViewData["Title"] = Resourses.Views.Gifts.Gifts.SendGiftHeader + " " + Model.Profile!.UserName;
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
@@ -20,5 +20,5 @@
             }
         }
     </div>
-    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary mt-4">Cancel</a>
+    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary mt-4">@Resourses.Views.Common.CancelButton</a>
 </div>

@@ -1,7 +1,7 @@
 @model BLL.App.DTO.Message
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Resourses.Views.Common.CreateHeader;
 }
 
 <div class="chat_section">
@@ -14,13 +14,13 @@
                     <textarea asp-for="MessageValue" rows="5" autofocus class="form-control"></textarea>
                     <span asp-validation-for="MessageValue" class="text-danger"></span>
                 </div>
-                
+
                 <input type="hidden" asp-for="ChatRoomId">
-                
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary"/>
-                    <a asp-action="Index" class="btn btn-primary">Cancel</a>
-                </div>
+
+                <input type="submit" class="btn btn-success" value="@Resourses.Views.Common.CreateButton">
+                <a type="button" asp-action="Index" class="btn btn-secondary">
+                    @Resourses.Views.Common.CancelButton
+                </a>
             </form>
         </div>
     </div>
