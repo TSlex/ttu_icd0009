@@ -1,27 +1,536 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Configurations>Debug;Release;TEST</Configurations>
-    <Platforms>AnyCPU</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Configurations>Debug;Release;TEST</Configurations>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="BLL.App.DTO" />
-    <Folder Include="Views\Home\" />
-    <Folder Include="Views\Posts\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Views\Home\" />
+        <Folder Include="Views\Posts\" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Domain\Post.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Shared\_Layout.en.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Shared\_Layout.ru.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Update="BLL.App.DTO\BlockedProfiles\BlockedProfiles.Designer.cs">
+            <DependentUpon>BlockedProfiles.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\ChatMembers\ChatMembers.Designer.cs">
+            <DependentUpon>ChatMembers.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\ChatRoles\ChatRoles.Designer.cs">
+            <DependentUpon>ChatRoles.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\ChatRooms\ChatRooms.Designer.cs">
+            <DependentUpon>ChatRooms.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Comments\Comments.Designer.cs">
+            <DependentUpon>Comments.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Common.Designer.cs">
+          <DependentUpon>Common.resx</DependentUpon>
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Favorites\Favorites.Designer.cs">
+            <DependentUpon>Favorites.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Feed\Feed.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Feed.resx</DependentUpon>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Followers\Followers.Designer.cs">
+            <DependentUpon>Followers.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Gifts\Gifts.Designer.cs">
+            <DependentUpon>Gifts.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Images\Images.Designer.cs">
+            <DependentUpon>Images.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Messages\Messages.Designer.cs">
+            <DependentUpon>Messages.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Posts\Posts.Designer.cs">
+            <DependentUpon>Posts.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\ProfileGifts\ProfileGifts.Designer.cs">
+            <DependentUpon>ProfileGifts.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\ProfileRanks\ProfileRanks.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>ProfileRanks.resx</DependentUpon>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Profiles\Profiles.Designer.cs">
+            <DependentUpon>Profiles.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="BLL.App.DTO\Ranks\Ranks.Designer.cs">
+            <DependentUpon>Ranks.resx</DependentUpon>
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+        </Compile>
+        <Compile Update="Views\BlockedProfiles\BlockedProfiles.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>BlockedProfiles.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\ChatMembers\ChatMembers.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChatMembers.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\ChatRoles\ChatRoles.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChatRoles.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\ChatRooms\ChatRooms.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChatRooms.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Comments\Comments.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Comments.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Common.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Common.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Favorites\Favorites.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Favorites.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Followers\Followers.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Followers.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Gifts\Gifts.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Gifts.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Home\Home.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Home.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Images\Images.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Images.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Messages\Messages.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Messages.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Posts\Posts.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Posts.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\ProfileGifts\ProfileGifts.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ProfileGifts.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Profiles\Profiles.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Profiles.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Ranks\Ranks.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Ranks.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Shared\_Layout.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>_Layout.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="BLL.App.DTO\BlockedProfiles\BlockedProfiles.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\BlockedProfiles\BlockedProfiles.resx">
+            <LastGenOutput>BlockedProfiles.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\BlockedProfiles\BlockedProfiles.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatMembers\ChatMembers.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatMembers\ChatMembers.resx">
+            <LastGenOutput>ChatMembers.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatMembers\ChatMembers.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatRoles\ChatRoles.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatRoles\ChatRoles.resx">
+            <LastGenOutput>ChatRoles.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatRoles\ChatRoles.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatRooms\ChatRooms.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatRooms\ChatRooms.resx">
+            <LastGenOutput>ChatRooms.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ChatRooms\ChatRooms.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Comments\Comments.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Comments\Comments.resx">
+            <LastGenOutput>Comments.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Comments\Comments.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Common.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Common.resx">
+          <LastGenOutput>Common.Designer.cs</LastGenOutput>
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Common.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Favorites\Favorites.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Favorites\Favorites.resx">
+            <LastGenOutput>Favorites.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Favorites\Favorites.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Feed\Feed.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Feed\Feed.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>Feed.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Feed\Feed.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Followers\Followers.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Followers\Followers.resx">
+            <LastGenOutput>Followers.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Followers\Followers.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Gifts\Gifts.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Gifts\Gifts.resx">
+            <LastGenOutput>Gifts.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Gifts\Gifts.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Images\Images.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Images\Images.resx">
+            <LastGenOutput>Images.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Images\Images.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Messages\Messages.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Messages\Messages.resx">
+            <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Messages\Messages.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Posts\Posts.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Posts\Posts.resx">
+            <LastGenOutput>Posts.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Posts\Posts.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ProfileGifts\ProfileGifts.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ProfileGifts\ProfileGifts.resx">
+            <LastGenOutput>ProfileGifts.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ProfileGifts\ProfileGifts.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ProfileRanks\ProfileRanks.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ProfileRanks\ProfileRanks.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>ProfileRanks.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\ProfileRanks\ProfileRanks.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Profiles\Profiles.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Profiles\Profiles.resx">
+            <LastGenOutput>Profiles.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Profiles\Profiles.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Ranks\Ranks.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Ranks\Ranks.resx">
+            <LastGenOutput>Ranks.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="BLL.App.DTO\Ranks\Ranks.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Domain\Post.en.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\BlockedProfiles\BlockedProfiles.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\BlockedProfiles\BlockedProfiles.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>BlockedProfiles.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\BlockedProfiles\BlockedProfiles.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatMembers\ChatMembers.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatMembers\ChatMembers.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ChatMembers.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatMembers\ChatMembers.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatRoles\ChatRoles.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatRoles\ChatRoles.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ChatRoles.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatRoles\ChatRoles.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatRooms\ChatRooms.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatRooms\ChatRooms.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ChatRooms.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ChatRooms\ChatRooms.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Comments\Comments.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Comments\Comments.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Comments.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Comments\Comments.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Common.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Common.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Common.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Common.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Favorites\Favorites.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Favorites\Favorites.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Favorites.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Favorites\Favorites.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Followers\Followers.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Followers\Followers.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Followers.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Followers\Followers.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Gifts\Gifts.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Gifts\Gifts.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Gifts.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Gifts\Gifts.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Home\Home.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Home\Home.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Home.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Home\Home.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Images\Images.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Images\Images.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Images.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Images\Images.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Messages\Messages.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Messages\Messages.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Messages\Messages.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Posts\Posts.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Posts\Posts.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Posts.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Posts\Posts.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ProfileGifts\ProfileGifts.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ProfileGifts\ProfileGifts.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ProfileGifts.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\ProfileGifts\ProfileGifts.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Profiles\Profiles.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Profiles\Profiles.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Profiles.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Profiles\Profiles.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Ranks\Ranks.et.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Ranks\Ranks.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Ranks.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Ranks\Ranks.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Shared\_Layout.en.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Shared\_Layout.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Shared\_Layout.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Shared\_Layout.ru.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+    </ItemGroup>
 
 </Project>

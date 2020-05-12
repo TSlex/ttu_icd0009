@@ -20,6 +20,10 @@ body {
     float: none;
 }
 
+.disable_form_style button{
+    line-height: initial !important;
+}
+
 /*navbar*/
 .navbar {
     padding: 0.5em !important;

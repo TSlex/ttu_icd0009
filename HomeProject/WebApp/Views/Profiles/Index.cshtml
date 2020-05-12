@@ -134,7 +134,7 @@
                 <span>@Model.ProfileAbout</span>
                 <br>
                 @{
-                    if (workPlaceUrlPattern.IsMatch(Model.ProfileWorkPlace))
+                    if (Model.ProfileWorkPlace != null && workPlaceUrlPattern.IsMatch(Model.ProfileWorkPlace))
                     {
                         <a href="@Model.ProfileWorkPlace" >@Model.ProfileWorkPlace</a>
                     }
