@@ -15,7 +15,9 @@ namespace DAL.App.DTO
         
         public Guid? GiftImageId { get; set; }
         public Image? GiftImage { get; set; }
-        
+
+        public DateTime GiftDateTime { get; set; }
+
         public ICollection<ProfileGift>? ProfileGifts { get; set; }
     }
 }

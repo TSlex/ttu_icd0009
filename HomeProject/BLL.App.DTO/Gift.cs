@@ -16,6 +16,8 @@ namespace BLL.App.DTO
         
         public int Price { get; set; }
         
+        public DateTime GiftDateTime { get; set; }
+        
         public ICollection<ProfileGift>? ProfileGifts { get; set; }
     }
     

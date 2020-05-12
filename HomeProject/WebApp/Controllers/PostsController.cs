@@ -134,7 +134,7 @@ namespace WebApp.Controllers
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (!ValidateUserAccess(post))
             {
@@ -153,7 +153,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Post post)
         {
-            var record = await _bll.Posts.FindAsync(id);
+            var record = await _bll.Posts.GetForUpdateAsync(id);
 
             if (!ValidateUserAccess(record) || id != post.Id)
             {
@@ -165,7 +165,7 @@ namespace WebApp.Controllers
 
             if (TryValidateModel(post))
             {
-                await _bll.Posts.UpdateAsync(record);
+                await _bll.Posts.UpdateAsync(post);
                 await _bll.SaveChangesAsync();
                 
                 if (post.ReturnUrl != null)
@@ -182,7 +182,7 @@ namespace WebApp.Controllers
         // GET: Posts/Delete/5
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (!ValidateUserAccess(post))
             {
@@ -199,7 +199,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, Post post)
         {
-            var record = await _bll.Posts.FindAsync(id);
+            var record = await _bll.Posts.GetForUpdateAsync(id);
             
             if (!ValidateUserAccess(record))
             {

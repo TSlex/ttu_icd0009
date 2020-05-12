@@ -37,7 +37,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
         public async Task<IActionResult> GetFavoritesCount(Guid id)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (post == null)
             {
@@ -53,7 +53,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
         public async Task<IActionResult> GetCommentsCount(Guid id)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (post == null)
             {
@@ -165,7 +165,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PutPost(Guid id, [FromBody] PostEditDTO post)
         {
-            var record = await _bll.Posts.FindAsync(id);
+            var record = await _bll.Posts.GetForUpdateAsync(id);
 
             if (post.Id != id)
             {
@@ -203,7 +203,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> DeletePost(Guid id)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (post == null)
             {
@@ -222,7 +222,7 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> AddToFavorites(Guid id)
         {
             var userId = User.UserId();
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (post == null)
             {
@@ -249,7 +249,7 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> RemoveFromFavorite(Guid id)
         {
             var userId = User.UserId();
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(id);
 
             if (post == null)
             {

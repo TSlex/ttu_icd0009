@@ -54,6 +54,11 @@ namespace DAL.Base.EF.Repositories
         {
             return Mapper.Map(await RepoDbSet.FindAsync(id));
         }
+        
+        public async Task<TDALEntity> GetForUpdateAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet.FindAsync(id));
+        }
 
         public virtual TDALEntity Add(TDALEntity entity)
         {
