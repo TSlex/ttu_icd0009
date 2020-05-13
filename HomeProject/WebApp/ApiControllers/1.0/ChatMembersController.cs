@@ -66,9 +66,9 @@ namespace WebApp.ApiControllers._1._0
             return Ok((await _bll.ChatMembers.RoomAllAsync(chatRoomId)).Select(member => new ChatMemberDTO
             {
                 Id = member.Id,
-                UserName = member.Profile.UserName,
-                ProfileAvatarUrl = member.Profile.ProfileAvatarUrl,
-                ChatRole = member.ChatRole.RoleTitle
+                UserName = member.Profile!.UserName,
+                ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl,
+                ChatRole = member.ChatRole!.RoleTitle
             }));
         }
         
@@ -104,7 +104,7 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("Member was not found!"));
             }
 
-            if (member.ChatRole.RoleTitle.Contains("Creator"))
+            if (member.ChatRole!.RoleTitle.Contains("Creator"))
             {
                 return BadRequest(new ErrorResponseDTO("Creator cannot be demoted!"));
             }

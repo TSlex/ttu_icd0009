@@ -11,7 +11,7 @@ namespace Contracts.BLL.App.Services
     public interface IBlockedProfileService: IBaseEntityService<global::DAL.App.DTO.BlockedProfile, BlockedProfile>
     {
         BlockedProfile AddBlockProperty(Guid userId, Guid profileId);
-        Task<BlockedProfile> RemoveBlockPropertyAsync(Guid userId, Guid profileId);
+        Task<BlockedProfile?> RemoveBlockPropertyAsync(Guid userId, Guid profileId);
         Task<BlockedProfile> FindAsync(Guid userId, Guid profileId);
         
         Task<int> CountByIdAsync(Guid userId);

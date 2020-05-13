@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApp.Helpers;
 
+#pragma warning disable 1591
 namespace WebApp
 {
     public class Startup

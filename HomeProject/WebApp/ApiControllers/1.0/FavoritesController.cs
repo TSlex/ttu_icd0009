@@ -83,8 +83,8 @@ namespace WebApp.ApiControllers._1._0
             return Ok((await _bll.Favorites.AllByIdPageAsync(postId, pageNumber, 10)).Select(favorite =>
                 new FavoriteProfileDTO
                 {
-                    UserName = favorite.Profile.UserName,
-                    ProfileAvatarUrl = favorite.Profile.ProfileAvatarUrl
+                    UserName = favorite.Profile!.UserName,
+                    ProfileAvatarUrl = favorite.Profile!.ProfileAvatarUrl
                 }));
         }
     }

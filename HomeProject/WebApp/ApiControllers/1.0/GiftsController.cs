@@ -101,11 +101,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber)).Select(gift => gift.Gift).Select(
                 gift => new GiftDTO()
                 {
-                    GiftName = gift.GiftName,
-                    GiftCode = gift.GiftCode,
-                    GiftImageId = gift.GiftImageId,
-                    GiftImageUrl = gift.GiftImageUrl,
-                    Price = gift.Price,
+                    GiftName = gift!.GiftName,
+                    GiftCode = gift!.GiftCode,
+                    GiftImageId = gift!.GiftImageId,
+                    GiftImageUrl = gift!.GiftImageUrl,
+                    Price = gift!.Price,
                 }));
         }
 

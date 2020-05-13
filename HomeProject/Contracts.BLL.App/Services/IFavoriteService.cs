@@ -10,7 +10,7 @@ namespace Contracts.BLL.App.Services
     public interface IFavoriteService: IBaseEntityService<global::DAL.App.DTO.Favorite, Favorite>
     {
         Task<Favorite> FindAsync(Guid id, Guid userId);
-        Favorite Create(Guid id, Guid userId);
+        Favorite? Create(Guid id, Guid userId);
         Task<Favorite> RemoveAsync(Guid id, Guid userId);
 
         Task<IEnumerable<Favorite>> AllByIdPageAsync(Guid postId, int pageNumber, int i);

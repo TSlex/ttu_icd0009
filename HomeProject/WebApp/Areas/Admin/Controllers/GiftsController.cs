@@ -75,7 +75,7 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Gift gift)
         {
-            if (gift.GiftImage.ImageFile == null)
+            if (gift.GiftImage!.ImageFile == null)
             {
                 ModelState.AddModelError(string.Empty, "Image should be specified");
                 return View(gift);
@@ -137,7 +137,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (gift.GiftImage.ImageFile == null && gift.GiftImageId == null)
+            if (gift.GiftImage!.ImageFile == null && gift.GiftImageId == null)
             {
                 ModelState.AddModelError(string.Empty, "Image should be specified");
                 return View(gift);

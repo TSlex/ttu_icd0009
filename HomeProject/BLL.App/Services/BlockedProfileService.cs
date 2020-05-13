@@ -28,7 +28,7 @@ namespace BLL.App.Services
             }));
         }
 
-        public async Task<BlockedProfile> RemoveBlockPropertyAsync(Guid userId, Guid profileId)
+        public async Task<BlockedProfile?> RemoveBlockPropertyAsync(Guid userId, Guid profileId)
         {
             var blockedProperty = await ServiceRepository.FindAsync(userId, profileId);
 

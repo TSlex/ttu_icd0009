@@ -28,7 +28,7 @@ namespace BLL.App.Services
             }));
         }
 
-        public async Task<Follower> RemoveSubscriptionAsync(Guid userId, Guid profileId)
+        public async Task<Follower?> RemoveSubscriptionAsync(Guid userId, Guid profileId)
         {
             var subscription = await ServiceRepository.FindAsync(userId, profileId);
 

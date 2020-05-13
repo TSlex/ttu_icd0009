@@ -40,7 +40,7 @@ namespace DAL.Repositories
             return (await RepoDbContext.Favorites
                     .Where(favorite => favorite.PostId == postId)
                     .Include(favorite => favorite.Profile)
-                    .OrderByDescending(favorite => favorite.Post.PostPublicationDateTime)
+                    .OrderByDescending(favorite => favorite.Post!.PostPublicationDateTime)
                     .Skip(startIndex)
                     .Take(count)
                     .ToListAsync())

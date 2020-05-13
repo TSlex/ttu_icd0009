@@ -31,16 +31,16 @@
             </div>
             
             <div class="custom-file mb-3">
-                <input type="file" asp-for="GiftImage.ImageFile" id="ImageFile" accept=".jpeg, .png, .jpg" required class="custom-file-input">
+                <input type="file" asp-for="GiftImage!.ImageFile" id="ImageFile" accept=".jpeg, .png, .jpg" required class="custom-file-input">
                 <label class="custom-file-label" style="overflow: hidden"> </label>
             </div>
 
-            <input type="hidden" asp-for="GiftImage.PaddingTop" id="PaddingTop" value="0"/>
-            <input type="hidden" asp-for="GiftImage.PaddingRight" id="PaddingRight" value="0"/>
-            <input type="hidden" asp-for="GiftImage.PaddingBottom" id="PaddingBottom" value="0">
-            <input type="hidden" asp-for="GiftImage.PaddingLeft" id="PaddingLeft" value="0"/>
-            <input type="hidden" asp-for="GiftImage.HeightPx" id="HeightPx" value="0"/>
-            <input type="hidden" asp-for="GiftImage.WidthPx" id="WidthPx" value="0"/>
+            <input type="hidden" asp-for="GiftImage!.PaddingTop" id="PaddingTop" value="0"/>
+            <input type="hidden" asp-for="GiftImage!.PaddingRight" id="PaddingRight" value="0"/>
+            <input type="hidden" asp-for="GiftImage!.PaddingBottom" id="PaddingBottom" value="0">
+            <input type="hidden" asp-for="GiftImage!.PaddingLeft" id="PaddingLeft" value="0"/>
+            <input type="hidden" asp-for="GiftImage!.HeightPx" id="HeightPx" value="0"/>
+            <input type="hidden" asp-for="GiftImage!.WidthPx" id="WidthPx" value="0"/>
 
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-primary ">Back to List</a>

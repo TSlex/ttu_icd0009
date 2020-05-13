@@ -25,11 +25,11 @@ namespace DAL.Repositories
             return await RepoDbContext.ProfileRanks
                 .Where(rank => rank.ProfileId == profileId)
                 .Include(rank => rank.Rank)
-                .ThenInclude(rank => rank.RankTitle)
-                .ThenInclude(title => title.Translations)
+                .ThenInclude(rank => rank!.RankTitle)
+                .ThenInclude(title => title!.Translations)
                 .Include(rank => rank.Rank)
-                .ThenInclude(rank => rank.RankDescription)
-                .ThenInclude(desc => desc.Translations)
+                .ThenInclude(rank => rank!.RankDescription)
+                .ThenInclude(desc => desc!.Translations)
                 .Select(rank => Mapper.Map(rank)).ToListAsync();
         }
 

@@ -152,7 +152,7 @@
             foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
             {
                 <div class="profile_gift">
-                    <img src="/images/@gift.Gift.GiftImageId" alt="..." height="150px" width="150px">
+                    <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
                 </div>
             }
 

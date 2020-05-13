@@ -63,8 +63,8 @@ namespace WebApp.ApiControllers._1._0
                 new CommentGetDTO
                 {
                     Id = comment.Id,
-                    UserName = comment.Profile.UserName,
-                    ProfileAvatarUrl = comment.Profile.ProfileAvatarUrl,
+                    UserName = comment.Profile!.UserName,
+                    ProfileAvatarUrl = comment.Profile!.ProfileAvatarUrl,
                     CommentValue = comment.CommentValue,
                     CommentDateTime = comment.CommentDateTime
                 }));

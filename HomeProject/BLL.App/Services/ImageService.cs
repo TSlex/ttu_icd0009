@@ -16,7 +16,7 @@ namespace BLL.App.Services
 {
     public class ImageService : BaseEntityService<IImageRepo, DAL.App.DTO.Image, Image>, IImageService
     {
-        public string RootPath { get; set; }
+        public string RootPath { get; set; } = default!;
 
         public ImageService(IAppUnitOfWork uow) :
             base(uow.Images, new BaseBLLMapper<DAL.App.DTO.Image, Image>())
@@ -142,7 +142,7 @@ namespace BLL.App.Services
                       entity.PaddingBottom != 0 || entity.PaddingLeft != 0))
             {
                 //save new file
-                var filename = Guid.NewGuid() + "." + entity.OriginalImageUrl.Split('.')[1];
+                var filename = Guid.NewGuid() + "." + entity.OriginalImageUrl!.Split('.')[1];
                 filename = Path.Combine(path, filename);
                 entity.ImageUrl = filename.Split("localstorage")[1];
 
@@ -183,7 +183,7 @@ namespace BLL.App.Services
 
         private static async Task CreateImagesAsync(Image entity, string path, bool update)
         {
-            var extension = Path.GetExtension(entity.ImageFile.FileName);
+            var extension = Path.GetExtension(entity.ImageFile!.FileName);
             string originalFilename;
 
             //save original file

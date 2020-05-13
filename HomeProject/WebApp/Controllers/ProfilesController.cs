@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,8 @@ namespace WebApp.Controllers
             var isUserBlocked = isAuthorized &&
                                 user.Id != User.UserId() &&
                                 await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
-
+            
+            // ReSharper disable EF1001
             if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
             {
                 _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()

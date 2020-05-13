@@ -68,13 +68,13 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(ranks.Select(rank => new RankDTO()
             {
-                RankTitle = rank.Rank.RankTitle,
-                RankDescription = rank.Rank.RankDescription,
-                RankIcon = rank.Rank.RankIcon,
-                RankColor = rank.Rank.RankColor,
-                RankTextColor = rank.Rank.RankTextColor,
-                MinExperience = rank.Rank.MinExperience,
-                MaxExperience = rank.Rank.MaxExperience,
+                RankTitle = rank.Rank!.RankTitle,
+                RankDescription = rank.Rank!.RankDescription,
+                RankIcon = rank.Rank!.RankIcon,
+                RankColor = rank.Rank!.RankColor,
+                RankTextColor = rank.Rank!.RankTextColor,
+                MinExperience = rank.Rank!.MinExperience,
+                MaxExperience = rank.Rank!.MaxExperience,
             }));
         }
 
@@ -112,18 +112,18 @@ namespace WebApp.ApiControllers._1._0
 
             ;
 
-            return Ok(ranks.Select(rank => rank.Rank)
-                .OrderByDescending(rank => rank.MaxExperience)
-                .Where(rank => rank.MinExperience <= user.Experience)
+            return Ok(ranks.Select(rank => rank!.Rank)
+                .OrderByDescending(rank => rank!.MaxExperience)
+                .Where(rank => rank!.MinExperience <= user.Experience)
                 .Select(rank => new RankDTO()
                 {
-                    RankTitle = rank.RankTitle,
-                    RankDescription = rank.RankDescription,
-                    RankIcon = rank.RankIcon,
-                    RankColor = rank.RankColor,
-                    RankTextColor = rank.RankTextColor,
-                    MinExperience = rank.MinExperience,
-                    MaxExperience = rank.MaxExperience,
+                    RankTitle = rank!.RankTitle,
+                    RankDescription = rank!.RankDescription,
+                    RankIcon = rank!.RankIcon,
+                    RankColor = rank!.RankColor,
+                    RankTextColor = rank!.RankTextColor,
+                    MinExperience = rank!.MinExperience,
+                    MaxExperience = rank!.MaxExperience,
                 }).FirstOrDefault());
         }
     }

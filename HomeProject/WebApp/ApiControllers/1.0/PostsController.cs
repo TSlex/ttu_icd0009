@@ -336,7 +336,7 @@ namespace WebApp.ApiControllers._1._0
                 IsFavorite = inObj.IsUserFavorite,
                 PostDescription = inObj.PostDescription,
                 PostTitle = inObj.PostTitle,
-                ProfileUsername = inObj.Profile.UserName,
+                ProfileUsername = inObj.Profile!.UserName,
                 PostCommentsCount = inObj.PostCommentsCount,
                 PostFavoritesCount = inObj.PostFavoritesCount,
                 PostImageId = inObj.PostImageId,

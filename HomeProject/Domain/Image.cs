@@ -8,8 +8,8 @@ namespace Domain
 {
     public class Image: DomainEntityBaseMetadata
     {
-        [MaxLength(300)] public string ImageUrl { get; set; }
-        [MaxLength(300)] public string OriginalImageUrl { get; set; }
+        [MaxLength(300)] public string ImageUrl { get; set; } = default!;
+        [MaxLength(300)] public string OriginalImageUrl { get; set; } = default!;
         
         [Range(0, int.MaxValue)] public ImageType ImageType { get; set; } = ImageType.Undefined;
         public Guid ImageFor { get; set; } = default!;

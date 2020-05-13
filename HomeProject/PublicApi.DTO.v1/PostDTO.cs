@@ -34,7 +34,7 @@ namespace PublicApi.DTO.v1
         public string PostTitle { get; set; } = default!;
         public string? PostDescription { get; set; }
         
-        public string ProfileUsername { get; set; }
+        public string ProfileUsername { get; set; } = default!;
         
         public Guid? PostImageId { get; set; }
         public string? PostImageUrl { get; set; }

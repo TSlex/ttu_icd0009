@@ -35,12 +35,12 @@ namespace DAL.Repositories
                         Id = member.Id,
                         Profile = new Domain.Profile()
                         {
-                            UserName = member.Profile.UserName,
-                            ProfileAvatarUrl = member.Profile.ProfileAvatarUrl
+                            UserName = member.Profile!.UserName,
+                            ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl
                         },
                         ChatRole = new Domain.ChatRole()
                         {
-                            RoleTitle = member.ChatRole.RoleTitle
+                            RoleTitle = member.ChatRole!.RoleTitle
                         }
                     })
                     .ToListAsync())

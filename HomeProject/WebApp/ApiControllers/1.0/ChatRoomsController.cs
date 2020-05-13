@@ -51,8 +51,8 @@ namespace WebApp.ApiControllers._1._0
             {
                 Id = room.Id,
                 ChatRoomTitle = room.ChatRoomTitle,
-                LastMessageDateTime = room.Messages.Count > 0 ? room.Messages.First()?.MessageDateTime : null,
-                LastMessageValue = room.Messages.Count > 0 ? room.Messages.First()?.MessageValue : null,
+                LastMessageDateTime = room.Messages!.Count > 0 ? room.Messages.First()?.MessageDateTime : null,
+                LastMessageValue = room.Messages!.Count > 0 ? room.Messages.First()?.MessageValue : null,
             }).OrderByDescending(room => room.LastMessageDateTime));
         }
 
@@ -93,7 +93,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 Id = result.Id,
                 MessageValue = result.MessageValue,
-                UserName = result.Profile.UserName,
+                UserName = result.Profile!.UserName,
                 MessageDateTime = result.MessageDateTime
             });
         }
@@ -159,7 +159,7 @@ namespace WebApp.ApiControllers._1._0
                 {
                     Id = message.Id,
                     MessageValue = message.MessageValue,
-                    UserName = message.Profile.UserName,
+                    UserName = message.Profile!.UserName,
                     MessageDateTime = message.MessageDateTime
                 }));
         }

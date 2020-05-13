@@ -56,7 +56,7 @@ namespace DAL.Repositories
                                          .Contains((Guid) requesterId),
                     Profile = new DAL.App.DTO.Profile()
                     {
-                        UserName = post.Profile.UserName
+                        UserName = post.Profile!.UserName
                     }
                 }).FirstOrDefaultAsync());
         }
@@ -81,7 +81,7 @@ namespace DAL.Repositories
                     IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
                     Profile = new DAL.App.DTO.Profile()
                     {
-                        UserName = post.Profile.UserName
+                        UserName = post.Profile!.UserName
                     }
                 })
                 .ToListAsync());
@@ -103,7 +103,7 @@ namespace DAL.Repositories
                         PostFavoritesCount = post.Favorites!.Count,
                         Profile = new Profile()
                         {
-                            UserName = post.Profile.UserName
+                            UserName = post.Profile!.UserName
                         }
                     })
                     .ToListAsync())
@@ -144,7 +144,7 @@ namespace DAL.Repositories
                                          .Contains((Guid) requesterId),
                     Profile = new DAL.App.DTO.Profile()
                     {
-                        UserName = post.Profile.UserName
+                        UserName = post.Profile!.UserName
                     }
                 })
                 .Skip(startIndex)
@@ -205,7 +205,7 @@ namespace DAL.Repositories
                     IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
                     Profile = new DAL.App.DTO.Profile()
                     {
-                        UserName = post.Profile.UserName
+                        UserName = post.Profile!.UserName
                     }
                 })
                 .Skip(startIndex)
@@ -238,7 +238,7 @@ namespace DAL.Repositories
                     PostFavoritesCount = post.Favorites!.Count,
                     Profile = new Profile()
                     {
-                        UserName = post.Profile.UserName
+                        UserName = post.Profile!.UserName
                     }
                 })
                 .Skip(startIndex)

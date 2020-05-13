@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
@@ -61,6 +62,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            // ReSharper disable EF1001
             if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
             {
                 _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()

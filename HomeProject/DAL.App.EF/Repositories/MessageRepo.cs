@@ -46,7 +46,7 @@ namespace DAL.Repositories
                         MessageValue = message.MessageValue,
                         Profile = new Domain.Profile()
                         {
-                            UserName = message.Profile.UserName
+                            UserName = message.Profile!.UserName
                         },
                         MessageDateTime = message.MessageDateTime
                     })
@@ -72,7 +72,7 @@ namespace DAL.Repositories
                     MessageValue = message.MessageValue,
                     Profile = new Domain.Profile()
                     {
-                        UserName = message.Profile.UserName
+                        UserName = message.Profile!.UserName
                     },
                     MessageDateTime = message.MessageDateTime
                 })

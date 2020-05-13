@@ -63,8 +63,8 @@ namespace WebApp.ApiControllers._1._0
             return Ok((await _bll.BlockedProfiles.AllByIdPageAsync(User.UserId(), pageNumber, 10)).Select(favorite =>
                 new BlockedProfileDTO
                 {
-                    UserName = favorite.BProfile.UserName,
-                    ProfileAvatarUrl = favorite.BProfile.ProfileAvatarUrl
+                    UserName = favorite.BProfile!.UserName,
+                    ProfileAvatarUrl = favorite.BProfile!.ProfileAvatarUrl
                 }));
         }
     }

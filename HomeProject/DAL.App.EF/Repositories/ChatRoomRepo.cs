@@ -74,8 +74,8 @@ namespace DAL.Repositories
                            room.Id == chatRoomId &&
                            room.ChatMembers.Select(member => member.ProfileId).Contains(userId) &&
                            (
-                               room.ChatMembers.Select(member => member.ChatRole.RoleTitle).Contains("Creator") ||
-                               room.ChatMembers.Select(member => member.ChatRole.RoleTitle).Contains("Administrator")
+                               room.ChatMembers.Select(member => member.ChatRole!.RoleTitle).Contains("Creator") ||
+                               room.ChatMembers.Select(member => member.ChatRole!.RoleTitle).Contains("Administrator")
                            )
                        ))) != null;
         }

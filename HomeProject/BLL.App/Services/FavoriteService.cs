@@ -28,7 +28,7 @@ namespace BLL.App.Services
             return Mapper.Map(await ServiceRepository.FindAsync(id, userId));
         }
 
-        public Favorite Create(Guid id, Guid userId)
+        public Favorite? Create(Guid id, Guid userId)
         {
             var post = _uow.Posts.Find(id);
 

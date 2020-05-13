@@ -20,9 +20,9 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbContext.Ranks
                 .Include(rank => rank.RankTitle)
-                .ThenInclude(s => s.Translations)
+                .ThenInclude(s => s!.Translations)
                 .Include(rank => rank.RankDescription)
-                .ThenInclude(s => s.Translations)
+                .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync(rank => rank.RankCode == code));
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.DTO;
@@ -31,12 +32,12 @@ namespace DAL.Repositories
                 .ThenInclude(gift => gift.Gift)
                 .Include(profile => profile.ProfileRanks)
                 .ThenInclude(rank => rank.Rank)
-                .ThenInclude(rank => rank.RankTitle)
-                .ThenInclude(title => title.Translations)
+                .ThenInclude(rank => rank!.RankTitle)
+                .ThenInclude(title => title!.Translations)
                 .Include(profile => profile.ProfileRanks)
                 .ThenInclude(rank => rank.Rank)
-                .ThenInclude(rank => rank.RankDescription)
-                .ThenInclude(desc => desc.Translations)
+                .ThenInclude(rank => rank!.RankDescription)
+                .ThenInclude(desc => desc!.Translations)
 //                .Include(profile => profile.ProfileRanks)
 //                .ThenInclude(rank => rank.Rank)
 //                .ThenInclude(rank => rank!.NextRank)
@@ -51,7 +52,8 @@ namespace DAL.Repositories
                 .Include(profile => profile.Followers!.Count)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
-
+        
+        #pragma warning disable 8604
         public async Task<Profile> FindByUsernameAsync(string username)
         {
             var result = await _userManager.Users
@@ -59,21 +61,21 @@ namespace DAL.Repositories
                 .Select(profile => new
                 {
                     value = profile,
-                    postsCount = profile.Posts.Count,
-                    followedCount = profile.Followed.Count,
-                    followersCount = profile.Followers.Count
+                    postsCount = profile.Posts!.Count,
+                    followedCount = profile.Followed!.Count,
+                    followersCount = profile.Followers!.Count
                 }).FirstOrDefaultAsync();
 
-            if (result?.value != null)
-            {
-                result.value.PostsCount = result.postsCount;
-                result.value.FollowedCount = result.followedCount;
-                result.value.FollowersCount = result.followersCount;
-            }
+            if (result!.value == null) return Mapper.Map(result!.value);
+            
+            result.value.PostsCount = result.postsCount;
+            result.value.FollowedCount = result.followedCount;
+            result.value.FollowersCount = result.followersCount;
 
-            return Mapper.Map(result?.value);
+            return Mapper.Map(result.value);
         }
-
+        #pragma warning restore 8604
+        
         public async Task IncreaseExperience(Guid userId, int amount)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());

@@ -243,7 +243,7 @@ namespace WebApp.Controllers
 
         private Image? ValidateImage(Image imageModel)
         {
-            var extension = Path.GetExtension(imageModel.ImageFile.FileName);
+            var extension = Path.GetExtension(imageModel.ImageFile!.FileName);
 
             if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
             {

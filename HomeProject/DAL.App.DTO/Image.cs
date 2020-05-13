@@ -8,8 +8,8 @@ namespace DAL.App.DTO
 {
     public class Image: DomainEntityBaseMetadata
     {
-        [MaxLength(300)] public string ImageUrl { get; set; }
-        [MaxLength(300)] public string OriginalImageUrl { get; set; }
+        [MaxLength(300)] public string ImageUrl { get; set; } = default!;
+        [MaxLength(300)] public string OriginalImageUrl { get; set; } = default!;
         
         [Range(0, 10000)] public int HeightPx { get; set; }
         [Range(0, 10000)] public int WidthPx { get; set; }

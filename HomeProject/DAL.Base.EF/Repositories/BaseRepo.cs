@@ -65,7 +65,9 @@ namespace DAL.Base.EF.Repositories
             return Mapper.Map(RepoDbSet.Add(Mapper.MapReverse(entity)).Entity);
         }
 
+        #pragma warning disable 1998
         public virtual async Task<TDALEntity> UpdateAsync(TDALEntity entity)
+        #pragma warning restore 1998
         {
             var trackEntity = RepoDbSet.Find(entity.Id);
             var newEntity = Mapper.MapReverse(entity);
