@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -20,12 +23,20 @@ namespace WebApp.Areas.Admin.ApiControllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public MessagesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/Messages
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Message>>> GetMessages()
         {
@@ -33,6 +44,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // GET: api/Messages/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Message>> GetMessage(Guid id)
         {
@@ -49,6 +65,12 @@ namespace WebApp.Areas.Admin.ApiControllers
         // PUT: api/Messages/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMessage(Guid id, Message message)
         {
@@ -81,6 +103,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         // POST: api/Messages
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
@@ -91,6 +118,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // DELETE: api/Messages/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Message>> DeleteMessage(Guid id)
         {

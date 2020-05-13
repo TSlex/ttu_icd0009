@@ -18,6 +18,9 @@ using Message = BLL.App.DTO.Message;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Messages
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -27,13 +30,22 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Message, MessageGetDTO> _mapper;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public MessagesController(IAppBLL bll)
         {
             _bll = bll;
             _mapper = new DTOMapper<Message, MessageGetDTO>();
         }
 
+        /// <summary>
+        /// Create a message
+        /// </summary>
+        /// <param name="message">Message body</param>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -66,6 +78,12 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Message is invalid"));
         }
         
+        /// <summary>
+        /// Updates a message
+        /// </summary>
+        /// <param name="id">Message id</param>
+        /// <param name="message">Message body</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -104,6 +122,11 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Message is invalid"));
         }
 
+        /// <summary>
+        /// Deletes message
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageGetDTO))]

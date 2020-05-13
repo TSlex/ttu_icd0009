@@ -17,7 +17,10 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: ChatRooms
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.ChatRooms.AllAsync(User.UserId()));
@@ -32,7 +35,11 @@ namespace WebApp.Controllers
             });
         }
 
-        // GET: ChatRooms/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
             var chatRoom = await _bll.ChatRooms.FindAsync(id);
@@ -45,7 +52,11 @@ namespace WebApp.Controllers
             return View(chatRoom);
         }
 
-        // POST: ChatRooms/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Images - for avatars, posts, gifts and etc...
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -24,12 +27,21 @@ namespace WebApp.ApiControllers._1._0
     public class ImagesController : ControllerBase
     {
         private readonly IAppBLL _bll;
-
+            
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public ImagesController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// Get image by it's id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{id?}")]
         [Produces("application/json")]
@@ -61,6 +73,11 @@ namespace WebApp.ApiControllers._1._0
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
 
+        /// <summary>
+        /// Get profile avatar
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("profile/{username}")]
         [Produces("application/json")]
@@ -90,6 +107,11 @@ namespace WebApp.ApiControllers._1._0
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
 
+        /// <summary>
+        /// Get posts image
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("post/{postId}")]
         [Produces("application/json")]
@@ -119,6 +141,11 @@ namespace WebApp.ApiControllers._1._0
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
 
+        /// <summary>
+        /// Get gift image
+        /// </summary>
+        /// <param name="giftCode"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("gift/{giftCode}")]
         [Produces("application/json")]

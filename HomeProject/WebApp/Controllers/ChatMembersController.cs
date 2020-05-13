@@ -16,13 +16,20 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: ChatMembers
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.ChatMembers.AllAsync());
         }
 
-        // GET: ChatMembers/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var chatMember = await _bll.ChatMembers.FindAsync(id);
@@ -35,7 +42,10 @@ namespace WebApp.Controllers
             return View(chatMember);
         }
 
-        // GET: ChatMembers/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
@@ -65,7 +75,10 @@ namespace WebApp.Controllers
             return View(chatMember);
         }
 
-        // GET: ChatMembers/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
             var chatMember = await _bll.ChatMembers.FindAsync(id);
@@ -104,7 +117,11 @@ namespace WebApp.Controllers
             return View(chatMember);
         }
 
-        // GET: ChatMembers/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -118,7 +135,11 @@ namespace WebApp.Controllers
             return View(chatMember);
         }
 
-        // POST: ChatMembers/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

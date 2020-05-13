@@ -15,6 +15,9 @@ using Post = BLL.App.DTO.Post;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Posts
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -24,13 +27,22 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Post, PostGetDTO> _postGetMapper;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public PostsController(IAppBLL bll)
         {
             _bll = bll;
             _postGetMapper = new DTOMapper<Post, PostGetDTO>();
         }
 
+        /// <summary>
+        /// Get post favorites count
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{id}/fav_count")]
         [Produces("application/json")]
@@ -47,6 +59,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetFavoritesCount(id)});
         }
 
+        /// <summary>
+        /// Get post comments count
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{id}/comments_count")]
         [Produces("application/json")]
@@ -63,6 +80,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetCommentsCount(id)});
         }
 
+        /// <summary>
+        /// Get user posts count
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/count")]
         [Produces("application/json")]
@@ -82,6 +104,12 @@ namespace WebApp.ApiControllers._1._0
 
         //crud========================================================
 
+        /// <summary>
+        /// Get user posts
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/{pageNumber}")]
         [Produces("application/json")]
@@ -106,6 +134,11 @@ namespace WebApp.ApiControllers._1._0
                 .Select(Map));
         }
 
+        /// <summary>
+        /// Get post by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{id}")]
         [Produces("application/json")]
@@ -131,6 +164,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(Map(post));
         }
 
+        /// <summary>
+        /// Creates a post
+        /// </summary>
+        /// <param name="post">Post body</param>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -157,6 +195,12 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Post is invalid"));
         }
 
+        /// <summary>
+        /// Updates a post
+        /// </summary>
+        /// <param name="id">Post id</param>
+        /// <param name="post">Post body</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -196,6 +240,11 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Post is invalid"));
         }
 
+        /// <summary>
+        /// Deletes post
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostGetDTO))]
@@ -215,6 +264,11 @@ namespace WebApp.ApiControllers._1._0
 
         //============================================================
 
+        /// <summary>
+        /// Add post to favorites
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{id}/favorite")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -242,6 +296,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new OkResponseDTO() {Status = "Post in already favorited"});
         }
 
+        /// <summary>
+        /// Removes post from favorites
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{id}/unfavorite")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

@@ -17,13 +17,20 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: ProfileRanks
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.ProfileRanks.AllAsync());
         }
 
-        // GET: ProfileRanks/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
 
@@ -38,7 +45,10 @@ namespace WebApp.Controllers
             return View(profileRank);
         }
 
-        // GET: ProfileRanks/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
 //            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
@@ -70,7 +80,10 @@ namespace WebApp.Controllers
             return View(profileRank);
         }
 
-        // GET: ProfileRanks/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -111,7 +124,11 @@ namespace WebApp.Controllers
             return View(profileRank);
         }
 
-        // GET: ProfileRanks/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -126,7 +143,11 @@ namespace WebApp.Controllers
             return View(profileRank);
         }
 
-        // POST: ProfileRanks/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

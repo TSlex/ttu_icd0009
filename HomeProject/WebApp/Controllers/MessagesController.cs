@@ -19,14 +19,20 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: Messages
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
 //        [Route("/{chatRoomId?}")]
         public async Task<IActionResult> Index(Guid chatRoomId)
         {
             return View(await _bll.Messages.AllAsync(chatRoomId));
         }
 
-        // GET: Messages/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create(Guid chatRoomId)
         {
 //            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
@@ -61,7 +67,10 @@ namespace WebApp.Controllers
             return View(message);
         }
 
-        // GET: Messages/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -100,7 +109,11 @@ namespace WebApp.Controllers
             return View(message);
         }
 
-        // GET: Messages/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -114,7 +127,11 @@ namespace WebApp.Controllers
             return View(message);
         }
 
-        // POST: Messages/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

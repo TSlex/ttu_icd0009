@@ -17,13 +17,20 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: Followers
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Followers.AllAsync());
         }
 
-        // GET: Followers/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var follower = await _bll.Followers.FindAsync(id);
@@ -36,7 +43,10 @@ namespace WebApp.Controllers
             return View(follower);
         }
 
-        // GET: Followers/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
 
@@ -68,7 +78,10 @@ namespace WebApp.Controllers
             return View(follower);
         }
 
-        // GET: Followers/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -108,7 +121,11 @@ namespace WebApp.Controllers
             return View(follower);
         }
 
-        // GET: Followers/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -122,7 +139,11 @@ namespace WebApp.Controllers
             return View(follower);
         }
 
-        // POST: Followers/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

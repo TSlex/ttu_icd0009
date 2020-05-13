@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -20,12 +23,20 @@ namespace WebApp.Areas.Admin.ApiControllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public ChatRolesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/ChatRoles
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChatRole>>> GetChatRoles()
         {
@@ -33,6 +44,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // GET: api/ChatRoles/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ChatRole>> GetChatRole(Guid id)
         {
@@ -49,6 +65,12 @@ namespace WebApp.Areas.Admin.ApiControllers
         // PUT: api/ChatRoles/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chatRole"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutChatRole(Guid id, ChatRole chatRole)
         {
@@ -81,6 +103,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         // POST: api/ChatRoles
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chatRole"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ChatRole>> PostChatRole(ChatRole chatRole)
         {
@@ -91,6 +118,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // DELETE: api/ChatRoles/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChatRole>> DeleteChatRole(Guid id)
         {

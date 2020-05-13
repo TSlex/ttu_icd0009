@@ -12,6 +12,9 @@ using PublicApi.DTO.v1;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -21,12 +24,20 @@ namespace WebApp.Areas.Admin.ApiControllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public PostsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/Posts
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PostDTO>>> GetPosts()
         {
@@ -51,6 +62,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // GET: api/Posts/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(Guid id)
         {
@@ -67,6 +83,12 @@ namespace WebApp.Areas.Admin.ApiControllers
         // PUT: api/Posts/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPost(Guid id, Post post)
         {
@@ -99,6 +121,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         // POST: api/Posts
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Post>> PostPost(Post post)
         {
@@ -109,6 +136,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // DELETE: api/Posts/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Post>> DeletePost(Guid id)
         {

@@ -17,6 +17,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Chat rooms
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -26,11 +29,19 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public ChatRoomsController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// Get chat rooms where current User is a member
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChatRoomGetDTO>))]
@@ -45,6 +56,11 @@ namespace WebApp.ApiControllers._1._0
             }).OrderByDescending(room => room.LastMessageDateTime));
         }
 
+        /// <summary>
+        /// Get last message of this room
+        /// </summary>
+        /// <param name="id">Chat room id</param>
+        /// <returns></returns>
         [HttpGet("{id}/last")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageGetDTO))]
@@ -82,6 +98,11 @@ namespace WebApp.ApiControllers._1._0
             });
         }
 
+        /// <summary>
+        /// Get room messages count
+        /// </summary>
+        /// <param name="id">Chat room id</param>
+        /// <returns></returns>
         [HttpGet("{id}/count")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
@@ -106,6 +127,12 @@ namespace WebApp.ApiControllers._1._0
             return Ok(_bll.Messages.CountByRoomAsync(id));
         }
 
+        /// <summary>
+        /// Get room's messages by page
+        /// </summary>
+        /// <param name="id">Chat room id</param>
+        /// <param name="pageNumber">Number of page</param>
+        /// <returns></returns>
         [HttpGet("{id}/{pageNumber}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MessageGetDTO>))]
@@ -137,6 +164,11 @@ namespace WebApp.ApiControllers._1._0
                 }));
         }
 
+        /// <summary>
+        /// Get room id (if room is not exist, create)
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <returns></returns>
         [HttpGet("{username}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Guid))]
@@ -153,6 +185,12 @@ namespace WebApp.ApiControllers._1._0
             return Ok(chatRoomId);
         }
 
+        /// <summary>
+        /// Room title update
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chatRoom"></param>
+        /// <returns></returns>
         [HttpPut("{id}/rename")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -193,6 +231,11 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Chat room is invalid"));
         }
 
+        /// <summary>
+        /// Delete room. Removes user from room members. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}/delete")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]

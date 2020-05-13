@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Gifts and profile gifts
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -26,12 +29,22 @@ namespace WebApp.ApiControllers._1._0
         private readonly IAppBLL _bll;
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
+        /// <param name="configuration">appsettings.json</param>
         public GiftsController(IAppBLL bll, IConfiguration configuration)
         {
             _bll = bll;
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Get all gift than are available
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{pageNumber}")]
         [Produces("application/json")]
@@ -49,6 +62,10 @@ namespace WebApp.ApiControllers._1._0
                 }));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("count")]
         [Produces("application/json")]
@@ -61,6 +78,12 @@ namespace WebApp.ApiControllers._1._0
             });
         }
 
+        /// <summary>
+        /// Get profile gifts
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/{pageNumber}")]
         [Produces("application/json")]
@@ -86,6 +109,11 @@ namespace WebApp.ApiControllers._1._0
                 }));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/count")]
         [Produces("application/json")]
@@ -106,6 +134,12 @@ namespace WebApp.ApiControllers._1._0
             });
         }
 
+        /// <summary>
+        /// Send the gift by giftcode to a profile with specified username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="giftCode"></param>
+        /// <returns></returns>
         [HttpPost("{username}/{giftCode}/send")]
         [Consumes("application/json")]
         [Produces("application/json")]

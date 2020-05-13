@@ -12,6 +12,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {    
+    /// <summary>
+    /// Profiles
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -21,13 +24,22 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<ProfileFull, ProfileDTO> _mapper;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public ProfilesController(IAppBLL bll)
         {
             _bll = bll;
             _mapper = new DTOMapper<ProfileFull, ProfileDTO>();
         }
         
+        /// <summary>
+        /// Get profile
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}")]
         [Produces("application/json")]
@@ -52,6 +64,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(_mapper.Map(user));
         }
 
+        /// <summary>
+        /// Subscribe to profile
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [HttpPost("{username}/follow")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -91,7 +108,12 @@ namespace WebApp.ApiControllers._1._0
             
             return Ok(new OkResponseDTO() {Status = $"You are already subscribed to {username}"});
         }
-
+        
+        /// <summary>
+        /// Unsubscribe from profile
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [HttpPost("{username}/unfollow")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -124,6 +146,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new OkResponseDTO() {Status = $"You are not subscribed to {username}"});
         }
 
+        /// <summary>
+        /// Add profile to black list
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [HttpPost("{username}/block")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -161,6 +188,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new OkResponseDTO() {Status = $"{username} is already blocked"});
         }
 
+        /// <summary>
+        /// Remove profile from black list
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [HttpPost("{username}/unblock")]
         [Produces("application/json")]
         [Consumes("application/json")]

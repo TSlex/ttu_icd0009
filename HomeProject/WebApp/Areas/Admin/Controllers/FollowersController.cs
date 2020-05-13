@@ -7,24 +7,38 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Followers and followed
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class FollowersController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public FollowersController(IAppBLL bll)
         {
             _bll = bll;
         }
 
-        // GET: Followers
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Followers.AllAsync());
         }
 
-        // GET: Followers/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var follower = await _bll.Followers.FindAsync(id);
@@ -37,16 +51,21 @@ namespace WebApp.Areas.Admin.Controllers
             return View(follower);
         }
 
-        // GET: Followers/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
 
             return View();
         }
 
-        // POST: Followers/Create
-        // To protect from overfollowering attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="follower"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -67,7 +86,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(follower);
         }
 
-        // GET: Followers/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -82,9 +104,12 @@ namespace WebApp.Areas.Admin.Controllers
             return View(follower);
         }
 
-        // POST: Followers/Edit/5
-        // To protect from overfollowering attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="follower"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
@@ -107,7 +132,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(follower);
         }
 
-        // GET: Followers/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -121,7 +150,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(follower);
         }
 
-        // POST: Followers/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

@@ -18,13 +18,20 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: Posts
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Posts.AllAsync());
         }
 
-        // GET: Posts/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
             var post = await _bll.Posts.GetPostFull(id);
@@ -93,7 +100,10 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Details), post);
         }
 
-        // GET: Posts/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create(string? returnUrl)
         {
             var post = new Post()
@@ -131,7 +141,10 @@ namespace WebApp.Controllers
             return View(post);
         }
 
-        // GET: Posts/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
             var post = await _bll.Posts.GetForUpdateAsync(id);
@@ -179,7 +192,11 @@ namespace WebApp.Controllers
             return View(post);
         }
 
-        // GET: Posts/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
             var post = await _bll.Posts.GetForUpdateAsync(id);
@@ -194,7 +211,11 @@ namespace WebApp.Controllers
             return View(post);
         }
 
-        // POST: Posts/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, Post post)

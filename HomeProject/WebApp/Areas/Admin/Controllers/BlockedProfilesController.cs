@@ -6,24 +6,39 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// User black list
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class BlockedProfilesController : Controller
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public BlockedProfilesController(IAppBLL bll)
         {
             _bll = bll;
         }
-
-        // GET: BlockedProfiles
+        
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.BlockedProfiles.AllAsync());
         }
 
-        // GET: BlockedProfiles/Details/5
+        
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
@@ -35,17 +50,22 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(blockedProfile);
         }
-
-        // GET: BlockedProfiles/Create
+        
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             return View();
         }
 
-        // POST: BlockedProfiles/Create
-        // To protect from overblockedProfileing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="blockedProfile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -65,7 +85,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(blockedProfile);
         }
 
-        // GET: BlockedProfiles/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
             var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
@@ -77,10 +100,13 @@ namespace WebApp.Areas.Admin.Controllers
             
             return View(blockedProfile);
         }
-
-        // POST: BlockedProfiles/Edit/5
-        // To protect from overblockedProfileing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="blockedProfile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
@@ -102,8 +128,12 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(blockedProfile);
         }
-
-        // GET: BlockedProfiles/Delete/5
+        
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -116,8 +146,12 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(blockedProfile);
         }
-
-        // POST: BlockedProfiles/Delete/5
+        
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

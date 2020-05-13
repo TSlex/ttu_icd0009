@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Chat members
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -25,11 +28,20 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public ChatMembersController(IAppBLL bll)
         {
             _bll = bll;
         }
         
+        /// <summary>
+        /// Get chat room members
+        /// </summary>
+        /// <param name="chatRoomId"></param>
+        /// <returns>List of members</returns>
         [HttpGet("{chatRoomId}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChatMemberDTO>))]
@@ -60,6 +72,12 @@ namespace WebApp.ApiControllers._1._0
             }));
         }
         
+        /// <summary>
+        /// Changes member role if possible
+        /// </summary>
+        /// <param name="id">Member's id</param>
+        /// <param name="roleTitle">Role name that will be set</param>
+        /// <returns></returns>
         [HttpPost("{id}/{roleTitle}/set")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

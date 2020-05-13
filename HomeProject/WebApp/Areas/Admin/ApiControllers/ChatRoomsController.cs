@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -20,12 +23,20 @@ namespace WebApp.Areas.Admin.ApiControllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public ChatRoomsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/ChatRooms
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRooms()
         {
@@ -33,6 +44,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // GET: api/ChatRooms/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ChatRoom>> GetChatRoom(Guid id)
         {
@@ -49,6 +65,12 @@ namespace WebApp.Areas.Admin.ApiControllers
         // PUT: api/ChatRooms/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chatRoom"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutChatRoom(Guid id, ChatRoom chatRoom)
         {
@@ -81,6 +103,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         // POST: api/ChatRooms
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chatRoom"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ChatRoom>> PostChatRoom(ChatRoom chatRoom)
         {
@@ -91,6 +118,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // DELETE: api/ChatRooms/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChatRoom>> DeleteChatRoom(Guid id)
         {

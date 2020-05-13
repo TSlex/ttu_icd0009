@@ -14,6 +14,9 @@ using WebApp.Areas.Admin.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Home
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class HomeController : Controller
@@ -23,6 +26,13 @@ namespace WebApp.Areas.Admin.Controllers
         private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="userManager"></param>
+        /// <param name="bll"></param>
+        /// <param name="signInManager"></param>
         public HomeController(ILogger<HomeController> logger, UserManager<Profile> userManager, IAppBLL bll,
             SignInManager<Profile> signInManager)
         {
@@ -32,12 +42,22 @@ namespace WebApp.Areas.Admin.Controllers
             _signInManager = signInManager;
         }
         
+        /// <summary>
+        /// Get admin panel
+        /// </summary>
+        /// <returns></returns>
         [Route("admin/panel")]
         public IActionResult Index()
         {
             return View();
         }
         
+        /// <summary>
+        /// Search user by username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> SearchUser(string? username, string? returnUrl)
         {

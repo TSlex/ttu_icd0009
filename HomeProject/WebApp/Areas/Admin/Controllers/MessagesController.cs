@@ -7,25 +7,39 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
-{    
+{
+    /// <summary>
+    /// Messages
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class MessagesController : Controller
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public MessagesController(IAppBLL bll)
         {
             _bll = bll;
         }
 
-        // GET: Messages
-//        [Route("/{chatRoomId?}")]
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Messages.AllAsync());
         }
-        
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var post = await _bll.Messages.FindAsync(id);
@@ -38,7 +52,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(post);
         }
 
-        // GET: Messages/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create(Guid chatRoomId)
         {
             var message = new Message()
@@ -48,16 +65,19 @@ namespace WebApp.Areas.Admin.Controllers
             return View(message);
         }
 
-        // POST: Messages/Create
-        // To protect from overmessageing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            BLL.App.DTO.Message message)
+            Message message)
         {
             ModelState.Clear();
-            
+
             message.ProfileId = User.UserId();
 
             if (TryValidateModel(message))
@@ -72,23 +92,28 @@ namespace WebApp.Areas.Admin.Controllers
             return View(message);
         }
 
-        // GET: Messages/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-
             var message = await _bll.Messages.FindAsync(id);
 
             if (message == null)
             {
                 return NotFound();
             }
-            
+
             return View(message);
         }
 
-        // POST: Messages/Edit/5
-        // To protect from overmessageing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Message message)
@@ -110,10 +135,13 @@ namespace WebApp.Areas.Admin.Controllers
             return View(message);
         }
 
-        // GET: Messages/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
-
             var message = await _bll.Messages.FindAsync(id);
 
             if (message == null)
@@ -124,7 +152,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(message);
         }
 
-        // POST: Messages/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

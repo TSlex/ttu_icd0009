@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -20,12 +23,20 @@ namespace WebApp.Areas.Admin.ApiControllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public CommentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/Comments
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
         {
@@ -33,6 +44,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // GET: api/Comments/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(Guid id)
         {
@@ -49,6 +65,12 @@ namespace WebApp.Areas.Admin.ApiControllers
         // PUT: api/Comments/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutComment(Guid id, Comment comment)
         {
@@ -81,6 +103,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         // POST: api/Comments
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
@@ -91,6 +118,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // DELETE: api/Comments/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Comment>> DeleteComment(Guid id)
         {

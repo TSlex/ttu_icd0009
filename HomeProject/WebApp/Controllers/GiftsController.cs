@@ -17,13 +17,20 @@ namespace WebApp.Controllers
             _bll = bll;
         }
 
-        // GET: Gifts
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Gifts.AllAsync());
         }
 
-        // GET: Gifts/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
 
@@ -37,7 +44,10 @@ namespace WebApp.Controllers
             return View(gift);
         }
 
-        // GET: Gifts/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
@@ -64,7 +74,10 @@ namespace WebApp.Controllers
             return View(gift);
         }
 
-        // GET: Gifts/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -102,7 +115,11 @@ namespace WebApp.Controllers
             return View(gift);
         }
 
-        // GET: Gifts/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -116,7 +133,11 @@ namespace WebApp.Controllers
             return View(gift);
         }
 
-        // POST: Gifts/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

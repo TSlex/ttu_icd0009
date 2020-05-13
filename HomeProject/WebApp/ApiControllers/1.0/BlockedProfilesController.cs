@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// User blacklist controller 
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -25,11 +28,19 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public BlockedProfilesController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// Get Profiles count that User follows
+        /// </summary>
+        /// <returns>Profiles count that User follows</returns>
         [HttpGet("count")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
@@ -39,6 +50,11 @@ namespace WebApp.ApiControllers._1._0
                 {Count = await _bll.BlockedProfiles.CountByIdAsync(User.UserId())});
         }
 
+        /// <summary>
+        /// Get Profiles that User follows
+        /// </summary>
+        /// <param name="pageNumber">Page number for page system</param>
+        /// <returns>Profiles that User follows</returns>
         [HttpGet("{pageNumber}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BlockedProfileDTO>))]

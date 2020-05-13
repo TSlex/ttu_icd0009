@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore.Internal;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Profiles
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("{area}/{id}/{action=Index}")]
@@ -20,18 +23,33 @@ namespace WebApp.Areas.Admin.Controllers
         private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="bll"></param>
+        /// <param name="signInManager"></param>
         public ProfilesController(UserManager<Profile> userManager, IAppBLL bll, SignInManager<Profile> signInManager)
         {
             _userManager = userManager;
             _bll = bll;
             _signInManager = signInManager;
         }
-
+        
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Profiles.AllAsync());
         }
-
+        
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -70,7 +88,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(profileModel);
         }
         
-        
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
             var profile = await _bll.Profiles.FindAsync(id);
@@ -101,6 +122,12 @@ namespace WebApp.Areas.Admin.Controllers
             });
         }
         
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="profile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProfileEdit profile)
@@ -175,11 +202,21 @@ namespace WebApp.Areas.Admin.Controllers
             return View(profile);
         }
         
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<IActionResult> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
         
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public Task<IActionResult> DeleteConfirmed(Guid id)

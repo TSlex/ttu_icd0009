@@ -8,23 +8,37 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// chat rooms
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class ChatRoomsController : Controller
     {
         private readonly IAppBLL _bll;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public ChatRoomsController(IAppBLL bll)
         {
             _bll = bll;
         }
 
-        // GET: ChatRooms
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.ChatRooms.AllAsync(User.UserId()));
         }
 
+        /// <summary>
+        /// Opens chat room with user (if not exist - creates)
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public async Task<IActionResult> OpenOrCreate(string username)
         {
             var chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
@@ -34,6 +48,11 @@ namespace WebApp.Areas.Admin.Controllers
             });
         }
         
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var chatRoom = await _bll.ChatRooms.FindAsync(id);
@@ -46,6 +65,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(chatRoom);
         }
         
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
             var chatRoom = await _bll.ChatRooms.FindAsync(id);
@@ -53,6 +76,12 @@ namespace WebApp.Areas.Admin.Controllers
             return View(chatRoom);
         }
         
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chatRoom"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ChatRoom chatRoom)
@@ -73,7 +102,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(chatRoom);
         }
 
-        // GET: ChatRooms/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
             var chatRoom = await _bll.ChatRooms.FindAsync(id);
@@ -86,7 +119,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(chatRoom);
         }
 
-        // POST: ChatRooms/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

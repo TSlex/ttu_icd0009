@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -20,12 +23,20 @@ namespace WebApp.Areas.Admin.ApiControllers
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public FollowersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: api/Followers
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Follower>>> GetWatchers()
         {
@@ -33,6 +44,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // GET: api/Followers/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Follower>> GetFollower(Guid id)
         {
@@ -49,6 +65,12 @@ namespace WebApp.Areas.Admin.ApiControllers
         // PUT: api/Followers/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="follower"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFollower(Guid id, Follower follower)
         {
@@ -81,6 +103,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         // POST: api/Followers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="follower"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Follower>> PostFollower(Follower follower)
         {
@@ -91,6 +118,11 @@ namespace WebApp.Areas.Admin.ApiControllers
         }
 
         // DELETE: api/Followers/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Follower>> DeleteFollower(Guid id)
         {

@@ -10,25 +10,40 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Gifts
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class GiftsController : Controller
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Controller
+        /// </summary>
+        /// <param name="bll"></param>
+        /// <param name="hostEnvironment"></param>
         public GiftsController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
             _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
 
-        // GET: Gifts
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Gifts.AllAsync());
         }
 
-        // GET: Gifts/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
 
@@ -42,15 +57,20 @@ namespace WebApp.Areas.Admin.Controllers
             return View(gift);
         }
 
-        // GET: Gifts/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Gifts/Create
-        // To protect from overgifting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="gift"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Gift gift)
@@ -85,7 +105,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(gift);
         }
 
-        // GET: Gifts/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -99,9 +122,12 @@ namespace WebApp.Areas.Admin.Controllers
             return View(gift);
         }
 
-        // POST: Gifts/Edit/5
-        // To protect from overgifting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="gift"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Gift gift)
@@ -138,7 +164,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(gift);
         }
 
-        // GET: Gifts/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -152,7 +182,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(gift);
         }
 
-        // POST: Gifts/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

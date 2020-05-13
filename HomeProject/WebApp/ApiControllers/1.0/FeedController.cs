@@ -17,6 +17,9 @@ using Profile = Domain.Profile;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Home page posts
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -25,12 +28,20 @@ namespace WebApp.ApiControllers._1._0
     public class FeedController : ControllerBase
     {
         private readonly IAppBLL _bll;
-
-        public FeedController(IAppBLL bll, SignInManager<Profile> signInManager)
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
+        public FeedController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("count")]
         [Produces("application/json")]
@@ -45,6 +56,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new CountResponseDTO() {Count = await _bll.Feeds.GetCount()});
         }
 
+        /// <summary>
+        /// Get posts for specific user subscriptions (including own posts) or all posts of all users
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{pageNumber}")]
         [Produces("application/json")]

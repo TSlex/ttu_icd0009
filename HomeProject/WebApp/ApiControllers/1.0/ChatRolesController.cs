@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Chat roles - Creator, Member, etc
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -19,6 +22,5 @@ namespace WebApp.ApiControllers._1._0
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatRolesController : ControllerBase
     {
-
     }
 }

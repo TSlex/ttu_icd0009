@@ -11,25 +11,40 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Images - avatar, post, gifts etc...
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class ImagesController : Controller
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
+        /// <param name="hostEnvironment"></param>
         public ImagesController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
             _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
 
-        // GET: Images
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.Images.AllAsync());
         }
 
-        // GET: Images/Details/5
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var image = await _bll.Images.FindAsync(id);
@@ -41,15 +56,21 @@ namespace WebApp.Areas.Admin.Controllers
             return View(image);
         }
 
-        // GET: Images/Create
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Images/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        /// <summary>
+        /// Load image, validate it, and save to lacolstorage
+        /// </summary>
+        /// <param name="imageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(104857600)] 
@@ -95,7 +116,10 @@ namespace WebApp.Areas.Admin.Controllers
             return View(imageModel);
         }
 
-        // GET: Images/Edit/5
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
             var image = await _bll.Images.FindAsync(id);
@@ -106,10 +130,13 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(image);
         }
-
-        // POST: Images/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        /// <summary>
+        /// Edit images, and save as new image
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="imageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(104857600)] 
@@ -162,7 +189,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(imageModel);
         }
 
-        // GET: Images/Delete/5
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
             var image = await _bll.Images.FindAsync(id);
@@ -174,7 +205,11 @@ namespace WebApp.Areas.Admin.Controllers
             return View(image);
         }
 
-        // POST: Images/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

@@ -15,6 +15,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Profile followers and followed
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -23,12 +26,21 @@ namespace WebApp.ApiControllers._1._0
     public class FollowersController : ControllerBase
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public FollowersController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/followed/count")]
         [Produces("application/json")]
@@ -47,6 +59,12 @@ namespace WebApp.ApiControllers._1._0
                 {Count = await _bll.Followers.CountByIdAsync(user.Id, true)});
         }
 
+        /// <summary>
+        /// Get users the profile is subscribed to
+        /// </summary>
+        /// <param name="username">Profile username</param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/followed/{pageNumber}")]
         [Produces("application/json")]
@@ -69,6 +87,11 @@ namespace WebApp.ApiControllers._1._0
                 }));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/followers/count")]
         [Produces("application/json")]
@@ -87,6 +110,12 @@ namespace WebApp.ApiControllers._1._0
                 {Count = await _bll.Followers.CountByIdAsync(user.Id, false)});
         }
 
+        /// <summary>
+        /// Get users who follow that profile
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/followers/{pageNumber}")]
         [Produces("application/json")]

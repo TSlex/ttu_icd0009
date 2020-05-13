@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 
 namespace WebApp.Areas.Admin.ApiControllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     [Area("Admin")]
     [ApiVersion("1.0")]
@@ -24,6 +27,13 @@ namespace WebApp.Areas.Admin.ApiControllers
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="configuration"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="userManager"></param>
         public ProfilesController(ILogger<ProfilesController> logger, IConfiguration configuration, SignInManager<Profile> signInManager, UserManager<Profile> userManager)
         {
             _logger = logger;
@@ -32,6 +42,11 @@ namespace WebApp.Areas.Admin.ApiControllers
             _userManager = userManager;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<string>> Login([FromBody] LoginDTO model)
         {
@@ -63,6 +78,11 @@ namespace WebApp.Areas.Admin.ApiControllers
             return StatusCode(403);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<string>> Register([FromBody] RegisterDTO model)
         {
@@ -86,15 +106,33 @@ namespace WebApp.Areas.Admin.ApiControllers
             return StatusCode(403);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
         public class LoginDTO
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Email { get; set; } = default!;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Password { get; set; } = default!;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class RegisterDTO
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string Email { get; set; } = default!;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Password { get; set; } = default!;
         }
 

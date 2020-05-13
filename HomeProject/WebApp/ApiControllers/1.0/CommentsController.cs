@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Comments
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -26,12 +29,22 @@ namespace WebApp.ApiControllers._1._0
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Comment, CommentGetDTO> _mapper;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public CommentsController(IAppBLL bll)
         {
             _bll = bll;
             _mapper = new DTOMapper<Comment, CommentGetDTO>();
         }
 
+        /// <summary>
+        /// Get Post Comments
+        /// </summary>
+        /// <param name="postId">Post id</param>
+        /// <param name="pageNumber">Number of page</param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{postId}/{pageNumber}")]
         [Produces("application/json")]
@@ -57,6 +70,11 @@ namespace WebApp.ApiControllers._1._0
                 }));
         }
 
+        /// <summary>
+        /// Creates a new post
+        /// </summary>
+        /// <param name="comment">Comment body</param>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -88,6 +106,12 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Comment is invalid"));
         }
         
+        /// <summary>
+        /// Updates a comment
+        /// </summary>
+        /// <param name="id">Comment id</param>
+        /// <param name="comment">Comment body</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -126,6 +150,11 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest(new ErrorResponseDTO("Comment is invalid"));
         }
 
+        /// <summary>
+        /// Deletes a comment
+        /// </summary>
+        /// <param name="id">Comments id</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentGetDTO))]

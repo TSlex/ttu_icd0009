@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0.Identity
 {
+    /// <summary>
+    /// Login, Register and Managing
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]/[action]")]
@@ -29,6 +32,14 @@ namespace WebApp.ApiControllers._1._0.Identity
         private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Controller
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="configuration"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="userManager"></param>
+        /// <param name="bll"></param>
         public IdentityController(ILogger<IdentityController> logger, IConfiguration configuration,
             SignInManager<Profile> signInManager, UserManager<Profile> userManager, IAppBLL bll)
         {
@@ -39,6 +50,11 @@ namespace WebApp.ApiControllers._1._0.Identity
             _bll = bll;
         }
 
+        /// <summary>
+        /// Login user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>JWT if succeed</returns>
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]
@@ -76,6 +92,11 @@ namespace WebApp.ApiControllers._1._0.Identity
             return NotFound(new ErrorResponseDTO("User not found!"));
         }
 
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]

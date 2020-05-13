@@ -16,6 +16,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Post favorites
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -25,11 +28,20 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public FavoritesController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// Get post favorites count
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{postId}/count")]
         [Produces("application/json")]
@@ -48,6 +60,12 @@ namespace WebApp.ApiControllers._1._0
                 {Count = await _bll.Favorites.CountByIdAsync(postId)});
         }
 
+        /// <summary>
+        /// Get post favorites count
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{postId}/{pageNumber}")]
         [Produces("application/json")]

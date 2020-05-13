@@ -11,6 +11,9 @@ using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <summary>
+    /// Ranks and profile ranks
+    /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -20,11 +23,20 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll">Application Bll</param>
         public RanksController(IAppBLL bll)
         {
             _bll = bll;
         }
 
+        /// <summary>
+        /// Get all user ranks
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/all")]
         [Produces("application/json")]
@@ -66,6 +78,11 @@ namespace WebApp.ApiControllers._1._0
             }));
         }
 
+        /// <summary>
+        /// Get user current rank
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("{username}/active")]
         [Produces("application/json")]
