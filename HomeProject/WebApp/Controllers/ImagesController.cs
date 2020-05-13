@@ -9,12 +9,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
-{
+{    
+    /// <summary>
+    /// Images - avatar, post, gifts etc...
+    /// </summary>
     public class ImagesController : Controller
     {
         private readonly IAppBLL _bll;
         private readonly IWebHostEnvironment _hostEnvironment;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
+        /// <param name="hostEnvironment"></param>
         public ImagesController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
@@ -22,6 +30,11 @@ namespace WebApp.Controllers
             _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
         
+        /// <summary>
+        /// Get image by it's id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("{controller}/{id?}")]
         public async Task<IActionResult> GetImage(Guid? id)
         {
@@ -74,9 +87,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Images/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Load image, validate it, and save to lacolstorage
+        /// </summary>
+        /// <param name="imageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(104857600)] 
@@ -137,9 +152,12 @@ namespace WebApp.Controllers
             return View(image);
         }
 
-        // POST: Images/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Edit images, and save as new image
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="imageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(104857600)] 

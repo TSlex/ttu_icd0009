@@ -6,11 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Chat members
+    /// </summary>
     [Authorize]
     public class ChatMembersController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public ChatMembersController(IAppBLL bll)
         {
             _bll = bll;
@@ -51,9 +58,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: ChatMembers/Create
-        // To protect from overchatMembering attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="chatMember"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -88,13 +97,15 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", chatMember.ProfileId);
             return View(chatMember);
         }
 
-        // POST: ChatMembers/Edit/5
-        // To protect from overchatMembering attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="chatMember"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
@@ -39,6 +40,9 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string[]? RecoveryCodes { get; set; }
 
+        /// <summary>
+        /// Message to notify user
+        /// </summary>
         [TempData]
         public string? StatusMessage { get; set; }
 

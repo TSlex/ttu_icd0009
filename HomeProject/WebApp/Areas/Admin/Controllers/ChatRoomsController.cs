@@ -16,6 +16,7 @@ namespace WebApp.Areas.Admin.Controllers
     public class ChatRoomsController : Controller
     {
         private readonly IAppBLL _bll;
+        
         /// <summary>
         /// Constructor
         /// </summary>

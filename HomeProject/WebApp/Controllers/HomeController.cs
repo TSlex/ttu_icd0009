@@ -13,13 +13,23 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Home
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="userManager"></param>
+        /// <param name="bll"></param>
+        /// <param name="signInManager"></param>
         public HomeController(ILogger<HomeController> logger, UserManager<Profile> userManager, IAppBLL bll,
             SignInManager<Profile> signInManager)
         {
@@ -28,7 +38,12 @@ namespace WebApp.Controllers
             _bll = bll;
             _signInManager = signInManager;
         }
-
+        
+        
+        /// <summary>
+        /// Get posts for specific user subscriptions (including own posts) or all posts of all users
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             if (_signInManager.IsSignedIn(User))
@@ -40,11 +55,21 @@ namespace WebApp.Controllers
             return View(await _bll.Feeds.GetCommonFeedAsync());
         }
 
+        /// <summary>
+        /// Get privacy page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Privacy()
         {
             return View();
         }
-
+        
+        /// <summary>
+        /// Search user by username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> SearchUser(string? username, string? returnUrl)
         {
@@ -69,6 +94,12 @@ namespace WebApp.Controllers
             return View("Index");
         }
 
+        /// <summary>
+        /// Set current culture to user selected one
+        /// </summary>
+        /// <param name="culture"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
@@ -83,6 +114,10 @@ namespace WebApp.Controllers
         }
 
 
+        /// <summary>
+        /// Some error occured
+        /// </summary>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

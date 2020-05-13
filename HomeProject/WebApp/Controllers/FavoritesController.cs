@@ -7,11 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Posts favorites
+    /// </summary>
     [Authorize]
     public class FavoritesController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public FavoritesController(IAppBLL bll)
         {
             _bll = bll;
@@ -52,9 +59,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Favorites/Create
-        // To protect from overfavoriteing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="favorite"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -95,9 +104,12 @@ namespace WebApp.Controllers
             return View(favorite);
         }
 
-        // POST: Favorites/Edit/5
-        // To protect from overfavoriteing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="favorite"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel

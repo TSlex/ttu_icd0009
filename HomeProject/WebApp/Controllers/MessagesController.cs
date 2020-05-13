@@ -8,12 +8,19 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {    
+    /// <summary>
+    /// Messages
+    /// </summary>
     [Authorize]
     [Route("{controller}/{chatRoomId}/{action=Index}/{id?}")]
     public class MessagesController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public MessagesController(IAppBLL bll)
         {
             _bll = bll;
@@ -23,7 +30,6 @@ namespace WebApp.Controllers
         /// Get all records
         /// </summary>
         /// <returns></returns>
-//        [Route("/{chatRoomId?}")]
         public async Task<IActionResult> Index(Guid chatRoomId)
         {
             return View(await _bll.Messages.AllAsync(chatRoomId));
@@ -35,7 +41,6 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public IActionResult Create(Guid chatRoomId)
         {
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id");
             var message = new Message()
             {
                 ChatRoomId = chatRoomId,
@@ -43,9 +48,11 @@ namespace WebApp.Controllers
             return View(message);
         }
 
-        // POST: Messages/Create
-        // To protect from overmessageing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -81,13 +88,15 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", message.ProfileId);
             return View(message);
         }
 
-        // POST: Messages/Edit/5
-        // To protect from overmessageing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Message message)

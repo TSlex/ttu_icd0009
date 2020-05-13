@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore.Internal;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Profiles
+    /// </summary>
     [Route("/{username}/{action=Index}")]
     public class ProfilesController : Controller
     {
@@ -17,6 +20,12 @@ namespace WebApp.Controllers
         private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="bll"></param>
+        /// <param name="signInManager"></param>
         public ProfilesController(UserManager<Profile> userManager, IAppBLL bll, SignInManager<Profile> signInManager)
         {
             _userManager = userManager;
@@ -24,6 +33,10 @@ namespace WebApp.Controllers
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
@@ -33,11 +46,11 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
-            var isUserBlocked = isAuthorized && 
-                                user.Id != User.UserId() && 
+
+            var isUserBlocked = isAuthorized &&
+                                user.Id != User.UserId() &&
                                 await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
-            
+
             if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
             {
                 _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
@@ -45,14 +58,16 @@ namespace WebApp.Controllers
                     ProfileId = user.Id,
                     RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
                 });
-                
+
                 await _bll.SaveChangesAsync();
-            };
+            }
+
+            ;
 
             if (isUserBlocked)
             {
                 var profileLimited = await _bll.Profiles.GetProfileLimited(user.Id);
-                
+
                 return View("IndexLimited", profileLimited);
             }
 
@@ -66,12 +81,17 @@ namespace WebApp.Controllers
             if (isAuthorized)
             {
                 profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
-                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;   
+                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;
             }
 
             return View(profileModel);
         }
 
+        /// <summary>
+        /// Subscribe to profile
+        /// </summary>
+        /// <param name="profileFullModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> FollowProfile(ProfileFull profileFullModel)
         {
@@ -95,6 +115,11 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
         }
 
+        /// <summary>
+        /// Unsubscribe from profile
+        /// </summary>
+        /// <param name="profileFullModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> UnfollowProfile(ProfileFull profileFullModel)
         {
@@ -110,14 +135,18 @@ namespace WebApp.Controllers
 
             if (subscription != null)
             {
-//                await _bll.Followers.RemoveSubscriptionAsync(userId, profile.Id);
                 _bll.Followers.Remove(subscription);
                 await _bll.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
         }
-
+        
+        /// <summary>
+        /// Add profile to black list
+        /// </summary>
+        /// <param name="profileFullModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> BlockProfile(ProfileFull profileFullModel)
         {
@@ -130,23 +159,27 @@ namespace WebApp.Controllers
             }
 
             var property = await _bll.BlockedProfiles.FindAsync(userId, profile.Id);
-            var subscription = await _bll.Followers.FindAsync(profile.Id,userId);
+            var subscription = await _bll.Followers.FindAsync(profile.Id, userId);
 
             if (property == null)
             {
                 if (subscription != null)
                 {
-//                    await _bll.Followers.RemoveSubscriptionAsync(profile.Id, userId);
                     _bll.Followers.Remove(subscription);
                 }
-//                _bll.BlockedProfiles.AddBlockProperty(userId, profile.Id);
+
                 _bll.BlockedProfiles.AddBlockProperty(userId, profile.Id);
                 await _bll.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
         }
-
+        
+        /// <summary>
+        /// Remove profile from black list
+        /// </summary>
+        /// <param name="profileFullModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> UnblockProfile(ProfileFull profileFullModel)
         {
@@ -157,12 +190,11 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
             }
-            
+
             var property = await _bll.BlockedProfiles.FindAsync(userId, profile.Id);
 
             if (property != null)
             {
-//                await _bll.BlockedProfiles.RemoveBlockPropertyAsync(userId, profile.Id);
                 _bll.BlockedProfiles.Remove(property);
                 await _bll.SaveChangesAsync();
             }

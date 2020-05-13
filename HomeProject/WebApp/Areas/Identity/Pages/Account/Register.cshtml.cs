@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Profile = Domain.Profile;
 
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]

@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp.Areas.Identity
 {
+    /// <inheritdoc />
     public class IdentityHostingStartup : IHostingStartup
     {
+        /// <inheritdoc />
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => { });

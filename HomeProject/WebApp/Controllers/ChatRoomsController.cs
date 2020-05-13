@@ -7,11 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// chat rooms
+    /// </summary>
     [Authorize]
     public class ChatRoomsController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public ChatRoomsController(IAppBLL bll)
         {
             _bll = bll;
@@ -25,7 +32,12 @@ namespace WebApp.Controllers
         {
             return View(await _bll.ChatRooms.AllAsync(User.UserId()));
         }
-
+        
+        /// <summary>
+        /// Opens chat room with user (if not exist - creates)
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public async Task<IActionResult> OpenOrCreate(string username)
         {
             var chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);

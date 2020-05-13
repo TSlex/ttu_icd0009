@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages
 {
     [AllowAnonymous]

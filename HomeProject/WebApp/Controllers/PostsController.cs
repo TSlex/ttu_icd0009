@@ -8,11 +8,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Posts
+    /// </summary>
     [Authorize]
     public class PostsController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public PostsController(IAppBLL bll)
         {
             _bll = bll;
@@ -31,6 +38,7 @@ namespace WebApp.Controllers
         /// Get record details
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
@@ -49,7 +57,13 @@ namespace WebApp.Controllers
 
             return View(post);
         }
-
+        
+        /// <summary>
+        /// Add profile to favorites
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToFavorite(Guid id, Post post)
@@ -76,6 +90,12 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Details), post);
         }
         
+        /// <summary>
+        /// Removes post from favorites
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveFromFavorite(Guid id, Post post)
@@ -114,9 +134,11 @@ namespace WebApp.Controllers
             return View(post);
         }
 
-        // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post)
@@ -159,9 +181,12 @@ namespace WebApp.Controllers
             return View(post);
         }
 
-        // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Post post)
@@ -196,6 +221,7 @@ namespace WebApp.Controllers
         /// Get delete confirmation page
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
@@ -215,6 +241,7 @@ namespace WebApp.Controllers
         /// Deletes a record
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

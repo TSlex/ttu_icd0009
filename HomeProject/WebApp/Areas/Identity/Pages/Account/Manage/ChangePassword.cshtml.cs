@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
@@ -28,6 +30,9 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 
         [BindProperty] public InputModel Input { get; set; } = default!;
 
+        /// <summary>
+        /// Message to notify user
+        /// </summary>
         [TempData]
         public string? StatusMessage { get; set; }
 

@@ -15,8 +15,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages.Account
 {
+    /// <inheritdoc />
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
@@ -25,6 +27,7 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
+        /// <inheritdoc />
         public ExternalLoginModel(
             SignInManager<Profile> signInManager,
             UserManager<Profile> userManager,
@@ -37,8 +40,10 @@ namespace WebApp.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
+        /// <summary>
+        /// Input model
+        /// </summary>
         [BindProperty] public InputModel Input { get; set; } = default!;
-
         public string LoginProvider { get; set; } = default!;
 
         public string? ReturnUrl { get; set; }

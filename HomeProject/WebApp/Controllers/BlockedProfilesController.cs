@@ -6,11 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// User black list
+    /// </summary>
     [Authorize]
     public class BlockedProfilesController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public BlockedProfilesController(IAppBLL bll)
         {
             _bll = bll;
@@ -52,9 +59,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: BlockedProfiles/Create
-        // To protect from overblockedProfileing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="blockedProfile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -89,13 +98,15 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-//            ViewData["ProfileId"] = new SelectList(_context.Profiles, "Id", "Id", blockedProfile.ProfileId);
             return View(blockedProfile);
         }
 
-        // POST: BlockedProfiles/Edit/5
-        // To protect from overblockedProfileing attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="blockedProfile"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,

@@ -14,13 +14,20 @@ using Image = BLL.App.DTO.Image;
 
 namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
+    /// <summary>
+    /// Model for avater changing
+    /// </summary>
     public class AvatarModel : PageModel
     {
+        /// <summary>
+        /// Status messge
+        /// </summary>
         [TempData] public string? StatusMessage { get; set; }
         
 //        [BindProperty] public Image ImageModel { get; set; } = default!;
         
         //=====================================================
+#pragma warning disable 1591
         [BindProperty][MaxLength(300)] public string? ImageUrl { get; set; }
         [BindProperty][MaxLength(300)] public string? OriginalImageUrl { get; set; }
         
@@ -31,13 +38,20 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         [BindProperty]public int PaddingRight { get; set; }
         [BindProperty]public int PaddingBottom { get; set; }
         [BindProperty]public int PaddingLeft { get; set; }
-        
+
         [BindProperty]public IFormFile? ImageFile { get; set; }
+#pragma warning restore 1591
         //=====================================================
 
         private readonly IAppBLL _bll;
         private readonly UserManager<Profile> _userManager;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
+        /// <param name="hostEnvironment"></param>
+        /// <param name="userManager"></param>
         public AvatarModel(IAppBLL bll, IWebHostEnvironment hostEnvironment, UserManager<Profile> userManager)
         {
             _bll = bll;
@@ -45,6 +59,10 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
         
+        /// <summary>
+        /// Get page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var imageModel = await _bll.Images.FindProfileAsync(User.UserId());
@@ -66,6 +84,10 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             return Page();
             }
         
+        /// <summary>
+        /// Update avatar image
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var imageModel = await _bll.Images.FindProfileAsync(User.UserId());

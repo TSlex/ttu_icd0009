@@ -7,11 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Gifts
+    /// </summary>
     [Authorize]
     public class GiftsController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Controller
+        /// </summary>
+        /// <param name="bll"></param>
         public GiftsController(IAppBLL bll)
         {
             _bll = bll;
@@ -53,9 +60,11 @@ namespace WebApp.Controllers
             return View();
         }
 
-        // POST: Gifts/Create
-        // To protect from overgifting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="gift"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Gift gift)
@@ -91,9 +100,12 @@ namespace WebApp.Controllers
             return View(gift);
         }
 
-        // POST: Gifts/Edit/5
-        // To protect from overgifting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="gift"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Gift gift)

@@ -39,7 +39,6 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]

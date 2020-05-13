@@ -9,21 +9,37 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Profile gifts
+    /// </summary>
     [Authorize]
     public class ProfileGiftsController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public ProfileGiftsController(IAppBLL bll)
         {
             _bll = bll;
         }
         
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _bll.ProfileGifts.AllAsync());
         }
         
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             var profileGift = await _bll.ProfileGifts.FindAsync(id);
@@ -36,6 +52,10 @@ namespace WebApp.Controllers
             return View(profileGift);
         }
         
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Create(string username, string? returnUrl)
         {
             var gifts = await _bll.Gifts.AllAsync();
@@ -47,6 +67,13 @@ namespace WebApp.Controllers
             });
         }
         
+        /// <summary>
+        /// Get record creating confirmation page
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="giftId"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         public async Task<IActionResult> CreateConfirm(string username, Guid giftId, string? returnUrl)
         {
             var gift = await _bll.Gifts.FindAsync(giftId);
@@ -61,6 +88,11 @@ namespace WebApp.Controllers
             });
         }
         
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="profileGift"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateConfirm(ProfileGift profileGift)
@@ -108,6 +140,10 @@ namespace WebApp.Controllers
             return View(profileGift);
         }
         
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -123,6 +159,12 @@ namespace WebApp.Controllers
             return View(profileGift);
         }
         
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="profileGift"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProfileGift profileGift)
@@ -144,6 +186,11 @@ namespace WebApp.Controllers
             return View(profileGift);
         }
         
+        /// <summary>
+        /// Get delete confirmation page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
 
@@ -157,6 +204,11 @@ namespace WebApp.Controllers
             return View(profileGift);
         }
         
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

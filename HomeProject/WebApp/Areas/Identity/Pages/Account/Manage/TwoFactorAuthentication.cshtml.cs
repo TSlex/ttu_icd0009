@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable 1591
 namespace WebApp.Areas.Identity.Pages.Account.Manage
 {
     public class TwoFactorAuthenticationModel : PageModel
@@ -37,6 +38,9 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 
         public bool IsMachineRemembered { get; set; }
 
+        /// <summary>
+        /// Message to notify user
+        /// </summary>
         [TempData]
         public string? StatusMessage { get; set; }
 

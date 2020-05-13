@@ -8,11 +8,18 @@ using Comment = BLL.App.DTO.Comment;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// comments
+    /// </summary>
     [Authorize]
     public class CommentsController : Controller
     {
         private readonly IAppBLL _bll;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
         public CommentsController(IAppBLL bll)
         {
             _bll = bll;
@@ -31,6 +38,7 @@ namespace WebApp.Controllers
         /// Get record details
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
@@ -62,9 +70,11 @@ namespace WebApp.Controllers
             return View(comment);
         }
 
-        // POST: Comments/Create
-        // To protect from overcommenting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Comment comment)
@@ -109,9 +119,12 @@ namespace WebApp.Controllers
             return View(comment);
         }
 
-        // POST: Comments/Edit/5
-        // To protect from overcommenting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
@@ -145,6 +158,7 @@ namespace WebApp.Controllers
         /// Get delete confirmation page
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
@@ -164,6 +178,7 @@ namespace WebApp.Controllers
         /// Deletes a record
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="comment"></param>
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
