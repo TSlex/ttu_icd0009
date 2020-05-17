@@ -49,7 +49,12 @@ namespace WebApp.Controllers
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
-            
+
+            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
 

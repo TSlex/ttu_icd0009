@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MaxExperience" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="MinExperience" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="NextRank" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="NextRankId" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PreviousRank" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PreviousRankId" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="ProfileRanks" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="RankCode" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="RankColor" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="RankDescription" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="RankIcon" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="RankTextColor" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="RankTitle" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
 </root>

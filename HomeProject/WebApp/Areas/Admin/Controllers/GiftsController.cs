@@ -46,7 +46,6 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-
             var gift = await _bll.Gifts.FindAsync(id);
 
             if (gift == null)
@@ -80,13 +79,13 @@ namespace WebApp.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, "Image should be specified");
                 return View(gift);
             }
-            
+
             ModelState.Clear();
 
             if (TryValidateModel(gift))
             {
                 gift.Id = Guid.NewGuid();
-                
+
                 var imageModel = gift.GiftImage;
                 imageModel.Id = Guid.NewGuid();
                 imageModel.ImageType = ImageType.Gift;
@@ -94,7 +93,7 @@ namespace WebApp.Areas.Admin.Controllers
 
                 gift.GiftImageId = imageModel.Id;
                 gift.GiftImage = null;
-                    
+
                 _bll.Gifts.Add(gift);
                 await _bll.Images.AddGiftAsync(gift.Id, imageModel);
                 await _bll.SaveChangesAsync();
@@ -111,14 +110,13 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-
             var gift = await _bll.Gifts.FindAsync(id);
 
             if (gift == null)
             {
                 return NotFound();
             }
-            
+
             return View(gift);
         }
 
@@ -142,22 +140,35 @@ namespace WebApp.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, "Image should be specified");
                 return View(gift);
             }
-            
+
             ModelState.Clear();
 
             var imageModel = gift.GiftImage;
-            imageModel.ImageType = ImageType.Gift;
-            imageModel.ImageFor = gift.Id;
+
+            if (gift.GiftImageId == null)
+            {
+                imageModel.Id = Guid.NewGuid();
+                imageModel.ImageType = ImageType.Gift;
+                imageModel.ImageFor = gift.Id;
+            }
 
             if (TryValidateModel(gift))
             {
-                gift.GiftImage = null;
-                gift.GiftImageId = imageModel.Id;
+                if (gift.GiftImageId == null)
+                {
+                    await _bll.Images.AddGiftAsync(gift.Id, imageModel);
+                }
+                else
+                {
+                    await _bll.Images.UpdateGiftAsync(gift.Id, imageModel);
+                }
 
-                await _bll.Images.UpdateGiftAsync(gift.Id, imageModel);
+                gift.GiftImageId = imageModel.Id;
+                gift.GiftImage = null;
+
                 await _bll.Gifts.UpdateAsync(gift);
                 await _bll.SaveChangesAsync();
-                
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -171,7 +182,6 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
-
             var gift = await _bll.Gifts.FindAsync(id);
 
             if (gift == null)

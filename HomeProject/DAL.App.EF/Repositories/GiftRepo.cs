@@ -22,12 +22,16 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbContext.Gifts
                 .Include(gift => gift.GiftImage)
+                .Include(gift => gift.GiftName)
+                .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync((gift => gift.Id == id)));
         }
 
         public async Task<Gift> FindByCodeAsync(string giftCode)
         {
             return Mapper.Map(await RepoDbContext.Gifts
+                .Include(gift => gift.GiftName)
+                .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync((gift => gift.GiftCode == giftCode)));
         }
 
@@ -38,11 +42,15 @@ namespace DAL.Repositories
 
             if (pageIndex < 0)
             {
-                return new Gift[]{};
+                return new Gift[] { };
             }
 
             return (await RepoDbContext.Gifts
-                .Skip(startIndex).Take(onPageCount).ToListAsync()).Select(gift => Mapper.Map(gift));
+                .Include(gift => gift.GiftName)
+                .ThenInclude(s => s!.Translations)
+                .Skip(startIndex).Take(onPageCount)
+                .ToListAsync())
+                .Select(gift => Mapper.Map(gift));
         }
 
         public async Task<int> GetCountAsync()

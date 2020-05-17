@@ -2,9 +2,11 @@ using System;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp.Controllers
 {
@@ -15,14 +17,16 @@ namespace WebApp.Controllers
     public class PostsController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="bll"></param>
-        public PostsController(IAppBLL bll)
+        /// <param name="hostEnvironment"></param>
+        public PostsController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
+            _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
 
         /// <summary>
@@ -143,13 +147,29 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post)
         {
+            if (post.PostImage!.ImageFile == null)
+            {
+                ModelState.AddModelError(string.Empty, "Image should be specified");
+                return View(post);
+            }
+            
             ModelState.Clear();
             post.ProfileId = User.UserId();
 
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
+                
+                var imageModel = post.PostImage;
+                imageModel.Id = Guid.NewGuid();
+                imageModel.ImageType = ImageType.Post;
+                imageModel.ImageFor = post.Id;
+
+                post.PostImageId = imageModel.Id;
+                post.PostImage = null;
+                
                 _bll.Posts.Add(post);
+                await _bll.Images.AddPostAsync(post.Id, imageModel);
                 await _bll.SaveChangesAsync();
 
                 if (post.ReturnUrl != null)
@@ -169,7 +189,7 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.GetForUpdateAsync(id);
+            var post = await _bll.Posts.FindAsync(id);
 
             if (!ValidateUserAccess(post))
             {
@@ -197,12 +217,38 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            
+            if (post.PostImage!.ImageFile == null && post.PostImageId == null)
+            {
+                ModelState.AddModelError(string.Empty, "Image should be specified");
+                return View(post);
+            }
 
             ModelState.Clear();
             post.ProfileId = User.UserId();
+            
+            var imageModel = post.PostImage;
+            if (post.PostImageId == null)
+            {
+                imageModel.Id = Guid.NewGuid();
+                imageModel.ImageType = ImageType.Post;
+                imageModel.ImageFor = post.Id;
+            }
 
             if (TryValidateModel(post))
             {
+                if (post.PostImageId == null)
+                {
+                    await _bll.Images.AddPostAsync(post.Id, imageModel);
+                }
+                else
+                {
+                    await _bll.Images.UpdatePostAsync(post.Id, imageModel);
+                }
+
+                post.PostImageId = imageModel.Id;
+                post.PostImage = null;
+                
                 await _bll.Posts.UpdateAsync(post);
                 await _bll.SaveChangesAsync();
                 
@@ -225,7 +271,7 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.GetForUpdateAsync(id);
+            var post = await _bll.Posts.FindAsync(id);
 
             if (!ValidateUserAccess(post))
             {

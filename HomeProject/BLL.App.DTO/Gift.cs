@@ -15,9 +15,9 @@ namespace BLL.App.DTO
         [MaxLength(100)]
         public string GiftCode { get; set; } = default!;
 
-        [Display(Name = nameof(GiftImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
+        /*[Display(Name = nameof(GiftImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         [MaxLength(300)]
-        public string? GiftImageUrl { get; set; }
+        public string? GiftImageUrl { get; set; }*/
 
         [Display(Name = nameof(GiftImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         public Guid? GiftImageId { get; set; }
@@ -27,9 +27,6 @@ namespace BLL.App.DTO
 
         [Display(Name = nameof(Price), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         public int Price { get; set; }
-
-        [Display(Name = nameof(GiftDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
-        public DateTime GiftDateTime { get; set; }
 
         [Display(Name = nameof(ProfileGifts), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         public ICollection<ProfileGift>? ProfileGifts { get; set; }

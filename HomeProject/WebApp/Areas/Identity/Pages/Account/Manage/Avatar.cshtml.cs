@@ -136,6 +136,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                     await _bll.Images.UpdateProfileAsync(User.UserId(), imageModel);
                     await _bll.SaveChangesAsync();
                 }
+
+                StatusMessage = "Avatar was updated successfully";
             }
 
             return RedirectToPage();

@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Gifts" xml:space="preserve">
-    <value />
+    <value>Gifts</value>
   </data>
   <data name="HeightPx" xml:space="preserve">
-    <value />
+    <value>Height (px)</value>
   </data>
   <data name="ImageFile" xml:space="preserve">
-    <value />
+    <value>Image file</value>
   </data>
   <data name="ImageFor" xml:space="preserve">
-    <value />
+    <value>For</value>
   </data>
   <data name="ImageType" xml:space="preserve">
-    <value />
+    <value>Type</value>
   </data>
   <data name="ImageUrl" xml:space="preserve">
-    <value />
+    <value>URL</value>
   </data>
   <data name="OriginalImageUrl" xml:space="preserve">
-    <value />
+    <value>Original URL</value>
   </data>
   <data name="PaddingBottom" xml:space="preserve">
-    <value />
+    <value>Padding bottom (px)</value>
   </data>
   <data name="PaddingLeft" xml:space="preserve">
-    <value />
+    <value>Padding left (px)</value>
   </data>
   <data name="PaddingRight" xml:space="preserve">
-    <value />
+    <value>Padding right (px)</value>
   </data>
   <data name="PaddingTop" xml:space="preserve">
-    <value />
+    <value>Padding top (px)</value>
   </data>
   <data name="Posts" xml:space="preserve">
-    <value />
+    <value>Posts</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value />
+    <value>Profiles</value>
   </data>
   <data name="WidthPx" xml:space="preserve">
-    <value />
+    <value>Width (px)</value>
   </data>
 </root>

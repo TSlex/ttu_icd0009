@@ -14,7 +14,7 @@
             <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
                 <div class="feed_post">
                     <div class="post_image">
-                        <img src="@post.PostImageUrl" alt="">
+                        <img src="/images/@post.PostImageId" alt="">
                     </div>
 
                     <div class="post_details_meta_section">

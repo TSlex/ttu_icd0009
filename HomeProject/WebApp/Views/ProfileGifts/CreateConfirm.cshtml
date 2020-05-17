@@ -10,8 +10,12 @@
     <div class="d-flex flex-column align-items-center">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <span>@Resourses.Views.Gifts.Gifts.SendGiftTitle <b>@Model.Profile.UserName</b></span>
-        <img src="@(Model.Gift!.GiftImageUrl)" alt="" height="200px" width="200px" class="m-3">
+        <span>
+            @Resourses.Views.Gifts.Gifts.SendGiftTitle <b>@Model.Profile.UserName</b>
+        </span>
+        <div class="profile_gift">
+            <img src="/images/@(Model.Gift!.GiftImageId)" alt="" style="height: 200px; width: 200px;" class="m-3">
+        </div>
         <span class="text-danger font-weight-bold">@Resourses.Views.Gifts.Gifts.Price: @Model.Price</span>
 
         <span>@Resourses.Views.Gifts.Gifts.AreSure</span>

@@ -7,21 +7,19 @@
 <h1 class="text-center">Edit</h1>
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
-    <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none; visibility: hidden" draggable="false">
-        <img
-            @{
-                if (Model.GiftImage?.OriginalImageUrl != null)
-                {
-                    @Html.Raw("src= \"~/localstorage/" + @Model.GiftImage.OriginalImageUrl + "\"")
-                }
-                else
-                {
-                    @Html.Raw("src=\"#\"")
-                }
-            }
-            alt="" class="card-img" id="render_image"/>
-    </div>
+    <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none;" draggable="false">
 
+        @{
+            if (Model.GiftImage?.OriginalImageUrl != null)
+            {
+                <img src="@Url.Content("~/localstorage" + @Model.GiftImage.OriginalImageUrl)" alt="" class="card-img" id="render_image"/>
+            }
+            else
+            {
+                <img src="#" alt="" class="card-img" id="render_image"/>
+            }
+        }
+    </div>
 
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
@@ -44,7 +42,7 @@
             </div>
 
             <div class="custom-file mb-3">
-                <input type="file" asp-for="GiftImage!.ImageFile" id="ImageFile" accept=".jpeg, .png, .jpg" class="custom-file-input">
+                <input type="file" asp-for="GiftImage!.ImageFile" id="ImageFile" accept=".jpeg, .png, .jpg" class="text-left custom-file-input">
                 <label class="custom-file-label" style="overflow: hidden"> </label>
             </div>
 
@@ -60,6 +58,7 @@
             <input type="hidden" asp-for="GiftImage!.ImageType"/>
 
             <input type="hidden" asp-for="Id"/>
+            <input type="hidden" asp-for="GiftImageId"/>
             <input type="hidden" asp-for="GiftImage!.Id"/>
 
             <div class="form-group">
@@ -75,9 +74,10 @@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script type="text/javascript" src="~/js/images/image-miniature.js"></script>
     <script>
-                    if ($('#render_image').src === "#"){
-                                        $('#image-miniature').css('visibility', 'hidden');
-                                    }
+                    
+                    if ($('#render_image').attr('src') === "#"){
+                        $('#image-miniature').css('visibility', 'hidden');
+                    }
                    
                     
                     $('#ImageFile').on('change',function(){

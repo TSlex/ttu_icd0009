@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Comments" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="Favorites" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="IsUserFavorite" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostCommentsCount" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostDescription" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="PostFavoritesCount" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostImage" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostImageId" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostImageUrl" xml:space="preserve">
     <value>Image URL</value> 
   </data>
   <data name="PostPublicationDateTime" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostTitle" xml:space="preserve">
     <value>Title</value> 
   </data>
   <data name="Profile" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="ProfileId" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
 </root>

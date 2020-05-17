@@ -78,7 +78,7 @@
     <value>Eesti</value>
   </data>
   <data name="SearchBarPlaceHolder" xml:space="preserve">
-    <value>kasutaja nimi</value>
+    <value>kasutajanimi</value>
   </data>
   <data name="ErrorDescription" xml:space="preserve">
     <value>Teie päringu töötlemisel ilmnes viga.</value>

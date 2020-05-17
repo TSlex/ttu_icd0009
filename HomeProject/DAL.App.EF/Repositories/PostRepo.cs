@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
+using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
 using DAL.Helpers;
 using DAL.Mappers;
@@ -15,15 +16,19 @@ namespace DAL.Repositories
 {
     public class PostRepo : BaseRepo<Domain.Post, Post, ApplicationDbContext>, IPostRepo
     {
+        private readonly BaseDALMapper<Image, DAL.App.DTO.Image> _imageMapper;
+        
         public PostRepo(ApplicationDbContext dbContext) :
             base(dbContext, new PostMapper())
         {
+            _imageMapper = new BaseDALMapper<Image, DAL.App.DTO.Image>();
         }
 
         public override async Task<IEnumerable<Post>> AllAsync()
         {
             return (await RepoDbContext.Posts
                 .Include(post => post.Profile)
+                .Include(p => p.PostImage)
                 .ToListAsync()).Select(post => Mapper.Map(post));
         }
 
@@ -48,6 +53,7 @@ namespace DAL.Repositories
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
+                    PostImage = _imageMapper.Map(post.PostImage),
                     PostPublicationDateTime = post.PostPublicationDateTime,
                     PostImageUrl = post.PostImageUrl,
                     PostCommentsCount = post.Comments!.Count,

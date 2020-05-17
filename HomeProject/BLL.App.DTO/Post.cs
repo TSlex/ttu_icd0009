@@ -11,9 +11,9 @@ namespace BLL.App.DTO
         [MaxLength(100)]
         public string PostTitle { get; set; } = default!;
 
-        [Display(Name = nameof(PostImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
+        /*[Display(Name = nameof(PostImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         [MaxLength(300)]
-        public string? PostImageUrl { get; set; }
+        public string? PostImageUrl { get; set; }*/
 
         [Display(Name = nameof(PostImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         public Guid? PostImageId { get; set; }

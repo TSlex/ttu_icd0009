@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Post" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostDescription" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostId" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostImageUrl" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="PostTitle" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="ProfileId" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
 </root>

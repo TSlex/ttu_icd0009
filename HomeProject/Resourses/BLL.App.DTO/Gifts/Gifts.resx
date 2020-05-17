@@ -118,30 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Count" xml:space="preserve">
-    <value />
+    <value>Count</value> 
   </data>
   <data name="GiftCode" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GiftDateTime" xml:space="preserve">
-    <value />
+    <value>Code</value> 
   </data>
   <data name="GiftImage" xml:space="preserve">
-    <value />
+    <value>Image</value> 
   </data>
   <data name="GiftImageId" xml:space="preserve">
-    <value />
+    <value>Image id</value> 
   </data>
   <data name="GiftImageUrl" xml:space="preserve">
-    <value />
+    <value>Image URL</value>
   </data>
   <data name="GiftName" xml:space="preserve">
-    <value />
+    <value>Name</value> 
   </data>
   <data name="Price" xml:space="preserve">
-    <value />
+    <value>Price</value> 
   </data>
   <data name="ProfileGifts" xml:space="preserve">
-    <value />
+    <value>Profile Gifts</value> 
   </data>
 </root>
