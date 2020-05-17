@@ -7,7 +7,7 @@ namespace Contracts.DAL.Base
     { 
     }
 
-    public interface IDomainEntityBaseMetadata<TKey> : IDomainEntityBase<TKey>, IDomainEntityMetadata
+    public interface IDomainEntityBaseMetadata<TKey> : IDomainEntityBase<TKey>, IDomainEntityMetadata, ISoftUpdateEntity<TKey>
         where TKey : struct, IComparable
     {
     }
