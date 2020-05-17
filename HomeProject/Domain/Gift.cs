@@ -6,7 +6,7 @@ using Domain.Translation;
 
 namespace Domain
 {
-    public class Gift: DomainEntityBaseMetadata
+    public class Gift: DomainEntityBaseMetaSoftUpdateDelete
     {
 //        [MaxLength(100)] public string GiftName { get; set; } = default!;
 

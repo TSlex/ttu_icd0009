@@ -79,5 +79,24 @@ namespace DAL.Repositories
                            )
                        ))) != null;
         }
+
+        public override ChatRoom Remove(ChatRoom entity)
+        {
+            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoomId == entity.Id).ToList();
+
+            foreach (var chatMember in members)
+            {
+                RepoDbContext.ChatMembers.Remove(chatMember);
+            }
+            
+            var messages = RepoDbContext.Messages.Where(message => message.ChatRoomId == entity.Id).ToList();
+
+            foreach (var message in messages)
+            {
+                RepoDbContext.Messages.Remove(message);
+            }
+            
+            return base.Remove(entity);
+        }
     }
 }

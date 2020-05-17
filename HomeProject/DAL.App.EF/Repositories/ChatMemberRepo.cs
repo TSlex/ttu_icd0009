@@ -46,5 +46,12 @@ namespace DAL.Repositories
                     .ToListAsync())
                 .Select(member => Mapper.Map(member));
         }
+
+        public override ChatMember Remove(ChatMember entity)
+        {
+            entity.ChatRoleId = RepoDbContext.ChatRoles.First(role => role.RoleTitle == "Left")!.Id;
+                
+            return base.Remove(entity);
+        }
     }
 }

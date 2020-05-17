@@ -47,7 +47,7 @@ namespace Domain
         [InverseProperty(nameof(BlockedProfile.BProfile))]
         public ICollection<BlockedProfile>? BlockedByProfiles { get; set; }
 
-        //Black list
+        //Followers list
         [InverseProperty(nameof(Follower.Profile))]
         public ICollection<Follower>? Followers { get; set; } //profile followers list
 

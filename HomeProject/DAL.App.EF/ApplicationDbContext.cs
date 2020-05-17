@@ -90,9 +90,21 @@ namespace DAL
                 {
                     entityWithMetaData.CreatedBy = _userNameProvider.CurrentUserName;
                 }
-                
+
                 entityWithMetaData.ChangedAt = entityWithMetaData.CreatedAt;
                 entityWithMetaData.ChangedBy = entityWithMetaData.CreatedBy;
+            }
+            
+            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+            
+            foreach (var entityEntry in markedAsDeleted)
+            {
+                if (!(entityEntry.Entity is ISoftDeleteEntity softDeleteEntity)) continue;
+
+                softDeleteEntity.DeletedAt = DateTime.Now;
+                softDeleteEntity.DeletedBy = _userNameProvider.CurrentUserName;
+
+                entityEntry.State = EntityState.Modified;
             }
 
             var markedAsModified = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
@@ -109,57 +121,7 @@ namespace DAL
                 entityEntry.Property(nameof(entityWithMetaData.CreatedAt)).IsModified = false;
                 entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
             }
-
-//            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
-
-            /*foreach (var entityEntry in markedAsDeleted)
-            {
-                // check for IDomainEntityMetadata
-                if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
-
-                entityWithMetaData.DeletedAt = DateTime.Now;
-                entityWithMetaData.DeletedBy = _userNameProvider.CurrentUserName;
-
-                entityEntry.Property(nameof(entityWithMetaData.CreatedAt)).IsModified = false;
-                entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
-                entityEntry.Property(nameof(entityWithMetaData.ChangedAt)).IsModified = false;
-                entityEntry.Property(nameof(entityWithMetaData.ChangedBy)).IsModified = false;
-
-                entityEntry.State = EntityState.Modified;
-
-//                SoftCascadeDelete(entityEntry);
-            }*/
         }
-
-//        private void SoftCascadeDelete(EntityEntry entry)
-//        {
-//            if (entry.Entity is IDomainEntityMetadata meta)
-//            {
-//                meta.DeletedAt = DateTime.Now;
-//                meta.DeletedBy = _userNameProvider.CurrentUserName;
-//
-//                entry.Property(nameof(meta.CreatedAt)).IsModified = false;
-//                entry.Property(nameof(meta.CreatedBy)).IsModified = false;
-//                entry.Property(nameof(meta.ChangedAt)).IsModified = false;
-//                entry.Property(nameof(meta.ChangedBy)).IsModified = false;
-//
-//                entry.State = EntityState.Modified;
-//
-//                foreach (var navigationEntry in entry.Navigations.Where(n => !n.Metadata.IsDependentToPrincipal()))
-//                {
-//                    if (navigationEntry is CollectionEntry collectionEntry && collectionEntry.CurrentValue != null)
-//                    {
-//                        foreach (var dependentEntry in collectionEntry.CurrentValue)
-//                        {
-//                            if (dependentEntry != null)
-//                            {
-//                                SoftCascadeDelete(Entry(dependentEntry));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
         public override int SaveChanges()
         {

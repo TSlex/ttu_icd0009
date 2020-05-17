@@ -258,5 +258,31 @@ namespace DAL.Repositories
                                                                 post.Favorites.Select(favorite => favorite.ProfileId)
                                                                     .Contains(userId))) != null;
         }
+
+        public override Post Remove(Post entity)
+        {
+            var comments = RepoDbContext.Comments.Where(comment => comment.PostId == entity.Id).ToList();
+
+            foreach (var comment in comments)
+            {
+                RepoDbContext.Comments.Remove(comment);
+            }
+
+            var favorites = RepoDbContext.Favorites.Where(favorite => favorite.PostId == entity.Id).ToList();
+
+            foreach (var favorite in favorites)
+            {
+                RepoDbContext.Favorites.Remove(favorite);
+            }
+            
+            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.PostImageId);
+
+            if (imageRecord != null)
+            {
+                RepoDbContext.Images.Remove(imageRecord);
+            }
+
+            return base.Remove(entity);
+        }
     }
 }

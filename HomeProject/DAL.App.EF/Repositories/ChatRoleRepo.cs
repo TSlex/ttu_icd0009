@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
 using DAL.App.DTO;
@@ -20,6 +21,23 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbContext.ChatRoles
                     .FirstOrDefaultAsync((role => role.RoleTitle == chatRoleTitle)));
+        }
+
+        public override Task<ChatRole> UpdateAsync(ChatRole entity)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override ChatRole Remove(ChatRole entity)
+        {
+            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoleId == entity.Id).ToList();
+
+            foreach (var chatMember in members)
+            {
+                RepoDbContext.ChatMembers.Remove(chatMember);
+            }
+            
+            return base.Remove(entity);
         }
     }
 }

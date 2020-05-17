@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Domain
 {
-    public class Rank: DomainEntityBaseMetadata
+    public class Rank: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string RankCode { get; set; } = default!;
         

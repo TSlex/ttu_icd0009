@@ -91,7 +91,7 @@ namespace DAL.Base.EF.Repositories
 
         public virtual TDALEntity Remove(Guid id)
         {
-            return Mapper.Map(RepoDbSet.Remove(RepoDbSet.Find(id)).Entity);
+            return Remove(Mapper.Map(RepoDbSet.Find(id)));
         }
 
         public virtual async Task<int> CountAsync()

@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ChatRoom: DomainEntityBaseMetadata
+    public class ChatRoom: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string ChatRoomTitle { get; set; } = default!;
         

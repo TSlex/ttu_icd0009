@@ -6,7 +6,7 @@ using Domain.Enums;
 
 namespace Domain
 {
-    public class Image: DomainEntityBaseMetadata
+    public class Image: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(300)] public string ImageUrl { get; set; } = default!;
         [MaxLength(300)] public string OriginalImageUrl { get; set; } = default!;

@@ -182,16 +182,83 @@ namespace DAL.Repositories
 
         public override Task<Profile> UpdateAsync(Profile entity)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
+        }
 
-            /*var stamp = (await _userManager.FindByIdAsync(entity.Id.ToString())).SecurityStamp;
-            var mappedEntity = Mapper.MapReverse(entity);
+        public override Profile Remove(Profile entity)
+        {
+            var blockedProfiles = RepoDbContext.BlockedProfiles.Where(profile => profile.ProfileId == entity.Id).ToList();
             
-            mappedEntity.SecurityStamp = stamp;
+            foreach (var blockedProfile in blockedProfiles)
+            {
+                RepoDbContext.BlockedProfiles.Remove(blockedProfile);
+            }
             
-            var result = await _userManager.UpdateAsync(mappedEntity);
+            var followers = RepoDbContext.Followers.Where(follower =>
+                follower.FollowerProfileId == entity.Id || follower.ProfileId == entity.Id);
+            
+            foreach (var follower in followers)
+            {
+                RepoDbContext.Followers.Remove(follower);
+            }
+            
+            var members = RepoDbContext.ChatMembers.Where(member => member.ProfileId == entity.Id).ToList();
 
-            return result.Succeeded ? entity : null;*/
+            foreach (var chatMember in members)
+            {
+                RepoDbContext.ChatMembers.Remove(chatMember);
+            }
+            
+            var messages = RepoDbContext.Messages.Where(message => message.ProfileId == entity.Id).ToList();
+
+            foreach (var message in messages)
+            {
+                RepoDbContext.Messages.Remove(message);
+            }
+            
+            var favorites = RepoDbContext.Favorites.Where(favorite => favorite.ProfileId == entity.Id).ToList();
+
+            foreach (var favorite in favorites)
+            {
+                RepoDbContext.Favorites.Remove(favorite);
+            }
+
+            var posts = RepoDbContext.Posts.Where(post => post.ProfileId == entity.Id).ToList();
+            
+            foreach (var post in posts)
+            {
+                RepoDbContext.Posts.Remove(post);
+            }
+            
+            var comments = RepoDbContext.Comments.Where(comment => comment.ProfileId == entity.Id).ToList();
+
+            foreach (var comment in comments)
+            {
+                RepoDbContext.Comments.Remove(comment);
+            }
+            
+            var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.ProfileId == entity.Id).ToList();
+
+            foreach (var rank in ranks)
+            {
+                RepoDbContext.ProfileRanks.Remove(rank);
+            }
+            
+            var profileGifts = RepoDbContext.ProfileGifts.Where(gift => gift.ProfileId == entity.Id);
+
+            foreach (var profileGift in profileGifts)
+            {
+                RepoDbContext.ProfileGifts.Remove(profileGift);
+            }
+            
+            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.ProfileAvatarId);
+
+            if (imageRecord != null)
+            {
+                RepoDbContext.Images.Remove(imageRecord);
+            }
+            
+            return base.Remove(entity);
         }
     }
 }

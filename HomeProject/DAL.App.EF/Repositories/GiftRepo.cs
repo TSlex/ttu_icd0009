@@ -57,5 +57,24 @@ namespace DAL.Repositories
         {
             return await RepoDbContext.Gifts.CountAsync();
         }
+
+        public override Gift Remove(Gift entity)
+        {
+            var profileGifts = RepoDbContext.ProfileGifts.Where(gift => gift.GiftId == entity.Id);
+
+            foreach (var profileGift in profileGifts)
+            {
+                RepoDbContext.ProfileGifts.Remove(profileGift);
+            }
+
+            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.GiftImageId);
+
+            if (imageRecord != null)
+            {
+                RepoDbContext.Images.Remove(imageRecord);
+            }
+            
+            return base.Remove(entity);
+        }
     }
 }

@@ -25,5 +25,17 @@ namespace DAL.Repositories
                 .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync(rank => rank.RankCode == code));
         }
+
+        public override Rank Remove(Rank entity)
+        {
+            var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.RankId == entity.Id).ToList();
+
+            foreach (var rank in ranks)
+            {
+                RepoDbContext.ProfileRanks.Remove(rank);
+            }
+            
+            return base.Remove(entity);
+        }
     }
 }

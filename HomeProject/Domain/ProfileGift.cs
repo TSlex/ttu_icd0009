@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ProfileGift: DomainEntityBaseMetadata
+    public class ProfileGift: DomainEntityBaseMetaSoftDelete
     {
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Message: DomainEntityBaseMetadata
+    public class Message: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(3000)] public string MessageValue { get; set; } = default!;
         
