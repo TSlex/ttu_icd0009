@@ -57,7 +57,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 Username = userName,
                 ProfileFullName = user.ProfileFullName,
                 ProfileWorkPlace = user.ProfileWorkPlace,
-                ProfileAvatarUrl = user.ProfileAvatarUrl,
+//                ProfileAvatarUrl = user.ProfileAvatarUrl,
                 ProfileAbout = user.ProfileAbout,
                 PhoneNumber = phoneNumber,
                 ProfileGender = user.ProfileGender,
@@ -127,7 +127,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             }
             
             //setup other
-            user.ProfileAvatarUrl = Input.ProfileAvatarUrl;
+//            user.ProfileAvatarUrl = Input.ProfileAvatarUrl;
             user.ProfileFullName = Input.ProfileFullName;
             user.ProfileWorkPlace = Input.ProfileWorkPlace;
             user.ProfileAbout = Input.ProfileAbout;

@@ -64,7 +64,7 @@ namespace WebApp.ApiControllers._1._0
                 new BlockedProfileDTO
                 {
                     UserName = favorite.BProfile!.UserName,
-                    ProfileAvatarUrl = favorite.BProfile!.ProfileAvatarUrl
+//                    ProfileAvatarUrl = favorite.BProfile!.ProfileAvatarUrl
                 }));
         }
     }

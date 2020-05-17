@@ -84,7 +84,7 @@ namespace WebApp.ApiControllers._1._0
                 new FavoriteProfileDTO
                 {
                     UserName = favorite.Profile!.UserName,
-                    ProfileAvatarUrl = favorite.Profile!.ProfileAvatarUrl
+//                    ProfileAvatarUrl = favorite.Profile!.ProfileAvatarUrl
                 }));
         }
     }

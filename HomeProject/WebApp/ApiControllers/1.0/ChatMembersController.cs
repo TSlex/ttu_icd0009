@@ -67,7 +67,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 Id = member.Id,
                 UserName = member.Profile!.UserName,
-                ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl,
+//                ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl,
                 ChatRole = member.ChatRole!.RoleTitle
             }));
         }

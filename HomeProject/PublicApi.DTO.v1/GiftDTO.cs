@@ -1,4 +1,5 @@
 ﻿using System;
+using BLL.App.DTO;
 
 namespace PublicApi.DTO.v1
 {
@@ -11,7 +12,9 @@ namespace PublicApi.DTO.v1
         public string GiftCode { get; set; } = default!;
 
         public Guid? GiftImageId { get; set; }
-        public string? GiftImageUrl { get; set; }
+        public ImageDTO? GiftImage { get; set; }
+        
+//        public string? GiftImageUrl { get; set; }
         
         public int Price { get; set; }
         

@@ -54,11 +54,11 @@
                 <input asp-for="ProfileAbout" class="form-control"/>
                 <span asp-validation-for="ProfileAbout" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="ProfileAvatarUrl" class="control-label"></label>
                 <input asp-for="ProfileAvatarUrl" class="form-control"/>
                 <span asp-validation-for="ProfileAvatarUrl" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="ProfileGender" class="control-label">Пол</label>
                 <select asp-for="ProfileGender" id="Input_ProfileGender" asp-items="Html.GetEnumSelectList<ProfileGender>()" class="form-control"></select>

@@ -9,7 +9,7 @@ namespace DAL.App.DTO
     {
         public string GiftName { get; set; } = default!;
         public string GiftCode { get; set; } = default!;
-        public string? GiftImageUrl { get; set; }
+//        public string? GiftImageUrl { get; set; }
         
         public int Price { get; set; }
         

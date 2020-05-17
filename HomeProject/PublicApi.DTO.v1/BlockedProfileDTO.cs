@@ -7,6 +7,7 @@ namespace PublicApi.DTO.v1
     public class BlockedProfileDTO
     {
         public string UserName { get; set; } = default!;
-        public string? ProfileAvatarUrl { get; set; }
+//        public string? ProfileAvatarUrl { get; set; }
+        public Guid? ProfileAvatarId { get; set; }
     }
 }

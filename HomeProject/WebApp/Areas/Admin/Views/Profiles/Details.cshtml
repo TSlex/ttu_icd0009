@@ -21,8 +21,7 @@
     <div class="profile_section">
         <div class="col-3 d-flex justify-content-center">
             <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
-                <img alt="" width="150px" height="150px"
-                     src=@Model.ProfileAvatarUrl>
+                @*<img alt="" width="150px" height="150px" src=@Model.ProfileAvatarUrl>*@
             </div>
         </div>
         <div class="profile_description col-9">
@@ -126,7 +125,7 @@
             foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
             {
                 <div class="profile_gift">
-                    <img src="@(gift.Gift!.GiftImageUrl)" alt="..." height="150px" width="150px">
+                    @*<img src="@(gift.Gift!.GiftImageUrl)" alt="..." height="150px" width="150px">*@
                 </div>
             }
 
@@ -147,7 +146,7 @@
             {
                 <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
                     <div class="post_item card">
-                        <img alt="" src="@post.PostImageUrl" class="post_image card-img">
+                        @*<img alt="" src="@post.PostImageUrl" class="post_image card-img">*@
                     </div>
                 </a>
             }

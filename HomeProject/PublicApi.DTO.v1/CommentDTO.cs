@@ -9,7 +9,8 @@ namespace PublicApi.DTO.v1
         public Guid Id { get; set; } = default!;
         
         public string UserName { get; set; } = default!;
-        public string? ProfileAvatarUrl { get; set; }
+//        public string? ProfileAvatarUrl { get; set; }
+        public Guid? ProfileAvatarId { get; set; }
 
         public string CommentValue { get; set; } = default!;
         public DateTime CommentDateTime { get; set; }

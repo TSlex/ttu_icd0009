@@ -56,7 +56,7 @@ namespace WebApp.Areas.Admin.ApiControllers
                 ProfileId = post.ProfileId,
                 PostCommentsCount = post.PostCommentsCount,
                 PostFavoritesCount = post.PostFavoritesCount,
-                PostImageUrl = post.PostImageUrl,
+//                PostImageUrl = post.PostImageUrl,
                 PostPublicationDateTime = post.PostPublicationDateTime
             }).ToListAsync();
         }

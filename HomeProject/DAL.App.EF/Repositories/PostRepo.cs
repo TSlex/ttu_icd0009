@@ -55,7 +55,7 @@ namespace DAL.Repositories
                     PostImageId = post.PostImageId,
                     PostImage = _imageMapper.Map(post.PostImage),
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostImageUrl = post.PostImageUrl,
+//                    PostImageUrl = post.PostImageUrl,
                     PostCommentsCount = post.Comments!.Count,
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = requesterId != null && post.Favorites.Select(favorite => favorite.ProfileId)
@@ -81,7 +81,7 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostImageUrl = post.PostImageUrl,
+//                    PostImageUrl = post.PostImageUrl,
                     PostCommentsCount = post.Comments!.Count,
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
@@ -104,7 +104,7 @@ namespace DAL.Repositories
                         PostDescription = post.PostDescription,
                         PostImageId = post.PostImageId,
                         PostPublicationDateTime = post.PostPublicationDateTime,
-                        PostImageUrl = post.PostImageUrl,
+//                        PostImageUrl = post.PostImageUrl,
                         PostCommentsCount = post.Comments!.Count,
                         PostFavoritesCount = post.Favorites!.Count,
                         Profile = new Profile()
@@ -143,7 +143,7 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostImageUrl = post.PostImageUrl,
+//                    PostImageUrl = post.PostImageUrl,
                     PostCommentsCount = post.Comments!.Count,
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = requesterId != null && post.Favorites.Select(favorite => favorite.ProfileId)
@@ -205,7 +205,7 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostImageUrl = post.PostImageUrl,
+//                    PostImageUrl = post.PostImageUrl,
                     PostCommentsCount = post.Comments!.Count,
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
@@ -239,7 +239,7 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostImageUrl = post.PostImageUrl,
+//                    PostImageUrl = post.PostImageUrl,
                     PostCommentsCount = post.Comments!.Count,
                     PostFavoritesCount = post.Favorites!.Count,
                     Profile = new Profile()

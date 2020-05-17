@@ -112,7 +112,7 @@ namespace WebApp.Areas.Admin.Controllers
                 ProfileWorkPlace = profile.ProfileWorkPlace,
                 Experience = profile.Experience,
                 ProfileAbout = profile.ProfileAbout,
-                ProfileAvatarUrl = profile.ProfileAvatarUrl,
+//                ProfileAvatarUrl = profile.ProfileAvatarUrl,
                 ProfileGender = profile.ProfileGender,
                 ProfileGenderOwn = profile.ProfileGenderOwn,
                 ProfileStatus = profile.ProfileStatus,
@@ -186,7 +186,7 @@ namespace WebApp.Areas.Admin.Controllers
                 record.ProfileWorkPlace = profile.ProfileWorkPlace;
                 record.Experience = profile.Experience;
                 record.ProfileAbout = profile.ProfileAbout;
-                record.ProfileAvatarUrl = profile.ProfileAvatarUrl;
+//                record.ProfileAvatarUrl = profile.ProfileAvatarUrl;
                 record.ProfileGender = profile.ProfileGender;
                 record.ProfileGenderOwn = profile.ProfileGenderOwn;
                 record.ProfileStatus = profile.ProfileStatus;

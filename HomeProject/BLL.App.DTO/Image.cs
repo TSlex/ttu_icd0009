@@ -5,6 +5,7 @@ using DAL.Base;
 using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace BLL.App.DTO
 {
@@ -47,12 +48,15 @@ namespace BLL.App.DTO
         [Display(Name = nameof(ImageFor), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         public Guid? ImageFor { get; set; }
 
+        [JsonIgnore]
         [Display(Name = nameof(Profiles), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         public ICollection<Profile>? Profiles { get; set; }
-
+        
+        [JsonIgnore]
         [Display(Name = nameof(Posts), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         public ICollection<Post>? Posts { get; set; }
-
+        
+        [JsonIgnore]
         [Display(Name = nameof(Gifts), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         public ICollection<Gift>? Gifts { get; set; }
     }

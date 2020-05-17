@@ -8,7 +8,8 @@ namespace PublicApi.DTO.v1
     {
         public Guid Id { get; set; } = default!;
         public string UserName { get; set; } = default!;
-        public string? ProfileAvatarUrl { get; set; }
+//        public string? ProfileAvatarUrl { get; set; }
+        public Guid? ProfileAvatarId { get; set; }
         public string ChatRole { get; set; } = default!;
     }
 }

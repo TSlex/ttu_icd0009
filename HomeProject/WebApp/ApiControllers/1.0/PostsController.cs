@@ -184,7 +184,7 @@ namespace WebApp.ApiControllers._1._0
                     ProfileId = User.UserId(),
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
-                    PostImageUrl = post.PostImageUrl
+//                    PostImageUrl = post.PostImageUrl
                 });
 
                 await _bll.SaveChangesAsync();
@@ -340,7 +340,7 @@ namespace WebApp.ApiControllers._1._0
                 PostCommentsCount = inObj.PostCommentsCount,
                 PostFavoritesCount = inObj.PostFavoritesCount,
                 PostImageId = inObj.PostImageId,
-                PostImageUrl = inObj.PostImageUrl,
+//                PostImageUrl = inObj.PostImageUrl,
                 PostPublicationDateTime = inObj.PostPublicationDateTime
             };
         }

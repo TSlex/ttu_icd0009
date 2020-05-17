@@ -17,9 +17,9 @@ namespace PublicApi.DTO.v1
         public string? ProfileStatus { get; set; }
         public string? ProfileAbout { get; set; }
         
-        public string? ProfileAvatarUrl { get; set; }
+//        public string? ProfileAvatarUrl { get; set; }
         public Guid? ProfileAvatarId { get; set; }
-        public Image? ProfileAvatar { get; set; }
+        public ImageDTO? ProfileAvatar { get; set; }
         
         public ProfileGender ProfileGender { get; set; }
         public string? ProfileGenderOwn { get; set; }

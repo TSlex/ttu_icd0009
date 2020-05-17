@@ -11,7 +11,7 @@ namespace DAL.App.DTO
         public string PostTitle { get; set; } = default!;
 
         [MaxLength(300)]
-        public string? PostImageUrl { get; set; }
+//        public string? PostImageUrl { get; set; }
         
         public Guid? PostImageId { get; set; }
         public Image? PostImage { get; set; }

@@ -17,7 +17,7 @@ namespace DAL.App.DTO
         
         [MaxLength(300)] public string? ProfileStatus { get; set; }
 
-        [MaxLength(300)] public string? ProfileAvatarUrl { get; set; }
+//        [MaxLength(300)] public string? ProfileAvatarUrl { get; set; }
         
         public Guid? ProfileAvatarId { get; set; }
         public Image? ProfileAvatar { get; set; }

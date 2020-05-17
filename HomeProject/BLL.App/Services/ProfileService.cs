@@ -41,7 +41,7 @@ namespace BLL.App.Services
                 LastLoginDateTime = profile.LastLoginDateTime,
                 ProfileAbout = profile.ProfileAbout,
                 ProfileStatus = profile.ProfileStatus,
-                ProfileAvatarUrl = profile.ProfileAvatarUrl,
+//                ProfileAvatarUrl = profile.ProfileAvatarUrl,
                 ProfileFullName = profile.ProfileFullName,
                 ProfileWorkPlace = profile.ProfileWorkPlace,
                 FollowedCount = profile.FollowedCount,

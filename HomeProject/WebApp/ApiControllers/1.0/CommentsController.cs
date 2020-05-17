@@ -64,7 +64,7 @@ namespace WebApp.ApiControllers._1._0
                 {
                     Id = comment.Id,
                     UserName = comment.Profile!.UserName,
-                    ProfileAvatarUrl = comment.Profile!.ProfileAvatarUrl,
+//                    ProfileAvatarUrl = comment.Profile!.ProfileAvatarUrl,
                     CommentValue = comment.CommentValue,
                     CommentDateTime = comment.CommentDateTime
                 }));

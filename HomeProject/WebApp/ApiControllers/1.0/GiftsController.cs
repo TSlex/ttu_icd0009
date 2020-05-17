@@ -57,7 +57,7 @@ namespace WebApp.ApiControllers._1._0
                     GiftName = gift.GiftName,
                     GiftCode = gift.GiftCode,
                     GiftImageId = gift.GiftImageId,
-                    GiftImageUrl = gift.GiftImageUrl,
+//                    GiftImageUrl = gift.GiftImageUrl,
                     Price = gift.Price,
                 }));
         }
@@ -104,7 +104,7 @@ namespace WebApp.ApiControllers._1._0
                     GiftName = gift!.GiftName,
                     GiftCode = gift!.GiftCode,
                     GiftImageId = gift!.GiftImageId,
-                    GiftImageUrl = gift!.GiftImageUrl,
+//                    GiftImageUrl = gift!.GiftImageUrl,
                     Price = gift!.Price,
                 }));
         }

@@ -36,7 +36,7 @@ namespace DAL.Repositories
                         Profile = new Domain.Profile()
                         {
                             UserName = member.Profile!.UserName,
-                            ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl
+//                            ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl
                         },
                         ChatRole = new Domain.ChatRole()
                         {

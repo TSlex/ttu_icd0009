@@ -212,31 +212,31 @@ namespace DAL.Helpers
                 {
                     GiftName = "New Horizon",
                     GiftCode = "X_00",
-                    GiftImageUrl = "https://sun9-37.userapi.com/c855036/v855036822/224f58/Kuwvm_ds5yQ.jpg"
+//                    GiftImageUrl = "https://sun9-37.userapi.com/c855036/v855036822/224f58/Kuwvm_ds5yQ.jpg"
                 },
                 new Gift()
                 {
                     GiftName = "1'st of May",
                     GiftCode = "X_01",
-                    GiftImageUrl = "https://vk.com/images/gift/1086/256.jpg"
+//                    GiftImageUrl = "https://vk.com/images/gift/1086/256.jpg"
                 },
                 new Gift()
                 {
                     GiftName = "Tasty",
                     GiftCode = "X_02",
-                    GiftImageUrl = "https://vk.com/images/gift/1069/256.jpg"
+//                    GiftImageUrl = "https://vk.com/images/gift/1069/256.jpg"
                 },
                 new Gift()
                 {
                     GiftName = "Bananas",
                     GiftCode = "X_03",
-                    GiftImageUrl = "https://vk.com/images/gift/1063/256.jpg"
+//                    GiftImageUrl = "https://vk.com/images/gift/1063/256.jpg"
                 },
                 new Gift()
                 {
                     GiftName = "LoveOfLove",
                     GiftCode = "X_04",
-                    GiftImageUrl = "https://vk.com/images/gift/1005/256.jpg"
+//                    GiftImageUrl = "https://vk.com/images/gift/1005/256.jpg"
                 }
             };
 
