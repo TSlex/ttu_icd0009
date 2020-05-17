@@ -50,7 +50,7 @@ namespace BLL.App.DTO
 
         [JsonIgnore]
         [Display(Name = nameof(Profiles), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
-        public ICollection<Profile>? Profiles { get; set; }
+        public ICollection<Domain.Profile>? Profiles { get; set; }
         
         [JsonIgnore]
         [Display(Name = nameof(Posts), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]

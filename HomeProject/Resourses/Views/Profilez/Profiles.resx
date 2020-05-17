@@ -47,4 +47,7 @@
     <data name="OfFollowed">
         <value>followed</value>
     </data>
+    <data name="Blocked">
+        <value>This user has added you to his blacklist!</value>
+    </data>
 </root>

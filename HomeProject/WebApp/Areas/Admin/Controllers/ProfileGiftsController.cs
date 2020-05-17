@@ -61,7 +61,7 @@ namespace WebApp.Areas.Admin.Controllers
             var gifts = await _bll.Gifts.AllAsync();
             return View(new ProfileGiftCreate()
             {
-                Profile = new ProfileFull {UserName = username},
+                Profile = new Profile {UserName = username},
                 GiftGallery = gifts,
                 ReturnUrl = returnUrl
             });
@@ -82,7 +82,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(new ProfileGift
             {
-                Profile = new ProfileFull {UserName = username},
+                Profile = new Profile {UserName = username},
                 Gift = gift,
                 GiftId = giftId,
                 ReturnUrl = returnUrl

@@ -4,7 +4,6 @@
 
 @inject IOptions<RequestLocalizationOptions> LocalizationOptions
 @{
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var cultureItems = LocalizationOptions.Value.SupportedUICultures
         .Select(c => new {Value = c.Name, Text = c.DisplayName}).ToList();
 

@@ -38,7 +38,7 @@ namespace BLL.App.DTO
         public Guid ProfileId { get; set; }
 
         [Display(Name = nameof(Profile), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
-        public ProfileFull? Profile { get; set; }
+        public Profile? Profile { get; set; }
 
         [Display(Name = nameof(Comments), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         public ICollection<Comment>? Comments { get; set; }

@@ -10,7 +10,7 @@ namespace BLL.App.DTO
         public Guid ProfileId { get; set; } = default!;
 
         [Display(Name = nameof(Profile), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
-        public ProfileFull? Profile { get; set; }
+        public Profile? Profile { get; set; }
 
         [Display(Name = nameof(PostId), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
         public Guid PostId { get; set; } = default!;

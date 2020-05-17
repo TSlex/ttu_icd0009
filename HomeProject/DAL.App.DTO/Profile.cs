@@ -34,6 +34,10 @@ namespace DAL.App.DTO
         public int PostsCount { get; set; }
         
         public int Experience { get; set; }
+        
+        public bool IsUserFollows { get; set; }
+        public bool IsUserBlocks { get; set; }
+        public bool IsUserBlocked { get; set; }
 
         //References
         //Black list

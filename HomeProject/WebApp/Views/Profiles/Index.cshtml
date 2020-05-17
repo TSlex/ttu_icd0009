@@ -2,11 +2,11 @@
 @using Domain
 @using Extension
 @using Microsoft.AspNetCore.Identity
-@model BLL.App.DTO.ProfileFull
+@model BLL.App.DTO.Profile
 @inject SignInManager<Profile> SignInManager
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Model.UserName;
     var profileRank = Model.ProfileRanks
         .OrderByDescending(rank => rank.Rank!.MaxExperience)
         .Where(rank => rank.Rank!.MinExperience <= Model.Experience)

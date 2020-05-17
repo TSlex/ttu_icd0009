@@ -26,6 +26,6 @@ namespace BLL.App.DTO
         public Guid ProfileId { get; set; } = default!;
 
         [Display(Name = nameof(Profile), ResourceType = typeof(Resourses.BLL.App.DTO.ChatMembers.ChatMembers))]
-        public ProfileFull? Profile { get; set; }
+        public Profile? Profile { get; set; }
     }
 }

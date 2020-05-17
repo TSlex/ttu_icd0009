@@ -70,6 +70,15 @@ namespace Resourses.Views.Profilez {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This user has added you to his blacklist!.
+        /// </summary>
+        public static string Blocked {
+            get {
+                return ResourceManager.GetString("Blocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow.
         /// </summary>
         public static string Follow {

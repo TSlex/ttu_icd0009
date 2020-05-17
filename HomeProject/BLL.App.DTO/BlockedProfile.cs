@@ -13,7 +13,7 @@ namespace BLL.App.DTO
 
         [Display(Name = nameof(Profile),
             ResourceType = typeof(Resourses.BLL.App.DTO.BlockedProfiles.BlockedProfiles))]
-        public ProfileFull? Profile { get; set; }
+        public Profile? Profile { get; set; }
 
         // BProfile blocked by Profile
         [Display(Name = nameof(BProfileId),
@@ -22,7 +22,7 @@ namespace BLL.App.DTO
 
         [Display(Name = nameof(BProfile),
             ResourceType = typeof(Resourses.BLL.App.DTO.BlockedProfiles.BlockedProfiles))]
-        public ProfileFull? BProfile { get; set; }
+        public Profile? BProfile { get; set; }
 
         [Display(Name = nameof(Reason),
             ResourceType = typeof(Resourses.BLL.App.DTO.BlockedProfiles.BlockedProfiles))]

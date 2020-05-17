@@ -1,31 +1,54 @@
 @model BLL.App.DTO.ProfileLimited
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Model.UserName;
+    
+    float currentExp = Model.Experience - (Model.Rank.Rank!.MinExperience >= 0 ? Model.Rank.Rank.MinExperience : 0);
+    float needExp = Model.Rank.Rank.MaxExperience - (Model.Rank.Rank!.MinExperience >= 0 ? Model.Rank.Rank.MinExperience : 0);
 }
 
 <div class="profile_container">
     <div class="profile_section">
-        <div class="profile_image col-3 d-flex justify-content-center">
-            @*<img alt="" width="150px" height="150px"
-                 src=@Model.ProfileAvatarUrl>*@
+        <div class="col-3 d-flex justify-content-center">
+            <div class="profile_image" style="background-color: @Model.Rank.Rank.RankColor !important;">
+                <img alt="" width="150px" height="150px" src="/images/@Model.ProfileAvatarId">
+            </div>
         </div>
         <div class="profile_description col-9">
             <ul class="profile_meta_section">
                 <li class="profile_name">@Model.UserName</li>
             </ul>
+            <div class="profile_rank">
+                <span class="rank_title">@Model.Rank.Rank.RankTitle</span>
+                <div class="rank_bar_back"></div>
+                <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @Model.Rank.Rank.RankColor">
+                </div>
+                <span class="rank_score">@Model.Experience/@Model.Rank.Rank.MaxExperience</span>
+                <div class="rank_icons">
+                    @{
+                        var icons = @Model.Rank.Rank.RankIcon?.Split(";").Where(s => s != "").ToList();
+                        if (icons != null)
+                        {
+                            foreach (var icon in icons)
+                            {
+                                <icon class="fa fa-@icon"></icon>
+                            }
+                        }
+                    }
+                </div>
+            </div>
             <ul class="profile_meta_section">
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.PostsCount</span>
-                    <span class="meta_title">публикаций</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfPosts</span>
                 </li>
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.FollowersCount</span>
-                    <span class="meta_title">подписчиков</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
                 </li>
                 <li class="profile_meta">
                     <span class="meta_counter">@Model.FollowedCount</span>
-                    <span class="meta_title">подписок</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
                 </li>
             </ul>
             <div class="profile_about">
@@ -37,5 +60,5 @@
         </div>
     </div>
     <hr>
-    <div class="text-danger font-weight-bold text-center">Данный пользователь внес Вас в свой черный список!</div>
+    <div class="text-danger font-weight-bold text-center">@Resourses.Views.Profilez.Profiles.Blocked</div>
 </div>

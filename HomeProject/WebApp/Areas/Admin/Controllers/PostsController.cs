@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
+using Domain.Enums;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -190,27 +191,48 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Post post)
         {
-            var record = await _bll.Posts.FindAsync(id);
-
             if (id != post.Id)
             {
                 return NotFound();
             }
+            
+            if (post.PostImage!.ImageFile == null && post.PostImageId == null)
+            {
+                ModelState.AddModelError(string.Empty, "Image should be specified");
+                return View(post);
+            }
 
             ModelState.Clear();
+            
+            var imageModel = post.PostImage;
+
+            if (post.PostImageId == null)
+            {
+                imageModel.Id = Guid.NewGuid();
+                imageModel.ImageType = ImageType.Post;
+                imageModel.ImageFor = post.Id;
+            }
+            
             post.ProfileId = User.UserId();
 
             if (TryValidateModel(post))
             {
-                await _bll.Posts.UpdateAsync(post);
-                await _bll.SaveChangesAsync();
-                
-                if (post.ReturnUrl != null)
+                if (post.PostImageId == null)
                 {
-                    return Redirect(post.ReturnUrl);
+                    await _bll.Images.AddPostAsync(post.Id, imageModel);
+                }
+                else
+                {
+                    await _bll.Images.UpdatePostAsync(post.Id, imageModel);
                 }
 
-                return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+                post.PostImageId = imageModel.Id;
+                post.PostImage = null;
+                
+                await _bll.Posts.UpdateAsync(post);
+                await _bll.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
             }
 
             return View(post);

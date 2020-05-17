@@ -9,22 +9,14 @@
 <div class="post_details">
     <div class="post_details_post">
 
-        @if (Model.ReturnUrl != null)
-        {
-            <a class="fa fa-angle-double-left post_return" asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl"></a>
-        }
-
         <div class="post_image">
-            @{
-                if (Model.ProfileId == User.UserId())
-                {
-                    <div class="post_controls">
-                        <a class="fa fa-edit" asp-action="Edit" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
-                        <a class="fa fa-times-circle" asp-action="Delete" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
-                    </div>
-                }
-            }
-            @* <img src="@Model.PostImageUrl" alt=""> *@
+
+            <div class="post_controls">
+                <a class="fa fa-edit" asp-action="Edit" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
+                <a class="fa fa-times-circle" asp-action="Delete" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
+            </div>
+
+            <img src="/images/@Model.PostImageId" alt="">
         </div>
 
         <div class="post_details_meta_section">
@@ -36,29 +28,11 @@
                 </li>
                 <li class="post_meta">
                     <span class="meta_counter">@Model.PostFavoritesCount</span>
-                    <span class="meta_title">лайков</span>
+                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
                 </li>
                 <li class="post_meta">
                     <span class="meta_counter">@Model.PostCommentsCount</span>
-                    <span class="meta_title">комментариев</span>
-                </li>
-                <li>
-                    @{
-                        if (@Model.IsUserFavorite)
-                        {
-                            <form method="post" asp-action="RemoveFromFavorite">
-                                <button type="submit" class="fas fa-heart"></button>
-                                <input type="hidden" asp-for="Id">
-                            </form>
-                        }
-                        else
-                        {
-                            <form method="post" asp-action="AddToFavorite">
-                                <button type="submit" class="far fa-heart"></button>
-                                <input type="hidden" asp-for="Id">
-                            </form>
-                        }
-                    }
+                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfComments</span>
                 </li>
             </ul>
         </div>
@@ -76,7 +50,10 @@
             }
         </div>
         <div class="row d-flex justify-content-center mt-3">
-            <a asp-action="Create" asp-controller="Comments" asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()" class="btn btn-primary">Create a comment</a>
+            <a asp-action="Create" asp-controller="Comments" asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()"
+               class="btn btn-primary">
+                Create a comment
+            </a>
         </div>
     </div>
 </div>

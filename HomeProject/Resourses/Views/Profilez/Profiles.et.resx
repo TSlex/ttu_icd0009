@@ -42,4 +42,7 @@
     <data name="OfFollowed">
         <value>järgnes</value>
     </data>
+    <data name="Blocked">
+        <value>See kasutaja lisas teid oma musta nimekirja!</value>
+    </data>
 </root>

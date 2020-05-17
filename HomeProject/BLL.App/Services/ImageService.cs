@@ -166,15 +166,6 @@ namespace BLL.App.Services
                 entity.ImageUrl = entity.OriginalImageUrl;
             }
 
-//            record.HeightPx = entity.HeightPx;
-//            record.WidthPx = entity.WidthPx;
-//            record.PaddingTop = entity.PaddingTop;
-//            record.PaddingRight = entity.PaddingRight;
-//            record.PaddingBottom = entity.PaddingBottom;
-//            record.PaddingLeft = entity.PaddingLeft;
-//            record.ImageUrl = entity.ImageUrl;
-//            record.OriginalImageUrl = entity.OriginalImageUrl;
-
             return await UpdateAsync(entity);
         }
 

@@ -10,12 +10,12 @@ namespace BLL.App.DTO
         public Guid ProfileId { get; set; } = default!;
 
         [Display(Name = nameof(Profile), ResourceType = typeof(Resourses.BLL.App.DTO.Followers.Followers))]
-        public ProfileFull? Profile { get; set; }
+        public Profile? Profile { get; set; }
 
         [Display(Name = nameof(FollowerProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Followers.Followers))]
         public Guid FollowerProfileId { get; set; } = default!;
 
         [Display(Name = nameof(FollowerProfile), ResourceType = typeof(Resourses.BLL.App.DTO.Followers.Followers))]
-        public ProfileFull? FollowerProfile { get; set; }
+        public Profile? FollowerProfile { get; set; }
     }
 }

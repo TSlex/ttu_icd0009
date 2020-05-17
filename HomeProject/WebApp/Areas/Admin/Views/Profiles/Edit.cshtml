@@ -7,11 +7,45 @@
 
 <h1 class="text-center">Edit</h1>
 <hr/>
-<div class="row text-center justify-content-center">
+<div class="row text-center align-items-center d-flex flex-column">
+    <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none;" draggable="false">
+
+        @{
+            if (Model.ProfileAvatar?.OriginalImageUrl != null)
+            {
+                <img src="@Url.Content("~/localstorage" + @Model.ProfileAvatar.OriginalImageUrl)" alt="" class="card-img" id="render_image"/>
+            }
+            else
+            {
+                <img src="#" alt="" class="card-img" id="render_image"/>
+            }
+        }
+    </div>
+
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Id">
+            <input type="hidden" asp-for="ProfileAvatar!.PaddingTop" id="PaddingTop"/>
+            <input type="hidden" asp-for="ProfileAvatar!.PaddingRight" id="PaddingRight"/>
+            <input type="hidden" asp-for="ProfileAvatar!.PaddingBottom" id="PaddingBottom">
+            <input type="hidden" asp-for="ProfileAvatar!.PaddingLeft" id="PaddingLeft"/>
+            <input type="hidden" asp-for="ProfileAvatar!.HeightPx" id="HeightPx"/>
+            <input type="hidden" asp-for="ProfileAvatar!.WidthPx" id="WidthPx"/>
+
+            <input type="hidden" asp-for="ProfileAvatar!.OriginalImageUrl"/>
+            <input type="hidden" asp-for="ProfileAvatar!.ImageUrl"/>
+            <input type="hidden" asp-for="ProfileAvatar!.ImageFor"/>
+            <input type="hidden" asp-for="ProfileAvatar!.ImageType"/>
+
+            <input type="hidden" asp-for="ProfileAvatar"/>
+            <input type="hidden" asp-for="ProfileAvatarId"/>
+            <input type="hidden" asp-for="ProfileAvatar!.Id"/>
+            
+            <div class="custom-file mb-3">
+                <input type="file" asp-for="ProfileAvatar!.ImageFile" id="ImageFile" accept=".jpeg, .png, .jpg" class="text-left custom-file-input">
+                <label class="custom-file-label" style="overflow: hidden"> </label>
+            </div>
 
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
@@ -54,11 +88,6 @@
                 <input asp-for="ProfileAbout" class="form-control"/>
                 <span asp-validation-for="ProfileAbout" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="ProfileAvatarUrl" class="control-label"></label>
-                <input asp-for="ProfileAvatarUrl" class="form-control"/>
-                <span asp-validation-for="ProfileAvatarUrl" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="ProfileGender" class="control-label">Пол</label>
                 <select asp-for="ProfileGender" id="Input_ProfileGender" asp-items="Html.GetEnumSelectList<ProfileGender>()" class="form-control"></select>
@@ -106,4 +135,44 @@
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script src="~/js/Identity/profile-preferences.js"></script>
+    <script type="text/javascript" src="~/js/images/image-miniature.js"></script>
+        <script>
+                        
+                        if ($('#render_image').attr('src') === "#"){
+                            $('#image-miniature').css('visibility', 'hidden');
+                        }
+                       
+                        
+                        $('#ImageFile').on('change',function(){
+                            //get the file name
+                            let fileName = $(this).val().replace('C:\\fakepath\\', "");
+                            //replace the "Choose a file" label
+                            $(this).next('.custom-file-label').html(fileName);
+                        })
+                        
+                        function readURL(input) {
+                          if (input.files && input.files[0]) {
+                            let reader = new FileReader();
+                            
+                            reader.onload = function(e) {
+                                let image = new Image();
+                                image.src = e.target.result;
+                                
+                                image.onload = function(){
+                                    $('#HeightPx').attr('value', image.height);
+                                    $('#WidthPx').attr('value', image.width);  
+                                }
+        
+                                $('#render_image').attr('src', e.target.result);
+                                $('#image-miniature').css('visibility', 'visible');
+            }
+        
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+            }
+        
+            $("#ImageFile").change(function() {
+            readURL(this);
+            });
+            </script>
 }

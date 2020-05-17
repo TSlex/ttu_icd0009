@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.App.DTO;
 using Contracts.BLL.Base.Mappers;
+using Profile = BLL.App.DTO.Profile;
 
 namespace BLL.Base.Mappers
 {
@@ -24,8 +25,8 @@ namespace BLL.Base.Mappers
                 config.CreateMap<DAL.App.DTO.ChatRoom, ChatRoom>();
                 config.CreateMap<ChatRoom, DAL.App.DTO.ChatRoom>();
 
-                config.CreateMap<DAL.App.DTO.Profile, ProfileFull>();
-                config.CreateMap<ProfileFull, DAL.App.DTO.Profile>();
+                config.CreateMap<DAL.App.DTO.Profile, Profile>();
+                config.CreateMap<Profile, DAL.App.DTO.Profile>();
 
                 config.CreateMap<DAL.App.DTO.ChatMember, ChatMember>();
                 config.CreateMap<ChatMember, DAL.App.DTO.ChatMember>();

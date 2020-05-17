@@ -23,7 +23,7 @@ namespace WebApp.ApiControllers._1._0
     public class ProfilesController : ControllerBase
     {
         private readonly IAppBLL _bll;
-        private readonly DTOMapper<ProfileFull, ProfileDTO> _mapper;
+        private readonly DTOMapper<Profile, ProfileDTO> _mapper;
         
         /// <summary>
         /// Constructor
@@ -32,7 +32,7 @@ namespace WebApp.ApiControllers._1._0
         public ProfilesController(IAppBLL bll)
         {
             _bll = bll;
-            _mapper = new DTOMapper<ProfileFull, ProfileDTO>();
+            _mapper = new DTOMapper<Profile, ProfileDTO>();
         }
         
         /// <summary>

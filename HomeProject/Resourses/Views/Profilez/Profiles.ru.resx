@@ -42,4 +42,7 @@
     <data name="OfFollowed">
         <value>отслеживается</value>
     </data>
+    <data name="Blocked">
+        <value>Данный пользователь внес Вас в свой черный список!</value>
+    </data>
 </root>

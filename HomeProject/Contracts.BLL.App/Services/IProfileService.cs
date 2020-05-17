@@ -5,11 +5,16 @@ using Contracts.BLL.Base.Services;
 
 namespace Contracts.BLL.App.Services
 {
-    public interface IProfileService: IBaseEntityService<global::DAL.App.DTO.Profile, ProfileFull>
+    public interface IProfileService : IBaseEntityService<global::DAL.App.DTO.Profile, Profile>
     {
-        Task<ProfileFull> GetProfileFull(Guid id);
+        Task<Profile> GetProfileAsync(Guid id, Guid? requesterId);
+
+        [Obsolete]
+        Task<Profile> GetProfileFull(Guid id);
+
+        [Obsolete]
         Task<ProfileLimited> GetProfileLimited(Guid id);
 
-        Task<ProfileFull> FindByUsernameAsync(string username);
+        Task<Profile> FindByUsernameAsync(string username);
     }
 }

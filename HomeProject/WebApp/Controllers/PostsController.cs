@@ -213,7 +213,7 @@ namespace WebApp.Controllers
         {
             var record = await _bll.Posts.GetForUpdateAsync(id);
 
-            if (!ValidateUserAccess(record) || id != post.Id)
+            if (!ValidateUserAccess(record) || id != post.Id || post.PostImageId != post.PostImage.Id)
             {
                 return NotFound();
             }
@@ -237,12 +237,19 @@ namespace WebApp.Controllers
 
             if (TryValidateModel(post))
             {
-                if (post.PostImageId == null)
+                if (record.PostImageId == null)
                 {
                     await _bll.Images.AddPostAsync(post.Id, imageModel);
                 }
                 else
                 {
+                    var imageRecord = await _bll.Images.FindAsync((Guid) record.PostImageId!);
+
+                    imageModel.OriginalImageUrl = imageRecord.OriginalImageUrl;
+                    imageModel.ImageUrl = imageRecord.ImageUrl;
+                    imageModel.ImageFor = imageRecord.ImageFor;
+                    imageModel.ImageType = imageRecord.ImageType;
+                    
                     await _bll.Images.UpdatePostAsync(post.Id, imageModel);
                 }
 

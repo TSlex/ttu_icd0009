@@ -8,6 +8,7 @@ using Domain;
 using Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
+using Profile = BLL.App.DTO.Profile;
 
 namespace WebApp.Controllers
 {
@@ -17,8 +18,8 @@ namespace WebApp.Controllers
     [Route("/{username}/{action=Index}")]
     public class ProfilesController : Controller
     {
-        private readonly UserManager<Profile> _userManager;
-        private readonly SignInManager<Profile> _signInManager;
+        private readonly UserManager<Domain.Profile> _userManager;
+        private readonly SignInManager<Domain.Profile> _signInManager;
         private readonly IAppBLL _bll;
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace WebApp.Controllers
         /// <param name="userManager"></param>
         /// <param name="bll"></param>
         /// <param name="signInManager"></param>
-        public ProfilesController(UserManager<Profile> userManager, IAppBLL bll, SignInManager<Profile> signInManager)
+        public ProfilesController(UserManager<Domain.Profile> userManager, IAppBLL bll, SignInManager<Domain.Profile> signInManager)
         {
             _userManager = userManager;
             _bll = bll;
@@ -48,61 +49,88 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var isUserBlocked = isAuthorized &&
-                                user.Id != User.UserId() &&
-                                await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
-            
-            // ReSharper disable EF1001
-            if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
-            {
-                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
-                {
-                    ProfileId = user.Id,
-                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
-                });
-
-                await _bll.SaveChangesAsync();
-            }
-
-            ;
-
-            if (isUserBlocked)
-            {
-                var profileLimited = await _bll.Profiles.GetProfileLimited(user.Id);
-
-                return View("IndexLimited", profileLimited);
-            }
-
-            var profileModel = await _bll.Profiles.GetProfileFull(user.Id);
-
-            if (profileModel == null)
-            {
-                return NotFound();
-            }
+            Profile record;
 
             if (isAuthorized)
             {
-                profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
-                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;
+                record = await _bll.Profiles.GetProfileAsync(user.Id, User.UserId());
+            }
+            else
+            {
+                record = await _bll.Profiles.GetProfileAsync(user.Id, null);
             }
 
-            return View(profileModel);
+            if (record.IsUserBlocked)
+            {
+                var profileLimited = new ProfileLimited()
+                {
+                    UserName = record.UserName,
+                    Experience = record.Experience,
+                    Rank = record.ProfileRanks.Take(1).FirstOrDefault(),
+                    FollowedCount = record.FollowedCount,
+                    FollowersCount = record.FollowersCount,
+                    PostsCount = record.PostsCount,
+                    ProfileAvatarId = record.ProfileAvatarId
+                };
+                
+                return View("IndexLimited", profileLimited);
+            }
+
+            return View(record);
+
+//            var isUserBlocked = isAuthorized &&
+//                                user.Id != User.UserId() &&
+//                                await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
+//            
+//            // ReSharper disable EF1001
+//            if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
+//            {
+//                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
+//                {
+//                    ProfileId = user.Id,
+//                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
+//                });
+//
+//                await _bll.SaveChangesAsync();
+//            }
+//
+//            if (isUserBlocked)
+//            {
+//                var profileLimited = await _bll.Profiles.GetProfileLimited(user.Id);
+//
+//                return View("IndexLimited", profileLimited);
+//            }
+//
+//            var profileModel = await _bll.Profiles.GetProfileFull(user.Id);
+//
+//            if (profileModel == null)
+//            {
+//                return NotFound();
+//            }
+//
+//            if (isAuthorized)
+//            {
+//                profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
+//                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;
+//            }
+
+//            return View(profileModel);
         }
 
         /// <summary>
         /// Subscribe to profile
         /// </summary>
-        /// <param name="profileFullModel"></param>
+        /// <param name="profileModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> FollowProfile(ProfileFull profileFullModel)
+        public async Task<IActionResult> FollowProfile(Profile profileModel)
         {
             var userId = User.UserId();
-            var profile = await _userManager.FindByNameAsync(profileFullModel.UserName);
+            var profile = await _userManager.FindByNameAsync(profileModel.UserName);
 
             if (profile == null || profile.Id == userId)
             {
-                return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+                return RedirectToAction(nameof(Index), new {profileModel.UserName});
             }
 
             var subscription = await _bll.Followers.FindAsync(userId, profile.Id);
@@ -114,23 +142,23 @@ namespace WebApp.Controllers
                 await _bll.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+            return RedirectToAction(nameof(Index), new {profileModel.UserName});
         }
 
         /// <summary>
         /// Unsubscribe from profile
         /// </summary>
-        /// <param name="profileFullModel"></param>
+        /// <param name="profileModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> UnfollowProfile(ProfileFull profileFullModel)
+        public async Task<IActionResult> UnfollowProfile(Profile profileModel)
         {
             var userId = User.UserId();
-            var profile = await _userManager.FindByNameAsync(profileFullModel.UserName);
+            var profile = await _userManager.FindByNameAsync(profileModel.UserName);
 
             if (profile == null || profile.Id == userId)
             {
-                return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+                return RedirectToAction(nameof(Index), new {profileModel.UserName});
             }
 
             var subscription = await _bll.Followers.FindAsync(userId, profile.Id);
@@ -141,23 +169,23 @@ namespace WebApp.Controllers
                 await _bll.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+            return RedirectToAction(nameof(Index), new {profileModel.UserName});
         }
         
         /// <summary>
         /// Add profile to black list
         /// </summary>
-        /// <param name="profileFullModel"></param>
+        /// <param name="profileModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> BlockProfile(ProfileFull profileFullModel)
+        public async Task<IActionResult> BlockProfile(Profile profileModel)
         {
             var userId = User.UserId();
-            var profile = await _userManager.FindByNameAsync(profileFullModel.UserName);
+            var profile = await _userManager.FindByNameAsync(profileModel.UserName);
 
             if (profile == null || profile.Id == userId)
             {
-                return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+                return RedirectToAction(nameof(Index), new {profileModel.UserName});
             }
 
             var property = await _bll.BlockedProfiles.FindAsync(userId, profile.Id);
@@ -174,23 +202,23 @@ namespace WebApp.Controllers
                 await _bll.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+            return RedirectToAction(nameof(Index), new {profileModel.UserName});
         }
         
         /// <summary>
         /// Remove profile from black list
         /// </summary>
-        /// <param name="profileFullModel"></param>
+        /// <param name="profileModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> UnblockProfile(ProfileFull profileFullModel)
+        public async Task<IActionResult> UnblockProfile(Profile profileModel)
         {
             var userId = User.UserId();
-            var profile = await _userManager.FindByNameAsync(profileFullModel.UserName);
+            var profile = await _userManager.FindByNameAsync(profileModel.UserName);
 
             if (profile == null || profile.Id == userId)
             {
-                return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+                return RedirectToAction(nameof(Index), new {profileModel.UserName});
             }
 
             var property = await _bll.BlockedProfiles.FindAsync(userId, profile.Id);
@@ -201,7 +229,7 @@ namespace WebApp.Controllers
                 await _bll.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Index), new {profileFullModel.UserName});
+            return RedirectToAction(nameof(Index), new {profileModel.UserName});
         }
     }
 }

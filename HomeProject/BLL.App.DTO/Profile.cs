@@ -7,7 +7,7 @@ using Domain.Enums;
 
 namespace BLL.App.DTO
 {
-    public class ProfileFull : MUser
+    public class Profile : MUser
     {
         [Display(Name = nameof(LastLoginDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         public DateTime? LastLoginDateTime { get; set; }
@@ -126,6 +126,9 @@ namespace BLL.App.DTO
 //        [Display(Name = nameof(ProfileAvatarUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
 //        public string? ProfileAvatarUrl { get; set; }
 
+        [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+        public Guid? ProfileAvatarId { get; set; }
+
         [Display(Name = nameof(ProfileAbout), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         public string? ProfileAbout { get; set; }
 
@@ -163,6 +166,12 @@ namespace BLL.App.DTO
 //        [Display(Name = nameof(ProfileAvatarUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
 //        [MaxLength(300)]
 //        public string? ProfileAvatarUrl { get; set; }
+
+        [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+        public Guid? ProfileAvatarId { get; set; }
+
+        [Display(Name = nameof(ProfileAvatar), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+        public Image? ProfileAvatar { get; set; }
 
         [Display(Name = nameof(ProfileAbout), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         [MaxLength(1000)]
