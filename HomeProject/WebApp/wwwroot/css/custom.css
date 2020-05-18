@@ -1,8 +1,12 @@
-﻿html{
+﻿html {
     user-select: none !important;
 }
 
 /*shared*/
+a {
+    text-decoration: none !important;
+}
+
 .alert {
     margin-bottom: 0 !important;
 }
@@ -15,20 +19,20 @@ body {
     line-height: inherit !important;
 }
 
-.col-centered{
+.col-centered {
     margin: 0 auto;
     float: none;
 }
 
-.disable_form_style button{
+.disable_form_style button {
     line-height: initial !important;
 }
 
-.custom-file-label{
+.custom-file-label {
     text-align: left !important;
 }
 
-.index_controls{
+.index_controls {
     display: block !important;
     width: 45px !important;
     height: 40px !important;
@@ -38,7 +42,7 @@ body {
     line-height: initial !important;
 }
 
-.btn-link{
+.btn-link {
     color: black !important;
     text-decoration: none !important;
     display: inline !important;
@@ -47,12 +51,12 @@ body {
     outline: none !important;
 }
 
-.btn-link:hover{
+.btn-link:hover {
     text-decoration: none !important;
     color: black !important;
 }
 
-.btn-link:active{
+.btn-link:active {
     text-decoration: none !important;
     color: black !important;
     outline: none !important;
@@ -93,13 +97,58 @@ body {
     display: inline-block;
 }
 
+/*profile gallery*/
+.profile_gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.profile_gallery .gallery_item {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gallery_item img {
+    border: 1px solid black;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.gallery_item .item_name {
+    text-decoration: none;
+    color: black !important;
+    position: absolute;
+    z-index: 50;
+    bottom: -10px;
+    border: 1px solid gray;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 0 4px;
+    font-size: 12px;
+    font-family: Consolas, serif;
+    font-weight: bold;
+}
+
+.gallery_item .item_controls {
+    position: absolute;
+    z-index: 100;
+    top: -10px;
+    left: -10px;
+}
+
 /*profile*/
 .profile_section, .posts_section {
     display: flex;
     padding: 10px;
 }
 
-.profile_section{
+.profile_section {
     margin-left: 150px;
 }
 
@@ -121,7 +170,7 @@ body {
     /*transform: rotate(-45deg);*/
 }
 
-.profile_description{
+.profile_description {
     justify-content: center;
 }
 
@@ -152,22 +201,23 @@ body {
     font-size: 20px;
 }
 
-.profile_controls{
+.profile_controls {
     font-size: 20px;
     margin-left: 5px;
 }
+
 /*profile gift*/
-.gift_gallery{
+.gift_gallery {
     display: flex;
     width: 100%;
     justify-content: center;
 }
 
-.gift_gallery .profile_gift{
+.gift_gallery .profile_gift {
     margin-right: 10px;
 }
 
-.profile_gift_section{
+.profile_gift_section {
     padding: 10px;
     display: flex;
     justify-content: space-evenly;
@@ -175,13 +225,13 @@ body {
     position: relative;
 }
 
-.profile_gift{
+.profile_gift {
     /*border: 1px solid gray !important;*/
     border-radius: 10px;
     overflow: hidden;
 }
 
-.profile_gift img{
+.profile_gift img {
     width: 150px;
     height: 150px;
     border: none !important;
@@ -189,7 +239,7 @@ body {
     margin: 0 !important;
 }
 
-.profile_gift_controls{
+.profile_gift_controls {
     height: 40px;
     text-align: center;
     line-height: 40px;
@@ -198,7 +248,7 @@ body {
 }
 
 /*profile rank*/
-.profile_rank{
+.profile_rank {
     position: relative;
     height: 30px;
     width: 500px;
@@ -208,7 +258,7 @@ body {
     box-sizing: content-box;
 }
 
-.profile_rank *{
+.profile_rank * {
     height: 30px !important;
     line-height: 30px;
 }
@@ -221,7 +271,7 @@ body {
     font-family: Consolas, serif;
 }
 
-.profile_rank .rank_score{
+.profile_rank .rank_score {
     position: absolute;
     width: 50%;
     left: 25%;
@@ -229,7 +279,7 @@ body {
     font-weight: bold;
 }
 
-.profile_rank .rank_bar{
+.profile_rank .rank_bar {
     position: absolute;
     background: #e4606d;
     min-width: 2%;
@@ -239,14 +289,14 @@ body {
     outline: gold 5px double;
 }
 
-.profile_rank .rank_bar_back{
+.profile_rank .rank_bar_back {
     position: absolute;
     background: #00000033;
     width: 100%;
     z-index: -2;
 }
 
-.profile_rank .rank_icons{
+.profile_rank .rank_icons {
     position: absolute;
     right: 10px;
     z-index: 0;
@@ -263,19 +313,19 @@ body {
 }
 
 /*feed*/
-.feed{
+.feed {
     /*background: red;*/
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.feed a{
+.feed a {
     text-decoration: none;
     color: black;
 }
 
-.feed_post{
+.feed_post {
     width: 600px;
     border: 1px solid gray;
     border-radius: 10px;
@@ -283,7 +333,7 @@ body {
     margin: 10px;
 }
 
-.feed_post .post_image img{
+.feed_post .post_image img {
     max-width: 90%;
     max-height: 550px;
 }
@@ -297,14 +347,14 @@ body {
     margin-left: 12em !important;
 }
 
-.post_details{
+.post_details {
     border: 1px solid gray;
     border-radius: 4px;
     display: flex;
     height: 600px;
 }
 
-.post_details_post{
+.post_details_post {
     position: relative;
     flex-grow: 1;
     padding: 20px;
@@ -312,7 +362,7 @@ body {
     flex-direction: column;
 }
 
-.post_details_comments{
+.post_details_comments {
     border-left: 1px solid gray;
     flex-grow: 2;
     padding: 20px;
@@ -320,20 +370,26 @@ body {
     flex-direction: column;
 }
 
-.post_controls{
+.post_controls {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 10;
+
+    background: #ffffffCC;
+    border: 1px solid gray;
+    padding: 2px 4px;
+    border-radius: 4px;
 }
 
-.post_return{
+.post_return {
+    text-decoration: none !important;
     position: absolute;
     left: 20px;
     z-index: 10;
 }
 
-.post_image{
+.post_image {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -341,7 +397,7 @@ body {
     height: 100%;
 }
 
-.post_image img{
+.post_image img {
     max-height: 400px;
     max-width: 600px;
     /*height: auto !important;*/
@@ -352,7 +408,7 @@ body {
     padding: 0;
 }
 
-.post_details_meta_section{
+.post_details_meta_section {
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -362,7 +418,7 @@ body {
     /*background-color: lightgray;*/
 }
 
-.post_details_meta_section>span{
+.post_details_meta_section > span {
     border: 1px solid gray;
     border-radius: 5px;
     /*width: 100% !important;*/
@@ -370,13 +426,13 @@ body {
     padding: 10px;
     /*flex-grow: 1;*/
     justify-self: flex-end;
-}   
+}
 
-.post_details_meta_section>p{
+.post_details_meta_section > p {
     margin-bottom: 1em;
 }
 
-.post_meta_section{
+.post_meta_section {
     list-style-type: none;
     display: flex;
     padding: 0;
@@ -384,13 +440,13 @@ body {
     margin-bottom: 0;
 }
 
-.post_meta{
+.post_meta {
     margin-right: 10px;
     font-family: Consolas, serif;
 }
 
 /*comments*/
-.post_comments_section{
+.post_comments_section {
     width: 100%;
     border: 1px solid gray;
     border-radius: 4px;
@@ -398,33 +454,50 @@ body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
+    overflow-y: auto;
 }
 
-.post_comment{
-    display: inline-block;
+.post_comment {
+    /*display: inline-block;
     text-decoration: none;
     color: black;
-    flex-basis: 100%;
+    flex-basis: 100%;*/
+
+    display: block;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 3px;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 10px;
+    /* flex-basis: 100%; */
+    flex-shrink: 0;
+    position: relative;
+
 }
 
-.post_comment:hover{
+.post_comment:hover {
     text-decoration: none;
 }
 
-.post_comment .comment_username{
+.post_comment .comment_username {
     font-family: Consolas, serif;
     font-weight: bold;
 }
 
-.post_comment .comment_datetime{
+.post_comment .comment_datetime {
     font-family: Consolas, serif;
 }
 
-.post_comment .comment_value{
+.post_comment .comment_value {
     word-break: break-all;
     word-break: break-word;
     /*overflow-wrap: ;*/
+}
+
+.post_comment .comment_controls {
+    float: right;
 }
 
 /*form*/
@@ -437,7 +510,7 @@ li form button, nav form button {
 }
 
 /*chat*/
-.chat_rooms{
+.chat_rooms {
     border: 1px solid gray;
     border-radius: 4px;
     display: flex;
@@ -447,17 +520,44 @@ li form button, nav form button {
     margin: 100px auto;
 }
 
-.chat_section{
+.chat_container {
     border: 1px solid gray;
     border-radius: 4px;
     margin-right: 12em !important;
     margin-left: 12em !important;
     display: flex;
     flex-direction: column;
+}
+
+.chat_container .chat_header {
+    border-bottom: 1px solid gray;
     padding: 10px;
 }
 
-.message{
+.chat_container .chat_section {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 550px;
+}
+
+.chat_container .chat_footer {
+    border-top: 1px solid gray;
+    padding: 10px;
+}
+
+.messages{
+    display: flex;
+    flex-direction: column;
+    flex-flow: column-reverse;
+    flex-grow: 1;
+    padding: 10px;
+    flex-basis: auto;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+
+.message {
     border: 1px solid gray;
     padding: 10px;
     width: fit-content;
@@ -467,21 +567,21 @@ li form button, nav form button {
     border-radius: 5px;
 }
 
-.message.active{
+.message.active {
     background: #1b6ec2;
     border: 1px solid #1861ac;
     color: white;
     align-self: flex-end;
 }
 
-.chat_create_form{
+.chat_create_form {
     background: red;
     display: flex;
     padding: 10px;
     align-items: center;
 }
 
-.chat_create_form textarea{
+.chat_create_form textarea {
     flex-grow: 80;
     height: 4em;
     border: 1px solid gray;
@@ -490,7 +590,7 @@ li form button, nav form button {
     resize: none;
 }
 
-.chat_create_form button{
+.chat_create_form button {
     flex-grow: 20;
     height: 3em;
     line-height: 3em;
@@ -501,14 +601,14 @@ li form button, nav form button {
 }
 
 /*image*/
-.miniature-cover{
+.miniature-cover {
     width: 100%;
     height: 100%;
     border: #ff5c6c 4px dashed;
     position: absolute;
 }
 
-.miniature-control{
+.miniature-control {
     position: absolute;
     width: 10px;
     height: 10px;
@@ -516,6 +616,6 @@ li form button, nav form button {
     background: #e0a800;
 }
 
-.miniature-control:hover{
+.miniature-control:hover {
     background: #fdc400;
 }

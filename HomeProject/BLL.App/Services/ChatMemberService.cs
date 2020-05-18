@@ -20,6 +20,12 @@ namespace BLL.App.Services
         {
         }
 
+
+        public async Task<ChatMember> FindByUserAndRoomAsync(Guid userId, Guid chatRoomId)
+        {
+            return Mapper.Map(await ServiceRepository.FindByUserAndRoomAsync(userId, chatRoomId));
+        }
+
         public async Task<IEnumerable<ChatMember>> RoomAllAsync(Guid chatRoomId)
         {
             return (await ServiceRepository.RoomAllAsync(chatRoomId)).Select(member => Mapper.Map(member));

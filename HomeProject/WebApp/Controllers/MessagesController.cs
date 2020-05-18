@@ -27,15 +27,6 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Get all records
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> Index(Guid chatRoomId)
-        {
-            return View(await _bll.Messages.AllAsync(chatRoomId));
-        }
-
-        /// <summary>
         /// Get record creating page
         /// </summary>
         /// <returns></returns>
@@ -68,7 +59,7 @@ namespace WebApp.Controllers
                 _bll.Messages.Add(message);
                 await _bll.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "ChatRooms", new {id = message.ChatRoomId});
             }
 
             return View(message);

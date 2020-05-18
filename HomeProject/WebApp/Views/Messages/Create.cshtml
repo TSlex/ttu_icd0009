@@ -18,7 +18,7 @@
                 <input type="hidden" asp-for="ChatRoomId">
 
                 <input type="submit" class="btn btn-success" value="@Resourses.Views.Common.CreateButton">
-                <a type="button" asp-action="Index" class="btn btn-secondary">
+                <a type="button" asp-action="Details" asp-controller="ChatRooms" asp-route-id="@Model.ChatRoomId" class="btn btn-secondary">
                     @Resourses.Views.Common.CancelButton
                 </a>
             </form>

@@ -27,26 +27,9 @@ namespace WebApp.Controllers
         /// Get all records
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid chatRoomId)
         {
-            return View(await _bll.ChatMembers.AllAsync());
-        }
-
-        /// <summary>
-        /// Get record details
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Details(Guid id)
-        {
-            var chatMember = await _bll.ChatMembers.FindAsync(id);
-
-            if (chatMember == null)
-            {
-                return NotFound();
-            }
-
-            return View(chatMember);
+            return View(await _bll.ChatMembers.RoomAllAsync(chatRoomId));
         }
 
         /// <summary>

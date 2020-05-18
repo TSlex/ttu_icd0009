@@ -76,7 +76,16 @@ namespace BLL.App.Services
 
         public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
         {
-            return (await ServiceRepository.AllAsync(userId)).Select(room => Mapper.Map(room));
+            return (await ServiceRepository.AllAsync(userId))
+                .Where(room => FilterByMemberDeleted(room, userId))
+                .Select(room => Mapper.Map(room));
+        }
+
+        private static bool FilterByMemberDeleted(DAL.App.DTO.ChatRoom chatRoom, Guid userId)
+        {
+            var member = chatRoom?.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == userId);
+            
+            return member?.DeletedAt == null;
         }
 
         public async Task<bool> IsRoomMemberAsync(Guid chatRoomId, Guid userId)

@@ -8,7 +8,7 @@ namespace Contracts.DAL.App.Repositories
 {
     public interface IChatRoomRepo : IBaseRepo<ChatRoom>
     {
-        Task<ChatRoom> GetRoomWithUserAsync(Guid firstId, Guid secondId);
+        Task<ChatRoom> GetRoomWithUserAsync(Guid userId, Guid requesterId);
         Task<IEnumerable<ChatRoom>> AllAsync(Guid userId);
         
         Task<bool> IsRoomMemberAsync(Guid chatRoomId, Guid userId);

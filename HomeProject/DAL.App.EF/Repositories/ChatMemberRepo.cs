@@ -26,18 +26,26 @@ namespace DAL.Repositories
                 .FirstOrDefaultAsync());
         }
 
+        public async Task<ChatMember> FindByUserAndRoomAsync(Guid userId, Guid chatRoomId)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Where(member => member.ProfileId == userId && member.ChatRoomId == chatRoomId)
+                .FirstOrDefaultAsync());
+        }
+
         public async Task<IEnumerable<ChatMember>> RoomAllAsync(Guid chatRoomId)
         {
             return (await RepoDbContext.ChatMembers
                     .Where(member => member.ChatRoomId == chatRoomId 
-                                     && member.DeletedAt == null)
+                                     && member.DeletedAt == null
+                                     && member.MasterId == null)
                     .Select(member => new Domain.ChatMember()
                     {
                         Id = member.Id,
                         Profile = new Domain.Profile()
                         {
                             UserName = member.Profile!.UserName,
-//                            ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl
+                            ProfileAvatarId = member.Profile!.ProfileAvatarId
                         },
                         ChatRole = new Domain.ChatRole()
                         {
@@ -48,12 +56,12 @@ namespace DAL.Repositories
                 .Select(member => Mapper.Map(member));
         }
 
-        public override ChatMember Remove(ChatMember entity)
+        /*public override ChatMember Remove(ChatMember entity)
         {
             entity.ChatRoleId = RepoDbContext.ChatRoles.First(role => role.RoleTitle == "Left")!.Id;
                 
             return base.Remove(entity);
-        }
+        }*/
 
         public override async Task<IEnumerable<ChatMember>> GetRecordHistoryAsync(Guid id)
         {

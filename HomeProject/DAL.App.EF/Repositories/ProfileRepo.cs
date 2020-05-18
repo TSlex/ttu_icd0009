@@ -112,8 +112,8 @@ namespace DAL.Repositories
                                        .Any(blockedProfile => blockedProfile.BProfileId == profile.Id
                                                               && blockedProfile.ProfileId == (Guid) requesterId),
                     IsUserFollows = requesterId != null && RepoDbContext.Followers
-                                        .Any(follower => follower.ProfileId == (Guid) requesterId
-                                                         && follower.FollowerProfileId == profile.Id),
+                                        .Any(follower => follower.ProfileId == profile.Id
+                                                         && follower.FollowerProfileId == (Guid) requesterId),
                 }).FirstOrDefaultAsync();
         }
 

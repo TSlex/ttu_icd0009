@@ -17,18 +17,51 @@ namespace DAL.Repositories
         {
         }
 
-        public async Task<ChatRoom> GetRoomWithUserAsync(Guid firstId, Guid secondId)
+        public override async Task<ChatRoom> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbContext.ChatRooms
+            return Mapper.Map(await RepoDbSet
+                .Include(room => room.Messages)
+                .Include(room => room.ChatMembers)
+                .ThenInclude(member => member.ChatRole)
+                .ThenInclude(role => role.RoleTitleValue)
+                .ThenInclude(s => s.Translations).FirstOrDefaultAsync());
+        }
+
+        public async Task<ChatRoom> GetRoomWithUserAsync(Guid userId, Guid requesterId)
+        {
+            var chatRoom = await RepoDbContext.ChatRooms
                 .Include(room => room.ChatMembers)
                 .Where(room => room.ChatMembers!.Count == 2
+                               && room.MasterId == null
                                && room.ChatMembers
                                    .Select(member => member.ProfileId)
-                                   .Contains(firstId)
+                                   .Contains(userId)
                                && room.ChatMembers
                                    .Select(member => member.ProfileId)
-                                   .Contains(secondId))
-                .FirstOrDefaultAsync());
+                                   .Contains(requesterId))
+                .FirstOrDefaultAsync();
+
+            if (chatRoom?.DeletedAt != null)
+            {
+                chatRoom.DeletedAt = null;
+                chatRoom.DeletedBy = null;
+
+                RepoDbSet.Update(chatRoom);
+                await RepoDbContext.SaveChangesAsync();
+            }
+
+            var member = chatRoom?.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == requesterId);
+
+            if (member != null && member.DeletedAt != null)
+            {
+                member.DeletedAt = null;
+                member.DeletedBy = null;
+
+                RepoDbContext.ChatMembers.Update(member);
+                await RepoDbContext.SaveChangesAsync();
+            }
+            
+            return Mapper.Map(chatRoom);
         }
 
         public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
@@ -37,8 +70,8 @@ namespace DAL.Repositories
                     .Include(room => room.ChatMembers)
                     .Include(room => room.Messages)
                     .Where(room => room.ChatMembers
-                        .Select(member => member.ProfileId)
-                        .Contains(userId) 
+                                       .Select(member => member.ProfileId)
+                                       .Contains(userId)
                                    && room.DeletedAt == null)
                     .Select(room => new Domain.ChatRoom()
                     {
@@ -78,20 +111,21 @@ namespace DAL.Repositories
             {
                 RepoDbContext.ChatMembers.Remove(chatMember);
             }
-            
+
             var messages = RepoDbContext.Messages.Where(message => message.ChatRoomId == entity.Id).ToList();
 
             foreach (var message in messages)
             {
                 RepoDbContext.Messages.Remove(message);
             }
-            
+
             return base.Remove(entity);
         }
-        
+
         public override async Task<IEnumerable<ChatRoom>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
+                record => Mapper.Map(record));
         }
     }
 }

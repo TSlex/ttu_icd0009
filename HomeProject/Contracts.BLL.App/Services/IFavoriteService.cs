@@ -13,7 +13,7 @@ namespace Contracts.BLL.App.Services
         Favorite? Create(Guid id, Guid userId);
         Task<Favorite> RemoveAsync(Guid id, Guid userId);
 
-        Task<IEnumerable<Favorite>> AllByIdPageAsync(Guid postId, int pageNumber, int i);
+        Task<IEnumerable<Favorite>> AllByPostIdPageAsync(Guid postId, int pageNumber, int i);
         Task<int> CountByIdAsync(Guid postId);
     }
 }

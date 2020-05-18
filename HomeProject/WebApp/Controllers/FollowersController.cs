@@ -25,12 +25,43 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Get all records
+        /// Get user followers
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Followers()
         {
-            return View(await _bll.Followers.AllAsync());
+            return View(await _bll.Followers.AllByIdPageAsync(User.UserId(), false, 1, int.MaxValue));
+        }
+        
+        /// <summary>
+        /// Get user followed
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Followed()
+        {
+            return View(await _bll.Followers.AllByIdPageAsync(User.UserId(), true, 1, int.MaxValue));
+        }
+        
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var record = await _bll.Followers.GetForUpdateAsync(id);
+
+            if (record == null || record.FollowerProfileId != User.UserId())
+            {
+                return NotFound();
+            }
+            
+            _bll.Followers.Remove(id);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Followed));
         }
     }
 }

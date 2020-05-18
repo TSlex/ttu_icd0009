@@ -1,0 +1,32 @@
+@using Extension
+@model BLL.App.DTO.ChatRoom
+
+@{
+    ViewData["Title"] = Resourses.Views.Messages.Messages.Header;
+}
+
+<div class="chat_container">
+    <div class="chat_header">
+        <span>@Model.ChatRoomTitle</span>
+        <a asp-action="Index" asp-controller="ChatMembers" asp-route-chatRoomId="@Model.Id">Участники</a>
+        <form asp-action="LeaveChat" method="post">
+            <input type="hidden" name="chatRoomId" asp-for="Id">
+            <button>Покинуть чат</button>
+        </form>
+        <a asp-action="Edit">Переменовать</a>
+    </div>
+
+    <div class="chat_section">
+        <div class="messages">
+            @foreach (var item in Model.Messages.OrderByDescending(message => message.MessageDateTime))
+            {
+                <div class="message @(User.UserId() == item.ProfileId ? "active" : "")">@item.MessageValue</div>
+            }
+        </div>
+    </div>
+    <div class="chat_footer d-flex justify-content-center">
+        <a asp-action="Create" asp-controller="Messages" asp-route-chatRoomId="@Model.Id"
+           class="btn btn-primary">
+            @Resourses.Views.ChatRooms.ChatRooms.WriteButton</a>
+    </div>
+</div>

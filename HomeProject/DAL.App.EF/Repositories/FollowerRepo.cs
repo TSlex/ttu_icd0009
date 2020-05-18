@@ -50,6 +50,7 @@ namespace DAL.Repositories
                 return (await RepoDbContext.Followers
                         .Where(follower => follower.FollowerProfileId == userId)
                         .Include(follower => follower.Profile)
+                        .Include(follower => follower.FollowerProfile)
                         .Skip(startIndex)
                         .Take(count)
                         .ToListAsync())
@@ -58,11 +59,8 @@ namespace DAL.Repositories
             
             return (await RepoDbContext.Followers
                     .Where(follower => follower.ProfileId == userId)
+                    .Include(follower => follower.Profile)
                     .Include(follower => follower.FollowerProfile)
-                    .Select(follower => new Domain.Follower()
-                    {
-                        Profile = follower.FollowerProfile
-                    })
                     .Skip(startIndex)
                     .Take(count)
                     .ToListAsync())

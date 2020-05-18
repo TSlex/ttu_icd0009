@@ -83,7 +83,7 @@ namespace WebApp.ApiControllers._1._0
                 new FollowerProfileDTO
                 {
                     UserName = favorite.Profile!.UserName,
-//                    ProfileAvatarUrl = favorite.Profile!.ProfileAvatarUrl
+                    ProfileAvatarId = favorite.Profile.ProfileAvatarId
                 }));
         }
 
@@ -133,8 +133,8 @@ namespace WebApp.ApiControllers._1._0
             return Ok((await _bll.Followers.AllByIdPageAsync(user.Id, false, pageNumber, 10)).Select(favorite =>
                 new FollowerProfileDTO
                 {
-                    UserName = favorite.Profile!.UserName,
-//                    ProfileAvatarUrl = favorite.Profile!.ProfileAvatarUrl
+                    UserName = favorite.FollowerProfile!.UserName,
+                    ProfileAvatarId = favorite.FollowerProfile.ProfileAvatarId
                 }));
         }
     }

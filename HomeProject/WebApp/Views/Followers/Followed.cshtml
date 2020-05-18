@@ -1,0 +1,27 @@
+@model IEnumerable<BLL.App.DTO.Follower>
+
+@{
+    ViewData["Title"] = "Followed";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr>
+<div class="profile_gallery">
+    @{
+        foreach (var follower in Model)
+        {
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@follower.Profile.UserName">
+
+                <form asp-action="Delete">
+                    <button type="submit" class="item_controls btn-link">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                    <input type="hidden" asp-for="@follower.Id" name="Id">
+                </form>
+
+                <img src="~/images/@follower.Profile.ProfileAvatarId" alt="" height="100px" width="100px"/>
+                <span class="item_name">@follower.Profile.UserName</span>
+            </a>
+        }
+    }
+</div>

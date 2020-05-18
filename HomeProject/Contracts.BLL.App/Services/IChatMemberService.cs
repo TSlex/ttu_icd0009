@@ -9,6 +9,7 @@ namespace Contracts.BLL.App.Services
 {
     public interface IChatMemberService: IBaseEntityService<global::DAL.App.DTO.ChatMember, ChatMember>
     {
+        Task<ChatMember> FindByUserAndRoomAsync(Guid userId, Guid chatRoomId);
         Task<IEnumerable<ChatMember>> RoomAllAsync(Guid chatRoomId);
     }
 }

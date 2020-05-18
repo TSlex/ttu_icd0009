@@ -1,80 +1,28 @@
 @model IEnumerable<BLL.App.DTO.BlockedProfile>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Black List";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr>
+<div class="profile_gallery">
+    @{
+        foreach (var profile in Model)
+        {
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@profile.BProfile.UserName">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BProfile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profile!.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BProfile!.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <form asp-action="Delete">
+                    <button type="submit" class="item_controls btn-link">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                    <input type="hidden" asp-for="@profile.Id" name="Id">
+                </form>
+                
+                <img src="images/@profile.BProfile.ProfileAvatarId" alt="gift" height="100px" width="100px"/>
+
+                <span class="item_name">@profile.BProfile.UserName</span>
+            </a>
+        }
+    }
+</div>

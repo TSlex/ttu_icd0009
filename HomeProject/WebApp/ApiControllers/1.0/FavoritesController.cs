@@ -80,7 +80,7 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
-            return Ok((await _bll.Favorites.AllByIdPageAsync(postId, pageNumber, 10)).Select(favorite =>
+            return Ok((await _bll.Favorites.AllByPostIdPageAsync(postId, pageNumber, 10)).Select(favorite =>
                 new FavoriteProfileDTO
                 {
                     UserName = favorite.Profile!.UserName,

@@ -35,8 +35,10 @@
                     <span class="meta_title">@Model.PostPublicationDateTime</span>
                 </li>
                 <li class="post_meta">
+                    <a class="btn-link" asp-action="Index" asp-route-postId="@Model.Id" asp-controller="Favorites">
                     <span class="meta_counter">@Model.PostFavoritesCount</span>
                     <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
+                    </a>
                 </li>
                 <li class="post_meta">
                     <span class="meta_counter">@Model.PostCommentsCount</span>
@@ -67,17 +69,21 @@
         <div class="post_comments_section">
             @foreach (var comment in Model.Comments.OrderBy(comment => comment.CommentDateTime))
             {
-                <a class="post_comment" asp-controller="Comments" asp-action="Details"
-                   asp-route-id="@comment.Id" asp-route-returnUrl="@Url.ActionLink()">
+                <span class="post_comment">
                     <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
                     <span class="comment_username">&#64;@comment.Profile!.UserName: </span>
                     <span class="comment_value">@comment.CommentValue</span>
-                </a>
+                    <div class="comment_controls">
+                        <a class="fa fa-edit" asp-action="Edit" asp-controller="Comments" asp-route-id="@comment.Id"></a>
+                        <a class="fa fa-times-circle" asp-action="Delete" asp-controller="Comments" asp-route-id="@comment.Id"></a>
+                    </div>
+                </span>
             }
         </div>
         <div class="row d-flex justify-content-center mt-3">
-            <a asp-action="Create" asp-controller="Comments" 
-               asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()" class="btn btn-primary">@Resourses.Views.Posts.Posts.CommentCreate</a>
+            <a asp-action="Create" asp-controller="Comments"
+               asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()" class="btn btn-primary">
+                @Resourses.Views.Posts.Posts.CommentCreate</a>
         </div>
     </div>
 </div>

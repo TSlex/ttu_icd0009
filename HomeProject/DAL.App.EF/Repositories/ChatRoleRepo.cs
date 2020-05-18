@@ -19,10 +19,16 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<IEnumerable<ChatRole>> AllAsync()
+        {
+            return (await RepoDbSet.Include(role => role.RoleTitleValue).ThenInclude(s => s.Translations)
+                .ToListAsync()).Select(role => Mapper.Map(role));
+        }
+
         public async Task<ChatRole> FindAsync(string chatRoleTitle)
         {
             return Mapper.Map(await RepoDbContext.ChatRoles
-                    .FirstOrDefaultAsync((role => role.RoleTitle == chatRoleTitle)));
+                .FirstOrDefaultAsync((role => role.RoleTitle == chatRoleTitle)));
         }
 
         public override Task<ChatRole> UpdateAsync(ChatRole entity)
@@ -38,13 +44,14 @@ namespace DAL.Repositories
             {
                 RepoDbContext.ChatMembers.Remove(chatMember);
             }
-            
+
             return base.Remove(entity);
         }
-        
+
         public override async Task<IEnumerable<ChatRole>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
+                record => Mapper.Map(record));
         }
     }
 }

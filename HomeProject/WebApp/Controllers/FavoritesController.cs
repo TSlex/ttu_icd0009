@@ -28,9 +28,9 @@ namespace WebApp.Controllers
         /// Get all records
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid postId)
         {
-            return View(await _bll.Favorites.AllAsync());
+            return View(await _bll.Favorites.AllByPostIdPageAsync(postId, 1, int.MaxValue));
         }
     }
 }

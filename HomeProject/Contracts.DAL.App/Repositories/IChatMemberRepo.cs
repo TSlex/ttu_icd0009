@@ -8,6 +8,7 @@ namespace Contracts.DAL.App.Repositories
 {
     public interface IChatMemberRepo : IBaseRepo<ChatMember>
     {
+        Task<ChatMember> FindByUserAndRoomAsync(Guid userId, Guid chatRoomId);
         Task<IEnumerable<ChatMember>> RoomAllAsync(Guid chatRoomId);
     }
 }

@@ -18,6 +18,24 @@ namespace DAL.Repositories
         {
         }
 
+        public override Message Add(Message entity)
+        {
+            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoomId == entity.ChatRoomId && member.MasterId == null).ToList();
+
+            foreach (var member in members)
+            {
+                if (member?.DeletedAt != null)
+                {
+                    member.DeletedAt = null;
+                    member.DeletedBy = null;
+
+                    RepoDbContext.ChatMembers.Update(member);
+                }
+            }
+            
+            return base.Add(entity);
+        }
+
         public async Task<IEnumerable<Message>> AllAsync(Guid id)
         {
             return await RepoDbContext.Messages.Where(message => message.ChatRoomId == id 

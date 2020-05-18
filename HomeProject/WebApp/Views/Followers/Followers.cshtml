@@ -1,0 +1,19 @@
+@model IEnumerable<BLL.App.DTO.Follower>
+
+@{
+    ViewData["Title"] = "Followers";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr>
+<div class="profile_gallery">
+    @{
+        foreach (var follower in Model)
+        {
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@follower.FollowerProfile.UserName">
+                <img src="~/images/@follower.FollowerProfile.ProfileAvatarId" alt="" height="100px" width="100px"/>
+                <span class="item_name">@follower.FollowerProfile.UserName</span>
+            </a>
+        }
+    }
+</div>

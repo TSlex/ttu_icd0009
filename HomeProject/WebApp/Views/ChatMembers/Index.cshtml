@@ -1,80 +1,33 @@
 @model IEnumerable<BLL.App.DTO.ChatMember>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "СhatMembers";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr>
+<div class="profile_gallery">
+    @{
+        foreach (var chatMember in Model)
+        {
+            <a class="gallery_item" style="width: 200px; height: 200px;" asp-controller="Profiles" asp-action="Index" asp-route-username="@chatMember.Profile.UserName">
+                <form asp-action="Edit" method="get">
+                    <button type="submit" class="item_controls btn-link" style="right: 0; left: initial">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChatRoleId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChatRoomId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profile!.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChatRoleId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChatRoomId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <form asp-action="Delete" method="post">
+                    <button type="submit" class="item_controls btn-link" style="left: 0">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                    <input type="hidden" asp-for="@chatMember.Id" name="Id">
+                </form>
+
+                <img src="/images/@chatMember.Profile.ProfileAvatarId" alt="gift" height="200px" width="200px"/>
+                <span class="item_name" style="bottom: 15px">@chatMember.ChatRole.RoleTitle</span>
+                <span class="item_name">@chatMember.Profile.UserName</span>
+            </a>
+        }
+    }
+</div>

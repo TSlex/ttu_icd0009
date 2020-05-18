@@ -57,7 +57,7 @@ namespace BLL.App.Services
             return await ServiceRepository.CountByIdAsync(postId);
         }
 
-        public async Task<IEnumerable<Favorite>> AllByIdPageAsync(Guid postId, int pageNumber, int count)
+        public async Task<IEnumerable<Favorite>> AllByPostIdPageAsync(Guid postId, int pageNumber, int count)
         {
             return (await ServiceRepository.AllByIdPageAsync(postId, pageNumber, count)).Select(favorite =>
                 Mapper.Map(favorite));
