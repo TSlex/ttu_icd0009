@@ -141,23 +141,6 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var chatRole = await _bll.ChatRoles.FindAsync(id);
-
-            if (chatRole == null)
-            {
-                return NotFound();
-            }
-
-            return View(chatRole);
-        }
-
-        /// <summary>
         /// Deletes a record
         /// </summary>
         /// <param name="id"></param>

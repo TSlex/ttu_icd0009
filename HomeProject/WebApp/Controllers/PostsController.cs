@@ -30,15 +30,6 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Get all records
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> Index()
-        {
-            return View(await _bll.Posts.AllAsync());
-        }
-
-        /// <summary>
         /// Get record details
         /// </summary>
         /// <param name="id"></param>

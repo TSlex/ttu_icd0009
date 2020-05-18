@@ -133,6 +133,11 @@
         <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_ManageNav.cshtml" />
         <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_StatusMessage.cshtml" />
         <_ContentIncludedByDefault Remove="Views\ProfilePreferences\_ViewImports.cshtml" />
+        <_ContentIncludedByDefault Remove="Views\Images\Create.cshtml" />
+        <_ContentIncludedByDefault Remove="Views\Images\Delete.cshtml" />
+        <_ContentIncludedByDefault Remove="Views\Images\Details.cshtml" />
+        <_ContentIncludedByDefault Remove="Views\Images\Edit.cshtml" />
+        <_ContentIncludedByDefault Remove="Views\Images\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -201,6 +206,11 @@
         <UpToDateCheckInput Remove="Views\Followers\Details.cshtml" />
         <UpToDateCheckInput Remove="Views\Followers\Edit.cshtml" />
         <UpToDateCheckInput Remove="Views\Followers\Index.cshtml" />
+        <UpToDateCheckInput Remove="Views\ProfileRanks\Create.cshtml" />
+        <UpToDateCheckInput Remove="Views\ProfileRanks\Delete.cshtml" />
+        <UpToDateCheckInput Remove="Views\ProfileRanks\Details.cshtml" />
+        <UpToDateCheckInput Remove="Views\ProfileRanks\Edit.cshtml" />
+        <UpToDateCheckInput Remove="Views\ProfileRanks\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

@@ -27,15 +27,6 @@ namespace WebApp.Controllers
         }
         
         /// <summary>
-        /// Get all records
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> Index()
-        {
-            return View(await _bll.ProfileGifts.AllAsync());
-        }
-        
-        /// <summary>
         /// Get record details
         /// </summary>
         /// <param name="id"></param>
@@ -135,52 +126,6 @@ namespace WebApp.Controllers
                 foreach (ModelError error in modelState.Errors) {
                     Console.WriteLine(error.ErrorMessage);
                 }
-            }
-
-            return View(profileGift);
-        }
-        
-        /// <summary>
-        /// Get record editing page
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> Edit(Guid id)
-        {
-
-
-            var profileGift = await _bll.ProfileGifts.FindAsync(id);
-
-            if (profileGift == null)
-            {
-                return NotFound();
-            }
-
-
-            return View(profileGift);
-        }
-        
-        /// <summary>
-        /// Updates a record
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="profileGift"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ProfileGift profileGift)
-        {
-            if (id != profileGift.Id || User.UserId() != profileGift.ProfileId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                await _bll.ProfileGifts.UpdateAsync(profileGift);
-                await _bll.SaveChangesAsync();
-
-
-                return RedirectToAction(nameof(Index));
             }
 
             return View(profileGift);

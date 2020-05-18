@@ -77,44 +77,6 @@ namespace WebApp.Controllers
             }
 
             return View(record);
-
-//            var isUserBlocked = isAuthorized &&
-//                                user.Id != User.UserId() &&
-//                                await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
-//            
-//            // ReSharper disable EF1001
-//            if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
-//            {
-//                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
-//                {
-//                    ProfileId = user.Id,
-//                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
-//                });
-//
-//                await _bll.SaveChangesAsync();
-//            }
-//
-//            if (isUserBlocked)
-//            {
-//                var profileLimited = await _bll.Profiles.GetProfileLimited(user.Id);
-//
-//                return View("IndexLimited", profileLimited);
-//            }
-//
-//            var profileModel = await _bll.Profiles.GetProfileFull(user.Id);
-//
-//            if (profileModel == null)
-//            {
-//                return NotFound();
-//            }
-//
-//            if (isAuthorized)
-//            {
-//                profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
-//                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;
-//            }
-
-//            return View(profileModel);
         }
 
         /// <summary>

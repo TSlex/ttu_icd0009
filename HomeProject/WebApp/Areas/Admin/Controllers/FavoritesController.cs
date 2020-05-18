@@ -52,41 +52,6 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Get record creating page
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-
-        /// <summary>
-        /// Creates a new record
-        /// </summary>
-        /// <param name="favorite"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.Favorite favorite)
-        {
-            ModelState.Clear();
-            favorite.ProfileId = User.UserId();
-
-            if (TryValidateModel(favorite))
-            {
-                favorite.Id = Guid.NewGuid();
-                _bll.Favorites.Add(favorite);
-                await _bll.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(favorite);
-        }
-
-        /// <summary>
         /// Get record editing page
         /// </summary>
         /// <returns></returns>
@@ -127,25 +92,6 @@ namespace WebApp.Areas.Admin.Controllers
 
 
                 return RedirectToAction(nameof(Index));
-            }
-
-            return View(favorite);
-        }
-
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-
-
-            var favorite = await _bll.Favorites.FindAsync(id);
-
-            if (favorite == null)
-            {
-                return NotFound();
             }
 
             return View(favorite);

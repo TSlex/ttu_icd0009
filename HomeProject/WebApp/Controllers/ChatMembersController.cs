@@ -50,41 +50,6 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Get record creating page
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// Creates a new record
-        /// </summary>
-        /// <param name="chatMember"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.ChatMember chatMember)
-        {
-            ModelState.Clear();
-            chatMember.ChangedAt = DateTime.Now;
-            chatMember.CreatedAt = DateTime.Now;
-
-            if (TryValidateModel(chatMember))
-            {
-                chatMember.Id = Guid.NewGuid();
-                _bll.ChatMembers.Add(chatMember);
-                await _bll.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(chatMember);
-        }
-
-        /// <summary>
         /// Get record editing page
         /// </summary>
         /// <returns></returns>
@@ -123,24 +88,6 @@ namespace WebApp.Controllers
 
 
                 return RedirectToAction(nameof(Index));
-            }
-
-            return View(chatMember);
-        }
-
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-
-            var chatMember = await _bll.ChatMembers.FindAsync(id);
-
-            if (chatMember == null)
-            {
-                return NotFound();
             }
 
             return View(chatMember);

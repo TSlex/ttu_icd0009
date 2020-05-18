@@ -189,23 +189,6 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var gift = await _bll.Gifts.FindAsync(id);
-
-            if (gift == null)
-            {
-                return NotFound();
-            }
-
-            return View(gift);
-        }
-
-        /// <summary>
         /// Deletes a record
         /// </summary>
         /// <param name="id"></param>

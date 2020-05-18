@@ -50,40 +50,6 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(blockedProfile);
         }
-        
-        /// <summary>
-        /// Get record creating page
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        
-        /// <summary>
-        /// Creates a new record
-        /// </summary>
-        /// <param name="blockedProfile"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.BlockedProfile blockedProfile)
-        {
-            ModelState.Clear();
-
-            if (TryValidateModel(blockedProfile))
-            {
-                blockedProfile.Id = Guid.NewGuid();
-                _bll.BlockedProfiles.Add(blockedProfile);
-                await _bll.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(blockedProfile);
-        }
 
         /// <summary>
         /// Get record editing page

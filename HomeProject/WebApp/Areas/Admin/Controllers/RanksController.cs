@@ -144,25 +144,6 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-
-
-            var rank = await _bll.Ranks.FindAsync(id);
-
-            if (rank == null)
-            {
-                return NotFound();
-            }
-
-            return View(rank);
-        }
-
-        /// <summary>
         /// Deletes a record
         /// </summary>
         /// <param name="id"></param>

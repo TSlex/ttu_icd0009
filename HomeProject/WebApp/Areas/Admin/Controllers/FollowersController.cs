@@ -52,41 +52,6 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Get record creating page
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Create()
-        {
-
-            return View();
-        }
-
-        /// <summary>
-        /// Creates a new record
-        /// </summary>
-        /// <param name="follower"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.Follower follower)
-        {
-            ModelState.Clear();
-            follower.ProfileId = User.UserId();
-
-            if (TryValidateModel(follower))
-            {
-                follower.Id = Guid.NewGuid();
-                _bll.Followers.Add(follower);
-                await _bll.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(follower);
-        }
-
-        /// <summary>
         /// Get record editing page
         /// </summary>
         /// <returns></returns>
@@ -127,24 +92,6 @@ namespace WebApp.Areas.Admin.Controllers
 
 
                 return RedirectToAction(nameof(Index));
-            }
-
-            return View(follower);
-        }
-
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-
-            var follower = await _bll.Followers.FindAsync(id);
-
-            if (follower == null)
-            {
-                return NotFound();
             }
 
             return View(follower);

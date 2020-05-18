@@ -26,35 +26,6 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Get all records
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> Index()
-        {
-            return View(await _bll.Comments.AllAsync());
-        }
-
-        /// <summary>
-        /// Get record details
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Details(Guid id, string? returnUrl)
-        {
-            var comment = await _bll.Comments.FindAsync(id);
-
-            if (comment == null)
-            {
-                return NotFound();
-            }
-            
-            comment.ReturnUrl = returnUrl;
-
-            return View(comment);
-        }
-
-        /// <summary>
         /// Get record creating page
         /// </summary>
         /// <returns></returns>
