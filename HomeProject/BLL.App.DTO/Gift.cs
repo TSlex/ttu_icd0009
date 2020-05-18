@@ -5,8 +5,10 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class Gift : DomainEntityBaseMetadata
+    public class Gift : DomainEntityBaseMetaSoftUpdateDelete
     {
+        public Guid GiftNameId { get; set; } = default!;
+        
         [Display(Name = nameof(GiftName), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         [MaxLength(100)]
         public string GiftName { get; set; } = default!;

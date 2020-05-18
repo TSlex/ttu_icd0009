@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ChatRoom" xml:space="preserve">
-    <value></value>
+    <value>ChatRoom</value>
   </data>
   <data name="ChatRoomId" xml:space="preserve">
-    <value></value>
+    <value>ChatRoomId</value>
   </data>
   <data name="MessageDateTime" xml:space="preserve">
-    <value></value>
+    <value>MessageDateTime</value>
   </data>
   <data name="MessageValue" xml:space="preserve">
-    <value>Message</value> 
+    <value>Message</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value></value>
+    <value>Profile</value>
   </data>
   <data name="ProfileId" xml:space="preserve">
-    <value></value>
+    <value>ProfileId</value>
   </data>
 </root>

@@ -17,6 +17,9 @@ namespace Contracts.BLL.Base.Services
     {
         IEnumerable<TBLLEntity> All();
         Task<IEnumerable<TBLLEntity>> AllAsync();
+        Task<IEnumerable<TBLLEntity>> AllAdminAsync();
+        
+        Task<IEnumerable<TBLLEntity>> GetRecordHistoryAsync(Guid id);
 
         TBLLEntity Find(Guid id);
         Task<TBLLEntity> FindAsync(Guid id);
@@ -27,6 +30,8 @@ namespace Contracts.BLL.Base.Services
 
         TBLLEntity Remove(TBLLEntity entity);
         TBLLEntity Remove(Guid id);
+
+        void Restore(TBLLEntity entity);
 
         Task<int> CountAsync();
 

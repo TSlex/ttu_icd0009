@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class Rank: DomainEntityBaseMetadata
+    public class Rank: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string RankTitle { get; set; } = default!;
         [MaxLength(300)] public string? RankDescription { get; set; }

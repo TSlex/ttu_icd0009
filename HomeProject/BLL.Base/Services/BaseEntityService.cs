@@ -21,7 +21,7 @@ namespace BLL.Base.Services
         public BaseEntityService(TServiceRepository serviceRepository, IBaseBLLMapper<TDALEntity, TBLLEntity> mapper)
         {
             ServiceRepository = serviceRepository;
-            Mapper = mapper;    
+            Mapper = mapper;
         }
 
         public virtual IEnumerable<TBLLEntity> All() =>
@@ -30,12 +30,18 @@ namespace BLL.Base.Services
         public virtual async Task<IEnumerable<TBLLEntity>> AllAsync() =>
             (await ServiceRepository.AllAsync()).Select(entity => Mapper.Map(entity));
 
+        public async Task<IEnumerable<TBLLEntity>> AllAdminAsync() =>
+            (await ServiceRepository.AllAdminAsync()).Select(entity => Mapper.Map(entity));
+
+        public async Task<IEnumerable<TBLLEntity>> GetRecordHistoryAsync(Guid id) =>
+            (await ServiceRepository.GetRecordHistoryAsync(id)).Select(entity => Mapper.Map(entity));
+
         public virtual TBLLEntity Find(Guid id) =>
             Mapper.Map(ServiceRepository.Find(id));
 
         public virtual async Task<TBLLEntity> FindAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.FindAsync(id));
-        
+
         public async Task<TBLLEntity> GetForUpdateAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.GetForUpdateAsync(id));
 
@@ -46,11 +52,13 @@ namespace BLL.Base.Services
             Mapper.Map(await ServiceRepository.UpdateAsync(Mapper.MapReverse(entity)));
 
         public virtual TBLLEntity Remove(TBLLEntity entity) =>
-            Mapper.Map( ServiceRepository.Remove(Mapper.MapReverse(entity)));
+            Mapper.Map(ServiceRepository.Remove(Mapper.MapReverse(entity)));
 
         public virtual TBLLEntity Remove(Guid id) =>
-            Mapper.Map( ServiceRepository.Remove(id));
-        
+            Mapper.Map(ServiceRepository.Remove(id));
+
+        public virtual void Restore(TBLLEntity entity)
+            => ServiceRepository.Restore(Mapper.MapReverse(entity));
 
         public virtual async Task<int> CountAsync()
         {

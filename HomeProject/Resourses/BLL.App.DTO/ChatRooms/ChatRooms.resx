@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ChatMembers" xml:space="preserve">
-    <value></value>
+    <value>ChatMembers</value>
   </data>
   <data name="ChatRoomImageId" xml:space="preserve">
-    <value></value>
+    <value>ChatRoomImageId</value>
   </data>
   <data name="ChatRoomImageUrl" xml:space="preserve">
-    <value></value>
+    <value>ChatRoomImageUrl</value>
   </data>
   <data name="ChatRoomTitle" xml:space="preserve">
-    <value></value>
+    <value>ChatRoomTitle</value>
   </data>
   <data name="LastMessageDateTime" xml:space="preserve">
-    <value></value>
+    <value>LastMessageDateTime</value>
   </data>
   <data name="LastMessageValue" xml:space="preserve">
-    <value></value>
+    <value>LastMessageValue</value>
   </data>
   <data name="Messages" xml:space="preserve">
-    <value></value>
+    <value>Messages</value>
   </data>
 </root>

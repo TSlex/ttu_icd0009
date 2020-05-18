@@ -46,16 +46,17 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Gifts
-                .Include(gift => gift.GiftName)
-                .ThenInclude(s => s!.Translations)
-                .Skip(startIndex).Take(onPageCount)
-                .ToListAsync())
+                    .Where(gift => gift.DeletedAt == null)
+                    .Include(gift => gift.GiftName)
+                    .ThenInclude(s => s!.Translations)
+                    .Skip(startIndex).Take(onPageCount)
+                    .ToListAsync())
                 .Select(gift => Mapper.Map(gift));
         }
 
         public async Task<int> GetCountAsync()
         {
-            return await RepoDbContext.Gifts.CountAsync();
+            return await RepoDbContext.Gifts.Where(gift => gift.DeletedAt == null).CountAsync();
         }
 
         public override Gift Remove(Gift entity)
@@ -73,8 +74,13 @@ namespace DAL.Repositories
             {
                 RepoDbContext.Images.Remove(imageRecord);
             }
-            
+
             return base.Remove(entity);
+        }
+        
+        public override async Task<IEnumerable<Gift>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

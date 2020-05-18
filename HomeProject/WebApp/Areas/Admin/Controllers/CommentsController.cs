@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Extension;
@@ -32,7 +33,19 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Comments.AllAsync());
+            return View(await _bll.Comments.AllAdminAsync());
+        }
+        
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
+        {
+            var history = (await _bll.Comments.GetRecordHistoryAsync(id)).ToList()
+                .OrderByDescending(record => record.CreatedAt);
+            
+            return View(nameof(Index), history);
         }
 
         /// <summary>
@@ -188,7 +201,23 @@ namespace WebApp.Areas.Admin.Controllers
                 return Redirect(comment.ReturnUrl);
             }
 
-            return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Index));
+        }
+        
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var record = await _bll.Comments.GetForUpdateAsync(id);
+            _bll.Comments.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

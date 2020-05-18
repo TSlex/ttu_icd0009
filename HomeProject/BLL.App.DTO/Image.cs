@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace BLL.App.DTO
 {
-    public class Image : DomainEntityBaseMetadata
+    public class Image : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(ImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         [MaxLength(300)]

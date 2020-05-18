@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class Gift: DomainEntityBaseMetadata
+    public class Gift: DomainEntityBaseMetaSoftUpdateDelete
     {
         public Guid GiftNameId { get; set; } = default!;
         public string GiftName { get; set; } = default!;

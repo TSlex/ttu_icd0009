@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class ProfileGift : DomainEntityBaseMetadata
+    public class ProfileGift : DomainEntityBaseMetaSoftDelete
     {
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
         public Guid ProfileId { get; set; } = default!;

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +31,19 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Ranks.AllAsync());
+            return View(await _bll.Ranks.AllAdminAsync());
+        }
+        
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
+        {
+            var history = (await _bll.Ranks.GetRecordHistoryAsync(id)).ToList()
+                .OrderByDescending(record => record.CreatedAt);
+            
+            return View(nameof(Index), history);
         }
 
         /// <summary>
@@ -159,6 +172,22 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             _bll.Ranks.Remove(id);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var record = await _bll.Ranks.GetForUpdateAsync(id);
+            _bll.Ranks.Restore(record);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

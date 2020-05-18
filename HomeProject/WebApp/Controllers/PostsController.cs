@@ -226,6 +226,7 @@ namespace WebApp.Controllers
 
             ModelState.Clear();
             post.ProfileId = User.UserId();
+            post.PostPublicationDateTime = record.PostPublicationDateTime;
             
             var imageModel = post.PostImage;
             if (post.PostImageId == null)

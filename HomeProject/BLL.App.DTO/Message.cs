@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class Message : DomainEntityBaseMetadata
+    public class Message : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(MessageValue), ResourceType = typeof(Resourses.BLL.App.DTO.Messages.Messages))]
         [MaxLength(3000)]

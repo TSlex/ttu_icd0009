@@ -61,7 +61,7 @@ namespace Resourses.BLL.App.DTO.Feed {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Profile.
         /// </summary>
         public static string Posts {
             get {

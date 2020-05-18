@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class ChatMember: DomainEntityBaseMetadata
+    public class ChatMember: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string? ChatRoomTitle { get; set; }
 

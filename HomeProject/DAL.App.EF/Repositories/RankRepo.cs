@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
 using DAL.App.DTO;
@@ -19,6 +21,7 @@ namespace DAL.Repositories
         public async Task<Rank> FindByCodeAsync(string code)
         {
             return Mapper.Map(await RepoDbContext.Ranks
+                .Where(rank => rank.DeletedAt == null)
                 .Include(rank => rank.RankTitle)
                 .ThenInclude(s => s!.Translations)
                 .Include(rank => rank.RankDescription)
@@ -36,6 +39,11 @@ namespace DAL.Repositories
             }
             
             return base.Remove(entity);
+        }
+        
+        public override async Task<IEnumerable<Rank>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

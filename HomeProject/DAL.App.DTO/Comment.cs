@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class Comment: DomainEntityBaseMetadata
+    public class Comment: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(300)][MinLength(1)] public string CommentValue { get; set; } = default!;
         public DateTime CommentDateTime { get; set; } = DateTime.Now;

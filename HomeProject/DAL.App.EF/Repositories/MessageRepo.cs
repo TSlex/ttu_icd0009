@@ -20,7 +20,8 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<Message>> AllAsync(Guid id)
         {
-            return await RepoDbContext.Messages.Where(message => message.ChatRoomId == id)
+            return await RepoDbContext.Messages.Where(message => message.ChatRoomId == id 
+                                                                 && message.DeletedAt == null)
                 .Select(message => Mapper.Map(message)).ToListAsync();
         }
 
@@ -35,7 +36,8 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Messages
-                    .Where(message => message.ChatRoomId == chatRoomId)
+                    .Where(message => message.ChatRoomId == chatRoomId 
+                                      && message.DeletedAt == null)
                     .Include(message => message.Profile)
                     .OrderByDescending(message => message.MessageDateTime)
                     .Skip(startIndex)
@@ -56,13 +58,14 @@ namespace DAL.Repositories
 
         public async Task<int> CountByRoomAsync(Guid chatRoomId)
         {
-            return await RepoDbContext.Messages.CountAsync(message => message.ChatRoomId == chatRoomId);
+            return await RepoDbContext.Messages.Where(message => message.DeletedAt == null).CountAsync(message => message.ChatRoomId == chatRoomId);
         }
 
         public async Task<Message> GetLastMessage(Guid chatRoomId)
         {
             return Mapper.Map(await RepoDbContext.Messages
-                .Where(message => message.ChatRoomId == chatRoomId)
+                .Where(message => message.ChatRoomId == chatRoomId 
+                                  && message.DeletedAt == null)
                 .Include(message => message.Profile)
                 .OrderByDescending(message => message.MessageDateTime)
                 .Take(1)
@@ -77,6 +80,11 @@ namespace DAL.Repositories
                     MessageDateTime = message.MessageDateTime
                 })
                 .FirstOrDefaultAsync());
+        }
+        
+        public override async Task<IEnumerable<Message>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

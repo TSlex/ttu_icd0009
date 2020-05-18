@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class Comment : DomainEntityBaseMetadata
+    public class Comment : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(CommentValue), ResourceType = typeof(Resourses.BLL.App.DTO.Comments.Comments))]
         [MaxLength(300)]

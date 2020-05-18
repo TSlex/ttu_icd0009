@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
@@ -37,7 +38,19 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Images.AllAsync());
+            return View(await _bll.Images.AllAdminAsync());
+        }
+        
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
+        {
+            var history = (await _bll.Images.GetRecordHistoryAsync(id)).ToList()
+                .OrderByDescending(record => record.CreatedAt);
+            
+            return View(nameof(Index), history);
         }
 
         /// <summary>
@@ -250,6 +263,22 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             return imageModel;
+        }
+        
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var record = await _bll.Images.GetForUpdateAsync(id);
+            _bll.Images.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

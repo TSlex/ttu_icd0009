@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class Post : DomainEntityBaseMetadata
+    public class Post : DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)]
         public string PostTitle { get; set; } = default!;

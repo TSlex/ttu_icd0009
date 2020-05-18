@@ -3,7 +3,7 @@ using DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class ProfileRank: DomainEntityBaseMetadata
+    public class ProfileRank: DomainEntityBaseMetaSoftDelete
     {
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

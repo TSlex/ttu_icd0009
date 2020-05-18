@@ -83,7 +83,8 @@ namespace DAL
             foreach (var entityEntry in markedAsAdded)
             {
                 if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
-
+                if (entityEntry.Entity is ISoftUpdateEntity softUpdateEntity && softUpdateEntity.MasterId != null) continue;
+                
                 entityWithMetaData.CreatedAt = DateTime.Now;
 
                 if (entityWithMetaData.CreatedBy == null)
@@ -117,7 +118,7 @@ namespace DAL
                 entityWithMetaData.ChangedAt = DateTime.Now;
                 entityWithMetaData.ChangedBy = _userNameProvider.CurrentUserName;
 
-                // do not let changes on these properties get into generated db sentences - db keeps old values
+                if (entityEntry.Entity is ISoftUpdateEntity) continue;
                 entityEntry.Property(nameof(entityWithMetaData.CreatedAt)).IsModified = false;
                 entityEntry.Property(nameof(entityWithMetaData.CreatedBy)).IsModified = false;
             }

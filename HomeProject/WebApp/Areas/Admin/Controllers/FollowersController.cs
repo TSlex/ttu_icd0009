@@ -31,7 +31,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Followers.AllAsync());
+            return View(await _bll.Followers.AllAdminAsync());
         }
 
         /// <summary>

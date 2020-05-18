@@ -23,7 +23,8 @@ namespace DAL.Repositories
         public async Task<IEnumerable<ProfileRank>> AllUserAsync(Guid profileId)
         {
             return await RepoDbContext.ProfileRanks
-                .Where(rank => rank.ProfileId == profileId)
+                .Where(rank => rank.ProfileId == profileId 
+                               && rank.DeletedAt == null)
                 .Include(rank => rank.Rank)
                 .ThenInclude(rank => rank!.RankTitle)
                 .ThenInclude(title => title!.Translations)
@@ -42,12 +43,6 @@ namespace DAL.Repositories
         public Task<ProfileRank> ActiveUserAsync(Guid profileId)
         {
             throw new NotImplementedException();
-            /*return (await RepoDbContext.ProfileRanks
-                .Where(rank => rank.ProfileId == profileId)
-                .Include(rank => rank.Rank)
-                .ToListAsync()).Select(rank => rank.Rank)
-                .OrderByDescending(rank => rank.MaxExperience)
-                .Where(rank => ra)*/
         }
     }
 }

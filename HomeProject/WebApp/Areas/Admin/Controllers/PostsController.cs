@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
@@ -36,7 +37,19 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Posts.AllAsync());
+            return View(await _bll.Posts.AllAdminAsync());
+        }
+        
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
+        {
+            var history = (await _bll.Posts.GetRecordHistoryAsync(id)).ToList()
+                .OrderByDescending(record => record.CreatedAt);
+            
+            return View(nameof(Index), history);
         }
 
         /// <summary>
@@ -271,7 +284,23 @@ namespace WebApp.Areas.Admin.Controllers
                 return Redirect(post.ReturnUrl);
             }
 
-            return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+            return RedirectToAction(nameof(Index));
+        }
+        
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var record = await _bll.Posts.GetForUpdateAsync(id);
+            _bll.Posts.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

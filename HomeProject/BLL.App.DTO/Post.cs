@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class Post : DomainEntityBaseMetadata
+    public class Post : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(PostTitle), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         [MaxLength(100)]

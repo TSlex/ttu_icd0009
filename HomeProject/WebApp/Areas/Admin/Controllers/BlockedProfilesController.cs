@@ -30,7 +30,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.BlockedProfiles.AllAsync());
+            return View(await _bll.BlockedProfiles.AllAdminAsync());
         }
 
         
@@ -144,7 +144,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(blockedProfile);
+            return RedirectToAction(nameof(Index));
         }
         
         /// <summary>

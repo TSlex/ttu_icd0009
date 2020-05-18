@@ -50,7 +50,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Profiles.AllAsync());
+            return View(await _bll.Profiles.AllAdminAsync());
         }
         
         /// <summary>
@@ -245,17 +245,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(profile);
         }
-        
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Task<IActionResult> Delete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-        
+
         /// <summary>
         /// Deletes a record
         /// </summary>
@@ -263,9 +253,29 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            throw new NotImplementedException();
+            var record = await _bll.Profiles.GetForUpdateAsync(id);
+            _bll.Profiles.Remove(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var record = await _bll.Profiles.GetForUpdateAsync(id);
+            _bll.Profiles.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

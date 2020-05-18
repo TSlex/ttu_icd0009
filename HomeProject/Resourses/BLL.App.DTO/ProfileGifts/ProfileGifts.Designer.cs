@@ -61,7 +61,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Gift.
         /// </summary>
         public static string Gift {
             get {
@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на GiftDateTime.
         /// </summary>
         public static string GiftDateTime {
             get {
@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на GiftGallery.
         /// </summary>
         public static string GiftGallery {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на GiftId.
         /// </summary>
         public static string GiftId {
             get {
@@ -97,7 +97,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Price.
         /// </summary>
         public static string Price {
             get {
@@ -106,7 +106,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Profile.
         /// </summary>
         public static string Profile {
             get {
@@ -115,7 +115,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на ProfileId.
         /// </summary>
         public static string ProfileId {
             get {

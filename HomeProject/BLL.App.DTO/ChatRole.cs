@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class ChatRole: DomainEntityBaseMetadata
+    public class ChatRole: DomainEntityBaseMetaSoftUpdateDelete
     {    
+        public Guid RoleTitleValueId { get; set; } = default!;
+        
         [Display(Name = nameof(RoleTitle), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRoles.ChatRoles))]
         [MaxLength(200)] public string RoleTitle { get; set; } = default!;
         

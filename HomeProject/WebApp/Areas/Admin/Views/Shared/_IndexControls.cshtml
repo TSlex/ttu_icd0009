@@ -1,12 +1,37 @@
-﻿<div class="d-flex">
+﻿@using Contracts.DAL.Base
+<div class="d-flex">
+    @{
+        if (Model is ISoftUpdateEntity softUpdateEntity && softUpdateEntity.MasterId == null)
+        {
+            <a asp-action="History" asp-route-id="@Model.Id">
+                <button class="btn btn-info fa fa-history index_controls"></button>
+            </a>
+        }
+    }
+
     <a asp-action="Edit" asp-route-id="@Model.Id">
         <button class="btn btn-primary fa fa-edit index_controls"></button>
     </a>
     <a asp-action="Details" asp-route-id="@Model.Id">
         <button class="btn btn-primary fa fa-eye index_controls"></button>
     </a>
-    <form method="post" asp-action="Delete" class="disable_form_style">
-        <input type="hidden" name="id" value="@Model.Id">
-        <button type="submit" class="btn btn-danger fa fa-times index_controls"/>
-    </form>
+    @{
+        if (Model is ISoftUpdateEntity softUpdateEntity1 && softUpdateEntity1.MasterId == null)
+        {
+            if (Model.DeletedAt == null)
+            {
+                <form method="post" asp-action="Delete" class="disable_form_style">
+                    <input type="hidden" name="id" value="@Model.Id">
+                    <button type="submit" class="btn btn-danger fa fa-trash index_controls"/>
+                </form>
+            }
+            else
+            {
+                <form method="post" asp-action="Restore" class="disable_form_style">
+                    <input type="hidden" name="id" value="@Model.Id">
+                    <button type="submit" class="btn btn-success fa fa-trash-restore index_controls"/>
+                </form>
+            }
+        }
+    }
 </div>

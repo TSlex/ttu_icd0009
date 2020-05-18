@@ -134,9 +134,10 @@ namespace BLL.App.Services
             if (entity.ImageFile != null)
             {
                 await CreateImagesAsync(entity, path, true);
+                return await UpdateAsync(entity);
             }
 
-            else if ((entity.PaddingTop != record.PaddingTop || entity.PaddingRight != record.PaddingRight ||
+            if ((entity.PaddingTop != record.PaddingTop || entity.PaddingRight != record.PaddingRight ||
                       entity.PaddingBottom != record.PaddingBottom || entity.PaddingLeft != record.PaddingLeft) &&
                      (entity.PaddingTop != 0 || entity.PaddingRight != 0 ||
                       entity.PaddingBottom != 0 || entity.PaddingLeft != 0))
@@ -158,15 +159,18 @@ namespace BLL.App.Services
                 {
                     newImage.Save(stream, ImageFormat.Png);
                 }
+                
+                return await UpdateAsync(entity);
             }
 
-            else if (entity.PaddingTop == 0 && entity.PaddingRight == 0 &&
+            if (entity.PaddingTop == 0 && entity.PaddingRight == 0 &&
                      entity.PaddingBottom == 0 && entity.PaddingLeft == 0)
             {
                 entity.ImageUrl = entity.OriginalImageUrl;
+                return await UpdateAsync(entity);
             }
 
-            return await UpdateAsync(entity);
+            return entity;
         }
 
         public override Image Remove(Image entity)

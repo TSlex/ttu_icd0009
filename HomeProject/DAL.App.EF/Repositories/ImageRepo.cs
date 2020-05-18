@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.DTO;
@@ -33,6 +34,11 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbContext.Images.FirstOrDefaultAsync(image =>
                 image.Gifts.Select(gift => gift.Id).Contains(giftId)));
+        }
+        
+        public override async Task<IEnumerable<Image>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

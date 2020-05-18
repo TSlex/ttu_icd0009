@@ -22,7 +22,7 @@ namespace DAL.Base.EF.Mappers
             {
                 config.CreateMap<TInObject, TOutObject>();
                 config.CreateMap<TOutObject, TInObject>();
-                
+
                 config.CreateMap<Domain.ChatRoom, ChatRoom>();
                 config.CreateMap<ChatRoom, Domain.ChatRoom>();
                 

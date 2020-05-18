@@ -31,7 +31,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.Favorites.AllAsync());
+            return View(await _bll.Favorites.AllAdminAsync());
         }
 
         /// <summary>

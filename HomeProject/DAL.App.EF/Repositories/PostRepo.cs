@@ -27,6 +27,7 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<Post>> AllAsync()
         {
             return (await RepoDbContext.Posts
+                .Where(post => post.DeletedAt == null)
                 .Include(post => post.Profile)
                 .Include(p => p.PostImage)
                 .ToListAsync()).Select(post => Mapper.Map(post));
@@ -70,9 +71,10 @@ namespace DAL.Repositories
         public async Task<IEnumerable<Post>> GetUserFollowsPostsAsync(Guid userId)
         {
             return (await RepoDbContext.Posts
-                .Where(post => post.Profile!.Followers
+                .Where(post => (post.Profile!.Followers
                                    .Select(follower => follower.FollowerProfileId)
-                                   .Contains(userId) || post.ProfileId == userId)
+                                   .Contains(userId) || post.ProfileId == userId) 
+                               && post.DeletedAt == null)
                 .Select(post => new Post()
                 {
                     Id = post.Id,
@@ -96,6 +98,7 @@ namespace DAL.Repositories
         public async Task<IEnumerable<Post>> GetCommonFeedAsync()
         {
             return (await RepoDbContext.Posts
+                    .Where(post => post.DeletedAt == null)
                     .Select(post => new Domain.Post()
                     {
                         Id = post.Id,
@@ -118,7 +121,8 @@ namespace DAL.Repositories
 
         public async Task<int> GetByUserCount(Guid userId)
         {
-            return await RepoDbContext.Posts.CountAsync(post => post.ProfileId == userId);
+            return await RepoDbContext.Posts.CountAsync(post => post.ProfileId == userId 
+                                                                && post.DeletedAt == null);
         }
 
         public async Task<IEnumerable<Post>> GetUserByPage(Guid userId, int pageNumber, int onPageCount,
@@ -133,7 +137,7 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
-                .Where(post => post.ProfileId == userId)
+                .Where(post => post.ProfileId == userId && post.DeletedAt == null)
                 .OrderByDescending(post => post.PostPublicationDateTime)
                 .Select(post => new Post()
                 {
@@ -172,6 +176,7 @@ namespace DAL.Repositories
         public async Task<int> GetUserFollowsPostsCount(Guid userId)
         {
             return await RepoDbContext.Posts
+                .Where(post => post.DeletedAt == null)
                 .CountAsync(post => post.Favorites
                     .Select(favorite => favorite.ProfileId)
                     .Contains(userId));
@@ -179,7 +184,9 @@ namespace DAL.Repositories
 
         public async Task<int> GetCommonPostsCount()
         {
-            return await RepoDbContext.Posts.CountAsync();
+            return await RepoDbContext.Posts
+                .Where(post => post.DeletedAt == null)
+                .CountAsync();
         }
 
         public async Task<IEnumerable<Post>> GetUserFollowsPostsByPage(Guid userId, int pageNumber, int onPageCount)
@@ -193,9 +200,10 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
-                .Where(post => post.Profile!.Followers
+                .Where(post => (post.Profile!.Followers
                                    .Select(follower => follower.FollowerProfileId)
-                                   .Contains(userId) || post.ProfileId == userId)
+                                   .Contains(userId) || post.ProfileId == userId) 
+                               && post.DeletedAt == null)
                 .OrderByDescending(post => post.PostPublicationDateTime)
                 .Select(post => new Post()
                 {
@@ -230,6 +238,7 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
+                .Where(post => post.DeletedAt == null)
                 .OrderByDescending(post => post.PostPublicationDateTime)
                 .Select(post => new Domain.Post()
                 {
@@ -283,6 +292,11 @@ namespace DAL.Repositories
             }
 
             return base.Remove(entity);
+        }
+        
+        public override async Task<IEnumerable<Post>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

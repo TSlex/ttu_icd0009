@@ -16,6 +16,9 @@ namespace Contracts.DAL.Base.Repositories
     {
         IEnumerable<TDALEntity> All();
         Task<IEnumerable<TDALEntity>> AllAsync();
+        Task<IEnumerable<TDALEntity>> AllAdminAsync();
+
+        Task<IEnumerable<TDALEntity>> GetRecordHistoryAsync(Guid id);
 
         TDALEntity Find(TKey id);
         Task<TDALEntity> FindAsync(TKey id);
@@ -30,5 +33,7 @@ namespace Contracts.DAL.Base.Repositories
 
         Task<int> CountAsync();
         Task<bool> Exist(Guid id);
+
+        void Restore(TDALEntity entity);
     }
 }

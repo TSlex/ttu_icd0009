@@ -19,17 +19,6 @@ namespace DAL.Repositories
 
         public async Task<ChatRoom> GetRoomWithUserAsync(Guid firstId, Guid secondId)
         {
-//            return Mapper.Map(await RepoDbContext.ChatRooms
-//                .Include(room => room.ChatMembers)
-//                .Where(room => room.ChatMembers.Count == 2)
-//                .Where(room => room.ChatMembers
-//                    .Select(member => member.ProfileId)
-//                    .Contains(firstId))
-//                .Where(room => room.ChatMembers
-//                    .Select(member => member.ProfileId)
-//                    .Contains(secondId))
-//                .FirstOrDefaultAsync());
-
             return Mapper.Map(await RepoDbContext.ChatRooms
                 .Include(room => room.ChatMembers)
                 .Where(room => room.ChatMembers!.Count == 2
@@ -49,7 +38,8 @@ namespace DAL.Repositories
                     .Include(room => room.Messages)
                     .Where(room => room.ChatMembers
                         .Select(member => member.ProfileId)
-                        .Contains(userId))
+                        .Contains(userId) 
+                                   && room.DeletedAt == null)
                     .Select(room => new Domain.ChatRoom()
                     {
                         Id = room.Id,
@@ -97,6 +87,11 @@ namespace DAL.Repositories
             }
             
             return base.Remove(entity);
+        }
+        
+        public override async Task<IEnumerable<ChatRoom>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

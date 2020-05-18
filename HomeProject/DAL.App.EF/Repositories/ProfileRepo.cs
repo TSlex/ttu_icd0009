@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +34,8 @@ namespace DAL.Repositories
 
         public async Task<Profile> GetProfile(Guid id, Guid? requesterId)
         {
-            return await RepoDbSet.Where(profile => profile.Id == id)
+            return await RepoDbSet.Where(profile => profile.Id == id 
+                                                    && profile.DeletedAt == null)
                 .Select(profile => new Profile()
                 {
                     Id = profile.Id,
@@ -53,9 +55,11 @@ namespace DAL.Repositories
                         .Select(blockedProfile => _blockedProfileMapper.Map(blockedProfile))
                         .ToList(),
                     Posts = profile.Posts
+                        .Where(post => post.DeletedAt == null)
                         .Select(post => _postMapper.Map(post))
                         .ToList(),
                     ProfileGifts = profile.ProfileGifts
+                        .Where(gift => gift.DeletedAt == null)
                         .Select(gift => new ProfileGift()
                         {
                             Id = gift.Id,
@@ -73,6 +77,7 @@ namespace DAL.Repositories
                         })
                         .ToList(),
                     ProfileRanks = profile.ProfileRanks
+                        .Where(rank => rank.DeletedAt == null)
                         .Select(rank => new ProfileRank()
                         {
                             Id = rank.Id,
@@ -257,7 +262,7 @@ namespace DAL.Repositories
             {
                 RepoDbContext.Images.Remove(imageRecord);
             }
-            
+
             return base.Remove(entity);
         }
     }

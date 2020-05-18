@@ -5,7 +5,7 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class ChatRoom : DomainEntityBaseMetadata
+    public class ChatRoom : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(ChatRoomTitle), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRooms.ChatRooms))]
         [MaxLength(100)]

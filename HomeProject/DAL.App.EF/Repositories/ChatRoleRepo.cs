@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
@@ -7,6 +8,7 @@ using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
 using DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
+using ChatRoom = Domain.ChatRoom;
 
 namespace DAL.Repositories
 {
@@ -38,6 +40,11 @@ namespace DAL.Repositories
             }
             
             return base.Remove(entity);
+        }
+        
+        public override async Task<IEnumerable<ChatRole>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

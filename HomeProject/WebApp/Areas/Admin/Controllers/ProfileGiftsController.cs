@@ -32,7 +32,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _bll.ProfileGifts.AllAsync());
+            return View(await _bll.ProfileGifts.AllAdminAsync());
         }
 
         /// <summary>
@@ -203,6 +203,22 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             _bll.ProfileGifts.Remove(id);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var record = await _bll.ProfileGifts.GetForUpdateAsync(id);
+            _bll.ProfileGifts.Restore(record);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

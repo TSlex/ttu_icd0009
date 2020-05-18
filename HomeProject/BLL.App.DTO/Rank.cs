@@ -5,8 +5,11 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class Rank : DomainEntityBaseMetadata
+    public class Rank : DomainEntityBaseMetaSoftUpdateDelete
     {
+        public Guid RankTitleId { get; set; } = default!;
+        public Guid? RankDescriptionId { get; set; }
+        
         [Display(Name = nameof(RankTitle), ResourceType = typeof(Resourses.BLL.App.DTO.Ranks.Ranks))]
         [MaxLength(100)]
         public string RankTitle { get; set; } = default!;

@@ -10,7 +10,7 @@ namespace Contracts.DAL.Base
         string? ChangedBy { get; set; }
         DateTime ChangedAt { get; set; }
         
-        /*string? DeletedBy { get; set; }
-        DateTime? DeletedAt { get; set; }*/
+        string? DeletedBy { get; set; }
+        DateTime? DeletedAt { get; set; }
     }
 }

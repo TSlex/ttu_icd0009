@@ -20,7 +20,7 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<Comment>> AllAsync()
         {
-            return (await RepoDbContext.Comments
+            return (await RepoDbContext.Comments.Where(comment => comment.DeletedAt == null)
                 .Include(post => post.Profile)
                 .ToListAsync()).Select(comment => Mapper.Map(comment));
         }
@@ -43,13 +43,19 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Comments
-                    .Where(comment => comment.PostId == postId)
+                    .Where(comment => comment.PostId == postId 
+                                      && comment.DeletedAt == null)
                     .Include(comment => comment.Profile)
                     .OrderByDescending(comment => comment.CommentDateTime)
                     .Skip(startIndex)
                     .Take(count)
                     .ToListAsync())
                 .Select(post => Mapper.Map(post));
+        }
+        
+        public override async Task<IEnumerable<Comment>> GetRecordHistoryAsync(Guid id)
+        {
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

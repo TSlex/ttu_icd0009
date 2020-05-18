@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Gift" xml:space="preserve">
-    <value />
+    <value>Gift</value>
   </data>
   <data name="GiftDateTime" xml:space="preserve">
-    <value />
+    <value>GiftDateTime</value>
   </data>
   <data name="GiftGallery" xml:space="preserve">
-    <value />
+    <value>GiftGallery</value>
   </data>
   <data name="GiftId" xml:space="preserve">
-    <value />
+    <value>GiftId</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value />
+    <value>Price</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value />
+    <value>Profile</value>
   </data>
   <data name="ProfileId" xml:space="preserve">
-    <value />
+    <value>ProfileId</value>
   </data>
 </root>

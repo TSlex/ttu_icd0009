@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class ProfileRank : DomainEntityBaseMetadata
+    public class ProfileRank : DomainEntityBaseMetaSoftDelete
     {
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileRanks.ProfileRanks))]
         public Guid ProfileId { get; set; } = default!;

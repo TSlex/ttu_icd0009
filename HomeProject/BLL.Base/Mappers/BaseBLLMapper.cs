@@ -66,6 +66,9 @@ namespace BLL.Base.Mappers
                 
                 config.CreateMap<DAL.App.DTO.Image, Image>();
                 config.CreateMap<Image, DAL.App.DTO.Image>();
+                
+                config.CreateMap<DAL.App.DTO.Image?, Image?>();
+                config.CreateMap<Image?, DAL.App.DTO.Image?>();
 
                 config.AllowNullDestinationValues = true;
             }).CreateMapper();
