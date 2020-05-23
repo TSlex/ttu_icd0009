@@ -38,7 +38,7 @@
                     <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
                         <img alt="" width="150px" height="150px"
                              src="/images/@Model.ProfileAvatarId">
-                    </div>
+                    </div> 
                 }
             }
         </div>
@@ -52,7 +52,7 @@
                             <a class="btn fa fa-bars" href="#" role="button" id="profile_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             </a>
 
-                            <div class="dropdown-menu" aria-labelledby="profile_more">
+                            <div class="dropdown-menu text-center" aria-labelledby="profile_more">
                                 <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName"
                                    class="dropdown-item text-center">
                                     @Resourses.Views.Profilez.Profiles.WriteMessage

@@ -45,6 +45,16 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var test = await _bll.ChatRooms.FindAsync(id);
+
+            if (!test.ChatMembers.Select(member => member.ProfileId).Contains(User.UserId()))
+            {
+                return NotFound();
+            }
+
+            test.Messages = test.Messages
+                .Where(message => message.DeletedAt == null && message.MasterId == null)
+                .ToList();
+
             return View(test);
         }
 
@@ -74,7 +84,7 @@ namespace WebApp.Controllers
 
             _bll.ChatMembers.Remove(chatMember);
             await _bll.SaveChangesAsync();
-            
+
             return RedirectToAction("Index");
         }
 
@@ -85,8 +95,9 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var chatRoom = await _bll.ChatRooms.FindAsync(id);
+            var member = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), id);
 
-            if (chatRoom == null)
+            if (chatRoom == null || member == null || !member.ChatRole.CanRenameRoom)
             {
                 return NotFound();
             }
@@ -105,58 +116,25 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id, ChatRoom chatRoom)
         {
             var record = await _bll.ChatRooms.GetForUpdateAsync(id);
+            var member = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatRoom.Id);
 
-            if (record == null || id != chatRoom.Id ||
-                !await _bll.ChatRooms.IsRoomMemberAsync(chatRoom.Id, User.UserId()))
+            if (record == null || id != chatRoom.Id || member == null || !member.ChatRole.CanRenameRoom)
             {
                 return NotFound();
             }
-            
 
             if (ModelState.IsValid)
             {
                 record.ChatRoomTitle = chatRoom.ChatRoomTitle;
-                
+
                 await _bll.ChatRooms.UpdateAsync(record);
 
                 await _bll.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new {id} );
             }
 
             return View(record);
-        }
-
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var chatRoom = await _bll.ChatRooms.FindAsync(id);
-
-            if (chatRoom == null)
-            {
-                return NotFound();
-            }
-
-            return View(chatRoom);
-        }
-
-        /// <summary>
-        /// Deletes a record
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            _bll.ChatRooms.Remove(id);
-            await _bll.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
         }
     }
 }

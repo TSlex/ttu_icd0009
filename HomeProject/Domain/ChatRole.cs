@@ -12,9 +12,13 @@ namespace Domain
         
         public Guid RoleTitleValueId { get; set; } = default!;
         public LangString? RoleTitleValue { get; set; } = default!;
-        
-        
-        
+
+        public bool CanRenameRoom { get; set; }
+        public bool CanEditMembers { get; set; }
+        public bool CanWriteMessages { get; set; }
+        public bool CanEditAllMessages { get; set; }
+        public bool CanEditMessages { get; set; }
+
         public ICollection<ChatMember>? ChatMembers { get; set; }
     }
 }

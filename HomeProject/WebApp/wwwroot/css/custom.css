@@ -591,6 +591,7 @@ li form button, nav form button {
     border: 1px solid gray;
     box-sizing: content-box;
     margin: 5px;
+    background: white;
 }
 
 .message_datetime{
@@ -644,6 +645,8 @@ li form button, nav form button {
     font-weight: bold;
     background: white;
     padding: 0 4px;
+    width: fit-content;
+    word-break: keep-all;
 }
 
 .message.active .profile_name{
@@ -651,6 +654,28 @@ li form button, nav form button {
     display: none;
     background: white;
     color: black;
+}
+
+.message .message_controls{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    right: -14px;
+    top: 15px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background: white;
+    font-size: 14px;
+}
+
+.message.active .message_controls{
+    right: unset;
+    left: -14px;
+}
+
+.message_controls *{
+    color: black !important;
 }
 
 .chat_create_form {

@@ -19,6 +19,9 @@
             @Html.DisplayNameFor(model => model.RoleTitle)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.RoleTitleValue)
+        </th>
+        <th>
             IS DELETED?
         </th>
         <th></th>
@@ -33,6 +36,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoleTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleTitleValue)
             </td>
             <td>
                 @(item.DeletedAt != default)

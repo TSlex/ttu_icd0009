@@ -16,9 +16,35 @@
                     if (member != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Details"
-                               asp-route-id="@item.Id">
-                                @(item.ChatRoomTitle)
+                            <a class="nav-link" asp-action="Details" asp-route-id="@item.Id">
+                                @if (item.Messages.Count > 0)
+                                {
+                                    var message = item.Messages.First();
+                                    
+                                    <div class="message text-center" style="width: 300px !important; max-width: unset; margin-top: 25px">
+                                        <div class="message_profile" style="width: 280px;">
+                                            <div class="message_avatar">
+                                                <img src="/images/@message.Profile.ProfileAvatarId" alt="profile" height="50px" width="50px"/>
+                                            </div>
+                                            <div class="profile_name"
+                                                  style="color: black !important; margin: auto; max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                @item.ChatRoomTitle
+                                            </div>
+                                        </div>
+                                        <div class="message_value" style="max-height: 50px; overflow: hidden; text-overflow: ellipsis;">
+                                            @message.MessageValue
+                                        </div>
+                                        <span class="message_datetime">@message.MessageDateTime</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="color: black !important; margin: auto; max-width: 400px; 
+                                    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+                                background: white; border: 1px solid gray; border-radius: 5px; padding: 10px">
+                                        @item.ChatRoomTitle
+                                    </div>
+                                }
                             </a>
                         </li>
                     }

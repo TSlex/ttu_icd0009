@@ -1,4 +1,5 @@
-﻿@model BLL.App.DTO.ChatRole
+﻿@using System.Threading
+@model BLL.App.DTO.ChatRole
 
 @{
     ViewData["Title"] = "Create";
@@ -15,6 +16,45 @@
                 <input asp-for="RoleTitle" class="form-control"/>
                 <span asp-validation-for="RoleTitle" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="RoleTitleValue" class="control-label">
+                    @(Resourses.BLL.App.DTO.ChatRoles.ChatRoles.RoleTitleValue) [@Thread.CurrentThread.CurrentCulture.Name]
+                </label>
+                <input asp-for="RoleTitleValue" class="form-control"/>
+                <span asp-validation-for="RoleTitleValue" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CanRenameRoom" class="control-label"></label>
+                <input type="checkbox" asp-for="CanRenameRoom" class="form-control"/>
+                <span asp-validation-for="CanRenameRoom" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CanEditMembers" class="control-label"></label>
+                <input type="checkbox" asp-for="CanEditMembers" class="form-control"/>
+                <span asp-validation-for="CanEditMembers" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CanWriteMessages" class="control-label"></label>
+                <input type="checkbox" asp-for="CanWriteMessages" class="form-control"/>
+                <span asp-validation-for="CanWriteMessages" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CanEditAllMessages" class="control-label"></label>
+                <input type="checkbox" asp-for="CanEditAllMessages" class="form-control"/>
+                <span asp-validation-for="CanEditAllMessages" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CanEditMessages" class="control-label"></label>
+                <input type="checkbox" asp-for="CanEditMessages" class="form-control"/>
+                <span asp-validation-for="CanEditMessages" class="text-danger"></span>
+            </div>
+            
             <div class="form-group">
                 <a asp-action="Index" class="btn btn-primary ">Back to List</a>
                 <input type="submit" value="Create" class="btn btn-primary"/>

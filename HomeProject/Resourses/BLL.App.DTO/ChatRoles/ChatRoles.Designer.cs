@@ -61,6 +61,51 @@ namespace Resourses.BLL.App.DTO.ChatRoles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can edit all messages?.
+        /// </summary>
+        public static string CanEditAllMessages {
+            get {
+                return ResourceManager.GetString("CanEditAllMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can edit members roles?.
+        /// </summary>
+        public static string CanEditMembers {
+            get {
+                return ResourceManager.GetString("CanEditMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can edit own messages?.
+        /// </summary>
+        public static string CanEditMessages {
+            get {
+                return ResourceManager.GetString("CanEditMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can rename room?.
+        /// </summary>
+        public static string CanRenameRoom {
+            get {
+                return ResourceManager.GetString("CanRenameRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can write messages?.
+        /// </summary>
+        public static string CanWriteMessages {
+            get {
+                return ResourceManager.GetString("CanWriteMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string ChatMembers {
@@ -70,7 +115,7 @@ namespace Resourses.BLL.App.DTO.ChatRoles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Role title.
         /// </summary>
         public static string RoleTitle {
             get {
@@ -79,7 +124,7 @@ namespace Resourses.BLL.App.DTO.ChatRoles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Role title translated.
         /// </summary>
         public static string RoleTitleValue {
             get {
@@ -88,7 +133,7 @@ namespace Resourses.BLL.App.DTO.ChatRoles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Role title Id.
         /// </summary>
         public static string RoleTitleValueId {
             get {

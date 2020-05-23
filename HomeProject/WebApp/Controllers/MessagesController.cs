@@ -12,7 +12,6 @@ namespace WebApp.Controllers
     /// Messages
     /// </summary>
     [Authorize]
-    [Route("{controller}/{chatRoomId}/{action=Index}/{id?}")]
     public class MessagesController : Controller
     {
         private readonly IAppBLL _bll;
@@ -71,14 +70,22 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-
             var message = await _bll.Messages.FindAsync(id);
 
             if (message == null)
             {
                 return NotFound();
             }
-
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                (message.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                 currentMember.ChatRole.CanEditAllMessages)))
+            {
+                return NotFound();
+            }
+            
             return View(message);
         }
 
@@ -92,39 +99,34 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Message message)
         {
-            if (id != message.Id || User.UserId() != message.ProfileId)
+            var record = await _bll.Messages.GetForUpdateAsync(id);
+            
+            if (record == null || id != message.Id)
+            {
+                return NotFound();
+            }
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                  (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                await _bll.Messages.UpdateAsync(message);
+                record.MessageValue = message.MessageValue;
+                
+                await _bll.Messages.UpdateAsync(record);
                 await _bll.SaveChangesAsync();
 
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "ChatRooms", new {id = record.ChatRoomId});
             }
 
-            return View(message);
-        }
-
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
-
-            var message = await _bll.Messages.FindAsync(id);
-
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return View(message);
+            return View(record);
         }
 
         /// <summary>
@@ -136,10 +138,21 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            var record = await _bll.Messages.GetForUpdateAsync(id);
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                  (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
+            {
+                return NotFound();
+            }
+            
             _bll.Messages.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "ChatRooms", new {id = record.ChatRoomId});
         }
     }
 }

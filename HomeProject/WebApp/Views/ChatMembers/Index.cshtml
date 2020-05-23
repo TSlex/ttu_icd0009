@@ -1,3 +1,4 @@
+@using Extension
 @model IEnumerable<BLL.App.DTO.ChatMember>
 
 @{
@@ -11,19 +12,25 @@
         foreach (var chatMember in Model)
         {
             <a class="gallery_item" style="width: 200px; height: 200px;" asp-controller="Profiles" asp-action="Index" asp-route-username="@chatMember.Profile.UserName">
-                <form asp-action="Edit" method="get">
-                    <button type="submit" class="item_controls btn-link" style="right: 0; left: initial">
-                        <i class="fas fa-edit"></i>
-                        <input type="hidden" asp-for="@chatMember.Id" name="Id">
-                    </button>
-                </form>
+                @{
+                    var currentMember = Model.FirstOrDefault(member => member.Profile.UserName == User.Identity.Name);
+                    if (currentMember != null && currentMember.ChatRole.CanEditMembers)
+                    {
+                        <form asp-action="Edit" method="get">
+                            <button type="submit" class="item_controls btn-link" style="right: 0; left: initial">
+                                <i class="fas fa-edit"></i>
+                                <input type="hidden" asp-for="@chatMember.Id" name="Id">
+                            </button>
+                        </form>
 
-                <form asp-action="Delete" method="post">
-                    <button type="submit" class="item_controls btn-link" style="left: 0">
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                    <input type="hidden" asp-for="@chatMember.Id" name="Id">
-                </form>
+                        <form asp-action="Delete" method="post">
+                            <button type="submit" class="item_controls btn-link" style="left: 0">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                            <input type="hidden" asp-for="@chatMember.Id" name="Id">
+                        </form>
+                    }
+                }
 
                 <img src="/images/@chatMember.Profile.ProfileAvatarId" alt="gift" height="200px" width="200px"/>
                 <span class="item_name" style="bottom: 15px">@chatMember.ChatRole.RoleTitle</span>

@@ -1,0 +1,9 @@
+﻿@model BLL.App.DTO.Message
+
+<div class="form-group">
+    <label asp-for="MessageValue" class="control-label"></label>
+    <textarea asp-for="MessageValue" rows="5" autofocus class="form-control text-center"></textarea>
+    <span asp-validation-for="MessageValue" class="text-danger"></span>
+</div>
+
+<input type="hidden" asp-for="ChatRoomId">

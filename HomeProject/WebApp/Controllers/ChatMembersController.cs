@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
@@ -32,7 +33,14 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index(Guid chatRoomId)
         {
-            return View(await _bll.ChatMembers.RoomAllAsync(chatRoomId));
+            var members = await _bll.ChatMembers.RoomAllAsync(chatRoomId);
+
+            if (!members.Select(member => member.Profile.UserName).Contains(User.Identity.Name))
+            {
+                return NotFound();
+            }
+            
+            return View(members);
         }
         
         public class ChatMemberRoleModel
@@ -48,9 +56,16 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var chatMember = await _bll.ChatMembers.FindAsync(id);
-            var chatRoles = await _bll.ChatRoles.AllAsync();
+            var chatRoles = (await _bll.ChatRoles.AllAsync()).Where(role => role.CanEditMembers == false);
 
             if (chatMember == null)
+            {
+                return NotFound();
+            }
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
+            
+            if (currentMember == null || !currentMember.ChatRole.CanEditMembers)
             {
                 return NotFound();
             }
@@ -83,19 +98,21 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            if (member.ChatRole.RoleTitle.ToLower().Contains("creator") || member.ChatRole.RoleTitle.ToLower().Contains("admin"))
-            {
-                ModelState.AddModelError(string.Empty, "You cannot change creator role!");
-            }
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), member.ChatRoomId);
             
-            if (chatRole.RoleTitle.ToLower().Contains("creator") || chatRole.RoleTitle.ToLower().Contains("admin"))
+            if (currentMember == null || !currentMember.ChatRole.CanEditMembers)
             {
-                ModelState.AddModelError(string.Empty, "You cannot assign creator role!");
+                return NotFound();
             }
 
-            if (!(await _bll.ChatRooms.IsRoomAdministratorAsync(member.ChatRoomId, User.UserId())))
+            if (member.ChatRole.CanEditMembers)
             {
-                ModelState.AddModelError(string.Empty, "Only room creator can change roles");
+                ModelState.AddModelError(string.Empty, "You cannot remove members control ability claim!");
+            }
+
+            if (chatRole.CanEditMembers)
+            {
+                ModelState.AddModelError(string.Empty, "You cannot claim members control ability!");
             }
 
             if (ModelState.IsValid)
@@ -112,6 +129,7 @@ namespace WebApp.Controllers
             
             var chatRoles = await _bll.ChatRoles.AllAsync();
 
+            model.ChatMember = member;
             model.ChatRoles = chatRoles;
             
             return View(model);
@@ -127,6 +145,19 @@ namespace WebApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var chatMember = await _bll.ChatMembers.GetForUpdateAsync(id);
+
+            if (chatMember == null)
+            {
+                return NotFound();
+            }
+
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
+
+            if (!currentMember.ChatRole.CanEditMembers)
+            {
+                return NotFound();
+            }
+            
             _bll.ChatMembers.Remove(chatMember);
             await _bll.SaveChangesAsync();
 

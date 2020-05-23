@@ -126,26 +126,6 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id, string? returnUrl)
-        {
-            var comment = await _bll.Comments.FindAsync(id);
-
-            if (!ValidateUserAccess(comment))
-            {
-                return NotFound();
-            }
-            
-            comment.ReturnUrl = returnUrl;
-
-            return View(comment);
-        }
-
-        /// <summary>
         /// Deletes a record
         /// </summary>
         /// <param name="id"></param>

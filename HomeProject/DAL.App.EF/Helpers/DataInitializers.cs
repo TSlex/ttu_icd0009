@@ -80,7 +80,6 @@ namespace DAL.Helpers
 
         public static void SeedData(ApplicationDbContext ctx)
         {
-            //ChatRoles
             var chatRoles = new ChatRole[]
             {
                 new ChatRole()
@@ -107,6 +106,11 @@ namespace DAL.Helpers
                             }
                         }
                     },
+                    CanRenameRoom = true,
+                    CanEditMembers = false,
+                    CanEditMessages = true,
+                    CanEditAllMessages = false,
+                    CanWriteMessages = true,
                 },
                 new ChatRole()
                 {
@@ -132,6 +136,12 @@ namespace DAL.Helpers
                             }
                         }
                     },
+                    
+                    CanRenameRoom = true,
+                    CanEditMembers = true,
+                    CanEditMessages = true,
+                    CanEditAllMessages = true,
+                    CanWriteMessages = true,
                 },
                 new ChatRole()
                 {
@@ -142,8 +152,8 @@ namespace DAL.Helpers
                         {
                             new Translation()
                             {
-                                Culture = "Moderator",
-                                Value = "Member"
+                                Culture = "en",
+                                Value = "Moderator"
                             },
                             new Translation()
                             {
@@ -157,8 +167,15 @@ namespace DAL.Helpers
                             }
                         }
                     },
+                    
+                    CanRenameRoom = true,
+                    CanEditMembers = true,
+                    CanEditMessages = true,
+                    CanEditAllMessages = true,
+                    CanWriteMessages = true,
                 },
             };
+            //ChatRoles
 
             foreach (var chatRole in chatRoles)
             {

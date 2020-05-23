@@ -70,6 +70,7 @@ namespace DAL.Repositories
             return (await RepoDbContext.ChatRooms
                     .Include(room => room.ChatMembers)
                     .Include(room => room.Messages)
+                    .ThenInclude(message => message.Profile)
                     .Where(room => room.ChatMembers
                                        .Select(member => member.ProfileId)
                                        .Contains(userId)
@@ -79,7 +80,9 @@ namespace DAL.Repositories
                         Id = room.Id,
                         ChatMembers = room.ChatMembers,
                         ChatRoomTitle = room.ChatRoomTitle,
-                        Messages = room.Messages.OrderByDescending(message => message.MessageDateTime).Take(1).ToList()
+                        Messages = room.Messages.OrderByDescending(message => message.MessageDateTime)
+                            .Where(message => message.DeletedAt == null && message.MasterId == null)
+                            .Take(1).ToList()
                     })
                     .ToListAsync())
                 .Select(room => Mapper.Map(room));

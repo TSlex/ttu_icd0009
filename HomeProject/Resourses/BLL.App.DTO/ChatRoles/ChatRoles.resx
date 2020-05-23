@@ -121,12 +121,27 @@
     <value></value>
   </data>
   <data name="RoleTitle" xml:space="preserve">
-    <value></value>
+    <value>Role title</value>
   </data>
   <data name="RoleTitleValue" xml:space="preserve">
-    <value></value>
+    <value>Role title translated</value>
   </data>
   <data name="RoleTitleValueId" xml:space="preserve">
-    <value></value>
+    <value>Role title Id</value>
+  </data>
+  <data name="CanRenameRoom">
+    <value>Can rename room?</value>
+  </data>
+  <data name="CanEditMembers">
+    <value>Can edit members roles?</value>
+  </data>
+  <data name="CanWriteMessages">
+    <value>Can write messages?</value>
+  </data>
+  <data name="CanEditAllMessages">
+    <value>Can edit all messages?</value>
+  </data>
+  <data name="CanEditMessages">
+    <value>Can edit own messages?</value>
   </data>
 </root>

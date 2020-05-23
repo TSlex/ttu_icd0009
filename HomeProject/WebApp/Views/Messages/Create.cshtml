@@ -9,13 +9,7 @@
         <div class="col-md-6 text-center">
             <form asp-action="Create">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="MessageValue" class="control-label"></label>
-                    <textarea asp-for="MessageValue" rows="5" autofocus class="form-control"></textarea>
-                    <span asp-validation-for="MessageValue" class="text-danger"></span>
-                </div>
-
-                <input type="hidden" asp-for="ChatRoomId">
+                <partial name="_MessageCreateEdit"/>
 
                 <input type="submit" class="btn btn-success" value="@Resourses.Views.Common.CreateButton">
                 <a type="button" asp-action="Details" asp-controller="ChatRooms" asp-route-id="@Model.ChatRoomId" class="btn btn-secondary">

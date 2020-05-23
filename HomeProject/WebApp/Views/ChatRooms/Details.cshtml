@@ -1,13 +1,40 @@
+@using System.Globalization
+@using System.Net
 @using Extension
 @model BLL.App.DTO.ChatRoom
 
 @{
     ViewData["Title"] = Resourses.Views.Messages.Messages.Header;
+
+    bool IsImageUrl(string url)
+    {
+        try
+        {
+            var req = (HttpWebRequest) WebRequest.Create(url);
+            req.Method = "HEAD";
+            using (var resp = req.GetResponse())
+            {
+                return resp.ContentType.ToLower(CultureInfo.InvariantCulture)
+                    .StartsWith("image/");
+            }
+        }
+        catch (Exception exception)
+        {
+            return false;
+        }
+    }
+
 }
 
 <div class="chat_container">
     <div class="chat_header d-flex align-items-center">
-        <span style="flex-grow: 1; text-align: center">&#x3C;--@Model.ChatRoomTitle--&#x3E;</span>
+        <div style="flex-grow: 1; display: flex; justify-content: center">
+            <div>&#x3C;--</div>
+            <div style="max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                @Model.ChatRoomTitle
+            </div>
+            <div>--&#x3E;</div>
+        </div>
 
         <div class="profile_controls dropdown dropright show">
             <a class="btn fa fa-bars" href="#" role="button" id="profile_more"
@@ -16,7 +43,15 @@
 
             <div class="dropdown-menu text-center" aria-labelledby="profile_more">
                 <a class="btn-link" asp-action="Index" asp-controller="ChatMembers" asp-route-chatRoomId="@Model.Id">Участники</a>
-                <a class="btn-link" asp-action="Edit">Переменовать</a>
+
+                @{
+                    var currentMember = Model.ChatMembers.FirstOrDefault(member => member.ProfileId == User.UserId());
+                    if (currentMember != null && currentMember.ChatRole.CanRenameRoom)
+                    {
+                        <a class="btn-link" asp-action="Edit" asp-controller="ChatRooms" asp-route-id="@Model.Id">Переменовать</a>
+                    }
+                }
+
                 <form asp-action="LeaveChat" method="post" class="disable_form_style">
                     <input type="hidden" name="chatRoomId" asp-for="Id">
                     <button class="btn-link" style="margin: 0 !important;">Покинуть чат</button>
@@ -30,13 +65,41 @@
             @foreach (var item in Model.Messages.OrderByDescending(message => message.MessageDateTime))
             {
                 <div class="message @(User.UserId() == item.ProfileId ? "active" : "")">
+
+                    @{
+                        if (currentMember != null &&
+                            (item.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                             currentMember.ChatRole.CanEditAllMessages))
+                        {
+                            <div class="message_controls">
+                                <a class="fa fa-edit" asp-action="Edit" asp-controller="Messages" asp-route-id="@item.Id"></a>
+
+                                <form asp-action="Delete" asp-controller="Messages" method="post" class="disable_form_style">
+                                    <input type="hidden" name="id" asp-for="@item.Id">
+                                    <button class="btn-link fa fa-times-circle" style="margin: 0 !important;"></button>
+                                </form>
+                            </div>
+                        }
+                    }
+
                     <a class="message_profile" asp-controller="Profiles" asp-action="Index" asp-route-username="@item.Profile.UserName">
                         <div class="message_avatar">
                             <img src="/images/@item.Profile.ProfileAvatarId" alt="profile" height="50px" width="50px"/>
                         </div>
                         <span class="profile_name" style="color: black !important;">@item.Profile.UserName</span>
                     </a>
-                    <span class="message_value">@item.MessageValue</span>
+
+                    @if (IsImageUrl(item.MessageValue))
+                    {
+                        <a href="@item.MessageValue">
+                            <img src="@item.MessageValue" alt="profile" height="auto" width="250px" style="border-radius: 5px"/>
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="message_value">@item.MessageValue</span>
+                    }
+
                     <span class="message_datetime">@item.MessageDateTime</span>
                 </div>
             }
