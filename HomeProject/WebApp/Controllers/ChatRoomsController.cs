@@ -44,7 +44,8 @@ namespace WebApp.Controllers
         [Route("/{controller}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            return View(await _bll.ChatRooms.FindAsync(id));
+            var test = await _bll.ChatRooms.FindAsync(id);
+            return View(test);
         }
 
         /// <summary>

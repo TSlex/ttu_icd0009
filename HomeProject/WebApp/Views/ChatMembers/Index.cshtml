@@ -14,6 +14,7 @@
                 <form asp-action="Edit" method="get">
                     <button type="submit" class="item_controls btn-link" style="right: 0; left: initial">
                         <i class="fas fa-edit"></i>
+                        <input type="hidden" asp-for="@chatMember.Id" name="Id">
                     </button>
                 </form>
 

@@ -8,15 +8,22 @@
 <div class="chat_rooms">
     <div class="row justify-content-center">
         <ul class="nav nav-pills flex-column">
-                @foreach (var item in Model)
+            @{
+                foreach (var item in Model)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Details"
-                           asp-route-id="@item.Id">
-                            @(item.ChatRoomTitle)
-                        </a>
-                    </li>
+                    var member = item.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == User.UserId() && chatMember.DeletedAt == null);
+
+                    if (member != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Details"
+                               asp-route-id="@item.Id">
+                                @(item.ChatRoomTitle)
+                            </a>
+                        </li>
+                    }
                 }
-            </ul>
+            }
+        </ul>
     </div>
 </div>

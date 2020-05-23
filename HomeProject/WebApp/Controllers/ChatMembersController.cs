@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.BLL.App;
+using Extension;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -31,6 +34,12 @@ namespace WebApp.Controllers
         {
             return View(await _bll.ChatMembers.RoomAllAsync(chatRoomId));
         }
+        
+        public class ChatMemberRoleModel
+        {
+            public IEnumerable<ChatRole>? ChatRoles { get; set; }
+            public ChatMember ChatMember { get; set; } = default!;
+        }
 
         /// <summary>
         /// Get record editing page
@@ -39,41 +48,73 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var chatMember = await _bll.ChatMembers.FindAsync(id);
+            var chatRoles = await _bll.ChatRoles.AllAsync();
 
             if (chatMember == null)
             {
                 return NotFound();
             }
 
-            return View(chatMember);
+            var model = new ChatMemberRoleModel()
+            {
+                ChatRoles = chatRoles,
+                ChatMember = chatMember
+            };
+
+            return View(model);
         }
 
         /// <summary>
         /// Updates a record
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="chatMember"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.ChatMember chatMember)
+            ChatMemberRoleModel model)
         {
-            if (id != chatMember.Id)
+            var member = await _bll.ChatMembers.FindAsync(id);
+            var chatRole = await _bll.ChatRoles.FindAsync(model.ChatMember.ChatRoleId);
+            
+            if (member == null || chatRole == null || id != model.ChatMember.Id)
             {
                 return NotFound();
             }
 
+            if (member.ChatRole.RoleTitle.ToLower().Contains("creator") || member.ChatRole.RoleTitle.ToLower().Contains("admin"))
+            {
+                ModelState.AddModelError(string.Empty, "You cannot change creator role!");
+            }
+            
+            if (chatRole.RoleTitle.ToLower().Contains("creator") || chatRole.RoleTitle.ToLower().Contains("admin"))
+            {
+                ModelState.AddModelError(string.Empty, "You cannot assign creator role!");
+            }
+
+            if (!(await _bll.ChatRooms.IsRoomAdministratorAsync(member.ChatRoomId, User.UserId())))
+            {
+                ModelState.AddModelError(string.Empty, "Only room creator can change roles");
+            }
+
             if (ModelState.IsValid)
             {
-                await _bll.ChatMembers.UpdateAsync(chatMember);
+                model.ChatMember.ChatRoomId = member.ChatRoomId;
+                model.ChatMember.ProfileId = member.ProfileId;
+                
+                await _bll.ChatMembers.UpdateAsync(model.ChatMember);
                 await _bll.SaveChangesAsync();
 
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { chatRoomId = member.ChatRoomId});
             }
+            
+            var chatRoles = await _bll.ChatRoles.AllAsync();
 
-            return View(chatMember);
+            model.ChatRoles = chatRoles;
+            
+            return View(model);
         }
 
         /// <summary>
@@ -85,10 +126,11 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _bll.ChatMembers.Remove(id);
+            var chatMember = await _bll.ChatMembers.GetForUpdateAsync(id);
+            _bll.ChatMembers.Remove(chatMember);
             await _bll.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new {chatRoomId = chatMember.ChatRoomId});
         }
     }
 }

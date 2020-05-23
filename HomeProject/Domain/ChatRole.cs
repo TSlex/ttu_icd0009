@@ -13,6 +13,8 @@ namespace Domain
         public Guid RoleTitleValueId { get; set; } = default!;
         public LangString? RoleTitleValue { get; set; } = default!;
         
+        
+        
         public ICollection<ChatMember>? ChatMembers { get; set; }
     }
 }

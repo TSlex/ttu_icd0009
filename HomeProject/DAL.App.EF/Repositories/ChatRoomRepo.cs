@@ -21,6 +21,7 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbSet
                 .Include(room => room.Messages)
+                .ThenInclude(message => message.Profile)
                 .Include(room => room.ChatMembers)
                 .ThenInclude(member => member.ChatRole)
                 .ThenInclude(role => role.RoleTitleValue)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Identity;
+using Domain.Translation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,23 +86,78 @@ namespace DAL.Helpers
                 new ChatRole()
                 {
                     RoleTitle = "Member",
-                    RoleTitleValue = "Member",
+                    RoleTitleValue = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Member"
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Участник"
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Osaleja"
+                            }
+                        }
+                    },
                 },
                 new ChatRole()
                 {
                     RoleTitle = "Creator",
-                    RoleTitleValue = "Creator",
+                    RoleTitleValue = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Creator"
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Создатель"
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Looja"
+                            }
+                        }
+                    },
                 },
                 new ChatRole()
                 {
                     RoleTitle = "Moderator",
-                    RoleTitleValue = "Moderator",
+                    RoleTitleValue = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "Moderator",
+                                Value = "Member"
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Модератор"
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Moderaator"
+                            }
+                        }
+                    },
                 },
-                new ChatRole()
-                {
-                    RoleTitle = "Left",
-                    RoleTitleValue = "Left",
-                }
             };
 
             foreach (var chatRole in chatRoles)

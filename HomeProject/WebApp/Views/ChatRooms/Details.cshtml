@@ -6,21 +6,39 @@
 }
 
 <div class="chat_container">
-    <div class="chat_header">
-        <span>@Model.ChatRoomTitle</span>
-        <a asp-action="Index" asp-controller="ChatMembers" asp-route-chatRoomId="@Model.Id">Участники</a>
-        <form asp-action="LeaveChat" method="post">
-            <input type="hidden" name="chatRoomId" asp-for="Id">
-            <button>Покинуть чат</button>
-        </form>
-        <a asp-action="Edit">Переменовать</a>
+    <div class="chat_header d-flex align-items-center">
+        <span style="flex-grow: 1; text-align: center">&#x3C;--@Model.ChatRoomTitle--&#x3E;</span>
+
+        <div class="profile_controls dropdown dropright show">
+            <a class="btn fa fa-bars" href="#" role="button" id="profile_more"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </a>
+
+            <div class="dropdown-menu text-center" aria-labelledby="profile_more">
+                <a class="btn-link" asp-action="Index" asp-controller="ChatMembers" asp-route-chatRoomId="@Model.Id">Участники</a>
+                <a class="btn-link" asp-action="Edit">Переменовать</a>
+                <form asp-action="LeaveChat" method="post" class="disable_form_style">
+                    <input type="hidden" name="chatRoomId" asp-for="Id">
+                    <button class="btn-link" style="margin: 0 !important;">Покинуть чат</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="chat_section">
         <div class="messages">
             @foreach (var item in Model.Messages.OrderByDescending(message => message.MessageDateTime))
             {
-                <div class="message @(User.UserId() == item.ProfileId ? "active" : "")">@item.MessageValue</div>
+                <div class="message @(User.UserId() == item.ProfileId ? "active" : "")">
+                    <a class="message_profile" asp-controller="Profiles" asp-action="Index" asp-route-username="@item.Profile.UserName">
+                        <div class="message_avatar">
+                            <img src="/images/@item.Profile.ProfileAvatarId" alt="profile" height="50px" width="50px"/>
+                        </div>
+                        <span class="profile_name" style="color: black !important;">@item.Profile.UserName</span>
+                    </a>
+                    <span class="message_value">@item.MessageValue</span>
+                    <span class="message_datetime">@item.MessageDateTime</span>
+                </div>
             }
         </div>
     </div>

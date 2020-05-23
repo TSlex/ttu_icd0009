@@ -539,6 +539,7 @@ li form button, nav form button {
     flex-direction: column;
     position: relative;
     height: 550px;
+    padding: 10px;
 }
 
 .chat_container .chat_footer {
@@ -546,7 +547,7 @@ li form button, nav form button {
     padding: 10px;
 }
 
-.messages{
+.messages {
     display: flex;
     flex-direction: column;
     flex-flow: column-reverse;
@@ -559,12 +560,17 @@ li form button, nav form button {
 
 .message {
     border: 1px solid gray;
-    padding: 10px;
+    padding: 25px;
     width: fit-content;
     max-width: 50%;
-    margin: 5px;
+    min-width: 170px;
+    /*margin: 5px;*/
     word-break: break-all;
     border-radius: 5px;
+    /*display: flex;*/
+    position: relative;
+    margin-bottom: 40px;
+    margin-left: 10px;
 }
 
 .message.active {
@@ -572,10 +578,83 @@ li form button, nav form button {
     border: 1px solid #1861ac;
     color: white;
     align-self: flex-end;
+    margin-right: 10px;
+    margin-left: unset;
+}
+
+.message .message_avatar{
+    height: 50px !important;
+    width: 50px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid gray;
+    box-sizing: content-box;
+    margin: 5px;
+}
+
+.message_datetime{
+    font-size: 12px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    font-family: Consolas, serif;
+    font-weight: bold;
+    background: white;
+    padding: 0 4px;
+    position: absolute;
+    bottom: -8px;
+    width: 150px !important;
+    text-align: center;
+    right: 10px;
+}
+
+.message.active .message_datetime{
+    right: unset;
+    left: 10px;
+    background: white;
+    color: black;
+}
+
+.message_value{
+    word-break: break-all;
+    word-break: break-word;
+}
+
+.message_profile{
+    position: absolute;
+    /*background: #a71d2a;*/
+    display: flex;
+    align-items: center;
+    height: 62px !important;
+    top: -31px;
+    left: -20px;
+}
+
+.message.active .message_profile{
+    right: -20px;
+    left: unset;
+    flex-direction: row-reverse;
+}
+
+.message_profile .profile_name{
+    font-size: 16px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    font-family: Consolas, serif;
+    font-weight: bold;
+    background: white;
+    padding: 0 4px;
+}
+
+.message.active .profile_name{
+    /*background: white;*/
+    display: none;
+    background: white;
+    color: black;
 }
 
 .chat_create_form {
-    background: red;
+    /*background: red;*/
     display: flex;
     padding: 10px;
     align-items: center;
