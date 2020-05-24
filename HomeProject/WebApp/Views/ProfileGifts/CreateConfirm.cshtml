@@ -1,26 +1,39 @@
-﻿@model BLL.App.DTO.ProfileGift
+﻿@using Extension
+@model BLL.App.DTO.ProfileGift
 
 @{
-    ViewData["Title"] = Resourses.Views.Gifts.Gifts.SendGiftHeader + " " + Model.Profile!.UserName;
+    ViewData["Title"] = Resourses.Views.Gifts.Gifts.SendGiftHeader;
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr>
 <div class="row text-center justify-content-center">
-    <div class="d-flex flex-column align-items-center">
+    <div class="d-flex flex-column">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <span>
-            @Resourses.Views.Gifts.Gifts.SendGiftTitle <b>@Model.Profile.UserName</b>
-        </span>
+        <a asp-action="Index" asp-controller="Profiles" asp-route-username="@Model.Profile.UserName" class="btn-link">
+            <b>@string.Format(Resourses.Views.Gifts.Gifts.SendGiftTitle, Model.Profile.UserName)</b>
+        </a>
         <div class="profile_gift">
-            <img src="/images/@(Model.Gift!.GiftImageId)" alt="" style="height: 200px; width: 200px;" class="m-3">
+            <img src="/images/@(Model.Gift!.GiftImageId)" alt="" style="height: 300px; width: 300px;" class="m-3">
         </div>
-        <span class="text-danger font-weight-bold">@Resourses.Views.Gifts.Gifts.Price: @Model.Price</span>
+        <span class="font-weight-bold">@Resourses.Views.Gifts.Gifts.Title: @Model.Gift.GiftName</span>
+        <span class="text-danger font-weight-bold">@Resourses.Views.Gifts.Gifts.Price: @Model.Gift.Price</span>
 
-        <span>@Resourses.Views.Gifts.Gifts.AreSure</span>
-        <br>
         <form method="post" asp-action="CreateConfirm">
+            <div class="form-group">
+                <label for="anon" class="control-label">@Resourses.Views.Gifts.Gifts.Anonymous</label>
+                <input type="checkbox" id="anon" class="form-control"/>
+                <input type="hidden" asp-for="FromProfile.UserName" id="from-id" value="@User.Identity.Name" class="form-control"/>
+                <input type="hidden" asp-for="FromProfile.UserName" id="from-id-empty" value="@null" disabled class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <textarea asp-for="Message" rows="3" autofocus class="form-control text-center"></textarea>
+            </div>
+
+            <span>@Resourses.Views.Gifts.Gifts.AreSure</span>
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Profile!.UserName">
             <input type="hidden" asp-for="ReturnUrl">
@@ -36,4 +49,22 @@
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script>
+        let checkbox = document.getElementById('anon');
+        let input = document.getElementById('from-id');
+        let inputEmpty = document.getElementById('from-id-empty');
+        
+        checkbox.addEventListener("change", ev => {
+            if (checkbox.checked === true){
+                input.disabled = true;
+                inputEmpty.disabled = false;
+            }
+            else {
+                input.disabled = false;
+                inputEmpty.disabled = true;
+            }
+        })
+    
+    </script>
 }

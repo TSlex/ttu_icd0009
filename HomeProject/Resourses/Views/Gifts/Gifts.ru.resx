@@ -19,15 +19,27 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="SendGiftHeader">
-        <value>Отправить подарок - </value>
+        <value>Отправить подарок</value>
     </data>
     <data name="SendGiftTitle">
-        <value>Следующий подарок будет отправлен - </value>
+        <value>Следующий подарок будет отправлен {0}</value>
     </data>
     <data name="Price">
         <value>Цена</value>
     </data>
     <data name="AreSure">
         <value>Вы уверены?</value>
+    </data>
+    <data name="Title">
+        <value>Название</value>
+    </data>
+    <data name="From">
+        <value>От {0}</value>
+    </data>
+    <data name="Message">
+        <value>Сообщение</value>
+    </data>
+    <data name="Anonymous">
+        <value>Анонимно?</value>
     </data>
 </root>

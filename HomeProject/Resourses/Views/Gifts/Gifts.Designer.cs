@@ -61,11 +61,38 @@ namespace Resourses.Views.Gifts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anonymous?.
+        /// </summary>
+        public static string Anonymous {
+            get {
+                return ResourceManager.GetString("Anonymous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string AreSure {
             get {
                 return ResourceManager.GetString("AreSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         
@@ -79,7 +106,7 @@ namespace Resourses.Views.Gifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Send a gift to.
+        ///   Looks up a localized string similar to Send a gift.
         /// </summary>
         public static string SendGiftHeader {
             get {
@@ -88,11 +115,20 @@ namespace Resourses.Views.Gifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following gift will be send to.
+        ///   Looks up a localized string similar to The following gift will be send to {0}.
         /// </summary>
         public static string SendGiftTitle {
             get {
                 return ResourceManager.GetString("SendGiftTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }
