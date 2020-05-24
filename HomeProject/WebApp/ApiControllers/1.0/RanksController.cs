@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -110,8 +111,6 @@ namespace WebApp.ApiControllers._1._0
                 await _bll.SaveChangesAsync();
             }
 
-            ;
-
             return Ok(ranks.Select(rank => rank!.Rank)
                 .OrderByDescending(rank => rank!.MaxExperience)
                 .Where(rank => rank!.MinExperience <= user.Experience)
@@ -125,6 +124,37 @@ namespace WebApp.ApiControllers._1._0
                     MinExperience = rank!.MinExperience,
                     MaxExperience = rank!.MaxExperience,
                 }).FirstOrDefault());
+        }
+        
+        /// <summary>
+        /// Get profile rank by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RankDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetProfileRank(Guid id)
+        {
+            var profileRank = await _bll.ProfileRanks.FindAsync(id);
+
+            if (profileRank == null)
+            {
+                return NotFound(new ErrorResponseDTO("Profile rank was not found!"));
+            }
+
+            return Ok(new RankDTO()
+            {
+                MaxExperience = profileRank.Rank.MaxExperience,
+                MinExperience = profileRank.Rank.MinExperience,
+                RankColor = profileRank.Rank.RankColor,
+                RankDescription = profileRank.Rank.RankDescription,
+                RankIcon = profileRank.Rank.RankIcon,
+                RankTitle = profileRank.Rank.RankTitle,
+                RankTextColor = profileRank.Rank.RankTextColor
+            });
         }
     }
 }

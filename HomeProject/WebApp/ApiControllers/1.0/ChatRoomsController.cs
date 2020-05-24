@@ -197,7 +197,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> PutRoom(Guid id, [FromBody] ChatRoomEditDTO chatRoom)
+        public async Task<IActionResult> RenameRoom(Guid id, [FromBody] ChatRoomEditDTO chatRoom)
         {
             var record = await _bll.ChatRooms.FindAsync(id);
 
@@ -229,28 +229,6 @@ namespace WebApp.ApiControllers._1._0
             }
 
             return BadRequest(new ErrorResponseDTO("Chat room is invalid"));
-        }
-
-        /// <summary>
-        /// Delete room. Removes user from room members. 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}/delete")]
-        [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> DeleteRoom(Guid id)
-        {
-            var exist = await _bll.ChatRooms.ExistAsync(id);
-
-            if (!exist)
-            {
-                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
-            }
-
-            throw new NotImplementedException();
         }
     }
 }

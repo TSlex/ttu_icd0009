@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Contracts.BLL.App;
 using DAL;
 using Domain;
+using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,7 @@ namespace WebApp.ApiControllers._1._0
     public class FollowersController : ControllerBase
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -136,6 +137,36 @@ namespace WebApp.ApiControllers._1._0
                     UserName = favorite.FollowerProfile!.UserName,
                     ProfileAvatarId = favorite.FollowerProfile.ProfileAvatarId
                 }));
+        }
+
+        /// <summary>
+        /// Deletes a followed
+        /// </summary>
+        /// <param name="id">Followed id</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> DeleteFollowed(Guid id)
+        {
+            var record = await _bll.Followers.GetForUpdateAsync(id);
+
+            if (record == null)
+            {
+                return NotFound(new ErrorResponseDTO("Follower was not found!"));
+            }
+
+            if (record.FollowerProfileId != User.UserId())
+            {
+                return BadRequest(new ErrorResponseDTO("You cannot delete this record!"));
+            }
+
+            _bll.Followers.Remove(id);
+            await _bll.SaveChangesAsync();
+
+            return NotFound(new OkResponseDTO() {Status = "Follower was deleted"});
         }
     }
 }

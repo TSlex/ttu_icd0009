@@ -6,8 +6,6 @@ namespace PublicApi.DTO.v1
 {
     public class ProfileRankDTO: DomainEntityBaseMetadata
     {
-        public Guid ProfileId { get; set; } = default!;
-
-        public Guid RankId { get; set; } = default!;
+        
     }
 }

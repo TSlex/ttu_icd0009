@@ -88,7 +88,6 @@ namespace WebApp.ApiControllers._1._0
                  PostCommentsCount = inObj.PostCommentsCount,
                  PostFavoritesCount = inObj.PostFavoritesCount,
                  PostImageId = inObj.PostImageId,
-//                 PostImageUrl = inObj.PostImageUrl,
                  PostPublicationDateTime = inObj.PostPublicationDateTime
             };
         }

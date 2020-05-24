@@ -57,7 +57,6 @@ namespace WebApp.ApiControllers._1._0
                     GiftName = gift.GiftName,
                     GiftCode = gift.GiftCode,
                     GiftImageId = gift.GiftImageId,
-//                    GiftImageUrl = gift.GiftImageUrl,
                     Price = gift.Price,
                 }));
         }
@@ -98,15 +97,15 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("User is not found!"));
             }
 
-            return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber)).Select(gift => gift.Gift).Select(
-                gift => new GiftDTO()
-                {
-                    GiftName = gift!.GiftName,
-                    GiftCode = gift!.GiftCode,
-                    GiftImageId = gift!.GiftImageId,
-//                    GiftImageUrl = gift!.GiftImageUrl,
-                    Price = gift!.Price,
-                }));
+            return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber)).Select(gift => gift.Gift)
+                .Select(
+                    gift => new GiftDTO()
+                    {
+                        GiftName = gift!.GiftName,
+                        GiftCode = gift!.GiftCode,
+                        GiftImageId = gift!.GiftImageId,
+                        Price = gift!.Price,
+                    }));
         }
 
         /// <summary>
@@ -138,30 +137,31 @@ namespace WebApp.ApiControllers._1._0
         /// Send the gift by giftcode to a profile with specified username
         /// </summary>
         /// <param name="username"></param>
-        /// <param name="giftCode"></param>
+        /// <param name="profileGift"></param>
         /// <returns></returns>
-        [HttpPost("{username}/{giftCode}/send")]
+        [HttpPost("{username}/send")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> SendGiftToUser(string username, string giftCode)
+        public async Task<IActionResult> SendGiftToUser(string username, ProfileGiftCreateDTO profileGift)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
+            var fromUser = await _bll.Profiles.FindByUsernameAsync(profileGift.FromUsername);
 
-            if (user == null)
+            if (user == null || user.UserName != profileGift.Username)
             {
-                return NotFound(new ErrorResponseDTO("User is not found!"));
+                return NotFound(new ErrorResponseDTO("User was not found!"));
             }
-            
+
             if (user.Id == User.UserId())
             {
                 return NotFound(new ErrorResponseDTO("You cannot send gift to yourself!"));
             }
-            
-            var gift = await _bll.Gifts.FindByCodeAsync(giftCode);
-            
+
+            var gift = await _bll.Gifts.FindByCodeAsync(profileGift.GiftCode);
+
             if (gift == null)
             {
                 return BadRequest(new ErrorResponseDTO("Gift code is invalid!"));
@@ -170,18 +170,76 @@ namespace WebApp.ApiControllers._1._0
             _bll.ProfileGifts.Add(new ProfileGift()
             {
                 ProfileId = user.Id,
+                FromProfileId = fromUser?.Id,
                 GiftId = gift.Id,
                 Price = gift.Price,
-                GiftDateTime = DateTime.Now
+                GiftDateTime = DateTime.Now,
+                Message = profileGift.Message,
             });
-            
-            await _bll.Ranks.IncreaseUserExperience(User.UserId(), 
+
+            await _bll.Ranks.IncreaseUserExperience(User.UserId(),
                 _configuration.GetValue<int>("Rank:GiftSendExperience"));
 
             return Ok(new OkResponseDTO
             {
                 Status = "Gift was send C:"
             });
+        }
+
+        /// <summary>
+        /// Get profile gift by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileGiftDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetProfileGift(Guid id)
+        {
+            var profileGift = await _bll.ProfileGifts.FindAsync(id);
+
+            if (profileGift == null)
+            {
+                return NotFound(new ErrorResponseDTO("Profile gift was not found!"));
+            }
+
+            return Ok(new ProfileGiftDTO
+            {
+                Id = profileGift.Id,
+                Username = profileGift.Profile.UserName,
+                FromUsername = profileGift.FromProfile.UserName,
+                Message = profileGift.Message,
+                Price = profileGift.Price,
+                GiftDateTime = profileGift.GiftDateTime,
+                ImageId = profileGift.Gift.GiftImageId
+            });
+        }
+
+        /// <summary>
+        /// Deletes a gift
+        /// </summary>
+        /// <param name="id">Profile gift id</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            var record = await _bll.ProfileGifts.GetForUpdateAsync(id);
+
+            if (record == null || record.ProfileId != User.UserId())
+            {
+                return NotFound(new ErrorResponseDTO("Profile gift was not found!"));
+            }
+
+            _bll.ProfileGifts.Remove(id);
+            await _bll.SaveChangesAsync();
+
+            return Ok(new OkResponseDTO() {Status = "Profile gift was deleted"});
         }
     }
 }

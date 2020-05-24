@@ -14,8 +14,6 @@ namespace PublicApi.DTO.v1
         public Guid? GiftImageId { get; set; }
         public ImageDTO? GiftImage { get; set; }
         
-//        public string? GiftImageUrl { get; set; }
-        
         public int Price { get; set; }
         
         public DateTime GiftDateTime { get; set; }

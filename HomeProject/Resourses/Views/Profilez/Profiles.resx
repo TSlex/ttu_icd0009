@@ -50,4 +50,10 @@
     <data name="Blocked">
         <value>This user has added you to his blacklist!</value>
     </data>
+    <data name="NoPresents">
+        <value>This user has no gifts yet. Give? :)</value>
+    </data>
+    <data name="NoPosts">
+        <value>Nothing here yet</value>
+    </data>
 </root>

@@ -61,6 +61,15 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("Chat room was not found!"));
             }
             
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                  (currentMember.ChatRole.CanWriteMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
+            {
+                return BadRequest(new ErrorResponseDTO("Access denied!"));
+            }
+            
             if (TryValidateModel(message))
             {
                 var result = _bll.Messages.Add(new Message()
@@ -92,7 +101,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PutMessage(Guid id, [FromBody] MessageEditDTO message)
         {
-            var record = await _bll.Messages.FindAsync(id);
+            var record = await _bll.Messages.GetForUpdateAsync(id);
 
             if (record == null)
             {
@@ -103,8 +112,12 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("Ids should math!"));
             }
-
-            if (record.ProfileId != User.UserId())
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                  (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
             {
                 return BadRequest(new ErrorResponseDTO("Access denied!"));
             }
@@ -129,19 +142,26 @@ namespace WebApp.ApiControllers._1._0
         /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageGetDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> DeleteMessage(Guid id)
         {
-            var message = await _bll.Messages.FindAsync(id);
-
-            if (message == null)
+            var record = await _bll.Messages.GetForUpdateAsync(id);
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                  (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
             {
-                return NotFound(new ErrorResponseDTO("Comment was not found!"));
+                return NotFound(new ErrorResponseDTO("Message was not found!"));
             }
+            
+            _bll.Messages.Remove(id);
+            await _bll.SaveChangesAsync();
 
-            throw new NotImplementedException();
+            return Ok(new OkResponseDTO() {Status = "Message was deleted"});
         }
     }
 }

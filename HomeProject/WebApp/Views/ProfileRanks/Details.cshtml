@@ -1,1 +1,68 @@
-﻿
+﻿@model BLL.App.DTO.ProfileRank
+
+@{
+    ViewData["Title"] = Model.Rank.RankTitle;
+
+    float currentExp = Model.Profile.Experience - (Model!.Rank.MinExperience >= 0 ? Model.Rank.MinExperience : 0);
+    float needExp = Model.Rank.MaxExperience - (Model!.Rank.MinExperience >= 0 ? Model.Rank.MinExperience : 0);
+
+    var progress = Math.Round(currentExp / needExp, 3) * 100;
+
+    if (progress > 100)
+    {
+        progress = 100D;
+    }
+
+    var style1 = $"conic-gradient({Model.Rank.RankColor} {progress}%$@! #FFFFFF {progress + 5}%) 50% 50% / 100% 100% no-repeat;"
+        .Replace(",", ".")
+        .Replace("$@!", ",");
+}
+
+<div class="row text-center justify-content-center mt-5">
+    <div class="d-flex flex-column align-items-center" style="position: relative">
+        <div class="progress_container" style="background: @style1">
+            <div class="progress_container_front">
+                <span class="progress_value">@(progress)%</span>
+            </div>
+        </div>
+        <span class="mt-4" style="color: @Model.Rank.RankTextColor; font-size: 24px; font-family: Consolas, serif">
+            @Model.Rank.RankTitle
+        </span>
+        <hr style="width: 400px">
+        <span style="display: inline-block; max-width: 600px; word-break: break-all; word-break: break-word;">
+            @Model.Rank.RankDescription
+        </span>
+    </div>
+</div>
+
+<style>
+    .progress_container{
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 1px solid gray;
+        padding: 10px;
+    }
+    
+    .progress_container_front{
+        background: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+    
+    .progress_value{
+        font-family: Consolas, serif;
+        font-size: 30px;
+    }
+</style>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

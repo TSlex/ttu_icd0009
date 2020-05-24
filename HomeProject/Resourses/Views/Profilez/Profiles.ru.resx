@@ -45,4 +45,10 @@
     <data name="Blocked">
         <value>Данный пользователь внес Вас в свой черный список!</value>
     </data>
+    <data name="NoPresents">
+        <value>У этого пользователя пока нет подарков. Подарить? :)</value>
+    </data>
+    <data name="NoPosts">
+        <value>Здесь пока ничего нет</value>
+    </data>
 </root>

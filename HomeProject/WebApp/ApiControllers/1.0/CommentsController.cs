@@ -64,7 +64,6 @@ namespace WebApp.ApiControllers._1._0
                 {
                     Id = comment.Id,
                     UserName = comment.Profile!.UserName,
-//                    ProfileAvatarUrl = comment.Profile!.ProfileAvatarUrl,
                     CommentValue = comment.CommentValue,
                     CommentDateTime = comment.CommentDateTime
                 }));
@@ -157,19 +156,34 @@ namespace WebApp.ApiControllers._1._0
         /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentGetDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> DeleteComment(Guid id)
         {
-            var comment = await _bll.Comments.FindAsync(id);
+            var record = await _bll.Comments.GetForUpdateAsync(id);
 
-            if (comment == null)
+            if (record == null)
             {
                 return NotFound(new ErrorResponseDTO("Comment was not found!"));
             }
+            
+            var post = await _bll.Posts.GetForUpdateAsync(record.PostId);
 
-            throw new NotImplementedException();
+            if (!ValidateUserAccess(record) && !(post != null && post.ProfileId == User.UserId()))
+            {
+                return NotFound(new ErrorResponseDTO("You cannot delete this comment!"));
+            }
+            
+            _bll.Comments.Remove(record.Id);
+            await _bll.SaveChangesAsync();
+
+            return Ok(new OkResponseDTO() {Status = "Comment was deleted"});
+        }
+        
+        private bool ValidateUserAccess(Comment? record)
+        {
+            return record != null && record.ProfileId == User.UserId();
         }
     }
 }

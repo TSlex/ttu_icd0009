@@ -20,6 +20,19 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<ProfileRank> FindAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Include(rank => rank.Profile)
+                .Include(rank => rank.Rank)
+                .ThenInclude(rank => rank!.RankTitle)
+                .ThenInclude(title => title!.Translations)
+                .Include(rank => rank.Rank)
+                .ThenInclude(rank => rank!.RankDescription)
+                .ThenInclude(desc => desc!.Translations)
+                .FirstOrDefaultAsync(rank => rank.Id == id));
+        }
+
         public async Task<IEnumerable<ProfileRank>> AllUserAsync(Guid profileId)
         {
             return await RepoDbContext.ProfileRanks

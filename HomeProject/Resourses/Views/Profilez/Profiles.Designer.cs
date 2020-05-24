@@ -88,6 +88,24 @@ namespace Resourses.Views.Profilez {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nothing here yet.
+        /// </summary>
+        public static string NoPosts {
+            get {
+                return ResourceManager.GetString("NoPosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This user has no gifts yet. Give? :).
+        /// </summary>
+        public static string NoPresents {
+            get {
+                return ResourceManager.GetString("NoPresents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to followed.
         /// </summary>
         public static string OfFollowed {

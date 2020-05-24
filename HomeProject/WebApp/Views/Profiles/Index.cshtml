@@ -10,10 +10,10 @@
     var profileRank = Model.ProfileRanks
         .OrderByDescending(rank => rank.Rank!.MaxExperience)
         .Where(rank => rank.Rank!.MinExperience <= Model.Experience)
-        .Take(1).ToList()[0].Rank;
+        .Take(1).ToList()[0];
 
-    float currentExp = Model.Experience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
-    float needExp = profileRank.MaxExperience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
+    float currentExp = Model.Experience - (profileRank!.Rank.MinExperience >= 0 ? profileRank.Rank.MinExperience : 0);
+    float needExp = profileRank.Rank.MaxExperience - (profileRank!.Rank.MinExperience >= 0 ? profileRank.Rank.MinExperience : 0);
 
     var isAuthorized = SignInManager.IsSignedIn(User);
 
@@ -27,7 +27,7 @@
                 if (isAuthorized && @Model.Id == User.UserId())
                 {
                     <a asp-page="/Account/Manage/Avatar" asp-area="Identity">
-                        <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
+                        <div class="profile_image" style="background-color: @profileRank.Rank.RankColor !important;">
                             <img alt="" width="150px" height="150px"
                                  src="/images/@Model.ProfileAvatarId">
                         </div>
@@ -35,7 +35,7 @@
                 }
                 else
                 {
-                    <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
+                    <div class="profile_image" style="background-color: @profileRank.Rank.RankColor !important;">
                         <img alt="" width="150px" height="150px"
                              src="/images/@Model.ProfileAvatarId">
                     </div>
@@ -98,15 +98,16 @@
                     }
                 }
             </ul>
+            <a asp-action="Details" asp-controller="ProfileRanks" asp-route-id="@profileRank.Id" style="color: @profileRank.Rank.RankTextColor">
             <div class="profile_rank">
-                <span class="rank_title">@profileRank.RankTitle</span>
+                <span class="rank_title">@profileRank.Rank.RankTitle</span>
                 <div class="rank_bar_back"></div>
-                <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.RankColor">
+                <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.Rank.RankColor">
                 </div>
-                <span class="rank_score">@Model.Experience/@profileRank.MaxExperience</span>
+                <span class="rank_score">@Model.Experience/@profileRank.Rank.MaxExperience</span>
                 <div class="rank_icons">
                     @{
-                        var icons = profileRank.RankIcon?.Split(";").Where(s => s != "").ToList();
+                        var icons = profileRank.Rank.RankIcon?.Split(";").Where(s => s != "").ToList();
                         if (icons != null)
                         {
                             foreach (var icon in icons)
@@ -117,6 +118,7 @@
                     }
                 </div>
             </div>
+            </a>
 
             <ul class="profile_meta_section">
                 <li class="profile_meta">
@@ -154,39 +156,56 @@
             </div>
         </div>
     </div>
-    <hr>
-    <div class="profile_gift_section">
-        @{
-            foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5))
-            {
-                <a asp-action="Details" asp-controller="ProfileGifts" asp-route-id="@gift.Id">
-                    <div class="profile_gift">
-                        <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
-                    </div>
-                </a>
-            }
+    @if (!(Model.ProfileGifts.Count == 0 && isAuthorized && Model.Id == User.UserId()))
+    {
+        <hr>
+        <div class="profile_gift_section">
+            @{
+                if (Model.ProfileGifts.Count > 0)
+                {
+                    foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5))
+                    {
+                        <a asp-action="Details" asp-controller="ProfileGifts" asp-route-id="@gift.Id">
+                            <div class="profile_gift">
+                                <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
+                            </div>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <span>@Resourses.Views.Profilez.Profiles.NoPresents</span>
+                }
 
-            if (isAuthorized && Model.Id != User.UserId())
-            {
-                <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
-                   asp-controller="ProfileGifts"
-                   asp-route-username="@Model.UserName"
-                   asp-route-returnUrl="@Url.ActionLink()">
-                </a>
-            }
-        }
-    </div>
-    <hr>
-    <div class="posts_section">
-        <div class="post_row card-columns">
-            @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
-            {
-                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
-                    <div class="post_item card">
-                        <img alt="" src="/images/@post.PostImageId" class="post_image card-img">
-                    </div>
-                </a>
+                if (isAuthorized && Model.Id != User.UserId())
+                {
+                    <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
+                       asp-controller="ProfileGifts"
+                       asp-route-username="@Model.UserName"
+                       asp-route-returnUrl="@Url.ActionLink()">
+                    </a>
+                }
             }
         </div>
+    }
+    <hr>
+    <div class="posts_section justify-content-center">
+        @if (Model.Posts.Count > 0)
+        {
+            <div class="post_row card-columns">
+                @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
+                {
+                    <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
+                        <div class="post_item card">
+                            <img alt="" src="/images/@post.PostImageId" class="post_image card-img">
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <span>@Resourses.Views.Profilez.Profiles.NoPosts</span>
+        }
     </div>
 </div>

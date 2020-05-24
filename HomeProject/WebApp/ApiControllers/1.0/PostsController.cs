@@ -27,7 +27,7 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Post, PostGetDTO> _postGetMapper;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -123,7 +123,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO("User was not found!"));
             }
-            
+
             if (User.Identity.IsAuthenticated)
             {
                 return Ok((await _bll.Posts.GetUser10ByPage(user.Id, pageNumber, User.UserId()))
@@ -155,7 +155,7 @@ namespace WebApp.ApiControllers._1._0
             {
                 post = await _bll.Posts.GetNoIncludes(id, null);
             }
-            
+
             if (post == null)
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
@@ -184,7 +184,6 @@ namespace WebApp.ApiControllers._1._0
                     ProfileId = User.UserId(),
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
-//                    PostImageUrl = post.PostImageUrl
                 });
 
                 await _bll.SaveChangesAsync();
@@ -247,19 +246,27 @@ namespace WebApp.ApiControllers._1._0
         /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PostGetDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> DeletePost(Guid id)
         {
-            var post = await _bll.Posts.GetForUpdateAsync(id);
+            var record = await _bll.Posts.GetForUpdateAsync(id);
 
-            if (post == null)
+            if (!ValidateUserAccess(record))
             {
                 return NotFound(new ErrorResponseDTO("Post was not found!"));
             }
 
-            throw new NotImplementedException();
+            _bll.Posts.Remove(id);
+            await _bll.SaveChangesAsync();
+
+            return Ok(new OkResponseDTO() {Status = "Post was deleted"});
+        }
+
+        private bool ValidateUserAccess(Post? record)
+        {
+            return record != null && record.ProfileId == User.UserId();
         }
 
         //============================================================
@@ -327,7 +334,7 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(new OkResponseDTO() {Status = "Post is not favorited"});
         }
-        
+
         private static PostGetDTO Map(Post inObj)
         {
             return new PostGetDTO()
@@ -340,7 +347,6 @@ namespace WebApp.ApiControllers._1._0
                 PostCommentsCount = inObj.PostCommentsCount,
                 PostFavoritesCount = inObj.PostFavoritesCount,
                 PostImageId = inObj.PostImageId,
-//                PostImageUrl = inObj.PostImageUrl,
                 PostPublicationDateTime = inObj.PostPublicationDateTime
             };
         }

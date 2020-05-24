@@ -23,5 +23,22 @@ namespace WebApp.Controllers
         {
             _bll = bll;
         }
+        
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var profileRank = await _bll.ProfileRanks.FindAsync(id);
+
+            if (profileRank == null)
+            {
+                return NotFound();
+            }
+
+            return View(profileRank);
+        }
     }
 }

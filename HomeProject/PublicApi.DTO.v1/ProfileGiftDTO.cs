@@ -6,8 +6,25 @@ namespace PublicApi.DTO.v1
 {
     public class ProfileGiftDTO: DomainEntityBaseMetadata
     {
-        public Guid ProfileId { get; set; } = default!;
+        public string Username { get; set; } = default!;
+        public string? FromUsername { get; set; }
 
-        public Guid GiftId { get; set; } = default!;
+        public Guid? ImageId { get; set; } = default!;
+        
+        public DateTime GiftDateTime { get; set; } = default!;
+        
+        public int Price { get; set; }
+
+        public string? Message { get; set; }
+    }
+    
+    public class ProfileGiftCreateDTO
+    {
+        public string Username { get; set; } = default!;
+        public string? FromUsername { get; set; }
+        
+        public string GiftCode { get; set; } = default!;
+
+        public string? Message { get; set; }
     }
 }

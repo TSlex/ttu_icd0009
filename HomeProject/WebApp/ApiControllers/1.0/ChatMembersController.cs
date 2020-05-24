@@ -67,8 +67,8 @@ namespace WebApp.ApiControllers._1._0
             {
                 Id = member.Id,
                 UserName = member.Profile!.UserName,
-//                ProfileAvatarUrl = member.Profile!.ProfileAvatarUrl,
-                ChatRole = member.ChatRole!.RoleTitle
+                ChatRole = member.ChatRole!.RoleTitle,
+                ProfileAvatarId = member.Profile!.ProfileAvatarId
             }));
         }
         
@@ -120,6 +120,38 @@ namespace WebApp.ApiControllers._1._0
             }
             
             return BadRequest(new ErrorResponseDTO("Only room administrator can assign roles!"));
+        }
+        
+        /// <summary>
+        /// Deletes a member
+        /// </summary>
+        /// <param name="id">Member id</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> DeleteMember(Guid id)
+        {
+            var chatMember = await _bll.ChatMembers.GetForUpdateAsync(id);
+
+            if (chatMember == null)
+            {
+                return NotFound(new ErrorResponseDTO("Member was not found!"));
+            }
+
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
+
+            if (!currentMember.ChatRole.CanEditMembers)
+            {
+                return BadRequest(new ErrorResponseDTO("You cannot edit members!"));
+            }
+            
+            _bll.ChatMembers.Remove(chatMember);
+            await _bll.SaveChangesAsync();
+
+            return Ok(new OkResponseDTO(){Status = "Member was removed"});
         }
     }
 }

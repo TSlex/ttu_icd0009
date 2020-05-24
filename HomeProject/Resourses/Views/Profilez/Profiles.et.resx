@@ -45,4 +45,10 @@
     <data name="Blocked">
         <value>See kasutaja lisas teid oma musta nimekirja!</value>
     </data>
+    <data name="NoPresents">
+        <value>Sellel kasutajal pole veel kingitusi. Anda? :)</value>
+    </data>
+    <data name="NoPosts">
+        <value>Midagi siin veel pole</value>
+    </data>
 </root>

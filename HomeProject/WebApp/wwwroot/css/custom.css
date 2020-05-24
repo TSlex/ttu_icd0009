@@ -198,6 +198,12 @@ body {
     font-weight: bold;
 }
 
+.profile_about{
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+}
+
 .profile_about * {
     font-size: 16px;
     margin: 0;

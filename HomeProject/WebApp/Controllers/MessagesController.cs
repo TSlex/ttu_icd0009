@@ -35,6 +35,7 @@ namespace WebApp.Controllers
             {
                 ChatRoomId = chatRoomId,
             };
+            
             return View(message);
         }
 
@@ -46,11 +47,20 @@ namespace WebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            BLL.App.DTO.Message message)
+            Message message)
         {
             ModelState.Clear();
             
             message.ProfileId = User.UserId();
+            
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
+            
+            if (!(currentMember != null &&
+                  (message.ProfileId == User.UserId() && currentMember.ChatRole.CanWriteMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
+            {
+                return NotFound();
+            }
 
             if (TryValidateModel(message))
             {
