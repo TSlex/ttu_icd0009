@@ -33,12 +33,12 @@ namespace BLL.App.Services
             //add profile next rank if possible
             var profileRank = profile.ProfileRanks.OrderByDescending(rank => rank.Rank!.MaxExperience).Take(1).ToList()[0].Rank;
 
-            if (profile.Experience + amount > profileRank!.MaxExperience && profileRank.NextRank != null)
+            if (profile.Experience + amount > profileRank!.MaxExperience && profileRank.NextRankId != null)
             {
                 _uow.ProfileRanks.Add(new ProfileRank()
                 {
                     ProfileId = userId,
-                    RankId = profileRank.NextRank.Id
+                    RankId = (Guid) profileRank.NextRankId
                 });
             }
             

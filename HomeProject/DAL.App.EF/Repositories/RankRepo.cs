@@ -7,6 +7,7 @@ using DAL.App.DTO;
 using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
 using DAL.Mappers;
+using Domain.Translation;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
@@ -18,10 +19,54 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<IEnumerable<Rank>> AllAdminAsync()
+        {
+            return (await RepoDbSet
+                .Include(rank => rank.RankTitle)
+                .ThenInclude(s => s!.Translations)
+                .Include(rank => rank.RankDescription)
+                .ThenInclude(s => s!.Translations)
+                .ToListAsync())
+                .Select(rank => Mapper.Map(rank));
+        }
+
+        public override async Task<IEnumerable<Rank>> AllAsync()
+        {
+            return (await RepoDbSet
+                .Include(rank => rank.RankTitle)
+                .ThenInclude(s => s!.Translations)
+                .Include(rank => rank.RankDescription)
+                .ThenInclude(s => s!.Translations)
+                .Where(rank => rank.DeletedAt == null && rank.MasterId == null)
+                .ToListAsync())
+                .Select(rank => Mapper.Map(rank));
+        }
+
+        public override async Task<Rank> UpdateAsync(Rank entity)
+        {
+            var domainEntity = await RepoDbSet
+                .Include(rank => rank.RankTitle)
+                .ThenInclude(s => s!.Translations)
+                .Include(rank => rank.RankDescription)
+                .ThenInclude(s => s!.Translations)
+                .FirstOrDefaultAsync(rank => rank.Id == entity.Id);
+
+            var rankTitle = entity.RankTitle;
+            var rankDescription = entity.RankDescription;
+
+            ((LangString) entity.RankTitle).Translations = domainEntity.RankTitle.Translations;
+            ((LangString) entity.RankDescription).Translations = domainEntity.RankDescription.Translations;
+
+            ((LangString) entity.RankTitle).Translate(rankTitle);
+            ((LangString) entity.RankDescription).Translate(rankDescription);
+
+            return await base.UpdateAsync(entity);
+        }
+
         public async Task<Rank> FindByCodeAsync(string code)
         {
             return Mapper.Map(await RepoDbContext.Ranks
-                .Where(rank => rank.DeletedAt == null)
+                .Where(rank => rank.DeletedAt == null && rank.MasterId == null)
                 .Include(rank => rank.RankTitle)
                 .ThenInclude(s => s!.Translations)
                 .Include(rank => rank.RankDescription)

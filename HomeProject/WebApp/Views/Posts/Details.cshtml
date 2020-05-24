@@ -36,8 +36,8 @@
                 </li>
                 <li class="post_meta">
                     <a class="btn-link" asp-action="Index" asp-route-postId="@Model.Id" asp-controller="Favorites">
-                    <span class="meta_counter">@Model.PostFavoritesCount</span>
-                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
+                        <span class="meta_counter">@Model.PostFavoritesCount</span>
+                        <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
                     </a>
                 </li>
                 <li class="post_meta">
@@ -70,13 +70,45 @@
             @foreach (var comment in Model.Comments.OrderBy(comment => comment.CommentDateTime))
             {
                 <span class="post_comment">
-                    <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
-                    <span class="comment_username">&#64;@comment.Profile!.UserName: </span>
+                    
+                    @{
+                        if (comment.CommentDateTime.Date == DateTime.Today)
+                        {
+                            <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
+                        }
+                        else
+                        {
+                            <span class="comment_datetime">[@comment.CommentDateTime.ToString("dd MMMM")]</span>
+                        }
+                    }
+                    <a class="btn-link" asp-action="Index" asp-controller="Profiles" asp-route-username="@comment.Profile.UserName">
+                        <span class="comment_username">&#64;@comment.Profile!.UserName: </span>
+                    </a>
                     <span class="comment_value">@comment.CommentValue</span>
-                    <div class="comment_controls">
-                        <a class="fa fa-edit" asp-action="Edit" asp-controller="Comments" asp-route-id="@comment.Id"></a>
-                        <a class="fa fa-times-circle" asp-action="Delete" asp-controller="Comments" asp-route-id="@comment.Id"></a>
-                    </div>
+
+                    @if (comment.ProfileId == User.UserId())
+                    {
+                        <div class="comment_controls">
+                            <a class="fa fa-edit btn-link" asp-action="Edit" asp-controller="Comments" asp-route-id="@comment.Id"></a>
+                            <form asp-action="Delete" asp-controller="Comments" method="post" class="disable_form_style">
+                                <input type="hidden" name="id" asp-for="@comment.Id">
+                                <input type="hidden" asp-for="@comment.PostId">
+                                <button class="btn-link fa fa-times-circle" style="margin: 0 !important;"></button>
+                            </form>
+                        </div>
+                    }
+
+                    else if (Model.ProfileId == User.UserId())
+                    {
+                        <div class="comment_controls">
+                            <form asp-action="Delete" asp-controller="Comments" method="post" class="disable_form_style">
+                                <input type="hidden" name="id" asp-for="@comment.Id">
+                                <input type="hidden" asp-for="@comment.PostId">
+                                <button class="btn-link fa fa-times-circle" style="margin: 0 !important;"></button>
+                            </form>
+                        </div>
+                    }
+
                 </span>
             }
         </div>

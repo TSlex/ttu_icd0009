@@ -12,8 +12,11 @@ namespace DAL.App.DTO
         public Gift? Gift { get; set; }
         
         public DateTime GiftDateTime { get; set; } = DateTime.Now;
-
-        //what price was
         public int Price { get; set; }
+        
+        public Guid? FromProfileId { get; set; }
+        public Profile? FromProfile { get; set; }
+
+        public string? Message { get; set; }
     }
 }

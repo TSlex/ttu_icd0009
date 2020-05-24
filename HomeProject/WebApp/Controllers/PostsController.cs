@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
@@ -43,13 +44,9 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
-            var favorite = await _bll.Favorites.FindAsync(id, User.UserId());
 
-            post.IsUserFavorite = favorite != null;
+            post.IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(User.UserId());
             
-            post.ReturnUrl = returnUrl;
-
             return View(post);
         }
         
@@ -250,13 +247,8 @@ namespace WebApp.Controllers
                 
                 await _bll.Posts.UpdateAsync(post);
                 await _bll.SaveChangesAsync();
-                
-                if (post.ReturnUrl != null)
-                {
-                    return Redirect(post.ReturnUrl);
-                }
 
-                return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+                return RedirectToAction("Details", "Posts", new {id});
             }
 
             return View(post);
@@ -270,7 +262,7 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.GetNoIncludes(id, null);
 
             if (!ValidateUserAccess(post))
             {

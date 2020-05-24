@@ -155,4 +155,7 @@
     <data name="DeleteHeader">
         <value>Delete</value>
     </data>
+    <data name="DeleteConfirm">
+        <value>Are you sure you want to delete this?</value>
+    </data>
 </root>

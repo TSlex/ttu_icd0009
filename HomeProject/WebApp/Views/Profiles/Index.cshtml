@@ -14,9 +14,9 @@
 
     float currentExp = Model.Experience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
     float needExp = profileRank.MaxExperience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
-    
+
     var isAuthorized = SignInManager.IsSignedIn(User);
-    
+
     var workPlaceUrlPattern = new Regex("(?:http(?:s)?:\\/\\/)?[A-z]*\\.[A-z]*(?:\\/.*)?");
 }
 
@@ -38,7 +38,7 @@
                     <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
                         <img alt="" width="150px" height="150px"
                              src="/images/@Model.ProfileAvatarId">
-                    </div> 
+                    </div>
                 }
             }
         </div>
@@ -61,14 +61,16 @@
                                     if (@Model.IsUserFollows)
                                     {
                                         <form method="post" asp-action="UnfollowProfile">
-                                            <button type="submit" class="dropdown-item"><i class="fas fa-bell-slash"></i> @Resourses.Views.Profilez.Profiles.Unfollow</button>
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="fas fa-bell-slash"></i> @Resourses.Views.Profilez.Profiles.Unfollow</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
                                     else
                                     {
                                         <form method="post" asp-action="FollowProfile">
-                                            <button type="submit" class="dropdown-item"><i class="far fa-bell"></i> @Resourses.Views.Profilez.Profiles.Follow</button>
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="far fa-bell"></i> @Resourses.Views.Profilez.Profiles.Follow</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
@@ -77,14 +79,16 @@
                                     if (@Model.IsUserBlocks)
                                     {
                                         <form method="post" asp-action="UnblockProfile">
-                                            <button type="submit" class="dropdown-item"><i class="fas fa-user-slash"></i> @Resourses.Views.Profilez.Profiles.Unblock</button>
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="fas fa-user-slash"></i> @Resourses.Views.Profilez.Profiles.Unblock</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
                                     else
                                     {
                                         <form method="post" asp-action="BlockProfile">
-                                            <button type="submit" class="dropdown-item"><i class="far fa-user"></i> @Resourses.Views.Profilez.Profiles.Block</button>
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="far fa-user"></i> @Resourses.Views.Profilez.Profiles.Block</button>
                                             <input type="hidden" asp-for="UserName">
                                         </form>
                                     }
@@ -121,14 +125,14 @@
                 </li>
                 <li class="profile_meta">
                     <a asp-controller="Followers" asp-action="Followers" class="btn-link">
-                    <span class="meta_counter">@Model.FollowersCount</span>
-                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
+                        <span class="meta_counter">@Model.FollowersCount</span>
+                        <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
                     </a>
                 </li>
                 <li class="profile_meta">
                     <a asp-controller="Followers" asp-action="Followed" class="btn-link">
-                    <span class="meta_counter">@Model.FollowedCount</span>
-                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
+                        <span class="meta_counter">@Model.FollowedCount</span>
+                        <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
                     </a>
                 </li>
             </ul>
@@ -140,7 +144,7 @@
                 @{
                     if (Model.ProfileWorkPlace != null && workPlaceUrlPattern.IsMatch(Model.ProfileWorkPlace))
                     {
-                        <a href="@Model.ProfileWorkPlace" >@Model.ProfileWorkPlace</a>
+                        <a href="@Model.ProfileWorkPlace">@Model.ProfileWorkPlace</a>
                     }
                     else
                     {
@@ -153,11 +157,13 @@
     <hr>
     <div class="profile_gift_section">
         @{
-            foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
+            foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5))
             {
-                <div class="profile_gift">
-                    <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
-                </div>
+                <a asp-action="Details" asp-controller="ProfileGifts" asp-route-id="@gift.Id">
+                    <div class="profile_gift">
+                        <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
+                    </div>
+                </a>
             }
 
             if (isAuthorized && Model.Id != User.UserId())

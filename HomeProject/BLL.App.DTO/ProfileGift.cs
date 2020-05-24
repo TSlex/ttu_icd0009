@@ -22,9 +22,18 @@ namespace BLL.App.DTO
         [Display(Name = nameof(GiftDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
         public DateTime GiftDateTime { get; set; } = DateTime.Now;
 
-        //what price was
         [Display(Name = nameof(Price), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
         public int Price { get; set; }
+
+        [Display(Name = nameof(FromProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
+        public Guid? FromProfileId { get; set; } = null;
+
+        [Display(Name = nameof(FromProfile), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
+        public Profile? FromProfile { get; set; }
+
+        [Display(Name = nameof(Message), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
+        [MaxLength(100)]
+        public string? Message { get; set; }
 
         [Display(Name = nameof(ReturnUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Common))]
         public string? ReturnUrl { get; set; }

@@ -62,7 +62,12 @@ namespace Domain
         public ICollection<Post>? Posts { get; set; } //List of profile posts
         public ICollection<Comment>? Comments { get; set; } //List of profile comments
 
+        [InverseProperty(nameof(ProfileGift.Profile))]
         public ICollection<ProfileGift>? ProfileGifts { get; set; } //List of profile gifts
+        
+        [InverseProperty(nameof(ProfileGift.FromProfile))]
+        public ICollection<ProfileGift>? ProfileSendGifts { get; set; } //List of profile gifts
+        
         public ICollection<ProfileRank>? ProfileRanks { get; set; } //List of profile ranks
     }
 }

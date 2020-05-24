@@ -18,6 +18,25 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<IEnumerable<Gift>> AllAdminAsync()
+        {
+            return (await RepoDbSet
+                    .Include(gift => gift.GiftName)
+                    .ThenInclude(s => s!.Translations)
+                    .ToListAsync())
+                .Select(rank => Mapper.Map(rank));
+        }
+
+        public override async Task<IEnumerable<Gift>> AllAsync()
+        {
+            return (await RepoDbSet
+                    .Include(gift => gift.GiftName)
+                    .ThenInclude(s => s!.Translations)
+                    .Where(gift => gift.DeletedAt == null && gift.MasterId == null)
+                    .ToListAsync())
+                .Select(rank => Mapper.Map(rank));
+        }
+
         public override async Task<Gift> FindAsync(Guid id)
         {
             return Mapper.Map(await RepoDbContext.Gifts
@@ -32,6 +51,7 @@ namespace DAL.Repositories
             return Mapper.Map(await RepoDbContext.Gifts
                 .Include(gift => gift.GiftName)
                 .ThenInclude(s => s!.Translations)
+                .Where(gift => gift.DeletedAt == null && gift.MasterId == null)
                 .FirstOrDefaultAsync((gift => gift.GiftCode == giftCode)));
         }
 
@@ -46,9 +66,9 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Gifts
-                    .Where(gift => gift.DeletedAt == null)
                     .Include(gift => gift.GiftName)
                     .ThenInclude(s => s!.Translations)
+                    .Where(gift => gift.DeletedAt == null && gift.MasterId == null)
                     .Skip(startIndex).Take(onPageCount)
                     .ToListAsync())
                 .Select(gift => Mapper.Map(gift));
@@ -56,19 +76,22 @@ namespace DAL.Repositories
 
         public async Task<int> GetCountAsync()
         {
-            return await RepoDbContext.Gifts.Where(gift => gift.DeletedAt == null).CountAsync();
+            return await RepoDbContext.Gifts
+                .Where(gift => gift.DeletedAt == null && gift.MasterId == null).CountAsync();
         }
 
         public override Gift Remove(Gift entity)
         {
-            var profileGifts = RepoDbContext.ProfileGifts.Where(gift => gift.GiftId == entity.Id);
+            var profileGifts = RepoDbContext.ProfileGifts
+                .Where(gift => gift.GiftId == entity.Id);
 
             foreach (var profileGift in profileGifts)
             {
                 RepoDbContext.ProfileGifts.Remove(profileGift);
             }
 
-            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.GiftImageId);
+            var imageRecord = RepoDbContext.Images
+                .FirstOrDefault(image => image.Id == entity.GiftImageId);
 
             if (imageRecord != null)
             {
@@ -77,10 +100,11 @@ namespace DAL.Repositories
 
             return base.Remove(entity);
         }
-        
+
         public override async Task<IEnumerable<Gift>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id)
+                .ToListAsync()).Select(record => Mapper.Map(record));
         }
     }
 }

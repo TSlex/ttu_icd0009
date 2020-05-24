@@ -19,6 +19,12 @@ body {
     line-height: inherit !important;
 }
 
+.table td{
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .col-centered {
     margin: 0 auto;
     float: none;
@@ -368,6 +374,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    max-width: 45%;
 }
 
 .post_controls {
@@ -498,6 +505,7 @@ body {
 
 .post_comment .comment_controls {
     float: right;
+    display: flex;
 }
 
 /*form*/

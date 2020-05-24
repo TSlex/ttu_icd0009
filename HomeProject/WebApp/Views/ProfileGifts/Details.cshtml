@@ -1,66 +1,55 @@
+@using Extension
 @model BLL.App.DTO.ProfileGift
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Gift.GiftName;
 }
 
-<h1>Details</h1>
+<div class="row text-center justify-content-center">
+    <div class="d-flex flex-column align-items-center" style="position: relative">
 
-<div>
-    <h4>ProfileGift</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Profile)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Profile!.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GiftId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GiftId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ChangedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ChangedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ChangedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ChangedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedAt)
-        </dd>
-    </dl>
+        @if (Model.ProfileId == User.UserId())
+        {
+            <form asp-action="Delete" asp-controller="ProfileGifts" method="post">
+                <button type="submit" class="item_controls btn-link" style="position: absolute; right: 0">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+                <input type="hidden" asp-for="Id">
+            </form>
+        }
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="profile_gift">
+            <img src="/images/@(Model.Gift!.GiftImageId)" alt="" style="height: 300px; width: 300px;" class="m-3">
+        </div>
+        <span class="font-weight-bold">@Model.Gift.GiftName</span>
+
+        @{
+            if (Model.FromProfile != null)
+            {
+                <span class="font-weight-bold mt-2">@string.Format(Resourses.Views.Gifts.Gifts.From, $"\"{Model.FromProfile.UserName}\"")</span>
+            }
+            else
+            {
+                <span class="font-weight-bold mt-2">@Resourses.Views.Gifts.Gifts.Anonymous.Replace("?", "")</span>
+            }
+
+
+            if (Model.Message != null)
+            {
+                <span class="font-weight-bold mt-2">@Resourses.Views.Gifts.Gifts.Message:</span>
+                <div style="color: black !important; margin: auto; max-width: 400px; overflow: hidden; text-overflow: ellipsis; word-break: break-word">
+                    @Model.Message
+                </div>
+            }
+        }
+
+        <hr>
+        <span>[@Model.GiftDateTime]</span>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

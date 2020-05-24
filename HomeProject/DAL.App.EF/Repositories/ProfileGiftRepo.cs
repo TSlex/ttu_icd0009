@@ -13,9 +13,21 @@ namespace DAL.Repositories
 {
     public class ProfileGiftRepo : BaseRepo<Domain.ProfileGift, ProfileGift, ApplicationDbContext>, IProfileGiftRepo
     {
-        public ProfileGiftRepo(ApplicationDbContext dbContext) : 
+        public ProfileGiftRepo(ApplicationDbContext dbContext) :
             base(dbContext, new ProfileGiftMapper())
         {
+        }
+
+        public override async Task<ProfileGift> FindAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Include(gift => gift.Gift)
+                .ThenInclude(gift => gift.GiftName)
+                .ThenInclude(s => s.Translations)
+                .Include(gift => gift.Profile)
+                .Include(gift => gift.FromProfile)
+                .FirstOrDefaultAsync(gift => gift.Id == id
+                                             && gift.DeletedAt == null));
         }
 
         public async Task<IEnumerable<ProfileGift>> GetByPageAsync(Guid userId, int pageNumber, int onPageCount)
@@ -25,39 +37,13 @@ namespace DAL.Repositories
 
             if (pageIndex < 0)
             {
-                return new ProfileGift[]{};
+                return new ProfileGift[] { };
             }
 
             return (await RepoDbContext.ProfileGifts
                 .Where(gift => gift.ProfileId == userId)
                 .Include(gift => gift.Gift)
                 .Skip(startIndex).Take(onPageCount).ToListAsync()).Select(gift => Mapper.Map(gift));
-
-            /*var query = RepoDbContext.ProfileGifts
-                .Where(gift => gift.ProfileId == userId)
-                .Include(gift => gift.Gift)
-                .AsQueryable();
-
-            if (await query.CountAsync() - 1 < startIndex)
-            {
-                return new ProfileGift[]{};
-            }
-
-            var available = await query.Skip(startIndex).CountAsync();
-
-            if (available >= onPageCount)
-            {
-                return (await query.ToListAsync())
-                    .Skip(startIndex)
-                    .Take(onPageCount)
-                    .Select(gift => Mapper.Map(gift));
-            } else
-            {
-                return (await query.ToListAsync())
-                    .Skip(startIndex)
-                    .Take(available)
-                    .Select(gift => Mapper.Map(gift));
-            }*/
         }
 
         public async Task<int> GetUserCountAsync(Guid userId)

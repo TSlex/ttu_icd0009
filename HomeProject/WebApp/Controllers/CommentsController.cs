@@ -60,13 +60,8 @@ namespace WebApp.Controllers
                 await _bll.SaveChangesAsync();
                 
                 await _bll.Ranks.IncreaseUserExperience(User.UserId(), 2);
-                
-                if (comment.ReturnUrl != null)
-                {
-                    return Redirect(comment.ReturnUrl);
-                }
 
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction("Details", "Posts", new {id = comment.PostId});
             }
 
             return View(comment);
@@ -101,7 +96,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id,
             Comment comment)
         {
-            var record = await _bll.Comments.FindAsync(id);
+            var record = await _bll.Comments.GetForUpdateAsync(id);
             
             if (!ValidateUserAccess(record) || id != comment.Id)
             {
@@ -110,19 +105,15 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                await _bll.Comments.UpdateAsync(comment);
+                record.CommentValue = comment.CommentValue;
+                
+                await _bll.Comments.UpdateAsync(record);
                 await _bll.SaveChangesAsync();
 
-
-                if (comment.ReturnUrl != null)
-                {
-                    return Redirect(comment.ReturnUrl);
-                }
-
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction("Details", "Posts", new {id = record.PostId});
             }
 
-            return View(comment);
+            return View(record);
         }
 
         /// <summary>
@@ -135,14 +126,15 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, Comment comment)
         {
-            var record = await _bll.Comments.FindAsync(id);
+            var record = await _bll.Comments.GetForUpdateAsync(id);
+            var post = await _bll.Posts.GetForUpdateAsync(comment.PostId);
 
-            if (!ValidateUserAccess(record))
+            if (!ValidateUserAccess(record) && !(post != null && post.ProfileId == User.UserId()))
             {
                 return NotFound();
             }
             
-            _bll.Comments.Remove(id);
+            _bll.Comments.Remove(record.Id);
             await _bll.SaveChangesAsync();
 
             if (comment.ReturnUrl != null)
@@ -150,7 +142,7 @@ namespace WebApp.Controllers
                 return Redirect(comment.ReturnUrl);
             }
 
-            return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction("Details", "Posts", new {id = record.PostId});
         }
         
         private bool ValidateUserAccess(Comment? record)

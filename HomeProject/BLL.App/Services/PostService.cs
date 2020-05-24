@@ -21,8 +21,13 @@ namespace BLL.App.Services
         public async Task<Post> GetPostFull(Guid id)
         {
             var post = Mapper.Map(await ServiceRepository.FindAsync(id));
-            post.PostCommentsCount = post.Comments?.Count ?? 0;
-            post.PostFavoritesCount = post.Favorites?.Count ?? 0;
+            
+            post.Comments = post.Comments
+                .Where(comment => comment.DeletedAt == null && comment.MasterId == null)
+                .ToList();
+            
+            post.PostCommentsCount = post.Comments.Count;
+            post.PostFavoritesCount = post.Favorites.Count;
 
             return post;
         }

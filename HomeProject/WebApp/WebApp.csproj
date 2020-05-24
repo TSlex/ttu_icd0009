@@ -211,6 +211,8 @@
         <UpToDateCheckInput Remove="Views\ProfileRanks\Details.cshtml" />
         <UpToDateCheckInput Remove="Views\ProfileRanks\Edit.cshtml" />
         <UpToDateCheckInput Remove="Views\ProfileRanks\Index.cshtml" />
+        <UpToDateCheckInput Remove="Views\Gifts\Details.cshtml" />
+        <UpToDateCheckInput Remove="Views\Gifts\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

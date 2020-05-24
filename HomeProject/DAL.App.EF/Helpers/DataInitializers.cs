@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
+using Domain.Enums;
 using Domain.Identity;
 using Domain.Translation;
 using Microsoft.AspNetCore.Identity;
@@ -45,7 +46,7 @@ namespace DAL.Helpers
             }
 
             var users = new[]
-                {new User {Email = "admin@admin.com", Password = "Admin_123", RolesNames = new[] {"User", "Admin"}}};
+                {new User {UserName = "admin", Email = "admin@admin.com", Password = "Admin_123", RolesNames = new[] {"User", "Admin"}}};
 
             foreach (var user in users)
             {
@@ -54,9 +55,18 @@ namespace DAL.Helpers
                 {
                     newUser = new Profile
                     {
+                        Id = new Guid("00000000-0000-0000-0000-000000000001"),
                         Email = user.Email,
-                        UserName = user.Email,
-                        EmailConfirmed = true
+                        UserName = user.UserName,
+                        EmailConfirmed = true,
+                        ProfileRanks = new List<ProfileRank>()
+                        {
+                            new ProfileRank()
+                            {
+                                ProfileId = new Guid("00000000-0000-0000-0000-000000000001"),
+                                RankId = new Guid("00000000-0000-0000-0000-000000000001"),
+                            }
+                        }
                     };
 
                     var result = userManager.CreateAsync(newUser, user.Password).Result;
@@ -80,10 +90,12 @@ namespace DAL.Helpers
 
         public static void SeedData(ApplicationDbContext ctx)
         {
+            //ChatRoles
             var chatRoles = new ChatRole[]
             {
                 new ChatRole()
                 {
+                    Id = new Guid("00000000-0000-0000-0000-000000000001"),
                     RoleTitle = "Member",
                     RoleTitleValue = new LangString()
                     {
@@ -114,6 +126,7 @@ namespace DAL.Helpers
                 },
                 new ChatRole()
                 {
+                    Id = new Guid("00000000-0000-0000-0000-000000000002"),
                     RoleTitle = "Creator",
                     RoleTitleValue = new LangString()
                     {
@@ -136,7 +149,7 @@ namespace DAL.Helpers
                             }
                         }
                     },
-                    
+
                     CanRenameRoom = true,
                     CanEditMembers = true,
                     CanEditMessages = true,
@@ -145,6 +158,7 @@ namespace DAL.Helpers
                 },
                 new ChatRole()
                 {
+                    Id = new Guid("00000000-0000-0000-0000-000000000003"),
                     RoleTitle = "Moderator",
                     RoleTitleValue = new LangString()
                     {
@@ -167,7 +181,7 @@ namespace DAL.Helpers
                             }
                         }
                     },
-                    
+
                     CanRenameRoom = true,
                     CanEditMembers = true,
                     CanEditMessages = true,
@@ -175,7 +189,6 @@ namespace DAL.Helpers
                     CanWriteMessages = true,
                 },
             };
-            //ChatRoles
 
             foreach (var chatRole in chatRoles)
             {
@@ -192,9 +205,50 @@ namespace DAL.Helpers
             {
                 new Rank()
                 {
-                    RankTitle = "New User",
+                    Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                    RankTitle = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "New User",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Uus kasutaja",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Новый пользователь",
+                            }
+                        }
+                    },
                     RankCode = "X_00",
-                    RankDescription = "Welcome! We are happy to see new faces C:",
+                    RankDescription = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Welcome! We are happy to see new faces C:",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Tere tulemast! Meil on hea meel näha uusi nägusid C:",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Добро пожаловать! Мы рады всегда рады новым лицам С:",
+                            }
+                        }
+                    },
                     RankTextColor = "#000000",
                     RankColor = "#CCFFFF",
                     MinExperience = int.MinValue,
@@ -202,9 +256,50 @@ namespace DAL.Helpers
                 },
                 new Rank()
                 {
-                    RankTitle = "Newbie",
+                    Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                    RankTitle = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Newbie",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Algaja",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Новичек",
+                            }
+                        }
+                    },
                     RankCode = "X_01",
-                    RankDescription = "You are learning a new place",
+                    RankDescription = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "You are learning a new place",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Sa oled leidnud uut koht",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Ты изучаешь новое место",
+                            }
+                        }
+                    },
                     RankTextColor = "#000000",
                     RankColor = "#99CCFF",
                     RankIcon = "star-half-alt;",
@@ -213,9 +308,50 @@ namespace DAL.Helpers
                 },
                 new Rank()
                 {
-                    RankTitle = "Amateur",
+                    Id = new Guid("00000000-0000-0000-0000-000000000003"),
+                    RankTitle = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Amateur",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Amatöör",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Любитель",
+                            }
+                        }
+                    },
                     RankCode = "X_02",
-                    RankDescription = "You feel a bit confident. What would wait you in future?",
+                    RankDescription = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "You feel a bit confident. What would wait you in future?",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Tunned end natuke enesekindlalt. Mis teid tulevikus ootaks?",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Вы чувствуете себя немного уверенно. Что будет ждать вас в будущем?",
+                            }
+                        }
+                    },
                     RankTextColor = "#000000",
                     RankColor = "#3399FF",
                     RankIcon = "star;",
@@ -224,10 +360,52 @@ namespace DAL.Helpers
                 },
                 new Rank()
                 {
-                    RankTitle = "Apprentice",
+                    Id = new Guid("00000000-0000-0000-0000-000000000004"),
+                    RankTitle = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Apprentice",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Õpipoiss",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Подмастерье",
+                            }
+                        }
+                    },
                     RankCode = "X_03",
-                    RankDescription =
-                        "You have already learned the basics, but are you ready to move to the next level?",
+                    RankDescription = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value =
+                                    "You have already learned the basics, but are you ready to move to the next level?",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value =
+                                    "Põhitõed olete juba õppinud, kuid kas olete valmis liikuma järgmisele tasemele?",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Вы уже изучили основы, но готовы ли вы перейти на следующий уровень?",
+                            }
+                        }
+                    },
                     RankTextColor = "#000000",
                     RankColor = "#0066FF",
                     RankIcon = "star;star-half-alt;",
@@ -236,10 +414,53 @@ namespace DAL.Helpers
                 },
                 new Rank()
                 {
-                    RankTitle = "Master",
+                    Id = new Guid("00000000-0000-0000-0000-000000000005"),
+                    RankTitle = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Master",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Meister",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Мастер",
+                            }
+                        }
+                    },
                     RankCode = "X_04",
-                    RankDescription =
-                        "Yes, you feel confidence and even can teach the basics to Newbies. However, there is no limit to perfection C:",
+                    RankDescription = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value =
+                                    "Yes, you feel confidence and even can teach the basics to Newbies. However, there is no limit to perfection C:",
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value =
+                                    "Jah, tunnete enesekindlust ja saate isegi algajatele põhitõdesid õpetada. Täiuslikkusel pole aga piire С:",
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value =
+                                    "Да, вы чувствуете уверенность и даже можете научить новичков основам. Однако нет предела совершенству C:",
+                            }
+                        }
+                    },
                     RankTextColor = "#000000",
                     RankColor = "#6633FF",
                     RankIcon = "star;star;",
@@ -283,34 +504,115 @@ namespace DAL.Helpers
             {
                 new Gift()
                 {
-                    GiftName = "New Horizon",
+                    Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                    GiftName = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Hello :)"
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Tere :)"
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Привет :)"
+                            },
+                        }
+                    },
                     GiftCode = "X_00",
-//                    GiftImageUrl = "https://sun9-37.userapi.com/c855036/v855036822/224f58/Kuwvm_ds5yQ.jpg"
+                    Price = 8,
+                    GiftImage = new Image()
+                    {
+                        Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                        ImageFor = new Guid("00000000-0000-0000-0000-000000000001"),
+                        ImageType = ImageType.Gift,
+                        ImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000001\00000000-0000-0000-0000-000000000001.jpg",
+                        OriginalImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000001\00000000-0000-0000-0000-000000000001.jpg",
+                        HeightPx = 236,
+                        WidthPx = 236,
+                    }
                 },
                 new Gift()
                 {
-                    GiftName = "1'st of May",
+                    Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                    GiftName = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "Together forever!"
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Igavesti koos!"
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Вместе навсегда!"
+                            },
+                        }
+                    },
                     GiftCode = "X_01",
-//                    GiftImageUrl = "https://vk.com/images/gift/1086/256.jpg"
+                    Price = 5,
+                    GiftImage = new Image()
+                    {
+                        Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                        ImageFor = new Guid("00000000-0000-0000-0000-000000000002"),
+                        ImageType = ImageType.Gift,
+                        ImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000002\00000000-0000-0000-0000-000000000002.jpg",
+                        OriginalImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000002\00000000-0000-0000-0000-000000000002.jpg",
+                        HeightPx = 700,
+                        WidthPx = 700,
+                    }
                 },
                 new Gift()
                 {
-                    GiftName = "Tasty",
+                    Id = new Guid("00000000-0000-0000-0000-000000000003"),
+                    GiftName = new LangString()
+                    {
+                        Translations = new List<Translation>()
+                        {
+                            new Translation()
+                            {
+                                Culture = "en",
+                                Value = "You are cute!"
+                            },
+                            new Translation()
+                            {
+                                Culture = "et",
+                                Value = "Sa oled armas!"
+                            },
+                            new Translation()
+                            {
+                                Culture = "ru",
+                                Value = "Ты просто прелесть!"
+                            },
+                        }
+                    },
                     GiftCode = "X_02",
-//                    GiftImageUrl = "https://vk.com/images/gift/1069/256.jpg"
+                    Price = 10,
+                    GiftImage = new Image()
+                    {
+                        Id = new Guid("00000000-0000-0000-0000-000000000003"),
+                        ImageFor = new Guid("00000000-0000-0000-0000-000000000003"),
+                        ImageType = ImageType.Gift,
+                        ImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000003\00000000-0000-0000-0000-000000000003.jpg",
+                        OriginalImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000003\00000000-0000-0000-0000-000000000003.jpg",
+                        HeightPx = 512,
+                        WidthPx = 512,
+                    }
                 },
-                new Gift()
-                {
-                    GiftName = "Bananas",
-                    GiftCode = "X_03",
-//                    GiftImageUrl = "https://vk.com/images/gift/1063/256.jpg"
-                },
-                new Gift()
-                {
-                    GiftName = "LoveOfLove",
-                    GiftCode = "X_04",
-//                    GiftImageUrl = "https://vk.com/images/gift/1005/256.jpg"
-                }
             };
 
             foreach (var gift in gifts)
@@ -323,10 +625,11 @@ namespace DAL.Helpers
 
             ctx.SaveChanges();
         }
-        
+
         struct User
         {
             public string Email { get; set; }
+            public string UserName { get; set; }
             public string Password { get; set; }
 
             public ICollection<string>? RolesNames { get; set; }

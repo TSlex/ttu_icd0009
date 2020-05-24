@@ -16,7 +16,7 @@ namespace WebApp.Controllers
     public class ProfileGiftsController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         {
             _bll = bll;
         }
-        
+
         /// <summary>
         /// Get record details
         /// </summary>
@@ -42,7 +42,7 @@ namespace WebApp.Controllers
 
             return View(profileGift);
         }
-        
+
         /// <summary>
         /// Get record creating page
         /// </summary>
@@ -52,12 +52,12 @@ namespace WebApp.Controllers
             var gifts = await _bll.Gifts.AllAsync();
             return View(new ProfileGiftCreate()
             {
-                Profile = new Profile{UserName = username},
+                Profile = new Profile {UserName = username},
                 GiftGallery = gifts,
                 ReturnUrl = returnUrl
             });
         }
-        
+
         /// <summary>
         /// Get record creating confirmation page
         /// </summary>
@@ -71,14 +71,14 @@ namespace WebApp.Controllers
 
             return View(new ProfileGift
             {
-                Profile = new Profile{UserName = username},
+                Profile = new Profile {UserName = username},
                 Gift = gift,
                 GiftId = giftId,
                 Price = gift.Price,
                 ReturnUrl = returnUrl
             });
         }
-        
+
         /// <summary>
         /// Creates a new record
         /// </summary>
@@ -89,6 +89,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> CreateConfirm(ProfileGift profileGift)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(profileGift.Profile!.UserName);
+            profileGift.Profile = null;
 
             if (user == null)
             {
@@ -96,24 +97,38 @@ namespace WebApp.Controllers
                 {
                     return Redirect(profileGift.ReturnUrl);
                 }
-                
+
                 return RedirectToAction("Index", "Home");
             }
-            
+
+            Profile? from = null;
+
+            if (profileGift.FromProfile?.UserName != null)
+            {
+                from = await _bll.Profiles.FindByUsernameAsync(profileGift.FromProfile!.UserName);
+            }
+
+
             ModelState.Clear();
+
+            profileGift.FromProfile = null;
             profileGift.ProfileId = user.Id;
 
             if (TryValidateModel(profileGift))
             {
                 await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
-                
+
+                if (from != null)
+                {
+                    profileGift.FromProfileId = from!.Id;
+                }
+
                 profileGift.Id = Guid.NewGuid();
-                profileGift.Profile = null;
                 profileGift.GiftDateTime = DateTime.Now;
-                
+
                 _bll.ProfileGifts.Add(profileGift);
                 await _bll.SaveChangesAsync();
-                
+
                 if (profileGift.ReturnUrl != null)
                 {
                     return Redirect(profileGift.ReturnUrl);
@@ -121,34 +136,18 @@ namespace WebApp.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            
-            foreach (var modelState in ViewData.ModelState.Values) {
-                foreach (ModelError error in modelState.Errors) {
+
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
                     Console.WriteLine(error.ErrorMessage);
                 }
             }
 
             return View(profileGift);
         }
-        
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
 
-            var profileGift = await _bll.ProfileGifts.FindAsync(id);
-
-            if (profileGift == null)
-            {
-                return NotFound();
-            }
-
-            return View(profileGift);
-        }
-        
         /// <summary>
         /// Deletes a record
         /// </summary>
@@ -158,10 +157,17 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            var record = await _bll.ProfileGifts.GetForUpdateAsync(id);
+
+            if (record == null || record.ProfileId != User.UserId())
+            {
+                return NotFound();
+            }
+
             _bll.ProfileGifts.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Profiles", new {username = User.Identity.Name});
         }
     }
 }

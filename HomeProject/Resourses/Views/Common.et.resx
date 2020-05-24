@@ -56,4 +56,7 @@
     <data name="SendButton">
         <value>Saada</value>
     </data>
+    <data name="DeleteConfirm">
+        <value>Kas soovite selle kindlasti kustutada?</value>
+    </data>
 </root>

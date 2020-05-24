@@ -51,4 +51,7 @@
     <data name="SendButton">
         <value>Отправить</value>
     </data>
+    <data name="DeleteConfirm">
+        <value>Вы уверены, что хотите удалить это?</value>
+    </data>
 </root>
