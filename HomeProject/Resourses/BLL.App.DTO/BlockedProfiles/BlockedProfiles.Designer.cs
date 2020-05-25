@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.BlockedProfiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blocked Profile Id.
+        ///   Looks up a localized string similar to Blocked Profile (ID).
         /// </summary>
         public static string BProfileId {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.BlockedProfiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile Id.
+        ///   Looks up a localized string similar to Profile (ID).
         /// </summary>
         public static string ProfileId {
             get {

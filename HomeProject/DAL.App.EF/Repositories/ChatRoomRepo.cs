@@ -25,7 +25,8 @@ namespace DAL.Repositories
                 .Include(room => room.ChatMembers)
                 .ThenInclude(member => member.ChatRole)
                 .ThenInclude(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations).FirstOrDefaultAsync());
+                .ThenInclude(s => s.Translations)
+                .FirstOrDefaultAsync(room => room.Id == id));
         }
 
         public async Task<ChatRoom> GetRoomWithUserAsync(Guid userId, Guid requesterId)

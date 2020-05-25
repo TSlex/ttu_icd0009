@@ -1,7 +1,7 @@
 @model BLL.App.DTO.ProfileGiftCreate
 
 @{
-    ViewData["Title"] = Resourses.Views.Gifts.Gifts.SendGiftHeader + " " + Model.Profile!.UserName;
+    ViewData["Title"] = string.Format(Resourses.Views.Gifts.Gifts.SendGiftHeader, Model.Profile!.UserName);
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>

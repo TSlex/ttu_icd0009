@@ -43,7 +43,7 @@ namespace BLL.App.Services
                 ProfileId = userId,
                 PostTitle = post.PostTitle,
                 PostDescription = post.PostDescription,
-//                PostImageUrl = post.PostImageUrl
+                PostImageId = post.PostImageId
             }));
         }
 

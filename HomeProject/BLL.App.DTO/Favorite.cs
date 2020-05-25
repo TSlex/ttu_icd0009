@@ -20,10 +20,10 @@ namespace BLL.App.DTO
 
         //what content user actually likes
         [Display(Name = nameof(PostTitle), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
-        public string PostTitle { get; set; } = default!;
+        public string? PostTitle { get; set; }
 
-        [Display(Name = nameof(PostImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
-        public string? PostImageUrl { get; set; }
+        [Display(Name = nameof(PostImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
+        public Guid? PostImageId { get; set; }
 
         [Display(Name = nameof(PostDescription), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
         public string? PostDescription { get; set; }

@@ -250,7 +250,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PhoneNumber.
+        ///   Looks up a localized string similar to Phone number.
         /// </summary>
         public static string PhoneNumber {
             get {
@@ -286,7 +286,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileAbout.
+        ///   Looks up a localized string similar to About.
         /// </summary>
         public static string ProfileAbout {
             get {
@@ -322,7 +322,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileFullName.
+        ///   Looks up a localized string similar to Full name.
         /// </summary>
         public static string ProfileFullName {
             get {
@@ -331,7 +331,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileGender.
+        ///   Looks up a localized string similar to Gender.
         /// </summary>
         public static string ProfileGender {
             get {
@@ -340,7 +340,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileGenderOwn.
+        ///   Looks up a localized string similar to Own variant.
         /// </summary>
         public static string ProfileGenderOwn {
             get {
@@ -376,7 +376,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileWorkPlace.
+        ///   Looks up a localized string similar to Work place.
         /// </summary>
         public static string ProfileWorkPlace {
             get {

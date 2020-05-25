@@ -106,7 +106,7 @@ namespace Resourses.Views.Gifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Send a gift.
+        ///   Looks up a localized string similar to Send a gift to {0}.
         /// </summary>
         public static string SendGiftHeader {
             get {

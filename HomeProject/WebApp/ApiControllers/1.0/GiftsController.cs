@@ -41,7 +41,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// Get all gift than are available
+        /// Get all gifts than are available
         /// </summary>
         /// <param name="pageNumber"></param>
         /// <returns></returns>
@@ -62,7 +62,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// 
+        /// Get all giftt count than are available
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
@@ -109,7 +109,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// 
+        /// Get profile gifts count
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>

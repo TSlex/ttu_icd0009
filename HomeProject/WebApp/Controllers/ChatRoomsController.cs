@@ -44,18 +44,18 @@ namespace WebApp.Controllers
         [Route("/{controller}/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var test = await _bll.ChatRooms.FindAsync(id);
+            var chatRoom = await _bll.ChatRooms.FindAsync(id);
 
-            if (!test.ChatMembers.Select(member => member.ProfileId).Contains(User.UserId()))
+            if (!chatRoom.ChatMembers.Select(member => member.ProfileId).Contains(User.UserId()))
             {
                 return NotFound();
             }
 
-            test.Messages = test.Messages
+            chatRoom.Messages = chatRoom.Messages
                 .Where(message => message.DeletedAt == null && message.MasterId == null)
                 .ToList();
 
-            return View(test);
+            return View(chatRoom);
         }
 
         /// <summary>

@@ -36,4 +36,82 @@
     <data name="RememberMe">
         <value>Remember me?</value>
     </data>
+    <data name="AvatarEditNav">
+        <value>Change avatar</value>
+    </data>
+    <data name="ProfileEditNav">
+        <value>Edit profile</value>
+    </data>
+    <data name="EmailEditNav">
+        <value>Change email</value>
+    </data>
+    <data name="PasswordEditNav">
+        <value>Change password</value>
+    </data>
+    <data name="PrivacyNav">
+        <value>Privacy and security</value>
+    </data>
+    <data name="BlackListNav">
+        <value>Blacklist</value>
+    </data>
+    <data name="AvatarHeader">
+        <value>Avatar</value>
+    </data>
+    <data name="ProfileHeader">
+        <value>Profile</value>
+    </data>
+    <data name="EmailHeader">
+        <value>Change email</value>
+    </data>
+    <data name="PasswordHeader">
+        <value>Change password</value>
+    </data>
+    <data name="PrivacyHeader">
+        <value>Privacy and Security</value>
+    </data>
+    <data name="CurrentEmail">
+        <value>Current email</value>
+    </data>
+    <data name="NewEmail">
+        <value>New email</value>
+    </data>
+    <data name="CurrentPassword">
+        <value>Current password</value>
+    </data>
+    <data name="NewPassword">
+        <value>New password</value>
+    </data>
+    <data name="NewPasswordConfirm">
+        <value>New password confirmation</value>
+    </data>
+    <data name="PersonalDataHeader">
+        <value>Personal Data</value>
+    </data>
+    <data name="PersonalDataWarning1">
+        <value>Your account contains personal data that you have given us.</value>
+    </data>
+    <data name="PersonalDataWarning2">
+        <value>This page allows you to download or delete that data.</value>
+    </data>
+    <data name="PersonalDataWarning3">
+        <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
+    </data>
+    <data name="AvatarUpdateStatusSuccess">
+        <value>Avatar was updated successfully</value>
+    </data>
+    <data name="ProfileDataUpdateStatusSuccess">
+        <value>Your profile has been updated</value>
+    </data>
+    <data name="ProfileDataUpdateStatusUsernameExists">
+        <value>Error. That username is already taken!</value>
+    </data>
+    <data name="EmailUpdateStatusConfirmationSend">
+        <value>Confirmation link to change email sent. Please check your email</value>
+    </data>
+    <data name="EmailUpdateStatusUnchanged">
+        <value>Your email is unchanged</value>
+    </data>
+    <data name="PasswordDataUpdateStatusSuccess">
+        <value>Your password has been changed</value>
+    </data>
 </root>

@@ -5,28 +5,33 @@
 }
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-        <a class="nav-link @ManageNavPages.AvatarNavClass(ViewContext)" id="avatar" asp-page="./Avatar">Редактировать аватар</a>
+        <a class="nav-link @ManageNavPages.AvatarNavClass(ViewContext)" id="avatar" asp-page="./Avatar">
+            @Resourses.Views.Identity.Identity.AvatarEditNav
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Редактировать профиль</a>
+        <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+            @Resourses.Views.Identity.Identity.ProfileEditNav
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Сменить эл. адресс</a>
+        <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">
+            @Resourses.Views.Identity.Identity.EmailEditNav
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Сменить пароль</a>
-    </li>
-    @if (hasExternalLogins)
-    {
-        <li id="external-logins" class="nav-item">
-            <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a>
-        </li>
-    }
-
-    <li class="nav-item">
-        <a class="nav-link @ManageNavPages.PrivacyNSecurityNavClass(ViewContext)" id="privacy-n-security" asp-page="./PrivacyNSecurity">Конфеденциальность и безопасность</a>
+        <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">
+            @Resourses.Views.Identity.Identity.PasswordEditNav
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" asp-action="Index" asp-controller="BlockedProfiles" asp-area="">Черный список</a>
+        <a class="nav-link @ManageNavPages.PrivacyNSecurityNavClass(ViewContext)" id="privacy-n-security" asp-page="./PrivacyNSecurity">
+            @Resourses.Views.Identity.Identity.PrivacyNav
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Index" asp-controller="BlockedProfiles" asp-area="">
+            @Resourses.Views.Identity.Identity.BlackListNav
+        </a>
     </li>
 </ul>

@@ -18,4 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="ChatRoomTitle" >
+    <value>Nimetus</value>
+  </data>
+    <data name="DialogDefaultTitle" >
+    <value>{0} ja {1} vestlus</value>
+  </data>
+    <data name="ChatMembers" >
+    <value>Osalejad</value>
+  </data>
+    <data name="ChatRoomImageId" >
+    <value>Pilt (ID)</value>
+  </data>
+    <data name="ChatRoomImageUrl" >
+    <value>Pilt (Url)</value>
+  </data>
+    <data name="LastMessageDateTime" >
+    <value>Viimase kiri kuupäev</value>
+  </data>
+    <data name="LastMessageValue" >
+    <value>Viimane kiri</value>
+  </data>
+    <data name="Messages" >
+    <value>Kirjad</value>
+  </data>
 </root>

@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.Gifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image id.
+        ///   Looks up a localized string similar to Image (ID).
         /// </summary>
         public static string GiftImageId {
             get {
@@ -97,7 +97,7 @@ namespace Resourses.BLL.App.DTO.Gifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image URL.
+        ///   Looks up a localized string similar to Image (URL).
         /// </summary>
         public static string GiftImageUrl {
             get {
@@ -124,7 +124,7 @@ namespace Resourses.BLL.App.DTO.Gifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile Gifts.
+        ///   Looks up a localized string similar to Profiles.
         /// </summary>
         public static string ProfileGifts {
             get {

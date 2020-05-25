@@ -41,21 +41,29 @@
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             </a>
 
-            <div class="dropdown-menu text-center" aria-labelledby="profile_more">
-                <a class="btn-link" asp-action="Index" asp-controller="ChatMembers" asp-route-chatRoomId="@Model.Id">Участники</a>
+            <div class="dropdown-menu" aria-labelledby="profile_more">
+                <div class="text-center d-flex flex-column">
+                    <a class="btn-link" asp-action="Index" asp-controller="ChatMembers" asp-route-chatRoomId="@Model.Id">
+                        @Resourses.Views.ChatRooms.ChatRooms.MembersNav
+                    </a>
 
-                @{
-                    var currentMember = Model.ChatMembers.FirstOrDefault(member => member.ProfileId == User.UserId());
-                    if (currentMember != null && currentMember.ChatRole.CanRenameRoom)
-                    {
-                        <a class="btn-link" asp-action="Edit" asp-controller="ChatRooms" asp-route-id="@Model.Id">Переменовать</a>
+                    @{
+                        var currentMember = Model.ChatMembers.FirstOrDefault(member => member.ProfileId == User.UserId());
+                        if (currentMember != null && currentMember.ChatRole.CanRenameRoom)
+                        {
+                            <a class="btn-link" asp-action="Edit" asp-controller="ChatRooms" asp-route-id="@Model.Id">
+                                @Resourses.Views.ChatRooms.ChatRooms.RenameNav
+                            </a>
+                        }
                     }
-                }
 
-                <form asp-action="LeaveChat" method="post" class="disable_form_style">
-                    <input type="hidden" name="chatRoomId" asp-for="Id">
-                    <button class="btn-link" style="margin: 0 !important;">Покинуть чат</button>
-                </form>
+                    <form asp-action="LeaveChat" method="post" class="disable_form_style">
+                        <input type="hidden" name="chatRoomId" asp-for="Id">
+                        <button class="btn-link" style="margin: 0 !important;">
+                            @Resourses.Views.ChatRooms.ChatRooms.LeaveNav
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

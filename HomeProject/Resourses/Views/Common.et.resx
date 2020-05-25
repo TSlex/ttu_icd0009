@@ -59,4 +59,10 @@
     <data name="DeleteConfirm">
         <value>Kas soovite selle kindlasti kustutada?</value>
     </data>
+    <data name="DownloadButton">
+        <value>Lae alla</value>
+    </data>
+    <data name="NoContent">
+        <value>Midagi siin veel pole</value>
+    </data>
 </root>

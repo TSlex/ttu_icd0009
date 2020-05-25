@@ -59,31 +59,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   
-  <data name="Privacy" xml:space="preserve">
+  <data name="Privacy" >
     <value>Privaatsus</value>
   </data>
-  <data name="RegisterButton" xml:space="preserve">
+  <data name="RegisterButton" >
     <value>Registreeri</value>
   </data>
-  <data name="LoginButton" xml:space="preserve">
+  <data name="LoginButton" >
     <value>Logi sisse</value>
   </data>
-  <data name="LogoutButton" xml:space="preserve">
+  <data name="LogoutButton" >
     <value>Logi välja</value>
   </data>
-  <data name="UserWelcome" xml:space="preserve">
+  <data name="UserWelcome" >
     <value>Tere, </value>
   </data>
-  <data name="Language" xml:space="preserve">
+  <data name="Language" >
     <value>Eesti</value>
   </data>
-  <data name="SearchBarPlaceHolder" xml:space="preserve">
+  <data name="SearchBarPlaceHolder" >
     <value>kasutajanimi</value>
   </data>
-  <data name="ErrorDescription" xml:space="preserve">
+  <data name="ErrorDescription" >
     <value>Teie päringu töötlemisel ilmnes viga.</value>
   </data>
-  <data name="Error" xml:space="preserve">
+  <data name="Error" >
     <value>Viga.</value>
   </data>
 </root>

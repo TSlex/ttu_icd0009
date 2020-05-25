@@ -24,7 +24,7 @@
         </value>
     </resheader>
     <data name="SendGiftHeader">
-        <value>Send a gift</value>
+        <value>Send a gift to {0}</value>
     </data>
     <data name="SendGiftTitle">
         <value>The following gift will be send to {0}</value>

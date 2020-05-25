@@ -39,6 +39,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
+        /// Get posts count for specific user subscriptions (including own posts) or all posts count of all users
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]

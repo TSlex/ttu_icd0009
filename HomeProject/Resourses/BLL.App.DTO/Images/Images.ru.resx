@@ -18,4 +18,46 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="Gifts">
+        <value>Подарки</value>
+    </data>
+    <data name="WidthPx">
+        <value>Ширина (PX)</value>
+    </data>
+    <data name="HeightPx">
+        <value>Высота (PX)</value>
+    </data>
+    <data name="ImageFile">
+        <value>Картинка (ФАЙЛ)</value>
+    </data>
+    <data name="ImageFor">
+        <value>Для</value>
+    </data>
+    <data name="ImageType">
+        <value>Тип</value>
+    </data>
+    <data name="ImageUrl">
+        <value>URL</value>
+    </data>
+    <data name="OriginalImageUrl">
+        <value>Оригинальный URL</value>
+    </data>
+    <data name="PaddingBottom">
+        <value>Отступ снизу (PX)</value>
+    </data>
+    <data name="PaddingLeft">
+        <value>Отступ слева (PX)</value>
+    </data>
+    <data name="PaddingRight">
+        <value>Отступ справа (PX)</value>
+    </data>
+    <data name="PaddingTop">
+        <value>Отступ сверху (PX)</value>
+    </data>
+    <data name="Posts">
+        <value>Посты</value>
+    </data>
+    <data name="Profiles">
+        <value>Профили</value>
+    </data>
 </root>

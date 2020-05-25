@@ -36,4 +36,82 @@
     <data name="RememberMe">
         <value>Mäleta mind?</value>
     </data>
+    <data name="AvatarEditNav">
+        <value>Muuda avatari</value>
+    </data>
+    <data name="ProfileEditNav">
+        <value>Muuda profiili</value>
+    </data>
+    <data name="EmailEditNav">
+        <value>Muuda meili</value>
+    </data>
+    <data name="PasswordEditNav">
+        <value>Muuda salasõna</value>
+    </data>
+    <data name="PrivacyNav">
+        <value>Privaatsus ja turvalisus</value>
+    </data>
+    <data name="BlackListNav">
+        <value>Must nimekiri</value>
+    </data>
+    <data name="AvatarHeader">
+        <value>Avatar</value>
+    </data>
+    <data name="ProfileHeader">
+        <value>Profiil</value>
+    </data>
+    <data name="EmailHeader">
+        <value>Muuda meili</value>
+    </data>
+    <data name="PasswordHeader">
+        <value>Muuda salasõna</value>
+    </data>
+    <data name="PrivacyHeader">
+        <value>Privaatsus ja turvalisus</value>
+    </data>
+    <data name="CurrentEmail">
+        <value>Praegune meil</value>
+    </data>
+    <data name="NewEmail">
+        <value>Uus meil</value>
+    </data>
+    <data name="CurrentPassword">
+        <value>Praegune salasõna</value>
+    </data>
+    <data name="NewPassword">
+        <value>Uus salasõna</value>
+    </data>
+    <data name="NewPasswordConfirm">
+        <value>Uus salasõna kinnitamine</value>
+    </data>
+    <data name="PersonalDataHeader">
+        <value>Isiklikud andmed</value>
+    </data>
+    <data name="PersonalDataWarning1">
+        <value>Teie konto sisaldab isikuandmeid, mille olete meile andnud.</value>
+    </data>
+    <data name="PersonalDataWarning2">
+        <value>Sellel lehel saate neid andmeid alla laadida või kustutada.</value>
+    </data>
+    <data name="PersonalDataWarning3">
+        <value>Nende andmete kustutamisel eemaldatakse teie konto jäädavalt ja seda ei saa taastada.</value>
+    </data>
+    <data name="ProfileDataUpdateStatusSuccess">
+        <value>Teie profiili on värskendatud</value>
+    </data>
+    <data name="AvatarUpdateStatusSuccess">
+        <value>Avatari värskendamine õnnestus</value>
+    </data>
+    <data name="ProfileDataUpdateStatusUsernameExists">
+        <value>Viga. See kasutajanimi on juba võetud!</value>
+    </data>
+    <data name="EmailUpdateStatusConfirmationSend">
+        <value>Saadetud meilisõnumi muutmiseks kinnituslink. Palun kontrollige oma e-posti aadressi</value>
+    </data>
+    <data name="EmailUpdateStatusUnchanged">
+        <value>Teie e-posti aadressi ei muudeta</value>
+    </data>
+    <data name="PasswordDataUpdateStatusSuccess">
+        <value>Teie parool on muudetud</value>
+    </data>
 </root>

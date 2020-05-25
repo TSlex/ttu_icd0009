@@ -36,4 +36,82 @@
     <data name="RememberMe">
         <value>Запомнить?</value>
     </data>
+    <data name="AvatarEditNav">
+        <value>Редактировать аватар</value>
+    </data>
+    <data name="ProfileEditNav">
+        <value>Редактировать профиль</value>
+    </data>
+    <data name="EmailEditNav">
+        <value>Сменить эл. адрес</value>
+    </data>
+    <data name="PasswordEditNav">
+        <value>Сменить пароль</value>
+    </data>
+    <data name="PrivacyNav">
+        <value>Конфеденциальность и безопасность</value>
+    </data>
+    <data name="BlackListNav">
+        <value>Черный список</value>
+    </data>
+    <data name="AvatarHeader">
+        <value>Аватар</value>
+    </data>
+    <data name="ProfileHeader">
+        <value>Профиль</value>
+    </data>
+    <data name="EmailHeader">
+        <value>Сменить эл. адрес</value>
+    </data>
+    <data name="PasswordHeader">
+        <value>Сменить пароль</value>
+    </data>
+    <data name="PrivacyHeader">
+        <value>Конфеденциальность и безопасность</value>
+    </data>
+    <data name="CurrentEmail">
+        <value>Текущий эл. адрес</value>
+    </data>
+    <data name="NewEmail">
+        <value>Новый эл. адрес</value>
+    </data>
+    <data name="CurrentPassword">
+        <value>Текущий пароль</value>
+    </data>
+    <data name="NewPassword">
+        <value>Новый пароль</value>
+    </data>
+    <data name="NewPasswordConfirm">
+        <value>Подверждение пароля</value>
+    </data>
+    <data name="PersonalDataHeader">
+        <value>Личные данные</value>
+    </data>
+    <data name="PersonalDataWarning1">
+        <value>Ваша учетная запись содержит личные данные, которые вы нам предоставили.</value>
+    </data>
+    <data name="PersonalDataWarning2">
+        <value>Эта страница позволяет вам загрузить или удалить эти данные.</value>
+    </data>
+    <data name="PersonalDataWarning3">
+        <value>Удаление этих данных навсегда удалит вашу учетную запись. Это действие не может быть отменено.</value>
+    </data>
+    <data name="ProfileDataUpdateStatusSuccess">
+        <value>Ваш профиль был обновлен</value>
+    </data>
+    <data name="AvatarUpdateStatusSuccess">
+        <value>Аватар был успешно обновлен</value>
+    </data>
+    <data name="ProfileDataUpdateStatusUsernameExists">
+        <value>Ошибка. Имя пользователя уже используется!</value>
+    </data>
+    <data name="EmailUpdateStatusConfirmationSend">
+        <value>Ссылка для подтверждения изменения отправленного электронного письма. Пожалуйста, проверьте вашу электронную почту</value>
+    </data>
+    <data name="EmailUpdateStatusUnchanged">
+        <value>Ваш электронный эл. адрес не изменился</value>
+    </data>
+    <data name="PasswordDataUpdateStatusSuccess">
+        <value>Ваш пароль был изменен</value>
+    </data>
 </root>

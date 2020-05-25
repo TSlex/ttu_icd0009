@@ -21,4 +21,13 @@
     <data name="WriteButton">
         <value>Write</value>
     </data>
+    <data name="MembersNav">
+        <value>Members</value>
+    </data>
+    <data name="RenameNav">
+        <value>Change Title</value>
+    </data>
+    <data name="LeaveNav">
+        <value>Leave</value>
+    </data>
 </root>

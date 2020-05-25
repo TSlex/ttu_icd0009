@@ -18,4 +18,19 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="BProfile" >
+    <value>Blokeeritud profiil</value>
+  </data>
+    <data name="BProfileId" >
+    <value>Blokeeritud profiil (ID)</value>
+  </data>
+    <data name="Profile" >
+    <value>Profiil</value>
+  </data>
+    <data name="ProfileId" >
+    <value>Profiil (ID)</value>
+  </data>
+    <data name="Reason" >
+    <value>Põhjus</value>
+  </data>
 </root>

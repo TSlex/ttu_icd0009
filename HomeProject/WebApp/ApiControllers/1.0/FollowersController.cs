@@ -38,7 +38,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// 
+        /// Get users count the profile is subscribed to
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -89,7 +89,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// 
+        /// Get users count who follow that profile
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>

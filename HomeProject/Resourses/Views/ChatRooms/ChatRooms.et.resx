@@ -21,4 +21,13 @@
     <data name="WriteButton">
         <value>Kirjuta</value>
     </data>
+    <data name="MembersNav">
+        <value>Osalejad</value>
+    </data>
+    <data name="RenameNav">
+        <value>Muuda nimetust</value>
+    </data>
+    <data name="LeaveNav">
+        <value>Ära minna</value>
+    </data>
 </root>

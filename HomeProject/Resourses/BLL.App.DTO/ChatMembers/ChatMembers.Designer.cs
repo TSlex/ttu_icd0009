@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.ChatMembers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role id.
+        ///   Looks up a localized string similar to Role (ID).
         /// </summary>
         public static string ChatRoleId {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.ChatMembers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chat room id.
+        ///   Looks up a localized string similar to Chat room (ID).
         /// </summary>
         public static string ChatRoomId {
             get {
@@ -115,7 +115,7 @@ namespace Resourses.BLL.App.DTO.ChatMembers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile id.
+        ///   Looks up a localized string similar to Profile (ID).
         /// </summary>
         public static string ProfileId {
             get {

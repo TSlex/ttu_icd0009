@@ -2,13 +2,18 @@
 @model IEnumerable<BLL.App.DTO.ChatRoom>
 
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = Resourses.Views.Messages.Messages.Header;
 }
 
 <div class="chat_rooms">
     <div class="row justify-content-center">
         <ul class="nav nav-pills flex-column">
             @{
+                if (!Model.Any())
+                {
+                    <span>@Resourses.Views.Common.NoContent</span>
+                }
+                
                 foreach (var item in Model)
                 {
                     var member = item.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == User.UserId() && chatMember.DeletedAt == null);

@@ -124,6 +124,15 @@ namespace Resourses.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string DownloadButton {
+            get {
+                return ResourceManager.GetString("DownloadButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string EditButton {
@@ -147,6 +156,15 @@ namespace Resourses.Views {
         public static string InspectButton {
             get {
                 return ResourceManager.GetString("InspectButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing here yet.
+        /// </summary>
+        public static string NoContent {
+            get {
+                return ResourceManager.GetString("NoContent", resourceCulture);
             }
         }
         

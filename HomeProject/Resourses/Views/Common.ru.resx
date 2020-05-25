@@ -54,4 +54,10 @@
     <data name="DeleteConfirm">
         <value>Вы уверены, что хотите удалить это?</value>
     </data>
+    <data name="DownloadButton">
+        <value>Скачать</value>
+    </data>
+    <data name="NoContent">
+        <value>Здесь пока ничего нет</value>
+    </data>
 </root>

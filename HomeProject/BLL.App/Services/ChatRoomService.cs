@@ -44,13 +44,13 @@ namespace BLL.App.Services
             {
                 chatRoom = _uow.ChatRooms.Add(new DAL.App.DTO.ChatRoom()
                 {
-                    ChatRoomTitle = "Chat of " + currentUser.UserName + " and " + otherProfile.UserName
+                    /*ChatRoomTitle = "Chat of " + currentUser.UserName + " and " + otherProfile.UserName*/
+                    ChatRoomTitle = string.Format(Resourses.BLL.App.DTO.ChatRooms.ChatRooms.DialogDefaultTitle,
+                        currentUser.UserName, otherProfile.UserName)
                 });
 
                 var memberRole = await _uow.ChatRoles.FindAsync("Member");
                 var creatorRole = await _uow.ChatRoles.FindAsync("Creator");
-//                var memberRole = await _uow.ChatRoles.FindAsync(new Guid("a065b5d2-871b-11ea-bcb9-0a0027000008"));
-//                var creatorRole = await _uow.ChatRoles.FindAsync(new Guid("a065ed3d-871b-11ea-bcb9-0a0027000008"));
 
                 _uow.ChatMembers.Add(new ChatMember()
                 {
@@ -84,7 +84,7 @@ namespace BLL.App.Services
         private static bool FilterByMemberDeleted(DAL.App.DTO.ChatRoom chatRoom, Guid userId)
         {
             var member = chatRoom?.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == userId);
-            
+
             return member?.DeletedAt == null;
         }
 

@@ -19,7 +19,7 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="SendGiftHeader">
-        <value>Saada kingitus</value>
+        <value>Saada kingitus {0}`le</value>
     </data>
     <data name="SendGiftTitle">
         <value>Järgmine kingitus saadetakse {0}`le</value>

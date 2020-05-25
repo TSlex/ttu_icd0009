@@ -137,7 +137,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                     await _bll.SaveChangesAsync();
                 }
 
-                StatusMessage = "Avatar was updated successfully";
+                StatusMessage = Resourses.Views.Identity.Identity.AvatarUpdateStatusSuccess;
             }
 
             return RedirectToPage();

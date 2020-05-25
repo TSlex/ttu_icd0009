@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Height (px).
+        ///   Looks up a localized string similar to Height (PX).
         /// </summary>
         public static string HeightPx {
             get {
@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image file.
+        ///   Looks up a localized string similar to Image (FILE).
         /// </summary>
         public static string ImageFile {
             get {
@@ -124,7 +124,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Padding bottom (px).
+        ///   Looks up a localized string similar to Padding bottom (PX).
         /// </summary>
         public static string PaddingBottom {
             get {
@@ -133,7 +133,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Padding left (px).
+        ///   Looks up a localized string similar to Padding left (PX).
         /// </summary>
         public static string PaddingLeft {
             get {
@@ -142,7 +142,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Padding right (px).
+        ///   Looks up a localized string similar to Padding right (PX).
         /// </summary>
         public static string PaddingRight {
             get {
@@ -151,7 +151,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Padding top (px).
+        ///   Looks up a localized string similar to Padding top (PX).
         /// </summary>
         public static string PaddingTop {
             get {
@@ -178,7 +178,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Width (px).
+        ///   Looks up a localized string similar to Width (PX).
         /// </summary>
         public static string WidthPx {
             get {

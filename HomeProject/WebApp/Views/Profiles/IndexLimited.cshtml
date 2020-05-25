@@ -23,7 +23,16 @@
                 <div class="rank_bar_back"></div>
                 <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @Model.Rank.Rank.RankColor">
                 </div>
-                <span class="rank_score">@Model.Experience/@Model.Rank.Rank.MaxExperience</span>
+                <span class="rank_score">
+                    @if (Model.Experience >= Model.Rank.Rank.MaxExperience)
+                    {
+                        <text>MAX</text>
+                    }
+                    else
+                    {
+                        <text>@Model.Experience/@Model.Rank.Rank.MaxExperience</text>
+                    }
+                </span>
                 <div class="rank_icons">
                     @{
                         var icons = @Model.Rank.Rank.RankIcon?.Split(";").Where(s => s != "").ToList();

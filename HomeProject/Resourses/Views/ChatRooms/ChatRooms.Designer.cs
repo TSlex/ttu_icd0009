@@ -61,6 +61,33 @@ namespace Resourses.Views.ChatRooms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leave.
+        /// </summary>
+        public static string LeaveNav {
+            get {
+                return ResourceManager.GetString("LeaveNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Members.
+        /// </summary>
+        public static string MembersNav {
+            get {
+                return ResourceManager.GetString("MembersNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Title.
+        /// </summary>
+        public static string RenameNav {
+            get {
+                return ResourceManager.GetString("RenameNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Write.
         /// </summary>
         public static string WriteButton {

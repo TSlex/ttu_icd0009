@@ -300,11 +300,10 @@ namespace DAL.Migrations
                     b.Property<Guid>("PostId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("PostImageUrl")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<Guid?>("PostImageId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("PostTitle")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<Guid>("ProfileId")

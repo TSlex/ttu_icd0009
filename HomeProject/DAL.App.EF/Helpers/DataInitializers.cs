@@ -303,7 +303,7 @@ namespace DAL.Helpers
                     RankTextColor = "#000000",
                     RankColor = "#99CCFF",
                     RankIcon = "star-half-alt;",
-                    MinExperience = 11,
+                    MinExperience = 10,
                     MaxExperience = 40
                 },
                 new Rank()
@@ -355,7 +355,7 @@ namespace DAL.Helpers
                     RankTextColor = "#000000",
                     RankColor = "#3399FF",
                     RankIcon = "star;",
-                    MinExperience = 41,
+                    MinExperience = 40,
                     MaxExperience = 100
                 },
                 new Rank()
@@ -409,7 +409,7 @@ namespace DAL.Helpers
                     RankTextColor = "#000000",
                     RankColor = "#0066FF",
                     RankIcon = "star;star-half-alt;",
-                    MinExperience = 101,
+                    MinExperience = 100,
                     MaxExperience = 500
                 },
                 new Rank()
@@ -464,7 +464,7 @@ namespace DAL.Helpers
                     RankTextColor = "#000000",
                     RankColor = "#6633FF",
                     RankIcon = "star;star;",
-                    MinExperience = 501,
+                    MinExperience = 500,
                     MaxExperience = 2000
                 }
             };

@@ -18,4 +18,46 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="Gifts">
+        <value>Kingitused</value>
+    </data>
+    <data name="WidthPx">
+        <value>Laius (PX)</value>
+    </data>
+    <data name="HeightPx">
+        <value>Kõrgus (PX)</value>
+    </data>
+    <data name="ImageFile">
+        <value>Pilt (FAIL)</value>
+    </data>
+    <data name="ImageFor">
+        <value>Kelle jaoks</value>
+    </data>
+    <data name="ImageType">
+        <value>Tüüp</value>
+    </data>
+    <data name="ImageUrl">
+        <value>URL</value>
+    </data>
+    <data name="OriginalImageUrl">
+        <value>Originaal URL</value>
+    </data>
+    <data name="PaddingBottom">
+        <value>Polster alt (PX)</value>
+    </data>
+    <data name="PaddingLeft">
+        <value>Polster vasakule (PX)</value>
+    </data>
+    <data name="PaddingRight">
+        <value>Polster paremale (PX)</value>
+    </data>
+    <data name="PaddingTop">
+        <value>Polster üles (PX)</value>
+    </data>
+    <data name="Posts">
+        <value>Postid</value>
+    </data>
+    <data name="Profiles">
+        <value>Profiilid</value>
+    </data>
 </root>

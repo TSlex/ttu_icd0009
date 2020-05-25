@@ -21,90 +21,134 @@
 }
 
 <div class="profile_container">
-    <div class="profile_section">
-        <div class="col-3 d-flex justify-content-center">
-            @{
-                if (isAuthorized && @Model.Id == User.UserId())
-                {
-                    <a asp-page="/Account/Manage/Avatar" asp-area="Identity">
-                        <div class="profile_image" style="background-color: @profileRank.Rank.RankColor !important;">
-                            <img alt="" width="150px" height="150px"
-                                 src="/images/@Model.ProfileAvatarId">
-                        </div>
-                    </a>
-                }
-                else
-                {
+<div class="profile_section">
+    <div class="col-3 d-flex justify-content-center">
+        @{
+            if (isAuthorized && @Model.Id == User.UserId())
+            {
+                <a asp-page="/Account/Manage/Avatar" asp-area="Identity">
                     <div class="profile_image" style="background-color: @profileRank.Rank.RankColor !important;">
                         <img alt="" width="150px" height="150px"
                              src="/images/@Model.ProfileAvatarId">
                     </div>
+                </a>
+            }
+            else
+            {
+                <div class="profile_image" style="background-color: @profileRank.Rank.RankColor !important;">
+                    <img alt="" width="150px" height="150px"
+                         src="/images/@Model.ProfileAvatarId">
+                </div>
+            }
+        }
+    </div>
+    <div class="profile_description col-9">
+        <ul class="profile_meta_section">
+            <li class="profile_name">@Model.UserName</li>
+            @{
+                if (isAuthorized && @Model.Id != User.UserId())
+                {
+                    <div class="profile_controls dropdown show">
+                        <a class="btn fa fa-bars" href="#" role="button" id="profile_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a>
+
+                        <div class="dropdown-menu text-center" aria-labelledby="profile_more">
+                            <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName"
+                               class="dropdown-item text-center">
+                                @Resourses.Views.Profilez.Profiles.WriteMessage
+                            </a>
+                            @{
+                                if (@Model.IsUserFollows)
+                                {
+                                    <form method="post" asp-action="UnfollowProfile">
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fas fa-bell-slash"></i> @Resourses.Views.Profilez.Profiles.Unfollow</button>
+                                        <input type="hidden" asp-for="UserName">
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="FollowProfile">
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="far fa-bell"></i> @Resourses.Views.Profilez.Profiles.Follow</button>
+                                        <input type="hidden" asp-for="UserName">
+                                    </form>
+                                }
+                            }
+                            @{
+                                if (@Model.IsUserBlocks)
+                                {
+                                    <form method="post" asp-action="UnblockProfile">
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fas fa-user-slash"></i> @Resourses.Views.Profilez.Profiles.Unblock</button>
+                                        <input type="hidden" asp-for="UserName">
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="BlockProfile">
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="far fa-user"></i> @Resourses.Views.Profilez.Profiles.Block</button>
+                                        <input type="hidden" asp-for="UserName">
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
                 }
             }
-        </div>
-        <div class="profile_description col-9">
-            <ul class="profile_meta_section">
-                <li class="profile_name">@Model.UserName</li>
-                @{
-                    if (isAuthorized && @Model.Id != User.UserId())
-                    {
-                        <div class="profile_controls dropdown show">
-                            <a class="btn fa fa-bars" href="#" role="button" id="profile_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            </a>
+        </ul>
 
-                            <div class="dropdown-menu text-center" aria-labelledby="profile_more">
-                                <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName"
-                                   class="dropdown-item text-center">
-                                    @Resourses.Views.Profilez.Profiles.WriteMessage
-                                </a>
-                                @{
-                                    if (@Model.IsUserFollows)
-                                    {
-                                        <form method="post" asp-action="UnfollowProfile">
-                                            <button type="submit" class="dropdown-item">
-                                                <i class="fas fa-bell-slash"></i> @Resourses.Views.Profilez.Profiles.Unfollow</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form method="post" asp-action="FollowProfile">
-                                            <button type="submit" class="dropdown-item">
-                                                <i class="far fa-bell"></i> @Resourses.Views.Profilez.Profiles.Follow</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                }
-                                @{
-                                    if (@Model.IsUserBlocks)
-                                    {
-                                        <form method="post" asp-action="UnblockProfile">
-                                            <button type="submit" class="dropdown-item">
-                                                <i class="fas fa-user-slash"></i> @Resourses.Views.Profilez.Profiles.Unblock</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form method="post" asp-action="BlockProfile">
-                                            <button type="submit" class="dropdown-item">
-                                                <i class="far fa-user"></i> @Resourses.Views.Profilez.Profiles.Block</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                }
-                            </div>
-                        </div>
-                    }
-                }
-            </ul>
+        @if (isAuthorized && Model.Id == User.UserId())
+        {
             <a asp-action="Details" asp-controller="ProfileRanks" asp-route-id="@profileRank.Id" style="color: @profileRank.Rank.RankTextColor">
+                <div class="profile_rank">
+                    <span class="rank_title">@profileRank.Rank.RankTitle</span>
+                    <div class="rank_bar_back"></div>
+                    <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.Rank.RankColor">
+                    </div>
+                    <span class="rank_score">
+                        @if (Model.Experience >= profileRank.Rank.MaxExperience)
+                        {
+                            <text>MAX</text>
+                        }
+                        else
+                        {
+                            <text>@Model.Experience/@profileRank.Rank.MaxExperience</text>
+                        }
+                    </span>
+                    <div class="rank_icons">
+                        @{
+                            var icons = profileRank.Rank.RankIcon?.Split(";").Where(s => s != "").ToList();
+                            if (icons != null)
+                            {
+                                foreach (var icon in icons)
+                                {
+                                    <icon class="fa fa-@icon"></icon>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </a>
+        }
+        else
+        {
             <div class="profile_rank">
                 <span class="rank_title">@profileRank.Rank.RankTitle</span>
                 <div class="rank_bar_back"></div>
                 <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.Rank.RankColor">
                 </div>
-                <span class="rank_score">@Model.Experience/@profileRank.Rank.MaxExperience</span>
+                <span class="rank_score">
+                    @if (Model.Experience >= profileRank.Rank.MaxExperience)
+                    {
+                        <text>MAX</text>
+                    }
+                    else
+                    {
+                        <text>@Model.Experience/@profileRank.Rank.MaxExperience</text>
+                    }
+                </span>
                 <div class="rank_icons">
                     @{
                         var icons = profileRank.Rank.RankIcon?.Split(";").Where(s => s != "").ToList();
@@ -118,94 +162,94 @@
                     }
                 </div>
             </div>
-            </a>
+        }
 
-            <ul class="profile_meta_section">
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.PostsCount</span>
-                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfPosts</span>
-                </li>
-                <li class="profile_meta">
-                    <a asp-controller="Followers" asp-action="Followers" class="btn-link">
-                        <span class="meta_counter">@Model.FollowersCount</span>
-                        <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
-                    </a>
-                </li>
-                <li class="profile_meta">
-                    <a asp-controller="Followers" asp-action="Followed" class="btn-link">
-                        <span class="meta_counter">@Model.FollowedCount</span>
-                        <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
-                    </a>
-                </li>
-            </ul>
+        <ul class="profile_meta_section">
+            <li class="profile_meta">
+                <span class="meta_counter">@Model.PostsCount</span>
+                <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfPosts</span>
+            </li>
+            <li class="profile_meta">
+                <a asp-controller="Followers" asp-action="Followers" class="btn-link">
+                    <span class="meta_counter">@Model.FollowersCount</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
+                </a>
+            </li>
+            <li class="profile_meta">
+                <a asp-controller="Followers" asp-action="Followed" class="btn-link">
+                    <span class="meta_counter">@Model.FollowedCount</span>
+                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
+                </a>
+            </li>
+        </ul>
 
-            <div class="profile_about">
-                <h1>@Model.ProfileFullName</h1>
-                <span>@Model.ProfileAbout</span>
-                <br>
-                @{
-                    if (Model.ProfileWorkPlace != null && workPlaceUrlPattern.IsMatch(Model.ProfileWorkPlace))
-                    {
-                        <a href="@Model.ProfileWorkPlace">@Model.ProfileWorkPlace</a>
-                    }
-                    else
-                    {
-                        <a>@Model.ProfileWorkPlace</a>
-                    }
-                }
-            </div>
-        </div>
-    </div>
-    @if (!(Model.ProfileGifts.Count == 0 && isAuthorized && Model.Id == User.UserId()))
-    {
-        <hr>
-        <div class="profile_gift_section">
+        <div class="profile_about">
+            <h1>@Model.ProfileFullName</h1>
+            <span>@Model.ProfileAbout</span>
+            <br>
             @{
-                if (Model.ProfileGifts.Count > 0)
+                if (Model.ProfileWorkPlace != null && workPlaceUrlPattern.IsMatch(Model.ProfileWorkPlace))
                 {
-                    foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5))
-                    {
-                        <a asp-action="Details" asp-controller="ProfileGifts" asp-route-id="@gift.Id">
-                            <div class="profile_gift">
-                                <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
-                            </div>
-                        </a>
-                    }
+                    <a href="@Model.ProfileWorkPlace">@Model.ProfileWorkPlace</a>
                 }
                 else
                 {
-                    <span>@Resourses.Views.Profilez.Profiles.NoPresents</span>
-                }
-
-                if (isAuthorized && Model.Id != User.UserId())
-                {
-                    <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
-                       asp-controller="ProfileGifts"
-                       asp-route-username="@Model.UserName"
-                       asp-route-returnUrl="@Url.ActionLink()">
-                    </a>
+                    <a>@Model.ProfileWorkPlace</a>
                 }
             }
         </div>
-    }
+    </div>
+</div>
+@if (!(Model.ProfileGifts.Count == 0 && isAuthorized && Model.Id == User.UserId()))
+{
     <hr>
-    <div class="posts_section justify-content-center">
-        @if (Model.Posts.Count > 0)
-        {
-            <div class="post_row card-columns">
-                @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
+    <div class="profile_gift_section">
+        @{
+            if (Model.ProfileGifts.Count > 0)
+            {
+                foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5))
                 {
-                    <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
-                        <div class="post_item card">
-                            <img alt="" src="/images/@post.PostImageId" class="post_image card-img">
+                    <a asp-action="Details" asp-controller="ProfileGifts" asp-route-id="@gift.Id">
+                        <div class="profile_gift">
+                            <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
                         </div>
                     </a>
                 }
-            </div>
-        }
-        else
-        {
-            <span>@Resourses.Views.Profilez.Profiles.NoPosts</span>
+            }
+            else
+            {
+                <span>@Resourses.Views.Profilez.Profiles.NoPresents</span>
+            }
+
+            if (isAuthorized && Model.Id != User.UserId())
+            {
+                <a asp-action="Create" class="fa fa-gift btn btn-primary profile_gift_controls"
+                   asp-controller="ProfileGifts"
+                   asp-route-username="@Model.UserName"
+                   asp-route-returnUrl="@Url.ActionLink()">
+                </a>
+            }
         }
     </div>
+}
+<hr>
+<div class="posts_section justify-content-center">
+    @if (Model.Posts.Count > 0)
+    {
+        <div class="post_row card-columns">
+            @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
+            {
+                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
+                    <div class="post_item card">
+                        <img alt="" src="/images/@post.PostImageId" class="post_image card-img">
+                    </div>
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <span>@Resourses.Views.Profilez.Profiles.NoPosts</span>
+    }
+</div>
 </div>

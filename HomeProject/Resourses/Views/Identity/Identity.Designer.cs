@@ -70,6 +70,96 @@ namespace Resourses.Views.Identity {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change avatar.
+        /// </summary>
+        public static string AvatarEditNav {
+            get {
+                return ResourceManager.GetString("AvatarEditNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avatar.
+        /// </summary>
+        public static string AvatarHeader {
+            get {
+                return ResourceManager.GetString("AvatarHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avatar was updated successfully.
+        /// </summary>
+        public static string AvatarUpdateStatusSuccess {
+            get {
+                return ResourceManager.GetString("AvatarUpdateStatusSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blacklist.
+        /// </summary>
+        public static string BlackListNav {
+            get {
+                return ResourceManager.GetString("BlackListNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current email.
+        /// </summary>
+        public static string CurrentEmail {
+            get {
+                return ResourceManager.GetString("CurrentEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current password.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change email.
+        /// </summary>
+        public static string EmailEditNav {
+            get {
+                return ResourceManager.GetString("EmailEditNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change email.
+        /// </summary>
+        public static string EmailHeader {
+            get {
+                return ResourceManager.GetString("EmailHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation link to change email sent. Please check your email.
+        /// </summary>
+        public static string EmailUpdateStatusConfirmationSend {
+            get {
+                return ResourceManager.GetString("EmailUpdateStatusConfirmationSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your email is unchanged.
+        /// </summary>
+        public static string EmailUpdateStatusUnchanged {
+            get {
+                return ResourceManager.GetString("EmailUpdateStatusUnchanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot your password?.
         /// </summary>
         public static string ForgotPassword {
@@ -84,6 +174,150 @@ namespace Resourses.Views.Identity {
         public static string LoginHeader {
             get {
                 return ResourceManager.GetString("LoginHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New email.
+        /// </summary>
+        public static string NewEmail {
+            get {
+                return ResourceManager.GetString("NewEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password confirmation.
+        /// </summary>
+        public static string NewPasswordConfirm {
+            get {
+                return ResourceManager.GetString("NewPasswordConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been changed.
+        /// </summary>
+        public static string PasswordDataUpdateStatusSuccess {
+            get {
+                return ResourceManager.GetString("PasswordDataUpdateStatusSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        public static string PasswordEditNav {
+            get {
+                return ResourceManager.GetString("PasswordEditNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        public static string PasswordHeader {
+            get {
+                return ResourceManager.GetString("PasswordHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal Data.
+        /// </summary>
+        public static string PersonalDataHeader {
+            get {
+                return ResourceManager.GetString("PersonalDataHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your account contains personal data that you have given us..
+        /// </summary>
+        public static string PersonalDataWarning1 {
+            get {
+                return ResourceManager.GetString("PersonalDataWarning1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This page allows you to download or delete that data..
+        /// </summary>
+        public static string PersonalDataWarning2 {
+            get {
+                return ResourceManager.GetString("PersonalDataWarning2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting this data will permanently remove your account, and this cannot be recovered..
+        /// </summary>
+        public static string PersonalDataWarning3 {
+            get {
+                return ResourceManager.GetString("PersonalDataWarning3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy and Security.
+        /// </summary>
+        public static string PrivacyHeader {
+            get {
+                return ResourceManager.GetString("PrivacyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy and security.
+        /// </summary>
+        public static string PrivacyNav {
+            get {
+                return ResourceManager.GetString("PrivacyNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your profile has been updated.
+        /// </summary>
+        public static string ProfileDataUpdateStatusSuccess {
+            get {
+                return ResourceManager.GetString("ProfileDataUpdateStatusSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error. That username is already taken!.
+        /// </summary>
+        public static string ProfileDataUpdateStatusUsernameExists {
+            get {
+                return ResourceManager.GetString("ProfileDataUpdateStatusUsernameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit profile.
+        /// </summary>
+        public static string ProfileEditNav {
+            get {
+                return ResourceManager.GetString("ProfileEditNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string ProfileHeader {
+            get {
+                return ResourceManager.GetString("ProfileHeader", resourceCulture);
             }
         }
         

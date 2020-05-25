@@ -25,10 +25,11 @@ namespace DAL.Repositories
                 .ToListAsync()).Select(comment => Mapper.Map(comment));
         }
 
-        public async Task<Comment> FindAsync(Guid? id)
+        public override async Task<Comment> FindAsync(Guid id)
         {
             return Mapper.Map(await RepoDbContext.Comments
                 .Include(p => p.Profile)
+                .Include(p => p.Post)
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
 

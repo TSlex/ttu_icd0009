@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChatMembers" xml:space="preserve">
-    <value></value>
+  <data name="ChatMembers" >
+    <value>Members</value>
   </data>
-  <data name="RoleTitle" xml:space="preserve">
+  <data name="RoleTitle" >
     <value>Role title</value>
   </data>
-  <data name="RoleTitleValue" xml:space="preserve">
+  <data name="RoleTitleValue" >
     <value>Role title translated</value>
   </data>
-  <data name="RoleTitleValueId" xml:space="preserve">
-    <value>Role title Id</value>
+  <data name="RoleTitleValueId" >
+    <value>Role title translated (ID)</value>
   </data>
   <data name="CanRenameRoom">
     <value>Can rename room?</value>

@@ -117,25 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChatMembers" xml:space="preserve">
-    <value>ChatMembers</value>
+  <data name="ChatMembers" >
+    <value>Members</value>
   </data>
-  <data name="ChatRoomImageId" xml:space="preserve">
-    <value>ChatRoomImageId</value>
+  <data name="ChatRoomImageId" >
+    <value>Image (ID)</value>
   </data>
-  <data name="ChatRoomImageUrl" xml:space="preserve">
-    <value>ChatRoomImageUrl</value>
+  <data name="ChatRoomImageUrl" >
+    <value>Image (Url)</value>
   </data>
-  <data name="ChatRoomTitle" xml:space="preserve">
-    <value>ChatRoomTitle</value>
+  <data name="ChatRoomTitle" >
+    <value>Title</value>
   </data>
-  <data name="LastMessageDateTime" xml:space="preserve">
-    <value>LastMessageDateTime</value>
+  <data name="LastMessageDateTime" >
+    <value>Date of last message</value>
   </data>
-  <data name="LastMessageValue" xml:space="preserve">
-    <value>LastMessageValue</value>
+  <data name="LastMessageValue" >
+    <value>Last message</value>
   </data>
-  <data name="Messages" xml:space="preserve">
+  <data name="Messages" >
     <value>Messages</value>
+  </data>
+  <data name="DialogDefaultTitle" >
+    <value>Chat of {0} and {1}</value>
   </data>
 </root>

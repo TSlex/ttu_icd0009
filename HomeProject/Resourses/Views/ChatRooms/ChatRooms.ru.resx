@@ -21,4 +21,13 @@
     <data name="WriteButton">
         <value>Написать</value>
     </data>
+    <data name="MembersNav">
+        <value>Участники</value>
+    </data>
+    <data name="RenameNav">
+        <value>Переменовать</value>
+    </data>
+    <data name="LeaveNav">
+        <value>Покинуть чат</value>
+    </data>
 </root>

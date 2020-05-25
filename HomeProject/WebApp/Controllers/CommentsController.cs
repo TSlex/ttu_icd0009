@@ -31,9 +31,17 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public IActionResult Create(Guid postId, string? returnUrl)
         {
+            var post = _bll.Posts.GetForUpdateAsync(postId).Result;
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+            
             var comment = new Comment
             {
                 PostId = postId, 
+                Post = post,
                 ReturnUrl = returnUrl
             };
 

@@ -41,6 +41,8 @@ namespace DAL.Repositories
                                      && member.DeletedAt == null
                                      && member.MasterId == null)
                     .Include(member => member.ChatRole)
+                    .ThenInclude(role => role.RoleTitleValue)
+                    .ThenInclude(s => s.Translations)
                     .Include(member => member.Profile)
                     .ToListAsync())
                 .Select(member => Mapper.Map(member));

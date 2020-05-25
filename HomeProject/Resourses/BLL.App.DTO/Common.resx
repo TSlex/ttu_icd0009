@@ -117,31 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangedAt" xml:space="preserve">
+  <data name="ChangedAt" >
     <value />
   </data>
-  <data name="ChangedBy" xml:space="preserve">
+  <data name="ChangedBy" >
     <value />
   </data>
-  <data name="CreatedAt" xml:space="preserve">
+  <data name="CreatedAt" >
     <value />
   </data>
-  <data name="CreatedBy" xml:space="preserve">
+  <data name="CreatedBy" >
     <value />
   </data>
-  <data name="DeletedAt" xml:space="preserve">
+  <data name="DeletedAt" >
     <value />
   </data>
-  <data name="DeletedBy" xml:space="preserve">
+  <data name="DeletedBy" >
     <value />
   </data>
-  <data name="Id" xml:space="preserve">
+  <data name="Id" >
     <value />
   </data>
-  <data name="MasterId" xml:space="preserve">
+  <data name="MasterId" >
     <value />
   </data>
-  <data name="ReturnUrl" xml:space="preserve">
+  <data name="ReturnUrl" >
     <value />
   </data>
   <data name="ErrorMessage_MaxLength">

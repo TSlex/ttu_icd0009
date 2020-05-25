@@ -18,4 +18,31 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="ChatMembers" >
+    <value>Osalejad</value>
+      </data>
+    <data name="RoleTitle" >
+        <value>Roll pealkiri</value>
+      </data>
+    <data name="RoleTitleValue" >
+        <value>Tõlgitud roll pealkiri</value>
+      </data>
+    <data name="RoleTitleValueId" >
+        <value>Tõlgitud roll pealkiri (ID)</value>
+      </data>
+    <data name="CanRenameRoom">
+        <value>Kas tuba saab ümber nimetada?</value>
+    </data>
+    <data name="CanEditMembers">
+        <value>Kas liikmete rolle saab muuta?</value>
+    </data>
+    <data name="CanWriteMessages">
+        <value>Kas saab kirju kirjutada?</value>
+    </data>
+    <data name="CanEditAllMessages">
+        <value>Kas saab kõiki sõnumeid muuta?</value>
+    </data>
+    <data name="CanEditMessages">
+        <value>Kas saab oma sõnumeid redigeerida?</value>
+    </data>
 </root>

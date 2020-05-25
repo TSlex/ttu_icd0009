@@ -2,7 +2,7 @@
 @using Domain.Enums
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = Resourses.Views.Identity.Identity.ProfileHeader;
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
@@ -13,22 +13,22 @@
         <form id="profile-form" class="" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Input.ProfileFullName" class="control-label">Имя:</label>
+                <label asp-for="Input.ProfileFullName" class="control-label"></label>
                 <input asp-for="Input.ProfileFullName" class="form-control"/>
                 <span asp-validation-for="Input.ProfileFullName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Username"></label>
-                <input asp-for="Input.Username" class="form-control"/>
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
+                <label asp-for="Input.UserName"></label>
+                <input asp-for="Input.UserName" class="form-control"/>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ProfileWorkPlace" class="control-label">Место работы:</label>
+                <label asp-for="Input.ProfileWorkPlace" class="control-label"></label>
                 <input asp-for="Input.ProfileWorkPlace" class="form-control"/>
                 <span asp-validation-for="Input.ProfileWorkPlace" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ProfileAbout" class="control-label">О себе:</label>
+                <label asp-for="Input.ProfileAbout" class="control-label"></label>
                 <textarea asp-for="Input.ProfileAbout" class="form-control form-"></textarea>
                 <span asp-validation-for="Input.ProfileAbout" class="text-danger"></span>
             </div>
@@ -39,12 +39,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Input.ProfileGender" class="control-label">Пол</label>
+                <label asp-for="Input.ProfileGender" class="control-label"></label>
                 <select asp-for="Input.ProfileGender" asp-items="Html.GetEnumSelectList<ProfileGender>()" class="form-control">
-                    @* <option>Мужской</option> *@
-                    @* <option>Женский</option> *@
-                    @* <option>Свой вариант</option> *@
-                    @* <option>Не указывать</option> *@
                 </select>
             </div>
             
@@ -54,7 +50,7 @@
                 <span asp-validation-for="Input.ProfileGenderOwn" class="text-danger"></span>
             </div>
 
-            <button id="update-profile-button" type="submit" class="btn btn-primary align-self-center">Сохранить</button>
+            <button id="update-profile-button" type="submit" class="btn btn-success align-self-center">@Resourses.Views.Common.SaveButton</button>
         </form>
     </div>
 </div>

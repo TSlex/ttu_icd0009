@@ -64,31 +64,31 @@
         </value>
     </resheader>
     
-    <data name="Privacy" xml:space="preserve">
+    <data name="Privacy" >
     <value>Приватность</value>
   </data>
-    <data name="RegisterButton" xml:space="preserve">
+    <data name="RegisterButton" >
     <value>Регистрация</value>
   </data>
-    <data name="LoginButton" xml:space="preserve">
+    <data name="LoginButton" >
     <value>Войти</value>
   </data>
-    <data name="LogoutButton" xml:space="preserve">
+    <data name="LogoutButton" >
     <value>Выйти</value>
   </data>
-    <data name="UserWelcome" xml:space="preserve">
+    <data name="UserWelcome" >
     <value>Здравствуй, </value>
   </data>
-    <data name="Language" xml:space="preserve">
+    <data name="Language" >
     <value>Русский</value>
   </data>
-    <data name="SearchBarPlaceHolder" xml:space="preserve">
+    <data name="SearchBarPlaceHolder" >
     <value>имя пользователя</value>
   </data>
-    <data name="ErrorDescription" xml:space="preserve">
+    <data name="ErrorDescription" >
     <value>При обработке вашего запроса произошла ошибка.</value>
   </data>
-    <data name="Error" xml:space="preserve">
+    <data name="Error" >
     <value>Ошибка.</value>
   </data>
 </root>

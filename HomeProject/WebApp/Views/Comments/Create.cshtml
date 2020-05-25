@@ -1,18 +1,28 @@
 @model BLL.App.DTO.Comment
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Resourses.Views.Common.CreateHeader;
 }
 
 <div class="chat_section">
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex align-items-center flex-column">
+        <div class="card mb-2" id="image-miniature" style="width: 16rem; user-select: none;">
+            @{
+                if (Model.Post!.PostImageId != null)
+                {
+                    <img src="/images/@Model.Post!.PostImageId" alt="" class="card-img" id="" draggable="false"/>
+                }
+            }
+        </div>
         <div class="col-md-6 text-center">
             <form asp-action="Create">
                 <partial name="_CommentCreateEdit"/>
 
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary"/>
-                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary">Cancel</a>
+                    <input type="submit" value="@Resourses.Views.Common.CreateButton" class="btn btn-success"/>
+                    <a asp-action="Return" asp-controller="Url" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary">
+                        @Resourses.Views.Common.CancelButton
+                    </a>
                 </div>
             </form>
         </div>

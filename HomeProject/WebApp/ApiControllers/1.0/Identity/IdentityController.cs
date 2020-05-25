@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PublicApi.DTO.v1;
 using PublicApi.DTO.v1.Identity;
 using PublicApi.DTO.v1.Response;
 
@@ -135,7 +138,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                     Id = user.Id,
                     RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
                 });
-                
+
                 await _bll.SaveChangesAsync();
 
                 var errors = result.Errors.Select(error => error.Description).ToList();
@@ -144,6 +147,123 @@ namespace WebApp.ApiControllers._1._0.Identity
             }
 
             return BadRequest(new ErrorResponseDTO("Invalid request!"));
+        }
+
+        /// <summary>
+        /// Updates a profile data (full name, work place etc...)
+        /// </summary>
+        /// <param name="dto">Data</param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> UpdateProfileData([FromBody] ProfileDataDTO dto)
+        {
+            var user = await _userManager.FindByIdAsync(User.UserId().ToString());
+
+            //setup new phone
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            if (dto.PhoneNumber != phoneNumber)
+            {
+                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, dto.PhoneNumber);
+                if (!setPhoneResult.Succeeded)
+                {
+                    return BadRequest(new ErrorResponseDTO(
+                        $"Unexpected error occurred while setting phone"));
+                }
+            }
+
+            //setup new username
+            var username = await _userManager.GetUserNameAsync(user);
+            if (dto.Username != username)
+            {
+                var userCheck = await _userManager.FindByNameAsync(dto.Username);
+
+                if (userCheck != null && !(userCheck.Equals(user)))
+                {
+                    return BadRequest(new ErrorResponseDTO("Error. That username is already taken!"));
+                }
+
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, dto.Username);
+
+                if (!setUserNameResult.Succeeded)
+                {
+                    return BadRequest(
+                        new ErrorResponseDTO(
+                            "Unexpected error occurred while setting username!"));
+                }
+            }
+
+            //setup other
+            user.ProfileFullName = dto.ProfileFullName;
+            user.ProfileWorkPlace = dto.ProfileWorkPlace;
+            user.ProfileAbout = dto.ProfileAbout;
+            user.ProfileGender = dto.ProfileGender;
+            user.ProfileGenderOwn = dto.ProfileGenderOwn;
+
+            await _userManager.UpdateAsync(user);
+            await _signInManager.RefreshSignInAsync(user);
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Updates profile email
+        /// </summary>
+        /// <param name="dto">Data</param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> UpdateProfileEmail([FromBody] EmailDTO dto)
+        {
+            var user = await _userManager.FindByIdAsync(User.UserId().ToString());
+
+            var email = await _userManager.GetEmailAsync(user);
+            if (dto.NewEmail != email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(user, dto.NewEmail);
+
+                if (!setEmailResult.Succeeded)
+                {
+                    return BadRequest(
+                        new ErrorResponseDTO(
+                            "Unexpected error occurred while setting email!"));
+                }
+            }
+
+            return NoContent();
+        }
+        
+        /// <summary>
+        /// Updates profile password
+        /// </summary>
+        /// <param name="dto">Data</param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> UpdateProfilePassword([FromBody] PasswordDTO dto)
+        {
+            var user = await _userManager.FindByIdAsync(User.UserId().ToString());
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                return BadRequest(
+                    new ErrorResponseDTO(changePasswordResult.Errors.Select(error => error.Description).ToString()));
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+            _logger.LogInformation("User changed their password successfully.");
+
+            return NoContent();
         }
     }
 }

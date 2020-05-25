@@ -18,4 +18,31 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="ChatMembers" >
+    <value>Участники</value>
+      </data>
+    <data name="RoleTitle" >
+        <value>Название</value>
+      </data>
+    <data name="RoleTitleValue" >
+        <value>Переведенное название</value>
+      </data>
+    <data name="RoleTitleValueId" >
+        <value>Переведенное название (ID)</value>
+      </data>
+    <data name="CanRenameRoom">
+        <value>Может переменовывать чат?</value>
+    </data>
+    <data name="CanEditMembers">
+        <value>Может менять роли участников?</value>
+    </data>
+    <data name="CanWriteMessages">
+        <value>Может писать в этот чат?</value>
+    </data>
+    <data name="CanEditAllMessages">
+        <value>Может редактировать все сообщения?</value>
+    </data>
+    <data name="CanEditMessages">
+        <value>Может редактировать свои сообщения?</value>
+    </data>
 </root>

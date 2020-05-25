@@ -117,43 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Comments" xml:space="preserve">
+  <data name="Comments" >
     <value>Comments</value>
   </data>
-  <data name="Favorites" xml:space="preserve">
+  <data name="Favorites" >
     <value>Favorites</value>
   </data>
-  <data name="IsUserFavorite" xml:space="preserve">
+  <data name="IsUserFavorite" >
     <value>IsUserFavorite</value>
   </data>
-  <data name="PostCommentsCount" xml:space="preserve">
+  <data name="PostCommentsCount" >
     <value>PostCommentsCount</value>
   </data>
-  <data name="PostDescription" xml:space="preserve">
+  <data name="PostDescription" >
     <value>Description</value>
   </data>
-  <data name="PostFavoritesCount" xml:space="preserve">
+  <data name="PostFavoritesCount" >
     <value>PostFavoritesCount</value>
   </data>
-  <data name="PostImage" xml:space="preserve">
+  <data name="PostImage" >
     <value>PostImage</value>
   </data>
-  <data name="PostImageId" xml:space="preserve">
+  <data name="PostImageId" >
     <value>PostImageId</value>
   </data>
-  <data name="PostImageUrl" xml:space="preserve">
+  <data name="PostImageUrl" >
     <value>Image URL</value>
   </data>
-  <data name="PostPublicationDateTime" xml:space="preserve">
+  <data name="PostPublicationDateTime" >
     <value>PostPublicationDateTime</value>
   </data>
-  <data name="PostTitle" xml:space="preserve">
+  <data name="PostTitle" >
     <value>Title</value>
   </data>
-  <data name="Profile" xml:space="preserve">
+  <data name="Profile" >
     <value>Profile</value>
   </data>
-  <data name="ProfileId" xml:space="preserve">
+  <data name="ProfileId" >
     <value>ProfileId</value>
   </data>
 </root>

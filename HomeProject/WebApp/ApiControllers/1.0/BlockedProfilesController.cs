@@ -38,27 +38,27 @@ namespace WebApp.ApiControllers._1._0
         }
 
         /// <summary>
-        /// Get Profiles count that User follows
+        /// Get Profiles count that User blocks
         /// </summary>
         /// <returns>Profiles count that User follows</returns>
         [HttpGet("count")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountResponseDTO))]
-        public async Task<IActionResult> GetUserFollowedCount()
+        public async Task<IActionResult> GetUserBlackListCount()
         {
             return Ok(new CountResponseDTO()
                 {Count = await _bll.BlockedProfiles.CountByIdAsync(User.UserId())});
         }
 
         /// <summary>
-        /// Get Profiles that User follows
+        /// Get Profiles that User blocks
         /// </summary>
         /// <param name="pageNumber">Page number for page system</param>
         /// <returns>Profiles that User follows</returns>
         [HttpGet("{pageNumber}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BlockedProfileDTO>))]
-        public async Task<IActionResult> GetUserFollowed(int pageNumber)
+        public async Task<IActionResult> GetUserBlackList(int pageNumber)
         {
             return Ok((await _bll.BlockedProfiles.AllByIdPageAsync(User.UserId(), pageNumber, 10)).Select(favorite =>
                 new BlockedProfileDTO

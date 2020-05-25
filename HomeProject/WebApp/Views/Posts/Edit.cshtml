@@ -4,16 +4,14 @@
     ViewData["Title"] = @Resourses.Views.Posts.Posts.EditHeader + " \"" + Model.PostTitle + "\"";
 }
 
-<h4 class="text-center">@ViewData["Title"]</h4>
-<br>
 <div class="post_create">
     <div class="row text-center align-items-center d-flex flex-column">
-        <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none;" draggable="false">
+        <div class="card mb-2" id="image-miniature" style="width: 18rem; user-select: none;" draggable="false">
 
             @{
                 if (Model.PostImage?.OriginalImageUrl != null)
                 {
-                    <img src="@Url.Content("~/localstorage" + @Model.PostImage.OriginalImageUrl)" alt="" class="card-img" id="render_image"/>
+                    <img src="/images/@Model.PostImageId" alt="" class="card-img" id="render_image"/>
                 }
                 else
                 {

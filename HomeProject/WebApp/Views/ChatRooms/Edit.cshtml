@@ -1,7 +1,7 @@
 @model BLL.App.DTO.ChatRoom
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Resourses.Views.Common.EditHeader;
 }
 
 <div class="chat_section">
@@ -19,8 +19,10 @@
                 </div>
                 
                 <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary"/>
-                    <a asp-action="Details" asp-controller="ChatRooms" asp-route-id="@Model.Id" class="btn btn-primary">Cancel</a>
+                    <input type="submit" value="@Resourses.Views.Common.SaveButton" class="btn btn-success"/>
+                    <a asp-action="Details" asp-controller="ChatRooms" asp-route-id="@Model.Id" class="btn btn-secondary">
+                        @Resourses.Views.Common.CancelButton
+                    </a>
                 </div>
             </form>
         </div>

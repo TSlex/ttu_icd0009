@@ -117,118 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessFailedCount" xml:space="preserve">
+  <data name="AccessFailedCount" >
     <value>AccessFailedCount</value> 
   </data>
-  <data name="BlockedByProfiles" xml:space="preserve">
+  <data name="BlockedByProfiles" >
     <value>BlockedByProfiles</value> 
   </data>
-  <data name="BlockedProfiles" xml:space="preserve">
+  <data name="BlockedProfiles" >
     <value>BlockedProfiles</value> 
   </data>
-  <data name="ChatMembers" xml:space="preserve">
+  <data name="ChatMembers" >
     <value>ChatMembers</value> 
   </data>
-  <data name="Comments" xml:space="preserve">
+  <data name="Comments" >
     <value>Comments</value> 
   </data>
-  <data name="Email" xml:space="preserve">
+  <data name="Email" >
     <value>Email</value> 
   </data>
-  <data name="EmailConfirmed" xml:space="preserve">
+  <data name="EmailConfirmed" >
     <value>EmailConfirmed</value> 
   </data>
-  <data name="Experience" xml:space="preserve">
+  <data name="Experience" >
     <value>Experience</value> 
   </data>
-  <data name="Favorites" xml:space="preserve">
+  <data name="Favorites" >
     <value>Favorites</value> 
   </data>
-  <data name="Followed" xml:space="preserve">
+  <data name="Followed" >
     <value>Followed</value> 
   </data>
-  <data name="FollowedCount" xml:space="preserve">
+  <data name="FollowedCount" >
     <value>FollowedCount</value> 
   </data>
-  <data name="Followers" xml:space="preserve">
+  <data name="Followers" >
     <value>Followers</value> 
   </data>
-  <data name="FollowersCount" xml:space="preserve">
+  <data name="FollowersCount" >
     <value>FollowersCount</value> 
   </data>
-  <data name="IsUserBlocked" xml:space="preserve">
+  <data name="IsUserBlocked" >
     <value>IsUserBlocked</value> 
   </data>
-  <data name="IsUserBlocks" xml:space="preserve">
+  <data name="IsUserBlocks" >
     <value>IsUserBlocks</value> 
   </data>
-  <data name="IsUserFollows" xml:space="preserve">
+  <data name="IsUserFollows" >
     <value>IsUserFollows</value> 
   </data>
-  <data name="LastLoginDateTime" xml:space="preserve">
+  <data name="LastLoginDateTime" >
     <value>LastLoginDateTime</value> 
   </data>
-  <data name="LockoutEnabled" xml:space="preserve">
+  <data name="LockoutEnabled" >
     <value>LockoutEnabled</value> 
   </data>
-  <data name="Messages" xml:space="preserve">
+  <data name="Messages" >
     <value>Messages</value> 
   </data>
-  <data name="Password" xml:space="preserve">
+  <data name="Password" >
     <value>Password</value> 
   </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>PhoneNumber</value> 
+  <data name="PhoneNumber" >
+    <value>Phone number</value> 
   </data>
-  <data name="PhoneNumberConfirmed" xml:space="preserve">
+  <data name="PhoneNumberConfirmed" >
     <value>PhoneNumberConfirmed</value> 
   </data>
-  <data name="Posts" xml:space="preserve">
+  <data name="Posts" >
     <value>Posts</value> 
   </data>
-  <data name="PostsCount" xml:space="preserve">
+  <data name="PostsCount" >
     <value>PostsCount</value> 
   </data>
-  <data name="ProfileAbout" xml:space="preserve">
-    <value>ProfileAbout</value> 
+  <data name="ProfileAbout" >
+    <value>About</value> 
   </data>
-  <data name="ProfileAvatar" xml:space="preserve">
+  <data name="ProfileAvatar" >
     <value>ProfileAvatar</value> 
   </data>
-  <data name="ProfileAvatarId" xml:space="preserve">
+  <data name="ProfileAvatarId" >
     <value>ProfileAvatarId</value> 
   </data>
-  <data name="ProfileAvatarUrl" xml:space="preserve">
+  <data name="ProfileAvatarUrl" >
     <value>ProfileAvatarUrl</value> 
   </data>
-  <data name="ProfileFullName" xml:space="preserve">
-    <value>ProfileFullName</value> 
+  <data name="ProfileFullName" >
+    <value>Full name</value> 
   </data>
-  <data name="ProfileGender" xml:space="preserve">
-    <value>ProfileGender</value> 
+  <data name="ProfileGender" >
+    <value>Gender</value> 
   </data>
-  <data name="ProfileGenderOwn" xml:space="preserve">
-    <value>ProfileGenderOwn</value> 
+  <data name="ProfileGenderOwn" >
+    <value>Own variant</value> 
   </data>
-  <data name="ProfileGifts" xml:space="preserve">
+  <data name="ProfileGifts" >
     <value>ProfileGifts</value> 
   </data>
-  <data name="ProfileRanks" xml:space="preserve">
+  <data name="ProfileRanks" >
     <value>ProfileRanks</value> 
   </data>
-  <data name="ProfileStatus" xml:space="preserve">
+  <data name="ProfileStatus" >
     <value>ProfileStatus</value> 
   </data>
-  <data name="ProfileWorkPlace" xml:space="preserve">
-    <value>ProfileWorkPlace</value> 
+  <data name="ProfileWorkPlace" >
+    <value>Work place</value> 
   </data>
-  <data name="Rank" xml:space="preserve">
+  <data name="Rank" >
     <value>Rank</value> 
   </data>
-  <data name="UserName" xml:space="preserve">
+  <data name="UserName" >
     <value>Username</value> 
   </data>
-  <data name="PasswordConfirm" xml:space="preserve">
+  <data name="PasswordConfirm" >
     <value>Confirm Password</value> 
   </data>
 </root>

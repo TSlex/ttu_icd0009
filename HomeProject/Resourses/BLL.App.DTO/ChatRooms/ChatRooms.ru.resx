@@ -18,4 +18,28 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="ChatRoomTitle" >
+    <value>Название</value>
+  </data>
+    <data name="DialogDefaultTitle" >
+    <value>Чат пользователей {0} и {1}</value>
+  </data>
+    <data name="ChatMembers" >
+    <value>Участники</value>
+  </data>
+    <data name="ChatRoomImageId" >
+    <value>Картинка (ID)</value>
+  </data>
+    <data name="ChatRoomImageUrl" >
+    <value>Картинка (Url)</value>
+  </data>
+    <data name="LastMessageDateTime" >
+    <value>Дата последнего сообщения</value>
+  </data>
+    <data name="LastMessageValue" >
+    <value>Последнее сообщение</value>
+  </data>
+    <data name="Messages" >
+    <value>Сообщения</value>
+  </data>
 </root>

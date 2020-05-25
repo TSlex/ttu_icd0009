@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChatRole" xml:space="preserve">
+  <data name="ChatRole" >
     <value>Role</value>
   </data>
-  <data name="ChatRoleId" xml:space="preserve">
-    <value>Role id</value>
+  <data name="ChatRoleId" >
+    <value>Role (ID)</value>
   </data>
-  <data name="ChatRoom" xml:space="preserve">
+  <data name="ChatRoom" >
     <value>Chat room</value>
   </data>
-  <data name="ChatRoomId" xml:space="preserve">
-    <value>Chat room id</value>
+  <data name="ChatRoomId" >
+    <value>Chat room (ID)</value>
   </data>
-  <data name="ChatRoomTitle" xml:space="preserve">
+  <data name="ChatRoomTitle" >
     <value>Chat room title</value>
   </data>
-  <data name="Profile" xml:space="preserve">
+  <data name="Profile" >
     <value>Profile</value>
   </data>
-  <data name="ProfileId" xml:space="preserve">
-    <value>Profile id</value>
+  <data name="ProfileId" >
+    <value>Profile (ID)</value>
   </data>
 </root>

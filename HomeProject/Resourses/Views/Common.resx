@@ -143,6 +143,9 @@
     <data name="DeleteButton">
         <value>Delete</value>
     </data>
+    <data name="DownloadButton">
+        <value>Download</value>
+    </data>
     <data name="CreateHeader">
         <value>Create</value>
     </data>
@@ -157,5 +160,8 @@
     </data>
     <data name="DeleteConfirm">
         <value>Are you sure you want to delete this?</value>
+    </data>
+    <data name="NoContent">
+        <value>Nothing here yet</value>
     </data>
 </root>

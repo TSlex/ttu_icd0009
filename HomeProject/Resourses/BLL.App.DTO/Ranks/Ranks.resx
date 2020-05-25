@@ -117,43 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MaxExperience" xml:space="preserve">
+  <data name="MaxExperience" >
     <value>MaxExperience</value>
   </data>
-  <data name="MinExperience" xml:space="preserve">
+  <data name="MinExperience" >
     <value>MinExperience</value>
   </data>
-  <data name="NextRank" xml:space="preserve">
+  <data name="NextRank" >
     <value>NextRank</value>
   </data>
-  <data name="NextRankId" xml:space="preserve">
+  <data name="NextRankId" >
     <value>NextRankId</value>
   </data>
-  <data name="PreviousRank" xml:space="preserve">
+  <data name="PreviousRank" >
     <value>PreviousRank</value>
   </data>
-  <data name="PreviousRankId" xml:space="preserve">
+  <data name="PreviousRankId" >
     <value>PreviousRankId</value>
   </data>
-  <data name="ProfileRanks" xml:space="preserve">
+  <data name="ProfileRanks" >
     <value>ProfileRanks</value>
   </data>
-  <data name="RankCode" xml:space="preserve">
+  <data name="RankCode" >
     <value>RankCode</value>
   </data>
-  <data name="RankColor" xml:space="preserve">
+  <data name="RankColor" >
     <value>RankColor</value>
   </data>
-  <data name="RankDescription" xml:space="preserve">
+  <data name="RankDescription" >
     <value>RankDescription</value>
   </data>
-  <data name="RankIcon" xml:space="preserve">
+  <data name="RankIcon" >
     <value>RankIcon</value>
   </data>
-  <data name="RankTextColor" xml:space="preserve">
+  <data name="RankTextColor" >
     <value>RankTextColor</value>
   </data>
-  <data name="RankTitle" xml:space="preserve">
+  <data name="RankTitle" >
     <value>RankTitle</value>
   </data>
 </root>
