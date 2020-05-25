@@ -22,4 +22,25 @@ namespace PublicApi.DTO.v1
         public int MaxExperience { get; set; } = default!;
         public int MinExperience { get; set; } = default!;
     }
+
+    public class RankAdminDTO : DomainEntityBaseMetaSoftUpdateDelete
+    {
+        [MaxLength(100)] public string RankCode { get; set; } = default!;
+
+        public Guid RankTitleId { get; set; } = default!;
+        public string? RankTitle { get; set; } = default!;
+        public Guid? RankDescriptionId { get; set; }
+        public string? RankDescription { get; set; }
+
+        [MaxLength(20)] public string RankColor { get; set; } = default!;
+        [MaxLength(20)] public string RankTextColor { get; set; } = default!;
+        [MaxLength(20)] public string? RankIcon { get; set; }
+
+        public int MaxExperience { get; set; } = default!;
+        public int MinExperience { get; set; } = default!;
+
+        public Guid? PreviousRankId { get; set; }
+
+        public Guid? NextRankId { get; set; }
+    }
 }

@@ -16,10 +16,18 @@ namespace PublicApi.DTO.v1
         public string? LastMessageValue { get; set; }
         public DateTime? LastMessageDateTime { get; set; }
     }
-    
+
     public class ChatRoomEditDTO
     {
         public Guid Id { get; set; }
         public string ChatRoomTitle { get; set; } = default!;
+    }
+
+    public class ChatRoomAdminDTO : DomainEntityBaseMetaSoftUpdateDelete
+    {
+        [MaxLength(100)] public string ChatRoomTitle { get; set; } = default!;
+
+        [MaxLength(300)] public string? ChatRoomImageUrl { get; set; }
+        public Guid? ChatRoomImageId { get; set; }
     }
 }

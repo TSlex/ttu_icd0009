@@ -11,10 +11,7 @@ namespace Domain
     public class Rank: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string RankCode { get; set; } = default!;
-        
-//        [MaxLength(100)] public string RankTitle { get; set; } = default!;
-//        [MaxLength(300)] public string? RankDescription { get; set; }
-        
+
         public Guid RankTitleId { get; set; } = default!;
         public LangString? RankTitle { get; set; } = default!;
         public Guid? RankDescriptionId { get; set; }

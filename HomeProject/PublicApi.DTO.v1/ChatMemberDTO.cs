@@ -8,8 +8,18 @@ namespace PublicApi.DTO.v1
     {
         public Guid Id { get; set; } = default!;
         public string UserName { get; set; } = default!;
-//        public string? ProfileAvatarUrl { get; set; }
         public Guid? ProfileAvatarId { get; set; }
         public string ChatRole { get; set; } = default!;
+    }
+    
+    public class ChatMemberAdminDTO: DomainEntityBaseMetaSoftUpdateDelete
+    {
+        [MaxLength(100)] public string? ChatRoomTitle { get; set; }
+
+        public Guid ChatRoomId { get; set; } = default!;
+
+        public Guid ChatRoleId { get; set; } = default!;
+
+        public Guid ProfileId { get; set; } = default!;
     }
 }

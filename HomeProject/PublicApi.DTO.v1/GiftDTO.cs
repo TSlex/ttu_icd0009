@@ -1,5 +1,5 @@
 ﻿using System;
-using BLL.App.DTO;
+using System.ComponentModel.DataAnnotations;
 
 namespace PublicApi.DTO.v1
 {
@@ -25,5 +25,17 @@ namespace PublicApi.DTO.v1
     public class GiftsCountDTO
     {
         public int Count { get; set; }
+    }
+    
+    public class GiftAdminDTO
+    {
+        public Guid GiftNameId { get; set; } = default!;
+        [MaxLength(100)] public string? GiftName { get; set; } = default!;
+
+        [MaxLength(100)] public string GiftCode { get; set; } = default!;
+
+        public Guid? GiftImageId { get; set; }
+
+        public int Price { get; set; }
     }
 }
