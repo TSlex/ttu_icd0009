@@ -61,7 +61,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MaxExperience.
+        ///   Looks up a localized string similar to Max experience.
         /// </summary>
         public static string MaxExperience {
             get {
@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MinExperience.
+        ///   Looks up a localized string similar to Min experience.
         /// </summary>
         public static string MinExperience {
             get {
@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NextRank.
+        ///   Looks up a localized string similar to Next rank.
         /// </summary>
         public static string NextRank {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NextRankId.
+        ///   Looks up a localized string similar to Next rank (ID).
         /// </summary>
         public static string NextRankId {
             get {
@@ -97,7 +97,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PreviousRank.
+        ///   Looks up a localized string similar to Previous rank.
         /// </summary>
         public static string PreviousRank {
             get {
@@ -106,7 +106,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PreviousRankId.
+        ///   Looks up a localized string similar to Previous rank (ID).
         /// </summary>
         public static string PreviousRankId {
             get {
@@ -115,7 +115,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileRanks.
+        ///   Looks up a localized string similar to Profile ranks.
         /// </summary>
         public static string ProfileRanks {
             get {
@@ -124,7 +124,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankCode.
+        ///   Looks up a localized string similar to Code.
         /// </summary>
         public static string RankCode {
             get {
@@ -133,7 +133,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankColor.
+        ///   Looks up a localized string similar to Color.
         /// </summary>
         public static string RankColor {
             get {
@@ -142,7 +142,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankDescription.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string RankDescription {
             get {
@@ -151,7 +151,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankIcon.
+        ///   Looks up a localized string similar to Icon.
         /// </summary>
         public static string RankIcon {
             get {
@@ -160,7 +160,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankTextColor.
+        ///   Looks up a localized string similar to Text color.
         /// </summary>
         public static string RankTextColor {
             get {
@@ -169,7 +169,7 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankTitle.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string RankTitle {
             get {

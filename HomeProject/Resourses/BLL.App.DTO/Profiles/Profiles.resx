@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccessFailedCount" >
-    <value>AccessFailedCount</value> 
+    <value>Access failed count</value> 
   </data>
   <data name="BlockedByProfiles" >
-    <value>BlockedByProfiles</value> 
+    <value>In blacklist</value> 
   </data>
   <data name="BlockedProfiles" >
-    <value>BlockedProfiles</value> 
+    <value>Blacklist</value> 
   </data>
   <data name="ChatMembers" >
-    <value>ChatMembers</value> 
+    <value>Members</value> 
   </data>
   <data name="Comments" >
     <value>Comments</value> 
@@ -136,7 +136,7 @@
     <value>Email</value> 
   </data>
   <data name="EmailConfirmed" >
-    <value>EmailConfirmed</value> 
+    <value>Email is confirmed?</value> 
   </data>
   <data name="Experience" >
     <value>Experience</value> 
@@ -148,28 +148,28 @@
     <value>Followed</value> 
   </data>
   <data name="FollowedCount" >
-    <value>FollowedCount</value> 
+    <value>Followed count</value> 
   </data>
   <data name="Followers" >
     <value>Followers</value> 
   </data>
   <data name="FollowersCount" >
-    <value>FollowersCount</value> 
+    <value>Followers count</value> 
   </data>
   <data name="IsUserBlocked" >
-    <value>IsUserBlocked</value> 
+    <value>Is user blocked?</value> 
   </data>
   <data name="IsUserBlocks" >
-    <value>IsUserBlocks</value> 
+    <value>Is user blocks?</value> 
   </data>
   <data name="IsUserFollows" >
-    <value>IsUserFollows</value> 
+    <value>Is user follows?</value> 
   </data>
   <data name="LastLoginDateTime" >
-    <value>LastLoginDateTime</value> 
+    <value>Last login</value> 
   </data>
   <data name="LockoutEnabled" >
-    <value>LockoutEnabled</value> 
+    <value>Is lockout enabled?</value> 
   </data>
   <data name="Messages" >
     <value>Messages</value> 
@@ -181,28 +181,28 @@
     <value>Phone number</value> 
   </data>
   <data name="PhoneNumberConfirmed" >
-    <value>PhoneNumberConfirmed</value> 
+    <value>Is phone number confirmed?</value> 
   </data>
   <data name="Posts" >
     <value>Posts</value> 
   </data>
   <data name="PostsCount" >
-    <value>PostsCount</value> 
+    <value>Posts count</value> 
   </data>
   <data name="ProfileAbout" >
     <value>About</value> 
   </data>
   <data name="ProfileAvatar" >
-    <value>ProfileAvatar</value> 
+    <value>Avatar</value> 
   </data>
   <data name="ProfileAvatarId" >
-    <value>ProfileAvatarId</value> 
+    <value>Avatar (ID)</value> 
   </data>
   <data name="ProfileAvatarUrl" >
-    <value>ProfileAvatarUrl</value> 
+    <value>Avatar (URL)</value> 
   </data>
   <data name="ProfileFullName" >
-    <value>Full name</value> 
+    <value>Fullname</value> 
   </data>
   <data name="ProfileGender" >
     <value>Gender</value> 
@@ -211,13 +211,13 @@
     <value>Own variant</value> 
   </data>
   <data name="ProfileGifts" >
-    <value>ProfileGifts</value> 
+    <value>Gifts</value> 
   </data>
   <data name="ProfileRanks" >
-    <value>ProfileRanks</value> 
+    <value>Ranks</value> 
   </data>
   <data name="ProfileStatus" >
-    <value>ProfileStatus</value> 
+    <value>Status</value> 
   </data>
   <data name="ProfileWorkPlace" >
     <value>Work place</value> 

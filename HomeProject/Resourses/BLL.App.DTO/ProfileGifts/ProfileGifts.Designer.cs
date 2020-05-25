@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From Id.
+        ///   Looks up a localized string similar to From (ID).
         /// </summary>
         public static string FromProfileId {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GiftDateTime.
+        ///   Looks up a localized string similar to Date of gift.
         /// </summary>
         public static string GiftDateTime {
             get {
@@ -97,7 +97,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GiftGallery.
+        ///   Looks up a localized string similar to Gallery.
         /// </summary>
         public static string GiftGallery {
             get {
@@ -106,7 +106,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GiftId.
+        ///   Looks up a localized string similar to Gift (ID).
         /// </summary>
         public static string GiftId {
             get {
@@ -142,7 +142,7 @@ namespace Resourses.BLL.App.DTO.ProfileGifts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileId.
+        ///   Looks up a localized string similar to Profile (ID).
         /// </summary>
         public static string ProfileId {
             get {

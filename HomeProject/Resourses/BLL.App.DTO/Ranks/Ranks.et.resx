@@ -18,4 +18,43 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="MaxExperience" >
+        <value>Maksimaalne kogemus</value>
+    </data>
+    <data name="MinExperience" >
+        <value>Minimaalne kogemus</value>
+    </data>
+    <data name="NextRank" >
+        <value>Järgmine järk</value>
+    </data>
+    <data name="NextRankId" >
+        <value>Järgmine järk (ID)</value>
+    </data>
+    <data name="PreviousRank" >
+        <value>Eelmine järk</value>
+    </data>
+    <data name="PreviousRankId" >
+        <value>Eelmine järk (ID)</value>
+    </data>
+    <data name="ProfileRanks" >
+        <value>Profiilide järkid</value>
+    </data>
+    <data name="RankCode" >
+        <value>Kood</value>
+    </data>
+    <data name="RankColor" >
+        <value>Värv</value>
+    </data>
+    <data name="RankDescription" >
+        <value>Kirjeldus</value>
+    </data>
+    <data name="RankIcon" >
+        <value>Ikoon</value>
+    </data>
+    <data name="RankTextColor" >
+        <value>Teksti värv</value>
+    </data>
+    <data name="RankTitle" >
+        <value>Pealkiri</value>
+    </data>
 </root>

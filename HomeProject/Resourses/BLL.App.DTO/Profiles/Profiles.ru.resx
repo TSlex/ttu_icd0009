@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -13,39 +14,127 @@
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
-    <data name="Email" >
-    <value>Э-адрес</value> 
-  </data>
-    <data name="Password" >
-    <value>Пароль</value> 
-  </data>
-    <data name="UserName" >
-    <value>Имя пользователя</value> 
-  </data>
-    <data name="PasswordConfirm" >
-    <value>Подтвердите пароль</value> 
-  </data>
-    <data name="ProfileFullName" >
-    <value>Имя и фамилия</value> 
-  </data>
-    <data name="ProfileWorkPlace" >
-    <value>Место работы</value> 
-  </data>
-    <data name="ProfileAbout" >
-    <value>О себе</value> 
-  </data>
-    <data name="PhoneNumber" >
-    <value>Номер телефона</value> 
-  </data>
-  <data name="ProfileGender" >
-    <value>Пол</value> 
-  </data>
-  <data name="ProfileGenderOwn" >
-    <value>Свой вариант</value> 
-  </data>
+    <data name="Email">
+        <value>Э-адрес</value>
+    </data>
+    <data name="Password">
+        <value>Пароль</value>
+    </data>
+    <data name="UserName">
+        <value>Имя пользователя</value>
+    </data>
+    <data name="PasswordConfirm">
+        <value>Подтвердите пароль</value>
+    </data>
+    <data name="ProfileFullName">
+        <value>Имя и фамилия</value>
+    </data>
+    <data name="ProfileWorkPlace">
+        <value>Место работы</value>
+    </data>
+    <data name="ProfileAbout">
+        <value>О себе</value>
+    </data>
+    <data name="PhoneNumber">
+        <value>Номер телефона</value>
+    </data>
+    <data name="ProfileGender">
+        <value>Пол</value>
+    </data>
+    <data name="ProfileGenderOwn">
+        <value>Свой вариант</value>
+    </data>
+    <data name="AccessFailedCount">
+        <value>Количество профальных попыток входа</value>
+    </data>
+    <data name="BlockedByProfiles">
+        <value>В черном списке</value>
+    </data>
+    <data name="BlockedProfiles">
+        <value>Черный список</value>
+    </data>
+    <data name="ChatMembers">
+        <value>Участники</value>
+    </data>
+    <data name="Comments">
+        <value>Комментарии</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Эл. адрес подтвержден?</value>
+    </data>
+    <data name="Experience">
+        <value>Опыт</value>
+    </data>
+    <data name="Favorites">
+        <value>Понравившиеся</value>
+    </data>
+    <data name="Followed">
+        <value>Подписки</value>
+    </data>
+    <data name="FollowedCount">
+        <value>Количество подписок</value>
+    </data>
+    <data name="Followers">
+        <value>Подписчики</value>
+    </data>
+    <data name="FollowersCount">
+        <value>Количество подписчиков</value>
+    </data>
+    <data name="IsUserBlocked">
+        <value>Вы в черном списке?</value>
+    </data>
+    <data name="IsUserBlocks">
+        <value>У вас в черном списке?</value>
+    </data>
+    <data name="IsUserFollows">
+        <value>Вы подписаны?</value>
+    </data>
+    <data name="LastLoginDateTime">
+        <value>Посдений вход</value>
+    </data>
+    <data name="LockoutEnabled">
+        <value>Блокировка включена?</value>
+    </data>
+    <data name="Messages">
+        <value>Сообщения</value>
+    </data>
+    <data name="PhoneNumberConfirmed">
+        <value>Номер телефона подтвержден?</value>
+    </data>
+    <data name="Posts">
+        <value>Посты</value>
+    </data>
+    <data name="PostsCount">
+        <value>Количество постов</value>
+    </data>
+    <data name="ProfileAvatar">
+        <value>Аватар</value>
+    </data>
+    <data name="ProfileAvatarId">
+        <value>Аватар (ID)</value>
+    </data>
+    <data name="ProfileAvatarUrl">
+        <value>Аватар (URL)</value>
+    </data>
+    <data name="ProfileGifts">
+        <value>Подарки</value>
+    </data>
+    <data name="ProfileRanks">
+        <value>Ранки</value>
+    </data>
+    <data name="ProfileStatus">
+        <value>Статус</value>
+    </data>
+    <data name="Rank">
+        <value>Ранк</value>
+    </data>
 </root>

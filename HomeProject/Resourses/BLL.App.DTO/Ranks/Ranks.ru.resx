@@ -18,4 +18,43 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="MaxExperience" >
+        <value>Максимальный опыт</value>
+    </data>
+    <data name="MinExperience" >
+        <value>Минимальный опыт</value>
+    </data>
+    <data name="NextRank" >
+        <value>Следующий ранк</value>
+    </data>
+    <data name="NextRankId" >
+        <value>Следующий ранк (ID)</value>
+    </data>
+    <data name="PreviousRank" >
+        <value>Предыдущий ранк</value>
+    </data>
+    <data name="PreviousRankId" >
+        <value>Предыдущий ранк (ID)</value>
+    </data>
+    <data name="ProfileRanks" >
+        <value>Ранки профиля</value>
+    </data>
+    <data name="RankCode" >
+        <value>Код</value>
+    </data>
+    <data name="RankColor" >
+        <value>Цвет</value>
+    </data>
+    <data name="RankDescription" >
+        <value>Описание</value>
+    </data>
+    <data name="RankIcon" >
+        <value>Иконка</value>
+    </data>
+    <data name="RankTextColor" >
+        <value>Цвет текста</value>
+    </data>
+    <data name="RankTitle" >
+        <value>Название</value>
+    </data>
 </root>

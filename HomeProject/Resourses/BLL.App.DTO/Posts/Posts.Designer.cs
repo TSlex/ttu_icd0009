@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IsUserFavorite.
+        ///   Looks up a localized string similar to Is user favorite.
         /// </summary>
         public static string IsUserFavorite {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PostCommentsCount.
+        ///   Looks up a localized string similar to Comments count.
         /// </summary>
         public static string PostCommentsCount {
             get {
@@ -106,7 +106,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PostFavoritesCount.
+        ///   Looks up a localized string similar to Favorites count.
         /// </summary>
         public static string PostFavoritesCount {
             get {
@@ -115,7 +115,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PostImage.
+        ///   Looks up a localized string similar to Image.
         /// </summary>
         public static string PostImage {
             get {
@@ -124,7 +124,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PostImageId.
+        ///   Looks up a localized string similar to Image (ID).
         /// </summary>
         public static string PostImageId {
             get {
@@ -133,7 +133,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image URL.
+        ///   Looks up a localized string similar to Image (URL).
         /// </summary>
         public static string PostImageUrl {
             get {
@@ -142,7 +142,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PostPublicationDateTime.
+        ///   Looks up a localized string similar to Date of post.
         /// </summary>
         public static string PostPublicationDateTime {
             get {
@@ -169,7 +169,7 @@ namespace Resourses.BLL.App.DTO.Posts {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileId.
+        ///   Looks up a localized string similar to Profile (ID).
         /// </summary>
         public static string ProfileId {
             get {

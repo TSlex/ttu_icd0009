@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -13,39 +14,127 @@
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
-    <data name="Email" >
-    <value>E-post</value> 
-  </data>
-    <data name="Password" >
-    <value>Salasõna</value> 
-  </data>
-    <data name="UserName" >
-    <value>Kasutajanimi</value> 
-  </data>
-    <data name="PasswordConfirm" >
-    <value>Kinnita salasõna</value> 
-  </data>
-    <data name="ProfileFullName" >
-    <value>Täisnimi</value> 
-  </data>
-    <data name="ProfileWorkPlace" >
-    <value>Töökoht</value> 
-  </data>
-    <data name="ProfileAbout" >
-    <value>Minust</value> 
-  </data>
-    <data name="PhoneNumber" >
-    <value>Telefoninumbe</value> 
-  </data>
-  <data name="ProfileGender" >
-    <value>Sugu</value> 
-  </data>
-  <data name="ProfileGenderOwn" >
-    <value>Oma variant</value> 
-  </data>
+    <data name="Email">
+        <value>E-post</value>
+    </data>
+    <data name="Password">
+        <value>Salasõna</value>
+    </data>
+    <data name="UserName">
+        <value>Kasutajanimi</value>
+    </data>
+    <data name="PasswordConfirm">
+        <value>Kinnita salasõna</value>
+    </data>
+    <data name="ProfileFullName">
+        <value>Täisnimi</value>
+    </data>
+    <data name="ProfileWorkPlace">
+        <value>Töökoht</value>
+    </data>
+    <data name="ProfileAbout">
+        <value>Minust</value>
+    </data>
+    <data name="PhoneNumber">
+        <value>Telefoninumbe</value>
+    </data>
+    <data name="ProfileGender">
+        <value>Sugu</value>
+    </data>
+    <data name="ProfileGenderOwn">
+        <value>Oma variant</value>
+    </data>
+    <data name="AccessFailedCount">
+        <value>Juurdepääs ebaõnnestuse arv</value>
+    </data>
+    <data name="BlockedByProfiles">
+        <value>Mustas nimekirjas</value>
+    </data>
+    <data name="BlockedProfiles">
+        <value>Must nimekiri</value>
+    </data>
+    <data name="ChatMembers">
+        <value>Osalejad</value>
+    </data>
+    <data name="Comments">
+        <value>Kommentaarid</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>E-post on kinnitatud?</value>
+    </data>
+    <data name="Experience">
+        <value>Kogemus</value>
+    </data>
+    <data name="Favorites">
+        <value>Lemmikud</value>
+    </data>
+    <data name="Followed">
+        <value>Järgnes</value>
+    </data>
+    <data name="FollowedCount">
+        <value>Järgnese arv</value>
+    </data>
+    <data name="Followers">
+        <value>Jälgijad</value>
+    </data>
+    <data name="FollowersCount">
+        <value>Jälgijade arv</value>
+    </data>
+    <data name="IsUserBlocked">
+        <value>Kas kasutaja on blokeeritud?</value>
+    </data>
+    <data name="IsUserBlocks">
+        <value>Kas kasutaja blokeerib?</value>
+    </data>
+    <data name="IsUserFollows">
+        <value>Kas kasutaja jälgib?</value>
+    </data>
+    <data name="LastLoginDateTime">
+        <value>Viimane sisselogimine</value>
+    </data>
+    <data name="LockoutEnabled">
+        <value>Kas blokeerimine on lubatud?</value>
+    </data>
+    <data name="Messages">
+        <value>Kirjad</value>
+    </data>
+    <data name="PhoneNumberConfirmed">
+        <value>Kas telefoninumber on kinnitatud?</value>
+    </data>
+    <data name="Posts">
+        <value>Postid</value>
+    </data>
+    <data name="PostsCount">
+        <value>Postide count</value>
+    </data>
+    <data name="ProfileAvatar">
+        <value>Avatar</value>
+    </data>
+    <data name="ProfileAvatarId">
+        <value>Avatar (ID)</value>
+    </data>
+    <data name="ProfileAvatarUrl">
+        <value>Avatar (URL)</value>
+    </data>
+    <data name="ProfileGifts">
+        <value>Kingitused</value>
+    </data>
+    <data name="ProfileRanks">
+        <value>Järkid</value>
+    </data>
+    <data name="ProfileStatus">
+        <value>Staatus</value>
+    </data>
+    <data name="Rank">
+        <value>Järk</value>
+    </data>
 </root>

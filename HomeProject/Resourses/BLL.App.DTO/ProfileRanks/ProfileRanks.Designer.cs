@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.ProfileRanks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileId.
+        ///   Looks up a localized string similar to Profile (ID).
         /// </summary>
         public static string ProfileId {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.ProfileRanks {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RankId.
+        ///   Looks up a localized string similar to Rank (ID).
         /// </summary>
         public static string RankId {
             get {

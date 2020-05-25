@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MaxExperience" >
-    <value>MaxExperience</value>
+    <value>Max experience</value>
   </data>
   <data name="MinExperience" >
-    <value>MinExperience</value>
+    <value>Min experience</value>
   </data>
   <data name="NextRank" >
-    <value>NextRank</value>
+    <value>Next rank</value>
   </data>
   <data name="NextRankId" >
-    <value>NextRankId</value>
+    <value>Next rank (ID)</value>
   </data>
   <data name="PreviousRank" >
-    <value>PreviousRank</value>
+    <value>Previous rank</value>
   </data>
   <data name="PreviousRankId" >
-    <value>PreviousRankId</value>
+    <value>Previous rank (ID)</value>
   </data>
   <data name="ProfileRanks" >
-    <value>ProfileRanks</value>
+    <value>Profile ranks</value>
   </data>
   <data name="RankCode" >
-    <value>RankCode</value>
+    <value>Code</value>
   </data>
   <data name="RankColor" >
-    <value>RankColor</value>
+    <value>Color</value>
   </data>
   <data name="RankDescription" >
-    <value>RankDescription</value>
+    <value>Description</value>
   </data>
   <data name="RankIcon" >
-    <value>RankIcon</value>
+    <value>Icon</value>
   </data>
   <data name="RankTextColor" >
-    <value>RankTextColor</value>
+    <value>Text color</value>
   </data>
   <data name="RankTitle" >
-    <value>RankTitle</value>
+    <value>Title</value>
   </data>
 </root>

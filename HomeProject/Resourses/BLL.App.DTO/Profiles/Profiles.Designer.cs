@@ -61,7 +61,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AccessFailedCount.
+        ///   Looks up a localized string similar to Access failed count.
         /// </summary>
         public static string AccessFailedCount {
             get {
@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BlockedByProfiles.
+        ///   Looks up a localized string similar to In blacklist.
         /// </summary>
         public static string BlockedByProfiles {
             get {
@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BlockedProfiles.
+        ///   Looks up a localized string similar to Blacklist.
         /// </summary>
         public static string BlockedProfiles {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ChatMembers.
+        ///   Looks up a localized string similar to Members.
         /// </summary>
         public static string ChatMembers {
             get {
@@ -115,7 +115,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EmailConfirmed.
+        ///   Looks up a localized string similar to Email is confirmed?.
         /// </summary>
         public static string EmailConfirmed {
             get {
@@ -151,7 +151,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FollowedCount.
+        ///   Looks up a localized string similar to Followed count.
         /// </summary>
         public static string FollowedCount {
             get {
@@ -169,7 +169,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FollowersCount.
+        ///   Looks up a localized string similar to Followers count.
         /// </summary>
         public static string FollowersCount {
             get {
@@ -178,7 +178,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IsUserBlocked.
+        ///   Looks up a localized string similar to Is user blocked?.
         /// </summary>
         public static string IsUserBlocked {
             get {
@@ -187,7 +187,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IsUserBlocks.
+        ///   Looks up a localized string similar to Is user blocks?.
         /// </summary>
         public static string IsUserBlocks {
             get {
@@ -196,7 +196,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IsUserFollows.
+        ///   Looks up a localized string similar to Is user follows?.
         /// </summary>
         public static string IsUserFollows {
             get {
@@ -205,7 +205,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LastLoginDateTime.
+        ///   Looks up a localized string similar to Last login.
         /// </summary>
         public static string LastLoginDateTime {
             get {
@@ -214,7 +214,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LockoutEnabled.
+        ///   Looks up a localized string similar to Is lockout enabled?.
         /// </summary>
         public static string LockoutEnabled {
             get {
@@ -259,7 +259,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PhoneNumberConfirmed.
+        ///   Looks up a localized string similar to Is phone number confirmed?.
         /// </summary>
         public static string PhoneNumberConfirmed {
             get {
@@ -277,7 +277,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PostsCount.
+        ///   Looks up a localized string similar to Posts count.
         /// </summary>
         public static string PostsCount {
             get {
@@ -295,7 +295,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileAvatar.
+        ///   Looks up a localized string similar to Avatar.
         /// </summary>
         public static string ProfileAvatar {
             get {
@@ -304,7 +304,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileAvatarId.
+        ///   Looks up a localized string similar to Avatar (ID).
         /// </summary>
         public static string ProfileAvatarId {
             get {
@@ -313,7 +313,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileAvatarUrl.
+        ///   Looks up a localized string similar to Avatar (URL).
         /// </summary>
         public static string ProfileAvatarUrl {
             get {
@@ -322,7 +322,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Full name.
+        ///   Looks up a localized string similar to Fullname.
         /// </summary>
         public static string ProfileFullName {
             get {
@@ -349,7 +349,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileGifts.
+        ///   Looks up a localized string similar to Gifts.
         /// </summary>
         public static string ProfileGifts {
             get {
@@ -358,7 +358,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileRanks.
+        ///   Looks up a localized string similar to Ranks.
         /// </summary>
         public static string ProfileRanks {
             get {
@@ -367,7 +367,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProfileStatus.
+        ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string ProfileStatus {
             get {

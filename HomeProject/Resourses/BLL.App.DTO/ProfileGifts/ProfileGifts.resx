@@ -122,34 +122,34 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="Gift" >
-    <value>Gift</value>
-  </data>
-    <data name="GiftDateTime" >
-    <value>GiftDateTime</value>
-  </data>
-    <data name="GiftGallery" >
-    <value>GiftGallery</value>
-  </data>
-    <data name="GiftId" >
-    <value>GiftId</value>
-  </data>
-    <data name="Price" >
-    <value>Price</value>
-  </data>
-    <data name="Profile" >
-    <value>Profile</value>
-  </data>
-    <data name="ProfileId" >
-    <value>ProfileId</value>
-  </data>
-    <data name="FromProfileId" >
-    <value>From Id</value>
-  </data>
-    <data name="FromProfile" >
-    <value>From</value>
-  </data>
-    <data name="Message" >
-    <value>Message</value>
-  </data>
+    <data name="Gift">
+        <value>Gift</value>
+    </data>
+    <data name="GiftDateTime">
+        <value>Date of gift</value>
+    </data>
+    <data name="GiftGallery">
+        <value>Gallery</value>
+    </data>
+    <data name="GiftId">
+        <value>Gift (ID)</value>
+    </data>
+    <data name="Price">
+        <value>Price</value>
+    </data>
+    <data name="Profile">
+        <value>Profile</value>
+    </data>
+    <data name="ProfileId">
+        <value>Profile (ID)</value>
+    </data>
+    <data name="FromProfileId">
+        <value>From (ID)</value>
+    </data>
+    <data name="FromProfile">
+        <value>From</value>
+    </data>
+    <data name="Message">
+        <value>Message</value>
+    </data>
 </root>
