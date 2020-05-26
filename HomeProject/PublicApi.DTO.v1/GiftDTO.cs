@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
@@ -27,7 +28,7 @@ namespace PublicApi.DTO.v1
         public int Count { get; set; }
     }
     
-    public class GiftAdminDTO
+    public class GiftAdminDTO: DomainEntityBaseMetaSoftUpdateDelete
     {
         public Guid GiftNameId { get; set; } = default!;
         [MaxLength(100)] public string? GiftName { get; set; } = default!;

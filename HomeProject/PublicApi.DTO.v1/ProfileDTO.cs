@@ -56,5 +56,7 @@ namespace PublicApi.DTO.v1
         public int PostsCount { get; set; }
 
         public int Experience { get; set; }
+        
+        public string? Password { get; set; }
     }
 }
