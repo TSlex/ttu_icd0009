@@ -8,6 +8,7 @@ namespace PublicApi.DTO.v1
     public class ChatRoleDTO
     {
         public string RoleTitle { get; set; } = default!;
+        public string RoleTitleValue { get; set; } = default!;
         
         public bool CanRenameRoom { get; set; }
         public bool CanEditMembers { get; set; }

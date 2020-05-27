@@ -23,39 +23,6 @@ namespace BLL.App.Services
         {
             _uow = uow;
         }
-        
-        [Obsolete]
-        public async Task<Profile> GetProfileFull(Guid id)
-        {
-            var profile = Mapper.Map(await ServiceRepository.FindFullIncludeAsync(id));
-            profile.PostsCount = profile.Posts?.Count ?? 0;
-            profile.FollowersCount = profile.Followers?.Count ?? 0;
-            profile.FollowedCount = profile.Followed?.Count ?? 0;
-
-            return profile;
-        }
-        
-        [Obsolete]
-        public async Task<ProfileLimited> GetProfileLimited(Guid id)
-        {
-            var profile = await GetProfileFull(id);
-
-            return new ProfileLimited()
-            {
-                UserName = profile.UserName,
-                LastLoginDateTime = profile.LastLoginDateTime,
-                ProfileAbout = profile.ProfileAbout,
-                ProfileStatus = profile.ProfileStatus,
-                ProfileAvatarId = profile.ProfileAvatarId,
-                ProfileFullName = profile.ProfileFullName,
-                ProfileWorkPlace = profile.ProfileWorkPlace,
-                FollowedCount = profile.FollowedCount,
-                FollowersCount = profile.FollowersCount,
-                PostsCount = profile.PostsCount,
-                Experience = profile.Experience,
-                Rank = profile.ProfileRanks.OrderBy(rank => rank.Rank!.MaxExperience).ToList()[0]
-            };
-        }
 
         public async Task<Profile> GetProfileAsync(Guid id, Guid? requesterId)
         {
@@ -90,6 +57,16 @@ namespace BLL.App.Services
         public async Task<Profile> FindByUsernameAsync(string username)
         {
             return Mapper.Map(await ServiceRepository.FindByUsernameAsync(username));
+        }
+
+        public async Task<Profile> FindByUsernameAsync(string username, Guid? requesterId)
+        {
+            return Mapper.Map(await ServiceRepository.FindByUsernameAsync(username, requesterId));
+        }
+        
+        public async Task<Profile> FindByUsernameWithFollowersAsync(string username)
+        {
+            return Mapper.Map(await ServiceRepository.FindByUsernameWithFollowersAsync(username));
         }
     }
 }

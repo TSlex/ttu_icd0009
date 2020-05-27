@@ -9,12 +9,8 @@ namespace Contracts.BLL.App.Services
     {
         Task<Profile> GetProfileAsync(Guid id, Guid? requesterId);
 
-        [Obsolete]
-        Task<Profile> GetProfileFull(Guid id);
-
-        [Obsolete]
-        Task<ProfileLimited> GetProfileLimited(Guid id);
-
         Task<Profile> FindByUsernameAsync(string username);
+        Task<Profile> FindByUsernameAsync(string username, Guid? requesterId);
+        Task<Profile> FindByUsernameWithFollowersAsync(string username);
     }
 }

@@ -63,6 +63,7 @@ namespace WebApp.ApiControllers._1._0
                 new CommentGetDTO
                 {
                     Id = comment.Id,
+                    ProfileAvatarId = comment.Profile!.ProfileAvatarId,
                     UserName = comment.Profile!.UserName,
                     CommentValue = comment.CommentValue,
                     CommentDateTime = comment.CommentDateTime
@@ -119,7 +120,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PutComment(Guid id, [FromBody] CommentEditDTO comment)
         {
-            var record = await _bll.Comments.FindAsync(id);
+            var record = await _bll.Comments.GetForUpdateAsync(id);
 
             if (record == null)
             {

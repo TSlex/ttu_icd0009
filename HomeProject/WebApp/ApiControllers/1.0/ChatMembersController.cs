@@ -68,7 +68,13 @@ namespace WebApp.ApiControllers._1._0
                 Id = member.Id,
                 UserName = member.Profile!.UserName,
                 ChatRole = member.ChatRole!.RoleTitle,
-                ProfileAvatarId = member.Profile!.ProfileAvatarId
+                ChatRoleValue = member.ChatRole!.RoleTitleValue,
+                ProfileAvatarId = member.Profile!.ProfileAvatarId,
+                CanEditMembers = member.ChatRole!.CanEditMembers,
+                CanEditMessages = member.ChatRole!.CanEditMessages,
+                CanRenameRoom = member.ChatRole!.CanRenameRoom,
+                CanWriteMessages = member.ChatRole!.CanWriteMessages,
+                CanEditAllMessages = member.ChatRole!. CanEditAllMessages
             }));
         }
         

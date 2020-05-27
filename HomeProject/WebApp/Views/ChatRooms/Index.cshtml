@@ -6,7 +6,7 @@
 }
 
 <div class="chat_rooms">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center text-center">
         <ul class="nav nav-pills flex-column">
             @{
                 if (!Model.Any())
@@ -14,7 +14,7 @@
                     <span>@Resourses.Views.Common.NoContent</span>
                 }
                 
-                foreach (var item in Model)
+                foreach (var item in Model.OrderByDescending(room => room.Messages.FirstOrDefault()?.MessageDateTime))
                 {
                     var member = item.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == User.UserId() && chatMember.DeletedAt == null);
 

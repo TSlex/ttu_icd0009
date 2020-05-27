@@ -2,6 +2,23 @@
     user-select: none !important;
 }
 
+html::-webkit-scrollbar {
+    width: .5em;
+}
+
+span::-webkit-scrollbar, p::-webkit-scrollbar{
+    width: 0;
+}
+
+html::-webkit-scrollbar-track {
+    border-left: 1px solid lightgray;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    outline: 1px solid slategrey;
+}
+
 /*shared*/
 a {
     text-decoration: none !important;
@@ -369,6 +386,7 @@ body {
 .post_details_post {
     position: relative;
     flex-grow: 1;
+    flex-basis: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -413,11 +431,8 @@ body {
 .post_image img {
     max-height: 400px;
     max-width: 600px;
-    /*height: auto !important;*/
-    /*height: max-content;*/
     border: 1px solid gray;
     border-radius: 4px;
-    /*width: 80%;*/
     padding: 0;
 }
 
@@ -425,24 +440,33 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    /*flex-grow: 1;*/
-    /*height: 100%;*/
     justify-content: flex-end;
-    /*background-color: lightgray;*/
 }
 
 .post_details_meta_section > span {
     border: 1px solid gray;
     border-radius: 5px;
-    /*width: 100% !important;*/
     display: inline-block;
     padding: 10px;
-    /*flex-grow: 1;*/
     justify-self: flex-end;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+    max-height: 3.2em;
+    box-sizing: content-box;
+    
 }
 
 .post_details_meta_section > p {
     margin-bottom: 1em;
+    display: inline-block;
+    overflow: auto;
+    text-overflow: ellipsis;
+    max-height: 1.5em;
+    box-sizing: content-box;
+    margin-left: auto;
+    margin-right: auto;
+    word-break: break-all;
 }
 
 .post_meta_section {
@@ -531,7 +555,10 @@ li form button, nav form button {
     flex-direction: column;
     padding: 10px;
     width: 500px;
-    margin: 100px auto;
+    height: 550px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 40px auto;
 }
 
 .chat_container {

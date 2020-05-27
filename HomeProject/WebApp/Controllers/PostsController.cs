@@ -40,7 +40,7 @@ namespace WebApp.Controllers
         {
             var post = await _bll.Posts.GetPostFull(id);
 
-            if (post == null)
+            if (post == null || post.DeletedAt != null)
             {
                 return NotFound();
             }

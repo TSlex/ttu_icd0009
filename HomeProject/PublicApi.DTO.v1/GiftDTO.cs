@@ -13,8 +13,7 @@ namespace PublicApi.DTO.v1
         public string GiftCode { get; set; } = default!;
 
         public Guid? GiftImageId { get; set; }
-        public ImageDTO? GiftImage { get; set; }
-        
+
         public int Price { get; set; }
         
         public DateTime GiftDateTime { get; set; }

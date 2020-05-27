@@ -170,13 +170,13 @@
                 <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfPosts</span>
             </li>
             <li class="profile_meta">
-                <a asp-controller="Followers" asp-action="Followers" class="btn-link">
+                <a asp-controller="Followers" asp-action="Followers" asp-route-username="@Model.UserName" class="btn-link">
                     <span class="meta_counter">@Model.FollowersCount</span>
                     <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
                 </a>
             </li>
             <li class="profile_meta">
-                <a asp-controller="Followers" asp-action="Followed" class="btn-link">
+                <a asp-controller="Followers" asp-action="Followed" asp-route-username="@Model.UserName" class="btn-link">
                     <span class="meta_counter">@Model.FollowedCount</span>
                     <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
                 </a>

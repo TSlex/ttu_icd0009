@@ -4,8 +4,12 @@ using DAL.Base;
 
 namespace PublicApi.DTO.v1
 {
-    public class ProfileGiftDTO : DomainEntityBaseMetadata
+    public class ProfileGiftDTO
     {
+        public Guid Id { get; set; } = default!;
+        
+        public string GiftName { get; set; } = default!;
+        
         public string Username { get; set; } = default!;
         public string? FromUsername { get; set; }
 

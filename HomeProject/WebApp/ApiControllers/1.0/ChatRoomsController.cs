@@ -53,6 +53,7 @@ namespace WebApp.ApiControllers._1._0
                 ChatRoomTitle = room.ChatRoomTitle,
                 LastMessageDateTime = room.Messages!.Count > 0 ? room.Messages.First()?.MessageDateTime : null,
                 LastMessageValue = room.Messages!.Count > 0 ? room.Messages.First()?.MessageValue : null,
+                ChatRoomImageId = room.Messages!.Count > 0 ? room.Messages.First()?.Profile?.ProfileAvatarId : null,
             }).OrderByDescending(room => room.LastMessageDateTime));
         }
 
@@ -158,6 +159,8 @@ namespace WebApp.ApiControllers._1._0
                 new MessageGetDTO()
                 {
                     Id = message.Id,
+                    ChatRoomId = message.ChatRoomId,
+                    ProfileAvatarId = message.Profile!.ProfileAvatarId,
                     MessageValue = message.MessageValue,
                     UserName = message.Profile!.UserName,
                     MessageDateTime = message.MessageDateTime

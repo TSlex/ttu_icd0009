@@ -28,7 +28,7 @@ namespace BLL.App.Services
 
         public async Task IncreaseUserExperience(Guid userId, int amount)
         {
-            var profile = await _uow.Profiles.FindFullIncludeAsync(userId);
+            var profile = await _uow.Profiles.FindRankIncludeAsync(userId);
 
             //add profile next rank if possible
             var profileRank =

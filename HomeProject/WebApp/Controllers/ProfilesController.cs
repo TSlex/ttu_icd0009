@@ -44,7 +44,7 @@ namespace WebApp.Controllers
             var user = await _userManager.FindByNameAsync(username);
             var isAuthorized = _signInManager.IsSignedIn(User);
 
-            if (user == null)
+            if (user == null || user.DeletedAt != null)
             {
                 return NotFound();
             }

@@ -241,7 +241,7 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm Password.
+        ///   Looks up a localized string similar to Confirm password.
         /// </summary>
         public static string PasswordConfirm {
             get {

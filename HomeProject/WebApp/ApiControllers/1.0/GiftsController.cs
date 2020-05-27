@@ -86,7 +86,7 @@ namespace WebApp.ApiControllers._1._0
         [AllowAnonymous]
         [HttpGet("{username}/{pageNumber}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GiftDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileGiftDTO>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetUserGifts(string username, int pageNumber)
         {
@@ -97,14 +97,18 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("User is not found!"));
             }
 
-            return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber)).Select(gift => gift.Gift)
+            return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber))
                 .Select(
-                    gift => new GiftDTO()
+                    gift => new ProfileGiftDTO()
                     {
-                        GiftName = gift!.GiftName,
-                        GiftCode = gift!.GiftCode,
-                        GiftImageId = gift!.GiftImageId,
-                        Price = gift!.Price,
+                        Id = gift.Id,
+                        GiftName = gift.Gift.GiftName,
+                        Username = gift.Profile.UserName,
+                        FromUsername = gift.FromProfile?.UserName,
+                        Message = gift.Message,
+                        Price = gift.Price,
+                        GiftDateTime = gift.GiftDateTime,
+                        ImageId = gift.Gift.GiftImageId
                     }));
         }
 
@@ -208,6 +212,7 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new ProfileGiftDTO
             {
                 Id = profileGift.Id,
+                GiftName = profileGift.Gift.GiftName,
                 Username = profileGift.Profile.UserName,
                 FromUsername = profileGift.FromProfile.UserName,
                 Message = profileGift.Message,

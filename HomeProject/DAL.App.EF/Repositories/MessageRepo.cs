@@ -66,7 +66,8 @@ namespace DAL.Repositories
                         MessageValue = message.MessageValue,
                         Profile = new Domain.Profile()
                         {
-                            UserName = message.Profile!.UserName
+                            UserName = message.Profile!.UserName,
+                            ProfileAvatarId = message.Profile!.ProfileAvatarId
                         },
                         MessageDateTime = message.MessageDateTime
                     })

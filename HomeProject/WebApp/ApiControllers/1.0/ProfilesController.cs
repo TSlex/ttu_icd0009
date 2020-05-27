@@ -47,20 +47,22 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetProfile(string username)
         {
-            var user = await _bll.Profiles.FindByUsernameAsync(username);
+            Profile user;
             
+            if (User.Identity.IsAuthenticated)
+            {
+                user = await _bll.Profiles.FindByUsernameAsync(username, User.UserId());
+            }
+            else
+            {
+                user = await _bll.Profiles.FindByUsernameAsync(username, null);
+            }
+
             if (user == null)
             {
                 return NotFound(new ErrorResponseDTO("User was not found!"));
             }
 
-            if (User.Identity.IsAuthenticated && User.UserId() != user.Id)
-            {
-                user.IsUserBlocked = await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId()) != null;
-                user.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
-                user.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;   
-            }
-            
             return Ok(_mapper.Map(user));
         }
 

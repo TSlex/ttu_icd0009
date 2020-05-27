@@ -34,7 +34,7 @@ namespace DAL.Repositories
 
         public async Task<Profile> GetProfile(Guid id, Guid? requesterId)
         {
-            return await RepoDbSet.Where(profile => profile.Id == id 
+            return await RepoDbSet.Where(profile => profile.Id == id
                                                     && profile.DeletedAt == null)
                 .Select(profile => new Profile()
                 {
@@ -117,14 +117,9 @@ namespace DAL.Repositories
                 }).FirstOrDefaultAsync();
         }
 
-        public async Task<Profile> FindFullIncludeAsync(Guid id)
+        public async Task<Profile> FindRankIncludeAsync(Guid id)
         {
             return Mapper.Map(await _userManager.Users
-                .Include(profile => profile.Posts)
-                .Include(profile => profile.Followed)
-                .Include(profile => profile.Followers)
-                .Include(profile => profile.ProfileGifts)
-                .ThenInclude(gift => gift.Gift)
                 .Include(profile => profile.ProfileRanks)
                 .ThenInclude(rank => rank.Rank)
                 .ThenInclude(rank => rank!.RankTitle)
@@ -133,43 +128,77 @@ namespace DAL.Repositories
                 .ThenInclude(rank => rank.Rank)
                 .ThenInclude(rank => rank!.RankDescription)
                 .ThenInclude(desc => desc!.Translations)
-//                .Include(profile => profile.ProfileRanks)
-//                .ThenInclude(rank => rank.Rank)
-//                .ThenInclude(rank => rank!.NextRank)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
 
-        public async Task<Profile> FindNoIncludeAsync(Guid id)
-        {
-            return Mapper.Map(await RepoDbSet
-                .Include(profile => profile.Posts!.Count)
-                .Include(profile => profile.Followed!.Count)
-                .Include(profile => profile.Followers!.Count)
-                .FirstOrDefaultAsync(profile => profile.Id == id));
-        }
 
-#pragma warning disable 8604
         public async Task<Profile> FindByUsernameAsync(string username)
         {
-            var result = await _userManager.Users
-                .Where(profile => profile.UserName == username)
-                .Select(profile => new
-                {
-                    value = profile,
-                    postsCount = profile.Posts!.Count,
-                    followedCount = profile.Followed!.Count,
-                    followersCount = profile.Followers!.Count
-                }).FirstOrDefaultAsync();
-
-            if (result!.value == null) return Mapper.Map(result!.value);
-
-            result.value.PostsCount = result.postsCount;
-            result.value.FollowedCount = result.followedCount;
-            result.value.FollowersCount = result.followersCount;
-
-            return Mapper.Map(result.value);
+            return Mapper.Map(await RepoDbSet.FirstOrDefaultAsync(profile => profile.UserName == username));
         }
-#pragma warning restore 8604
+
+        public async Task<Profile> FindByUsernameWithFollowersAsync(string username)
+        {
+            return await RepoDbSet
+                .Where(profile => profile.UserName == username)
+                .Select(profile => new Profile()
+                {
+                    Followed = profile.Followed.Select(follower => new Follower()
+                    {
+                        Id = follower.Id,
+                        Profile = new Profile()
+                        {
+                            UserName = follower.Profile.UserName,
+                            ProfileAvatarId = follower.Profile.ProfileAvatarId,
+                        }
+                    }).ToList(),
+                    Followers = profile.Followers.Select(follower => new Follower()
+                    {
+                        Id = follower.Id,
+                        FollowerProfile = new Profile()
+                        {
+                            UserName = follower.FollowerProfile.UserName,
+                            ProfileAvatarId = follower.FollowerProfile.ProfileAvatarId,
+                        }
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Profile> FindByUsernameAsync(string username, Guid? requesterId)
+        {
+            return await RepoDbSet.Where(profile => profile.UserName == username
+                                                    && profile.DeletedAt == null)
+                .Select(profile => new Profile()
+                {
+                    Id = profile.Id,
+                    ProfileAbout = profile.ProfileAbout,
+                    ProfileFullName = profile.ProfileFullName,
+                    ProfileWorkPlace = profile.ProfileWorkPlace,
+                    ProfileAvatarId = profile.ProfileAvatarId,
+                    UserName = profile.UserName,
+                    Experience = profile.Experience,
+                    Followed = profile.Followed
+                        .Select(follower => _followerMapper.Map(follower))
+                        .ToList(),
+                    Followers = profile.Followers
+                        .Select(follower => _followerMapper.Map(follower))
+                        .ToList(),
+                    FollowedCount = profile.Followed.Count,
+                    FollowersCount = profile.Followers.Count,
+                    PostsCount = profile.Posts.Count(post => post.DeletedAt == null && post.MasterId == null),
+                    IsUserBlocked = requesterId != null && RepoDbContext.BlockedProfiles
+                                        .Any(blockedProfile => blockedProfile.ProfileId == profile.Id
+                                                               && blockedProfile.BProfileId == (Guid) requesterId),
+                    IsUserBlocks = requesterId != null && RepoDbContext.BlockedProfiles
+                                       .Any(blockedProfile => blockedProfile.BProfileId == profile.Id
+                                                              && blockedProfile.ProfileId == (Guid) requesterId),
+                    IsUserFollows = requesterId != null && RepoDbContext.Followers
+                                        .Any(follower => follower.ProfileId == profile.Id
+                                                         && follower.FollowerProfileId == (Guid) requesterId),
+                })
+                .FirstOrDefaultAsync();
+        }
 
         public async Task IncreaseExperience(Guid userId, int amount)
         {
@@ -192,35 +221,36 @@ namespace DAL.Repositories
 
         public override Profile Remove(Profile entity)
         {
-            var blockedProfiles = RepoDbContext.BlockedProfiles.Where(profile => profile.ProfileId == entity.Id).ToList();
-            
+            var blockedProfiles =
+                RepoDbContext.BlockedProfiles.Where(profile => profile.ProfileId == entity.Id).ToList();
+
             foreach (var blockedProfile in blockedProfiles)
             {
                 RepoDbContext.BlockedProfiles.Remove(blockedProfile);
             }
-            
+
             var followers = RepoDbContext.Followers.Where(follower =>
                 follower.FollowerProfileId == entity.Id || follower.ProfileId == entity.Id);
-            
+
             foreach (var follower in followers)
             {
                 RepoDbContext.Followers.Remove(follower);
             }
-            
+
             var members = RepoDbContext.ChatMembers.Where(member => member.ProfileId == entity.Id).ToList();
 
             foreach (var chatMember in members)
             {
                 RepoDbContext.ChatMembers.Remove(chatMember);
             }
-            
+
             var messages = RepoDbContext.Messages.Where(message => message.ProfileId == entity.Id).ToList();
 
             foreach (var message in messages)
             {
                 RepoDbContext.Messages.Remove(message);
             }
-            
+
             var favorites = RepoDbContext.Favorites.Where(favorite => favorite.ProfileId == entity.Id).ToList();
 
             foreach (var favorite in favorites)
@@ -229,33 +259,33 @@ namespace DAL.Repositories
             }
 
             var posts = RepoDbContext.Posts.Where(post => post.ProfileId == entity.Id).ToList();
-            
+
             foreach (var post in posts)
             {
                 RepoDbContext.Posts.Remove(post);
             }
-            
+
             var comments = RepoDbContext.Comments.Where(comment => comment.ProfileId == entity.Id).ToList();
 
             foreach (var comment in comments)
             {
                 RepoDbContext.Comments.Remove(comment);
             }
-            
+
             var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.ProfileId == entity.Id).ToList();
 
             foreach (var rank in ranks)
             {
                 RepoDbContext.ProfileRanks.Remove(rank);
             }
-            
+
             var profileGifts = RepoDbContext.ProfileGifts.Where(gift => gift.ProfileId == entity.Id);
 
             foreach (var profileGift in profileGifts)
             {
                 RepoDbContext.ProfileGifts.Remove(profileGift);
             }
-            
+
             var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.ProfileAvatarId);
 
             if (imageRecord != null)

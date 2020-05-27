@@ -28,18 +28,34 @@ namespace WebApp.Controllers
         /// Get user followers
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Followers()
+        public async Task<IActionResult> Followers(string username)
         {
-            return View(await _bll.Followers.AllByIdPageAsync(User.UserId(), false, 1, int.MaxValue));
+            var user = await _bll.Profiles.FindByUsernameWithFollowersAsync(username);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+//            return View(await _bll.Followers.AllByIdPageAsync(user.Id, false, 1, int.MaxValue));
+            return View(user.Followers);
         }
         
         /// <summary>
         /// Get user followed
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Followed()
+        public async Task<IActionResult> Followed(string username)
         {
-            return View(await _bll.Followers.AllByIdPageAsync(User.UserId(), true, 1, int.MaxValue));
+            var user = await _bll.Profiles.FindByUsernameWithFollowersAsync(username);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+//            return View(await _bll.Followers.AllByIdPageAsync(user.Id, true, 1, int.MaxValue));
+            return View(user.Followed);
         }
         
         /// <summary>
