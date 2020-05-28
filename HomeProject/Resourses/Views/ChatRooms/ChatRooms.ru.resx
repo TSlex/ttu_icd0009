@@ -30,4 +30,7 @@
     <data name="LeaveNav">
         <value>Покинуть чат</value>
     </data>
+    <data name="CannotWrite">
+        <value>Вы не можете отправлять сообщения в этот чат!</value>
+    </data>
 </root>

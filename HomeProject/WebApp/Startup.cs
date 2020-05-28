@@ -63,9 +63,10 @@ namespace WebApp
                 options.AddPolicy("CorsAllowAll",
                     builder =>
                     {
-                        builder.AllowAnyOrigin();
-                        builder.AllowAnyHeader();
-                        builder.AllowAnyMethod();
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
 

@@ -78,6 +78,42 @@ namespace WebApp.ApiControllers._1._0
         }
         
         /// <summary>
+        /// Get original image version by it's id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{id?}/original")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetOriginalImage(string? id)
+        {
+            if (id == null)
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+
+            Image image;
+
+            try
+            {
+                image = await _bll.Images.FindAsync(new Guid(id));
+
+                if (image == null)
+                {
+                    return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                }
+            }
+            catch (Exception)
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+
+            Request.Headers.Add("imageId", id.ToString());
+            return base.File("~/localstorage" + image.OriginalImageUrl, "image/jpeg");
+        }
+        
+        /// <summary>
         /// Create a new image and returns Id
         /// </summary>
         /// <param name="imageDTO"></param>
@@ -87,7 +123,7 @@ namespace WebApp.ApiControllers._1._0
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> PostImage([FromBody] ImageDTO imageDTO)
+        public async Task<IActionResult> PostImage([FromBody] ImagePostDTO imageDTO)
         {
             if (imageDTO.ImageType != ImageType.Post && imageDTO.ImageType != ImageType.ProfileAvatar)
             {
@@ -159,7 +195,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> PutImage(Guid id, [FromBody] ImageDTO imageDTO)
+        public async Task<IActionResult> PutImage(Guid id, [FromBody] ImagePutDTO imageDTO)
         {
             var record = await _bll.Images.GetForUpdateAsync(id);
 

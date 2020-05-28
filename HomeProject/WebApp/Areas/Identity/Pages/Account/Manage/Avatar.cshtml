@@ -13,7 +13,7 @@
         if (Model.OriginalImageUrl != null)
         {
             <div class="card" style="width: 20rem; user-select: none;" draggable="false" id="image-miniature">
-                <img src="~/localstorage/@Model.OriginalImageUrl" alt="" class="card-img" id="render_image" draggable="false">
+                <img src="/images/@Model.Id/original" alt="" class="card-img" id="render_image" draggable="false">
             </div>
         }
         else
@@ -76,7 +76,11 @@
                         image.onload = function(){
                             $('#HeightPx').attr('value', image.height);
                             $('#WidthPx').attr('value', image.width);  
-                        }
+                            $('#PaddingTop').attr('value', 0);
+                            $('#PaddingRight').attr('value', 0);  
+                            $('#PaddingBottom').attr('value', 0);
+                            $('#PaddingLeft').attr('value', 0);  
+                        };
 
                         $('#render_image').attr('src', e.target.result);
                         $('#image-miniature').css('visibility', 'visible');

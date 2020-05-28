@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -14,7 +15,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Enums;
 using PublicApi.DTO.v1.Identity;
+using PublicApi.DTO.v1.Mappers;
 using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0.Identity
@@ -33,6 +36,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         private readonly ILogger<IdentityController> _logger;
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
+        private readonly DTOMapper<BLL.App.DTO.Profile, ProfileDataDTO> _dataMapper;
         private readonly IAppBLL _bll;
 
         /// <summary>
@@ -50,6 +54,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             _configuration = configuration;
             _signInManager = signInManager;
             _userManager = userManager;
+            _dataMapper = new DTOMapper<BLL.App.DTO.Profile, ProfileDataDTO>();
             _bll = bll;
         }
 
@@ -150,11 +155,35 @@ namespace WebApp.ApiControllers._1._0.Identity
         }
 
         /// <summary>
+        /// Get profile email
+        /// </summary>
+        /// <returns>List of chat roles</returns>
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        public async Task<IActionResult> GetEmail()
+        {
+            return Ok((await _bll.Profiles.GetForUpdateAsync(User.UserId())).Email);
+        }
+
+        /// <summary>
+        /// Get profile data
+        /// </summary>
+        /// <returns>List of chat roles</returns>
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileDataDTO))]
+        public async Task<IActionResult> GetProfileData()
+        {
+            return Ok(_dataMapper.Map((await _bll.Profiles.GetForUpdateAsync(User.UserId()))));
+        }
+
+        /// <summary>
         /// Updates a profile data (full name, work place etc...)
         /// </summary>
         /// <param name="dto">Data</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -214,7 +243,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         /// </summary>
         /// <param name="dto">Data</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -226,7 +255,9 @@ namespace WebApp.ApiControllers._1._0.Identity
             var email = await _userManager.GetEmailAsync(user);
             if (dto.NewEmail != email)
             {
-                var setEmailResult = await _userManager.SetEmailAsync(user, dto.NewEmail);
+                await _userManager.SetEmailAsync(user, dto.NewEmail);
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var setEmailResult = await _userManager.ConfirmEmailAsync(user, code);
 
                 if (!setEmailResult.Succeeded)
                 {
@@ -238,13 +269,13 @@ namespace WebApp.ApiControllers._1._0.Identity
 
             return NoContent();
         }
-        
+
         /// <summary>
         /// Updates profile password
         /// </summary>
         /// <param name="dto">Data</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -253,17 +284,55 @@ namespace WebApp.ApiControllers._1._0.Identity
         {
             var user = await _userManager.FindByIdAsync(User.UserId().ToString());
 
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+            var changePasswordResult =
+                await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
                 return BadRequest(
-                    new ErrorResponseDTO(changePasswordResult.Errors.Select(error => error.Description).ToString()));
+                    new ErrorResponseDTO(changePasswordResult.Errors.Select(error => error.Description).ToArray()));
             }
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Deletes message
+        /// </summary>
+        /// <param name="deleteDTO"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> DeleteProfile([FromBody] ProfileDeleteDTO deleteDTO)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound(new ErrorResponseDTO("Unable to load user"));
+            }
+
+            var requirePassword = await _userManager.HasPasswordAsync(user);
+            if (requirePassword)
+            {
+                if (deleteDTO.Password == null || !await _userManager.CheckPasswordAsync(user, deleteDTO.Password))
+                {
+                    return BadRequest(new ErrorResponseDTO("Incorrect password"));
+                }
+            }
+
+            var profile = await _bll.Profiles.GetForUpdateAsync(user.Id);
+            _bll.Profiles.Remove(profile);
+            await _bll.SaveChangesAsync();
+
+            await _signInManager.SignOutAsync();
+
+            return Ok(new OkResponseDTO() {Status = "Your account was deleted."});
         }
     }
 }

@@ -47,7 +47,7 @@ namespace DAL.Repositories
                     .Where(comment => comment.PostId == postId 
                                       && comment.DeletedAt == null)
                     .Include(comment => comment.Profile)
-                    .OrderByDescending(comment => comment.CommentDateTime)
+                    .OrderBy(comment => comment.CommentDateTime)
                     .Skip(startIndex)
                     .Take(count)
                     .ToListAsync())

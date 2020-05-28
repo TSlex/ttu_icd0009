@@ -20,7 +20,7 @@ namespace PublicApi.DTO.v1
     public class ChatRoomEditDTO
     {
         public Guid Id { get; set; }
-        public string ChatRoomTitle { get; set; } = default!;
+        [MaxLength(100)] public string ChatRoomTitle { get; set; } = default!;
     }
 
     public class ChatRoomAdminDTO : DomainEntityBaseMetaSoftUpdateDelete

@@ -26,7 +26,17 @@
                 <a class="btn btn-primary fas fa-briefcase mr-2" asp-area="Admin" asp-controller="Home"
                    asp-action="Index"/>
             }
-            <a class="btn btn-primary fas fa-user-alt mr-2" asp-controller="Profiles" asp-action="Index" asp-route-username="@User.Identity.Name"></a>
+            
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary fas fa-user-alt mr-2" asp-controller="Profiles" asp-action="Index" asp-route-username="@User.Identity.Name"></a>
+                }
+                else
+                {
+                    <a class="btn btn-primary fas fa-user-alt mr-2" asp-area="Identity" asp-page="/Account/Login"></a>
+                }
+            }
             <a class="btn btn-primary fas fa-plus-square mr-2" asp-controller="Posts" asp-action="Create" asp-route-returnUrl="@Url.ActionLink()"></a>
             <a class="btn btn-primary fas fa-envelope" asp-controller="ChatRooms" asp-action="Index"></a>
             

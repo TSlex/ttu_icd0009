@@ -61,6 +61,15 @@ namespace Resourses.Views.ChatRooms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot send messages to this chat!.
+        /// </summary>
+        public static string CannotWrite {
+            get {
+                return ResourceManager.GetString("CannotWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leave.
         /// </summary>
         public static string LeaveNav {

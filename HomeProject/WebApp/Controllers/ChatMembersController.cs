@@ -56,7 +56,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var chatMember = await _bll.ChatMembers.FindAsync(id);
-            var chatRoles = (await _bll.ChatRoles.AllAsync()).Where(role => role.CanEditMembers == false);
+            var chatRoles = (await _bll.ChatRoles.AllAsync());
 
             if (chatMember == null)
             {

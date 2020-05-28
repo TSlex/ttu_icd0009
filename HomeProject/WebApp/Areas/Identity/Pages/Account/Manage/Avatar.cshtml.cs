@@ -28,6 +28,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         
         //=====================================================
 #pragma warning disable 1591
+        public Guid Id { get; set; }
+
         [BindProperty][MaxLength(300)] public string? ImageUrl { get; set; }
         [BindProperty][MaxLength(300)] public string? OriginalImageUrl { get; set; }
         
@@ -69,6 +71,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 
             if (imageModel != null)
             {
+                Id = imageModel.Id;
                 ImageUrl = imageModel.ImageUrl;
                 OriginalImageUrl = imageModel.OriginalImageUrl;
 

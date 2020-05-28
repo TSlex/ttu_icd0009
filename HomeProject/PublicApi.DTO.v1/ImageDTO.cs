@@ -30,6 +30,38 @@ namespace PublicApi.DTO.v1
         public Guid? ImageFor { get; set; }
     }
     
+    public class ImagePostDTO
+    {
+        [Range(0, int.MaxValue)] public int HeightPx { get; set; }
+        [Range(0, int.MaxValue)] public int WidthPx { get; set; }
+        
+        [Range(0, int.MaxValue)] public int PaddingTop { get; set; }
+        [Range(0, int.MaxValue)] public int PaddingRight { get; set; }
+        [Range(0, int.MaxValue)] public int PaddingBottom { get; set; }
+        [Range(0, int.MaxValue)] public int PaddingLeft { get; set; }
+
+        public IFormFile ImageFile { get; set; }
+        
+        public ImageType ImageType { get; set; }
+        
+        public Guid? ImageFor { get; set; }
+    }
+    
+    public class ImagePutDTO
+    {
+        public Guid? Id { get; set; }
+        
+        [Range(0, int.MaxValue)] public int HeightPx { get; set; }
+        [Range(0, int.MaxValue)] public int WidthPx { get; set; }
+
+        [Range(0, int.MaxValue)] public int PaddingTop { get; set; }
+        [Range(0, int.MaxValue)] public int PaddingRight { get; set; }
+        [Range(0, int.MaxValue)] public int PaddingBottom { get; set; }
+        [Range(0, int.MaxValue)] public int PaddingLeft { get; set; }
+
+        public IFormFile? ImageFile { get; set; }
+    }
+    
     public class ImageAdminDTO: DomainEntityBaseMetaSoftUpdateDelete
     {
         public string? ImageUrl { get; set; }

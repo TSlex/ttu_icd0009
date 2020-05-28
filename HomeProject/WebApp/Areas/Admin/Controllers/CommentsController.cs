@@ -94,23 +94,13 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Comment comment)
         {
-            ModelState.Clear();
-            comment.ProfileId = User.UserId();
-
             if (TryValidateModel(comment))
             {
                 comment.Id = Guid.NewGuid();
                 _bll.Comments.Add(comment);
                 await _bll.SaveChangesAsync();
 
-                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 2);
-
-                if (comment.ReturnUrl != null)
-                {
-                    return Redirect(comment.ReturnUrl);
-                }
-
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(comment);
@@ -142,9 +132,9 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(Guid id,
             Comment comment)
         {
-            var record = await _bll.Comments.FindAsync(id);
+            var record = await _bll.Comments.GetForUpdateAsync(id);
 
-            if (id != comment.Id)
+            if (record == null || id != comment.Id)
             {
                 return NotFound();
             }
@@ -154,13 +144,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await _bll.Comments.UpdateAsync(comment);
                 await _bll.SaveChangesAsync();
 
-
-                if (comment.ReturnUrl != null)
-                {
-                    return Redirect(comment.ReturnUrl);
-                }
-
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(comment);

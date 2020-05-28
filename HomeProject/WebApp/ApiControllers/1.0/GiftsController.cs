@@ -97,7 +97,7 @@ namespace WebApp.ApiControllers._1._0
                 return NotFound(new ErrorResponseDTO("User is not found!"));
             }
 
-            return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber))
+            return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber)).Take(5)
                 .Select(
                     gift => new ProfileGiftDTO()
                     {
@@ -196,7 +196,7 @@ namespace WebApp.ApiControllers._1._0
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet("{id}")]
+        [HttpGet("profileGift/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileGiftDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]

@@ -9,6 +9,7 @@ using DAL.Base.EF.Repositories;
 using DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
 using ChatRoom = Domain.ChatRoom;
+using Rank = Domain.Rank;
 
 namespace DAL.Repositories
 {
@@ -22,6 +23,7 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<ChatRole>> AllAsync()
         {
             return (await RepoDbSet
+                .Where(role => !role.CanEditMembers)
                 .Include(role => role.RoleTitleValue)
                 .ThenInclude(s => s.Translations)
                 .ToListAsync()).Select(role => Mapper.Map(role));

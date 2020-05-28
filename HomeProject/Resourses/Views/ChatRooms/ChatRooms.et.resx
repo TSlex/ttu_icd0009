@@ -30,4 +30,7 @@
     <data name="LeaveNav">
         <value>Ära minna</value>
     </data>
+    <data name="CannotWrite">
+        <value>Sa ei saa saata sõnumeid selle vestluse!</value>
+    </data>
 </root>

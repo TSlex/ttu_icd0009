@@ -114,8 +114,17 @@
         </div>
     </div>
     <div class="chat_footer d-flex justify-content-center">
-        <a asp-action="Create" asp-controller="Messages" asp-route-chatRoomId="@Model.Id"
-           class="btn btn-primary">
-            @Resourses.Views.ChatRooms.ChatRooms.WriteButton</a>
+        @{
+            if (currentMember != null && currentMember.ChatRole.CanWriteMessages)
+            {
+                <a asp-action="Create" asp-controller="Messages" asp-route-chatRoomId="@Model.Id"
+                   class="btn btn-primary">
+                    @Resourses.Views.ChatRooms.ChatRooms.WriteButton</a>
+            }
+            else
+            {
+                <span class="text-center p-2 text-danger">@Resourses.Views.ChatRooms.ChatRooms.CannotWrite</span>
+            }
+        }
     </div>
 </div>

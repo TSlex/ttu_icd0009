@@ -119,7 +119,8 @@ namespace WebApp.ApiControllers._1._0
 
             if (isRoomAdministrator)
             {
-                member.ChatRole = role;
+                member.ChatRole = null;
+                member.ChatRoleId = role.Id;
                 await _bll.ChatMembers.UpdateAsync(member);
                 await _bll.SaveChangesAsync();
                 return NoContent();

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -84,6 +85,11 @@ namespace WebApp.Areas.Admin.Controllers
         {
             ModelState.Clear();
 
+            if (chatRole.RoleTitleValue == null)
+            {
+                ModelState.AddModelError(string.Empty, "Translation is required");
+            }
+
             if (TryValidateModel(chatRole))
             {
                 chatRole.Id = Guid.NewGuid();
@@ -126,6 +132,11 @@ namespace WebApp.Areas.Admin.Controllers
             if (id != chatRole.Id)
             {
                 return NotFound();
+            }
+            
+            if (chatRole.RoleTitleValue == null)
+            {
+                ModelState.AddModelError(string.Empty, "Translation is required");
             }
 
             if (ModelState.IsValid)

@@ -57,5 +57,33 @@ namespace WebApp.Controllers
 
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
+        
+        /// <summary>
+        /// Get original image version by it's id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{controller}/{id?}/original")]
+        public async Task<IActionResult> GetOriginalImage(Guid? id)
+        {
+            if (id == null)
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+            
+            var image = await _bll.Images.FindAsync((Guid) id);
+
+            if (image == null)
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+
+            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
+            {
+                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            }
+
+            return base.File("~/localstorage" + image.OriginalImageUrl, "image/jpeg");
+        }
     }
 }
