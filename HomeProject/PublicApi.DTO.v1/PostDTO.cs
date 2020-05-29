@@ -6,11 +6,11 @@ namespace PublicApi.DTO.v1
 {
     public class PostCreateDTO
     {
+        public Guid Id { get; set; } = default!;
         public string PostTitle { get; set; } = default!;
         public string? PostDescription { get; set; }
 
         public Guid? PostImageId { get; set; }
-        public string? PostImageUrl { get; set; }
     }
 
     public class PostGetDTO
@@ -22,7 +22,6 @@ namespace PublicApi.DTO.v1
         public string ProfileUsername { get; set; } = default!;
         
         public Guid? PostImageId { get; set; }
-        public string? PostImageUrl { get; set; }
 
         public DateTime PostPublicationDateTime { get; set; } = default!;
         

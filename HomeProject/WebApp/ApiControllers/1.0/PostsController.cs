@@ -180,12 +180,12 @@ namespace WebApp.ApiControllers._1._0
             {
                 var result = _bll.Posts.Add(new Post()
                 {
-                    PostImageId = null,
-                    ProfileId = User.UserId(),
+                    Id = post.Id,
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
+                    PostImageId = post.PostImageId,
+                    ProfileId = User.UserId(),
                 });
-
                 await _bll.SaveChangesAsync();
 
                 return CreatedAtAction("GetPost", _postGetMapper.Map(result));

@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using PublicApi.DTO.v1;
+using PublicApi.DTO.v1.Mappers;
 using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
@@ -31,6 +32,7 @@ namespace WebApp.ApiControllers._1._0
     public class ImagesController : ControllerBase
     {
         private readonly IAppBLL _bll;
+        private readonly DTOMapper<Image, ImageDTO> _mapper;
             
         /// <summary>
         /// Constructor
@@ -39,6 +41,7 @@ namespace WebApp.ApiControllers._1._0
         public ImagesController(IAppBLL bll)
         {
             _bll = bll;
+            _mapper = new DTOMapper<Image, ImageDTO>();
         }
 
         /// <summary>
@@ -121,7 +124,7 @@ namespace WebApp.ApiControllers._1._0
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Guid))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ImageDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PostImage([FromBody] ImagePostDTO imageDTO)
         {
@@ -154,7 +157,7 @@ namespace WebApp.ApiControllers._1._0
                     PaddingBottom = imageDTO.PaddingBottom,
                     PaddingLeft = imageDTO.PaddingLeft,
                     ImageType = imageDTO.ImageType,
-                    ImageFor = imageDTO.ImageFor,
+                    ImageFor = imageDTO.ImageFor ?? Guid.NewGuid(),
                 };
 
                 if (image.ImageType == ImageType.ProfileAvatar)
@@ -162,22 +165,22 @@ namespace WebApp.ApiControllers._1._0
                     image.ImageFor = User.UserId();
                 }
 
+                Image? result;
+
                 switch (image.ImageType)
                 {
                     case ImageType.ProfileAvatar:
-                        await _bll.Images.AddProfileAsync(User.UserId(), image);
+                        result = await _bll.Images.AddProfileAsync(User.UserId(), image);
                         break;
                     case ImageType.Post:
-                        Debug.Assert(image.ImageFor != null, "image.ImageFor != null");
-                        
-                        await _bll.Images.AddPostAsync((Guid) image.ImageFor, image);
+                        result = await _bll.Images.AddPostAsync((Guid) image.ImageFor, image);
                         break;
                     default:
                         return BadRequest(new ErrorResponseDTO("Access denied!"));
                 }
 
                 await _bll.SaveChangesAsync();
-                return Ok(modelId);
+                return Ok(_mapper.Map(result));
             }
             
             return BadRequest(new ErrorResponseDTO("Image is invalid!"));
