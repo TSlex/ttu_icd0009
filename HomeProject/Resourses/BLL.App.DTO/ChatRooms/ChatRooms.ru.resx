@@ -31,7 +31,7 @@
     <value>Картинка (ID)</value>
   </data>
     <data name="ChatRoomImageUrl" >
-    <value>Картинка (Url)</value>
+    <value>Картинка (URL)</value>
   </data>
     <data name="LastMessageDateTime" >
     <value>Дата последнего сообщения</value>

@@ -1,13 +1,12 @@
 @model IEnumerable<BLL.App.DTO.Gift>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-center" style="font-size: 30px">
+    <a asp-action="Create" class="far fa-plus-square"></a>
 </p>
 <table class="table">
     <thead>
@@ -16,16 +15,13 @@
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GiftCode)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.GiftName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.GiftCode)
         </th>
         <th>
-            IS DELETED?
+            @Html.DisplayNameFor(model => model.Price)
         </th>
         <th></th>
     </tr>
@@ -38,17 +34,15 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GiftCode)
+                @Html.DisplayFor(modelItem => item.GiftName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GiftName)
+                @Html.DisplayFor(modelItem => item.GiftCode)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                @(item.DeletedAt != default)
-            </td>
+            
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

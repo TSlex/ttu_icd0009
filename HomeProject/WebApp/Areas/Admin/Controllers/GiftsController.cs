@@ -107,8 +107,9 @@ namespace WebApp.Areas.Admin.Controllers
                 gift.GiftImageId = imageModel.Id;
                 gift.GiftImage = null;
 
-                _bll.Gifts.Add(gift);
                 await _bll.Images.AddGiftAsync(gift.Id, imageModel);
+                
+                _bll.Gifts.Add(gift);
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));

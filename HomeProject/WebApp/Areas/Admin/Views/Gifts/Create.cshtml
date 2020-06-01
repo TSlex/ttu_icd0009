@@ -1,14 +1,14 @@
 @model BLL.App.DTO.Gift
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Resourses.Views.Common.CreateHeader;
 }
 
-<h1 class="text-center">Create</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
-    <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none" draggable="false">
-        <img src="#" alt="" class="card-img" id="render_image"/>
+    <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none">
+        <img src="#" alt="" class="card-img" id="render_image" draggable="false">
     </div>
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
@@ -42,10 +42,7 @@
             <input type="hidden" asp-for="GiftImage!.HeightPx" id="HeightPx" value="0"/>
             <input type="hidden" asp-for="GiftImage!.WidthPx" id="WidthPx" value="0"/>
 
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
+            <partial name="_EditControls"/>
         </form>
     </div>
 </div>

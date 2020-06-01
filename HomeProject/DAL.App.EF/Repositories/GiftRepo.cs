@@ -18,6 +18,15 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<Gift> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Include(gift => gift.GiftImage)
+                .Include(gift => gift.GiftName)
+                .ThenInclude(s => s!.Translations)
+                .FirstOrDefaultAsync((gift => gift.Id == id)));
+        }
+
         public override async Task<IEnumerable<Gift>> AllAdminAsync()
         {
             return (await RepoDbSet

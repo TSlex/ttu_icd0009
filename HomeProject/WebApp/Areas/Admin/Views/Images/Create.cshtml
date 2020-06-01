@@ -3,17 +3,16 @@
 @model BLL.App.DTO.Image
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Resourses.Views.Common.CreateHeader;
 }
 
-<h1>Create</h1>
-
+<h1 class="text-center">@ViewData["Title"]</h1>
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
-    <div class="card mb-2" id="image-miniature" style="width: 40rem; user-select: none" draggable="false">
-        <img src="#" alt="" class="card-img" id="render_image"/>
+    <div class="card mb-2" id="image-miniature" style="width: 30rem; user-select: none">
+        <img src="#" alt="" class="card-img" id="render_image" draggable="false" />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <form asp-action="Create" method="post" enctype="multipart/form-data" class="custom-file">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="custom-file">
@@ -21,24 +20,16 @@
                 <label class="custom-file-label" style="overflow: hidden"> </label>
             </div>
 
-            <div class="d-flex flex-column">
-                <div class="form-grop">
-                    <lable>@ImageType.ProfileAvatar</lable>
-                    <input type="radio" asp-for="ImageType" value="@ImageType.ProfileAvatar"/>
-                </div>
-                <div class="form-grop">
-                    <lable>@ImageType.Post</lable>
-                    <input type="radio" asp-for="ImageType" value="@ImageType.Post"/>
-                </div>
-                <div class="form-grop">
-                    <lable>@ImageType.Gift</lable>
-                    <input type="radio" asp-for="ImageType" value="@ImageType.Gift"/>
-                </div>
-                <div class="form-grop">
-                    <lable>@ImageType.Undefined</lable>
-                    <input type="radio" asp-for="ImageType" value="@ImageType.Undefined" checked/>
-                </div>
+            <div class="form-group mt-2">
+                <label asp-for="ImageFor" class="control-label"></label>
                 <input asp-for="ImageFor" class="form-control"/>
+                <span asp-validation-for="ImageFor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImageType" class="control-label"></label>
+                <select asp-for="ImageType" asp-items="Html.GetEnumSelectList<ImageType>()" class="form-control"></select>
+                <span asp-validation-for="ImageType" class="text-danger"></span>
             </div>
 
             <input type="hidden" asp-for="PaddingTop" value="0"/>
@@ -48,10 +39,7 @@
             <input type="hidden" asp-for="HeightPx" value="0"/>
             <input type="hidden" asp-for="WidthPx" value="0"/>
 
-            <div class="form-group mt-2">
-                <a class="btn btn-primary" asp-action="Index">Back to List</a>
-                <input type="submit" value="Create" class="btn btn-primary"/>
-            </div>
+            <partial name="_CreateControls"/>
         </form>
     </div>
 </div>

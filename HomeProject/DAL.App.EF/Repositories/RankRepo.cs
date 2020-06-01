@@ -14,31 +14,40 @@ namespace DAL.Repositories
 {
     public class RankRepo : BaseRepo<Domain.Rank, Rank, ApplicationDbContext>, IRankRepo
     {
-        public RankRepo(ApplicationDbContext dbContext) : 
+        public RankRepo(ApplicationDbContext dbContext) :
             base(dbContext, new RankMapper())
         {
+        }
+
+        public override async Task<Rank> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Include(rank => rank.RankTitle)
+                .ThenInclude(s => s!.Translations)
+                .Include(rank => rank.RankDescription)
+                .ThenInclude(s => s!.Translations).FirstOrDefaultAsync(rank => rank.Id == id));
         }
 
         public override async Task<IEnumerable<Rank>> AllAdminAsync()
         {
             return (await RepoDbSet
-                .Include(rank => rank.RankTitle)
-                .ThenInclude(s => s!.Translations)
-                .Include(rank => rank.RankDescription)
-                .ThenInclude(s => s!.Translations)
-                .ToListAsync())
+                    .Include(rank => rank.RankTitle)
+                    .ThenInclude(s => s!.Translations)
+                    .Include(rank => rank.RankDescription)
+                    .ThenInclude(s => s!.Translations)
+                    .ToListAsync())
                 .Select(rank => Mapper.Map(rank));
         }
 
         public override async Task<IEnumerable<Rank>> AllAsync()
         {
             return (await RepoDbSet
-                .Include(rank => rank.RankTitle)
-                .ThenInclude(s => s!.Translations)
-                .Include(rank => rank.RankDescription)
-                .ThenInclude(s => s!.Translations)
-                .Where(rank => rank.DeletedAt == null && rank.MasterId == null)
-                .ToListAsync())
+                    .Include(rank => rank.RankTitle)
+                    .ThenInclude(s => s!.Translations)
+                    .Include(rank => rank.RankDescription)
+                    .ThenInclude(s => s!.Translations)
+                    .Where(rank => rank.DeletedAt == null && rank.MasterId == null)
+                    .ToListAsync())
                 .Select(rank => Mapper.Map(rank));
         }
 
@@ -82,13 +91,14 @@ namespace DAL.Repositories
             {
                 RepoDbContext.ProfileRanks.Remove(rank);
             }
-            
+
             return base.Remove(entity);
         }
-        
+
         public override async Task<IEnumerable<Rank>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
+                record => Mapper.Map(record));
         }
     }
 }

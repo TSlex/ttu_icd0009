@@ -1,59 +1,112 @@
-@using Domain
-@using Extension
-@using Microsoft.AspNetCore.Identity
 @model BLL.App.DTO.Post
 
 @{
-    ViewData["Title"] = @Model.PostTitle;
+    ViewData["Title"] = Resourses.Views.Common.DetailsHeader;
 }
-<div class="post_details">
-    <div class="post_details_post">
 
-        <div class="post_image">
-
-            <div class="post_controls">
-                <a class="fa fa-edit" asp-action="Edit" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
-                <a class="fa fa-times-circle" asp-action="Delete" asp-route-id="@Model.Id" asp-route-returnUrl="@Model.ReturnUrl"></a>
-            </div>
-
-            <img src="/images/@Model.PostImageId" alt="">
-        </div>
-
-        <div class="post_details_meta_section">
-            <p>"@ViewData["Title"]" by @Model.Profile!.UserName</p>
-            <span>@Model.PostDescription</span>
-            <ul class="post_meta_section">
-                <li class="post_meta">
-                    <span class="meta_title">@Model.PostPublicationDateTime</span>
-                </li>
-                <li class="post_meta">
-                    <span class="meta_counter">@Model.PostFavoritesCount</span>
-                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfFavorites</span>
-                </li>
-                <li class="post_meta">
-                    <span class="meta_counter">@Model.PostCommentsCount</span>
-                    <span class="meta_title">@Resourses.Views.Posts.Posts.OfComments</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="post_details_comments">
-        <div class="post_comments_section">
-            @foreach (var comment in Model.Comments.OrderBy(comment => comment.CommentDateTime))
+<h1>@ViewData["Title"]</h1>
+<hr/>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileId)
+        </dd>
+    </dl>
+    <hr/>
+    <div class="mb-2" id="image-miniature" style="width: 20rem; user-select: none;">
+        @{
+            if (Model.PostImageId != null)
             {
-                <a class="post_comment" asp-controller="Comments" asp-action="Details"
-                   asp-route-id="@comment.Id" asp-route-returnUrl="@Url.ActionLink()">
-                    <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
-                    <span class="comment_username">&#64;@comment.Profile!.UserName: </span>
-                    <span class="comment_value">@comment.CommentValue</span>
-                </a>
+                <img src="/images/@Model.PostImageId" alt="image"
+                     class="card-img" id="render_image" draggable="false"/>
             }
-        </div>
-        <div class="row d-flex justify-content-center mt-3">
-            <a asp-action="Create" asp-controller="Comments" asp-route-postId="@Model.Id" asp-route-returnUrl="@Url.ActionLink()"
-               class="btn btn-primary">
-                Create a comment
-            </a>
-        </div>
+            else
+            {
+                <img alt="" class="card-img" id="render_image" draggable="false"/>
+            }
+        }
     </div>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostPublicationDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostPublicationDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostFavoritesCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostFavoritesCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostCommentsCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostCommentsCount)
+        </dd>
+    </dl>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChangedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChangedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChangedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChangedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeletedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DeletedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeletedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DeletedAt)
+        </dd>
+    </dl>
 </div>
+<hr/>
+<partial name="_DetailsControls"/>

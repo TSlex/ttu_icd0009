@@ -19,6 +19,15 @@ html::-webkit-scrollbar-thumb {
     outline: 1px solid slategrey;
 }
 
+img{
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
 /*shared*/
 a {
     text-decoration: none !important;

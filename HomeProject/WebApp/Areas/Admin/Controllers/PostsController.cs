@@ -105,15 +105,21 @@ namespace WebApp.Areas.Admin.Controllers
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
+                
+                var imageModel = post.PostImage;
+                imageModel.Id = Guid.NewGuid();
+                imageModel.ImageType = ImageType.Post;
+                imageModel.ImageFor = post.Id;
+                
+                post.PostImageId = imageModel.Id;
+                post.PostImage = null;
+                
+                await _bll.Images.AddPostAsync(post.Id, imageModel);
+                
                 _bll.Posts.Add(post);
                 await _bll.SaveChangesAsync();
 
-                if (post.ReturnUrl != null)
-                {
-                    return Redirect(post.ReturnUrl);
-                }
-
-                return RedirectToAction(nameof(Index), "Profiles", new {username = User.Identity.Name});
+                return RedirectToAction(nameof(Index));
             }
 
             return View(post);

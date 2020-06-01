@@ -1,13 +1,12 @@
 @model IEnumerable<BLL.App.DTO.Rank>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-center" style="font-size: 30px">
+    <a asp-action="Create" class="far fa-plus-square"></a>
 </p>
 <table class="table">
     <thead>
@@ -20,9 +19,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.NextRankId)
-        </th>
-        <th>
-            IS DELETED?
         </th>
         <th></th>
     </tr>
@@ -40,9 +36,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NextRankId)
             </td>
-            <td>
-                @(item.DeletedAt != default)
-            </td>
+            
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

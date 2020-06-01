@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 using Contracts.DAL.App.Repositories;
 using DAL.App.DTO;
 using DAL.Base.EF.Repositories;
@@ -15,6 +16,28 @@ namespace DAL.Repositories
         public ChatRoomRepo(ApplicationDbContext dbContext) :
             base(dbContext, new ChatRoomMapper())
         {
+        }
+
+        public override async Task<ChatRoom> FindAdminAsync(Guid id)
+        {
+            var raw = await RepoDbSet.Where(room => room.Id == id)
+                .Include(room => room.Messages)
+                .ThenInclude(message => message.Profile)
+                .Select(room => new
+                {
+                    value = room,
+                    lastMessage = room.Messages.OrderByDescending(message => message.MessageDateTime).FirstOrDefault()
+                }).FirstOrDefaultAsync();
+
+            var record = Mapper.Map(raw.value);
+
+            if (record == null) return Mapper.Map(raw.value);
+
+            record.LastMessageValue = raw.lastMessage.MessageValue;
+            record.LastMessageDateTime = raw.lastMessage.MessageDateTime;
+            record.ChatRoomImageId = raw.lastMessage.Profile.ProfileAvatarId;
+
+            return record;
         }
 
         public override async Task<ChatRoom> FindAsync(Guid id)
@@ -62,7 +85,7 @@ namespace DAL.Repositories
                 RepoDbContext.ChatMembers.Update(member);
                 await RepoDbContext.SaveChangesAsync();
             }
-            
+
             return Mapper.Map(chatRoom);
         }
 

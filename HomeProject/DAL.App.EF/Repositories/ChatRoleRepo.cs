@@ -20,6 +20,14 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<ChatRole> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbContext.ChatRoles
+                .Include(role => role.RoleTitleValue)
+                .ThenInclude(s => s.Translations)
+                .FirstOrDefaultAsync((role => role.Id == id)));
+        }
+
         public override async Task<IEnumerable<ChatRole>> AllAsync()
         {
             return (await RepoDbSet

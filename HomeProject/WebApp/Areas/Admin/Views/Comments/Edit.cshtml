@@ -1,12 +1,20 @@
 @model BLL.App.DTO.Comment
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Resourses.Views.Common.EditHeader;
 }
 
-<h1 class="text-center">Edit</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 <hr/>
-<div class="row text-center justify-content-center">
+<div class="row d-flex align-items-center flex-column text-center">
+    <div class="card" id="image-miniature" style="width: 16rem; user-select: none;">
+        @{
+            if (Model.Post!.PostImageId != null)
+            {
+                <img src="/images/@Model.Post!.PostImageId" alt="" class="card-img" id="" draggable="false"/>
+            }
+        }
+    </div>
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -31,10 +39,7 @@
                 <span asp-validation-for="CommentDateTime" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id"/>
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
+            <partial name="_EditControls"/>
         </form>
     </div>
 </div>

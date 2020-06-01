@@ -1,11 +1,11 @@
 @model IEnumerable<BLL.App.DTO.Profile>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
+<h1 class="text-center">@ViewData["Title"]</h1>
+<br>
 <table class="table">
     <thead>
     <tr>
@@ -17,9 +17,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            IS DELETED?
         </th>
         <th>
         </th>
@@ -37,9 +34,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @(item.DeletedAt != default)
             </td>
             <td>
                 <partial name="_IndexControls" model="@item"/>

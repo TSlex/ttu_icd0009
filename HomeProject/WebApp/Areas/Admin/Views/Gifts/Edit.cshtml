@@ -1,10 +1,10 @@
 @model BLL.App.DTO.Gift
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Resourses.Views.Common.EditHeader;
 }
 
-<h1 class="text-center">Edit</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
     <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none;" draggable="false">
@@ -61,10 +61,7 @@
             <input type="hidden" asp-for="GiftImageId"/>
             <input type="hidden" asp-for="GiftImage!.Id"/>
 
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
+            <partial name="_EditControls"/>
         </form>
     </div>
 </div>

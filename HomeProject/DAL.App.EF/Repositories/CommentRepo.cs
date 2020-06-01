@@ -18,6 +18,13 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<Comment> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbContext.Comments
+                .Include(p => p.Post)
+                .FirstOrDefaultAsync(m => m.Id == id));
+        }
+
         public override async Task<IEnumerable<Comment>> AllAsync()
         {
             return (await RepoDbContext.Comments.Where(comment => comment.DeletedAt == null)

@@ -1,12 +1,13 @@
 @model IEnumerable<BLL.App.DTO.Post>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
-
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-center" style="font-size: 30px">
+    <a asp-action="Create" class="far fa-plus-square"></a>
+</p>
 <table class="table">
     <thead>
     <tr>
@@ -14,13 +15,10 @@
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
+            @Resourses.Views.Images.Images.Preview
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.PostTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostPublicationDateTime)
-        </th>
-        <th>
-            IS DELETED?
         </th>
         <th></th>
     </tr>
@@ -33,13 +31,13 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
+                <div id="image-miniature" style="width: 5rem; user-select: none;">
+                    <img src="/images/@item.PostImageId" alt="image"
+                         class="card-img" id="render_image" draggable="false"/>
+                </div>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.PostTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostPublicationDateTime)
-            </td>
-            <td>
-                @(item.DeletedAt != default)
             </td>
             <td>
                 <partial name="_IndexControls" model="@item"/>

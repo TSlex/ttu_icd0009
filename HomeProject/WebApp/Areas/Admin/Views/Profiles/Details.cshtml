@@ -5,142 +5,152 @@
 @inject SignInManager<Profile> SignInManager
 
 @{
-    ViewData["Title"] = "Index";
-    var profileRank = Model.ProfileRanks
-        .OrderByDescending(rank => rank.Rank!.MaxExperience)
-        .Where(rank => rank.Rank!.MinExperience <= Model.Experience)
-        .Take(1).ToList()[0].Rank;
-
-    var isAuthorized = SignInManager.IsSignedIn(User);
-
-    float currentExp = Model.Experience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
-    float needExp = profileRank.MaxExperience - (profileRank!.MinExperience >= 0 ? profileRank.MinExperience : 0);
+    ViewData["Title"] = Resourses.Views.Common.DetailsHeader;
 }
 
-<div class="profile_container">
-    <div class="profile_section">
-        <div class="col-3 d-flex justify-content-center">
-            <div class="profile_image" style="background-color: @profileRank.RankColor !important;">
-                <img alt="" width="150px" height="150px" src="/images/@Model.ProfileAvatarId">
-            </div>
-        </div>
-        <div class="profile_description col-9">
-            <ul class="profile_meta_section">
-                <li class="profile_name">@Model.UserName</li>
-                @{
-                    if (isAuthorized && @Model.Id != User.UserId())
-                    {
-                        <div class="profile_controls dropdown show">
-                            <a class="btn fa fa-bars" href="#" role="button" id="profile_more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="profile_more">
-                                <a asp-action="OpenOrCreate" asp-controller="ChatRooms" asp-route-username="@Model.UserName"
-                                   class="dropdown-item text-center">
-                                    Написать
-                                </a>
-                                @{
-                                    if (@Model.IsUserFollows)
-                                    {
-                                        <form method="post" asp-action="UnfollowProfile">
-                                            <button type="submit" class="dropdown-item"><i class="fas fa-bell-slash"></i> Отписаться</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form method="post" asp-action="FollowProfile">
-                                            <button type="submit" class="dropdown-item"><i class="far fa-bell"></i> Подписаться</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                }
-                                @{
-                                    if (@Model.IsUserBlocks)
-                                    {
-                                        <form method="post" asp-action="UnblockProfile">
-                                            <button type="submit" class="dropdown-item"><i class="fas fa-user-slash"></i> Разблокировать</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form method="post" asp-action="BlockProfile">
-                                            <button type="submit" class="dropdown-item"><i class="far fa-user"></i> Заблокировать</button>
-                                            <input type="hidden" asp-for="UserName">
-                                        </form>
-                                    }
-                                }
-                            </div>
-                        </div>
-                    }
-                }
-            </ul>
-            <div class="profile_rank">
-                <span class="rank_title">@profileRank.RankTitle</span>
-                <div class="rank_bar_back"></div>
-                <div class="rank_bar" style="width: @(Math.Floor((currentExp / needExp) * 100))%; background-color: @profileRank.RankColor">
-                </div>
-                <span class="rank_score">@Model.Experience/@profileRank.MaxExperience</span>
-                <div class="rank_icons">
-                    @{
-                        var icons = profileRank.RankIcon?.Split(";").Where(s => s != "").ToList();
-                        if (icons != null)
-                        {
-                            foreach (var icon in icons)
-                            {
-                                <icon class="fa fa-@icon"></icon>
-                            }
-                        }
-                    }
-                </div>
-            </div>
-
-            <ul class="profile_meta_section">
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.PostsCount</span>
-                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfPosts</span>
-                </li>
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.FollowersCount</span>
-                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowers</span>
-                </li>
-                <li class="profile_meta">
-                    <span class="meta_counter">@Model.FollowedCount</span>
-                    <span class="meta_title">@Resourses.Views.Profilez.Profiles.OfFollowed</span>
-                </li>
-            </ul>
-
-            <div class="profile_about">
-                <h1>@Model.ProfileFullName</h1>
-                <span>@Model.ProfileAbout</span>
-                <br>
-                <a href="">@Model.ProfileWorkPlace</a>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="profile_gift_section">
-        @{
-            foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5).ToList())
-            {
-                <div class="profile_gift">
-                    <img src="/images/@(gift.Gift!.GiftImageId)" alt="..." height="150px" width="150px">
-                </div>
-            }
-        }
-    </div>
-    <hr>
-    <div class="posts_section">
-        <div class="post_row card-columns">
-            @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))
-            {
-                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" asp-route-returnUrl="@Url.ActionLink()">
-                    <div class="post_item card">
-                        <img alt="" src="/images/@post.PostImageId" class="post_image card-img">
-                    </div>
-                </a>
-            }
-        </div>
-    </div>
+<h1>@ViewData["Title"]</h1>
+<hr/>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileFullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileFullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileAbout)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileAbout)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileWorkPlace)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileWorkPlace)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileGender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileGender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileGenderOwn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileGenderOwn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileStatus)
+        </dd>
+    </dl>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Experience)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Experience)
+        </dd>
+    </dl>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-5">
+            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+        </dd>
+        <dt class="col-sm-5">
+            @Html.DisplayNameFor(model => model.LockoutEnabled)
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.LockoutEnabled)
+        </dd>
+        <dt class="col-sm-5">
+            @Html.DisplayNameFor(model => model.EmailConfirmed)
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.EmailConfirmed)
+        </dd>
+        <dt class="col-sm-5">
+            @Html.DisplayNameFor(model => model.AccessFailedCount)
+        </dt>
+        <dd class="col-sm-5">
+            @Html.DisplayFor(model => model.AccessFailedCount)
+        </dd>
+    </dl>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChangedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChangedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChangedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChangedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeletedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DeletedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DeletedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DeletedAt)
+        </dd>
+    </dl>
 </div>
+<hr/>
+<partial name="_DetailsControls"/>

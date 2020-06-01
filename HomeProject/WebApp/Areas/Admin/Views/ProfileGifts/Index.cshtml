@@ -1,11 +1,11 @@
 @model IEnumerable<BLL.App.DTO.ProfileGift>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
+<h1 class="text-center">@ViewData["Title"]</h1>
+<br>
 <table class="table">
     <thead>
     <tr>
@@ -16,7 +16,7 @@
             @Html.DisplayNameFor(model => model.GiftId)
         </th>
         <th>
-            IS DELETED?
+            @Resourses.Views.Images.Images.Preview
         </th>
         <th></th>
     </tr>
@@ -32,7 +32,10 @@
                 @Html.DisplayFor(modelItem => item.GiftId)
             </td>
             <td>
-                @(item.DeletedAt != default)
+                <div id="image-miniature" style="width: 5rem; user-select: none;">
+                    <img src="/images/@item.Gift.GiftImageId" alt="image"
+                         class="card-img" id="render_image" draggable="false"/>
+                </div>
             </td>
             <td>
                 <partial name="_IndexControls" model="@item"/>

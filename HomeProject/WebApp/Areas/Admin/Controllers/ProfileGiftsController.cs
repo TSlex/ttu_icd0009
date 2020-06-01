@@ -107,7 +107,7 @@ namespace WebApp.Areas.Admin.Controllers
                     return Redirect(profileGift.ReturnUrl);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
 
             ModelState.Clear();
@@ -126,7 +126,7 @@ namespace WebApp.Areas.Admin.Controllers
                     return Redirect(profileGift.ReturnUrl);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
 
             return View(profileGift);

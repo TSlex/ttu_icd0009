@@ -1,26 +1,41 @@
 @model BLL.App.DTO.Gift
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Resourses.Views.Common.DetailsHeader;
 }
 
-<h1>Details</h1>
-
+<h1>@ViewData["Title"]</h1>
+<hr/>
 <div>
-    <h4>Gift</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GiftNameId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GiftNameId)
+        </dd>
+    </dl>
     <hr/>
-    <div class="card mb-2" id="image-miniature" style="width: 20rem; user-select: none;" draggable="false">
+    <div class="mb-2" id="image-miniature" style="width: 20rem; user-select: none;">
         @{
-            if (Model.GiftImage?.OriginalImageUrl != null)
+            if (Model.GiftImageId != null)
             {
-                <img src="@Url.Content("~/localstorage" + @Model.GiftImage.ImageUrl)" alt="" class="card-img" id="render_image"/>
+                <img src="/images/@Model.GiftImageId" alt="image"
+                     class="card-img" id="render_image" draggable="false"/>
             }
             else
             {
-                <img alt="" class="card-img" id="render_image"/>
+                <img alt="" class="card-img" id="render_image" draggable="false"/>
             }
         }
     </div>
+    <hr/>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GiftName)
@@ -28,12 +43,21 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.GiftName)
         </dd>
-        @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.GiftImageUrl)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GiftCode)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GiftImageUrl)
-        </dd>*@
+            @Html.DisplayFor(model => model.GiftCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+    <hr/>
+    <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedBy)
         </dt>
@@ -72,7 +96,5 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<hr/>
+<partial name="_DetailsControls"/>

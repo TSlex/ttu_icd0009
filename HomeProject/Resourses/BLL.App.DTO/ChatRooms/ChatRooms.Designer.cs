@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.ChatRooms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image (Url).
+        ///   Looks up a localized string similar to Image (URL).
         /// </summary>
         public static string ChatRoomImageUrl {
             get {

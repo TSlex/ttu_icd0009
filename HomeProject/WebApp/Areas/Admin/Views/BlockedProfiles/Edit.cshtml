@@ -1,10 +1,10 @@
 @model BLL.App.DTO.BlockedProfile
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Resourses.Views.Common.EditHeader;
 }
 
-<h1 class="text-center">Edit</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 <hr/>
 <div class="row text-center justify-content-center">
     <div class="col-md-4">
@@ -22,10 +22,7 @@
                 <span asp-validation-for="BProfileId" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id"/>
-            <div class="form-group">
-                <a asp-action="Index" class="btn btn-primary ">Back to List</a>
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
+            <partial name="_EditControls"/>
         </form>
     </div>
 </div>

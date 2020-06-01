@@ -18,11 +18,23 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<IEnumerable<ProfileGift>> AllAdminAsync()
+        {
+            return await RepoDbSet.Include(gift => gift.Gift)
+                .Select(gift => Mapper.Map(gift)).ToListAsync();
+        }
+
+        public override async Task<ProfileGift> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet.Include(gift => gift.Gift)
+                .FirstOrDefaultAsync(gift => gift.Id == id));
+        }
+
         public override async Task<ProfileGift> FindAsync(Guid id)
         {
             return Mapper.Map(
                 await GetQuery(GetFindBaseQuery(id))
-                .FirstOrDefaultAsync());
+                    .FirstOrDefaultAsync());
         }
 
         public async Task<IEnumerable<ProfileGift>> GetByPageAsync(Guid userId, int pageNumber, int onPageCount)
@@ -34,12 +46,12 @@ namespace DAL.Repositories
             {
                 return new ProfileGift[] { };
             }
-            
+
             return (await GetQuery(GetAllBaseQuery(userId))
-                .OrderByDescending(gift => gift.GiftDateTime)
-                .Skip(startIndex)
-                .Take(onPageCount)
-                .ToListAsync())
+                    .OrderByDescending(gift => gift.GiftDateTime)
+                    .Skip(startIndex)
+                    .Take(onPageCount)
+                    .ToListAsync())
                 .Select(gift => Mapper.Map(gift));
         }
 
@@ -47,7 +59,7 @@ namespace DAL.Repositories
         {
             return RepoDbSet.Where(gift => gift.Id == id);
         }
-        
+
         private IQueryable<Domain.ProfileGift> GetAllBaseQuery(Guid userId)
         {
             return RepoDbSet.Where(gift => gift.ProfileId == userId);

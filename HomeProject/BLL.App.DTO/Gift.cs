@@ -18,10 +18,6 @@ namespace BLL.App.DTO
         [MaxLength(100)]
         public string GiftCode { get; set; } = default!;
 
-        /*[Display(Name = nameof(GiftImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
-        [MaxLength(300)]
-        public string? GiftImageUrl { get; set; }*/
-
         [Display(Name = nameof(GiftImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         public Guid? GiftImageId { get; set; }
 

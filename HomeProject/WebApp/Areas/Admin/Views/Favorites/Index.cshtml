@@ -1,13 +1,11 @@
 @model IEnumerable<BLL.App.DTO.Favorite>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
-
-<table class="table">
+<h1 class="text-center">@ViewData["Title"]</h1>
+<br><table class="table">
     <thead>
     <tr>
         <th>
@@ -15,9 +13,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PostId)
-        </th>
-        <th>
-            IS DELETED?
         </th>
         <th></th>
     </tr>
@@ -32,9 +27,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PostId)
             </td>
-            <td>
-                @(item.DeletedAt != default)
-            </td>
+            
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

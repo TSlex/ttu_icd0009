@@ -54,7 +54,7 @@
         <value>Свой вариант</value>
     </data>
     <data name="AccessFailedCount">
-        <value>Количество профальных попыток входа</value>
+        <value>Количество провальных попыток входа</value>
     </data>
     <data name="BlockedByProfiles">
         <value>В черном списке</value>

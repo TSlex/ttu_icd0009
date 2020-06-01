@@ -1,12 +1,11 @@
 @model IEnumerable<BLL.App.DTO.BlockedProfile>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Resourses.Views.Common.IndexHeader;
 }
 
-<h1>Index</h1>
-
-<table class="table">
+<h1 class="text-center">@ViewData["Title"]</h1>
+<br><table class="table">
     <thead>
     <tr>
         <th>
@@ -17,9 +16,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BProfileId)
-        </th>
-        <th>
-            IS DELETED?
         </th>
         <th></th>
     </tr>
@@ -37,9 +33,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BProfileId)
             </td>
-            <td>
-                @(item.DeletedAt != default)
-            </td>
+            
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

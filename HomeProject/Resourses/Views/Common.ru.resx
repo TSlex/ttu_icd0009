@@ -60,4 +60,10 @@
     <data name="NoContent">
         <value>Здесь пока ничего нет</value>
     </data>
+    <data name="BackToListButton">
+        <value>Назад к списку</value>
+    </data>
+    <data name="IndexHeader">
+        <value>Каталог</value>
+    </data>
 </root>

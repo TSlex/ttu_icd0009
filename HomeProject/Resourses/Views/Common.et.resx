@@ -65,4 +65,10 @@
     <data name="NoContent">
         <value>Midagi siin veel pole</value>
     </data>
+    <data name="BackToListButton">
+        <value>Tagasi nimekirja</value>
+    </data>
+    <data name="IndexHeader">
+        <value>Indeks</value>
+    </data>
 </root>

@@ -61,6 +61,15 @@ namespace Resourses.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string BackToListButton {
+            get {
+                return ResourceManager.GetString("BackToListButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string CancelButton {
@@ -147,6 +156,15 @@ namespace Resourses.Views {
         public static string EditHeader {
             get {
                 return ResourceManager.GetString("EditHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        public static string IndexHeader {
+            get {
+                return ResourceManager.GetString("IndexHeader", resourceCulture);
             }
         }
         

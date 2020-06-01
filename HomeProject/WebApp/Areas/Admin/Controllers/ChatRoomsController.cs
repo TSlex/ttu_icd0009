@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
-using Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +13,11 @@ namespace WebApp.Areas.Admin.Controllers
     /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class ChatRoomsController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -35,7 +35,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View(await _bll.ChatRooms.AllAdminAsync());
         }
-        
+
         /// <summary>
         /// Get record history
         /// </summary>
@@ -44,24 +44,10 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var history = (await _bll.ChatRooms.GetRecordHistoryAsync(id)).ToList()
                 .OrderByDescending(record => record.CreatedAt);
-            
+
             return View(nameof(Index), history);
         }
 
-        /// <summary>
-        /// Opens chat room with user (if not exist - creates)
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> OpenOrCreate(string username)
-        {
-            var chatRoomId = await _bll.ChatRooms.OpenOrCreateAsync(username);
-
-            return RedirectToAction("Index", "Messages", new {
-                chatRoomId = chatRoomId
-            });
-        }
-        
         /// <summary>
         /// Get record details
         /// </summary>
@@ -78,7 +64,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(chatRoom);
         }
-        
+
         /// <summary>
         /// Get record editing page
         /// </summary>
@@ -89,7 +75,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(chatRoom);
         }
-        
+
         /// <summary>
         /// Updates a record
         /// </summary>
@@ -110,7 +96,10 @@ namespace WebApp.Areas.Admin.Controllers
                 await _bll.ChatRooms.UpdateAsync(chatRoom);
                 await _bll.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction("Index", "ChatRooms", new
+                {
+                    area = "Admin"
+                });
             }
 
             return View(chatRoom);
@@ -130,7 +119,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         /// <summary>
         /// Restores a record
         /// </summary>

@@ -24,6 +24,13 @@ namespace DAL.Repositories
             _imageMapper = new BaseDALMapper<Image, DAL.App.DTO.Image>();
         }
 
+        public override async Task<Post> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbContext.Posts
+                .Include(post => post.PostImage)
+                .FirstOrDefaultAsync(post => post.Id == id));
+        }
+
         public override async Task<IEnumerable<Post>> AllAsync()
         {
             return (await RepoDbContext.Posts

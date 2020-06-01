@@ -166,7 +166,6 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 
                 profile.ProfileAvatarId = imageModel.Id;
-//                profile.ProfileAvatar = null;
 
                 if (record.UserName != profile.UserName)
                 {
