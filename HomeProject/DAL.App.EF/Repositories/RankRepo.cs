@@ -80,7 +80,7 @@ namespace DAL.Repositories
                 .ThenInclude(s => s!.Translations)
                 .Include(rank => rank.RankDescription)
                 .ThenInclude(s => s!.Translations)
-                .FirstOrDefaultAsync(rank => rank.RankCode == code));
+                .FirstOrDefaultAsync(rank => rank.RankCode == code && rank.MasterId == null));
         }
 
         public override Rank Remove(Rank entity)

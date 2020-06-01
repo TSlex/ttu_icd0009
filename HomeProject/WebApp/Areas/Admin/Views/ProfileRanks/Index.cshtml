@@ -5,7 +5,10 @@
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
-<br><table class="table">
+<p class="text-center" style="font-size: 30px">
+    <a asp-action="Create" class="far fa-plus-square"></a>
+</p>
+<table class="table">
     <thead>
     <tr>
         <th>
@@ -27,7 +30,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RankId)
             </td>
-            
+
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

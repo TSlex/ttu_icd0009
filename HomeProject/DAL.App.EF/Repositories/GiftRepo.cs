@@ -30,6 +30,7 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<Gift>> AllAdminAsync()
         {
             return (await RepoDbSet
+                    .Where(gift => gift.MasterId == null)
                     .Include(gift => gift.GiftName)
                     .ThenInclude(s => s!.Translations)
                     .ToListAsync())
@@ -61,7 +62,7 @@ namespace DAL.Repositories
                 .Include(gift => gift.GiftName)
                 .ThenInclude(s => s!.Translations)
                 .Where(gift => gift.DeletedAt == null && gift.MasterId == null)
-                .FirstOrDefaultAsync((gift => gift.GiftCode == giftCode)));
+                .FirstOrDefaultAsync(gift => gift.GiftCode == giftCode && gift.MasterId == null));
         }
 
         public async Task<IEnumerable<Gift>> Get10ByPageAsync(int pageNumber, int onPageCount)

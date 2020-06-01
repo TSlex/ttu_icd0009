@@ -69,7 +69,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record editing page
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Edit(Guid id, string? returnUrl)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var chatRoom = await _bll.ChatRooms.FindAdminAsync(id);
 
@@ -96,10 +96,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await _bll.ChatRooms.UpdateAsync(chatRoom);
                 await _bll.SaveChangesAsync();
 
-                return RedirectToAction("Index", "ChatRooms", new
-                {
-                    area = "Admin"
-                });
+                return RedirectToAction(nameof(Index));
             }
 
             return View(chatRoom);

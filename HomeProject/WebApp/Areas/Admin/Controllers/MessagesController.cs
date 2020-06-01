@@ -70,13 +70,9 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record creating page
         /// </summary>
         /// <returns></returns>
-        public IActionResult Create(Guid chatRoomId)
+        public IActionResult Create()
         {
-            var message = new Message()
-            {
-                ChatRoomId = chatRoomId,
-            };
-            return View(message);
+            return View();
         }
 
 
@@ -87,13 +83,8 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            Message message)
+        public async Task<IActionResult> Create(Message message)
         {
-            ModelState.Clear();
-
-            message.ProfileId = User.UserId();
-
             if (TryValidateModel(message))
             {
                 message.Id = Guid.NewGuid();

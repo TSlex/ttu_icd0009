@@ -95,25 +95,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(blockedProfile);
         }
-        
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id)
-        {
 
-            var blockedProfile = await _bll.BlockedProfiles.FindAdminAsync(id);
-
-            if (blockedProfile == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-        
         /// <summary>
         /// Deletes a record
         /// </summary>

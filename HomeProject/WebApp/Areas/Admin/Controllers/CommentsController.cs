@@ -53,9 +53,8 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record details
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="returnUrl"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Details(Guid id, string? returnUrl)
+        public async Task<IActionResult> Details(Guid id)
         {
             var comment = await _bll.Comments.FindAdminAsync(id);
 
@@ -64,8 +63,6 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            comment.ReturnUrl = returnUrl;
-
             return View(comment);
         }
 
@@ -73,16 +70,9 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record creating page
         /// </summary>
         /// <returns></returns>
-        public IActionResult Create(Guid postId, string? returnUrl)
+        public IActionResult Create()
         {
-            var comment = new Comment
-            {
-                PostId = postId,
-                ReturnUrl = returnUrl
-            };
-
-
-            return View(comment);
+            return View();
         }
 
         
@@ -113,11 +103,14 @@ namespace WebApp.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Edit(Guid id, string? returnUrl)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var comment = await _bll.Comments.FindAdminAsync(id);
 
-            comment.ReturnUrl = returnUrl;
+            if (comment == null)
+            {
+                return NotFound();
+            }
 
             return View(comment);
         }

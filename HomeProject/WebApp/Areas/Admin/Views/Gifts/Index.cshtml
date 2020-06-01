@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
+            @Resourses.Views.Images.Images.Preview
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.GiftName)
         </th>
         <th>
@@ -34,6 +37,12 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
+                <div id="image-miniature" style="width: 5rem; user-select: none;">
+                    <img src="/images/@item.GiftImageId" alt="image"
+                         class="card-img" id="render_image" draggable="false"/>
+                </div>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.GiftName)
             </td>
             <td>
@@ -42,7 +51,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            
+
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

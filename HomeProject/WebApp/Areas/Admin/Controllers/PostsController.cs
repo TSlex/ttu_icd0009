@@ -81,14 +81,9 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record creating page
         /// </summary>
         /// <returns></returns>
-        public IActionResult Create(string? returnUrl)
+        public IActionResult Create()
         {
-            var post = new Post()
-            {
-                ReturnUrl = returnUrl
-            };
-            
-            return View(post);
+            return View();
         }
 
         /// <summary>
@@ -100,9 +95,6 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Post post)
         {
-            ModelState.Clear();
-            post.ProfileId = User.UserId();
-
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
@@ -192,21 +184,6 @@ namespace WebApp.Areas.Admin.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(post);
-        }
-
-        /// <summary>
-        /// Get delete confirmation page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> Delete(Guid id, string? returnUrl)
-        {
-            var post = await _bll.Posts.FindAdminAsync(id);
-
-            post.ReturnUrl = returnUrl;
 
             return View(post);
         }

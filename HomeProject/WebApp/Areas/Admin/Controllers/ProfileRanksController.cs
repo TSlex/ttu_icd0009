@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.BLL.App;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
@@ -53,20 +54,47 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Get record creating confirmation page
+        /// </summary>
+        /// <param name="profileRank"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Create(ProfileRank profileRank)
+        {
+            if (TryValidateModel(profileRank))
+            {
+                profileRank.Id = Guid.NewGuid();
+                _bll.ProfileRanks.Add(profileRank);
+                await _bll.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(profileRank);
+        }
+
+        /// <summary>
         /// Get record editing page
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-
-
             var profileRank = await _bll.ProfileRanks.FindAdminAsync(id);
 
             if (profileRank == null)
             {
                 return NotFound();
             }
-            
+
             return View(profileRank);
         }
 
@@ -79,7 +107,7 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.ProfileRank profileRank)
+            ProfileRank profileRank)
         {
             if (id != profileRank.Id)
             {
@@ -112,7 +140,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         /// <summary>
         /// Restores a record
         /// </summary>

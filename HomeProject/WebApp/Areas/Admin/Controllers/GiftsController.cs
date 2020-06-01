@@ -94,8 +94,6 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(gift);
             }
 
-            ModelState.Clear();
-
             if (TryValidateModel(gift))
             {
                 gift.Id = Guid.NewGuid();
