@@ -11,6 +11,7 @@ namespace WebApp.Areas.Admin.Controllers
     /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class BlockedProfilesController : Controller
     {
         private readonly IAppBLL _bll;

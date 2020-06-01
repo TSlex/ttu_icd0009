@@ -13,6 +13,7 @@ namespace WebApp.Areas.Admin.Controllers
     /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class ProfileGiftsController : Controller
     {
         private readonly IAppBLL _bll;

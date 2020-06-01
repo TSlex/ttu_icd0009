@@ -30,3 +30,34 @@
 .panel_section a{
     margin-top: 4px;
 }
+
+.bg-white{
+    background-color: lightgray!important;
+    font-family: Consolas, serif;
+    font-weight: bold !important;
+}
+
+.nav-link{
+    /*font-weight: bold !important;*/
+    display: block !important;
+    border: none;
+}
+
+a{
+    color: #FF6633;
+}
+
+.btn-primary{
+    background-color: #FF6633;
+    border-color: #CC3300;
+}
+
+.btn-primary:hover{
+    background-color: #CC3300;
+    border-color: #CC3300;
+}
+
+.btn-primary:focus{
+    outline-width: 3px !important;
+    outline-color: #CC3300 !important;
+}

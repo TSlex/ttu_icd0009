@@ -21,7 +21,7 @@ namespace WebApp.Areas.Admin.Controllers
     /// </summary>
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("{area}/{id}/{action=Index}")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class ProfilesController : Controller
     {
         private readonly UserManager<Profile> _userManager;
