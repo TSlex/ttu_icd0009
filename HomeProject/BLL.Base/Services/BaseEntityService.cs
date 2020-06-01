@@ -41,6 +41,9 @@ namespace BLL.Base.Services
 
         public virtual async Task<TBLLEntity> FindAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.FindAsync(id));
+        
+        public virtual async Task<TBLLEntity> FindAdminAsync(Guid id) =>
+            Mapper.Map(await ServiceRepository.FindAdminAsync(id));
 
         public async Task<TBLLEntity> GetForUpdateAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.GetForUpdateAsync(id));

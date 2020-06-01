@@ -61,7 +61,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Changed at.
         /// </summary>
         public static string ChangedAt {
             get {
@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Changed by.
         /// </summary>
         public static string ChangedBy {
             get {
@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Created at.
         /// </summary>
         public static string CreatedAt {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Created by.
         /// </summary>
         public static string CreatedBy {
             get {
@@ -97,7 +97,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Deleted at.
         /// </summary>
         public static string DeletedAt {
             get {
@@ -106,7 +106,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Deleted by.
         /// </summary>
         public static string DeletedBy {
             get {
@@ -169,7 +169,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to (ID).
         /// </summary>
         public static string Id {
             get {
@@ -178,7 +178,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Master (ID).
         /// </summary>
         public static string MasterId {
             get {
@@ -187,7 +187,7 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Url to return.
         /// </summary>
         public static string ReturnUrl {
             get {

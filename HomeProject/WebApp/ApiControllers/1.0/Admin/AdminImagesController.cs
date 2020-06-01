@@ -79,10 +79,10 @@ namespace WebApp.ApiControllers._1._0.Admin
         [HttpPost]
         [RequestSizeLimit(104857600)] 
         [Produces("application/json")]
-        [Consumes("application/json")]
+        [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ImageAdminDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> Create([FromBody] ImageAdminDTO model)
+        public async Task<IActionResult> Create([FromForm] ImageAdminDTO model)
         {
             if (model.ImageFile == null)
             {
@@ -126,12 +126,12 @@ namespace WebApp.ApiControllers._1._0.Admin
 
         [HttpPut("{id}")]
         [RequestSizeLimit(104857600)] 
-        [Consumes("application/json")]
+        [Consumes("multipart/form-data")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> Edit(Guid id, [FromBody] ImageAdminDTO model)
+        public async Task<IActionResult> Edit(Guid id, [FromForm] ImageAdminDTO model)
         {
             if (id != model.Id)
             {

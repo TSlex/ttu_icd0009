@@ -78,7 +78,7 @@ namespace WebApp.Controllers
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }
 
-            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
+            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.OriginalImageUrl))
             {
                 return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
             }

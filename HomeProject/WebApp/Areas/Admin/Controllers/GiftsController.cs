@@ -59,7 +59,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var gift = await _bll.Gifts.FindAsync(id);
+            var gift = await _bll.Gifts.FindAdminAsync(id);
 
             if (gift == null)
             {
@@ -123,7 +123,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var gift = await _bll.Gifts.FindAsync(id);
+            var gift = await _bll.Gifts.FindAdminAsync(id);
 
             if (gift == null)
             {

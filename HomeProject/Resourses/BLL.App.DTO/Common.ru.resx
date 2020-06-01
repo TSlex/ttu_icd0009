@@ -36,4 +36,31 @@
     <data name="ErrorMessage_Range">
         <value>Значение {0} должно быть между {1} и {2}.</value>
     </data>
+    <data name="MasterId" >
+        <value>Мастер (ID)</value>
+    </data>
+    <data name="Id">
+        <value>(ID)</value>
+    </data>
+    <data name="CreatedBy">
+        <value>Создан</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Создан в</value>
+    </data>
+    <data name="ChangedBy">
+        <value>Изменен</value>
+    </data>
+    <data name="ChangedAt">
+        <value>Изменен в</value>
+    </data>
+    <data name="DeletedBy">
+        <value>Удален</value>
+    </data>
+    <data name="DeletedAt">
+        <value>Удален в</value>
+    </data>
+    <data name="ReturnUrl" >
+        <value>Url для возврата</value>
+    </data>
 </root>

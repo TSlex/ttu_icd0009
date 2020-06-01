@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Base;
+using DomainEntityBaseMetaSoftDelete = BLL.App.DTO.Base.DomainEntityBaseMetaSoftDelete;
 
 namespace BLL.App.DTO
 {

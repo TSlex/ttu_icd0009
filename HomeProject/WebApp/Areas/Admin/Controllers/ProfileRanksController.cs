@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var profileRank = await _bll.ProfileRanks.FindAsync(id);
+            var profileRank = await _bll.ProfileRanks.FindAdminAsync(id);
 
             if (profileRank == null)
             {
@@ -59,7 +59,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
 
 
-            var profileRank = await _bll.ProfileRanks.FindAsync(id);
+            var profileRank = await _bll.ProfileRanks.FindAdminAsync(id);
 
             if (profileRank == null)
             {

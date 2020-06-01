@@ -11,6 +11,7 @@ using Domain.Enums;
 using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -33,14 +34,18 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Image, ImageDTO> _mapper;
-            
+        private readonly IWebHostEnvironment _hostEnvironment;
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="bll">Application Bll</param>
-        public ImagesController(IAppBLL bll)
+        /// <param name="hostEnvironment"></param>
+        public ImagesController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
+            _hostEnvironment = hostEnvironment;
+            _bll.Images.RootPath = hostEnvironment.WebRootPath;
             _mapper = new DTOMapper<Image, ImageDTO>();
         }
 
@@ -79,7 +84,7 @@ namespace WebApp.ApiControllers._1._0
             Request.Headers.Add("imageId", id.ToString());
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
-        
+
         /// <summary>
         /// Get original image version by it's id
         /// </summary>
@@ -115,7 +120,28 @@ namespace WebApp.ApiControllers._1._0
             Request.Headers.Add("imageId", id.ToString());
             return base.File("~/localstorage" + image.OriginalImageUrl, "image/jpeg");
         }
-        
+
+        /// <summary>
+        /// Get image model
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/model")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = (typeof(ImageDTO)))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = (typeof(ErrorResponseDTO)))]
+        public async Task<IActionResult> GetImageModel(Guid id)
+        {
+            var record = await _bll.Images.GetForUpdateAsync(id);
+
+            if (record == null)
+            {
+                return NotFound(new ErrorResponseDTO("Not found"));
+            }
+
+            return Ok(_mapper.Map(record));
+        }
+
         /// <summary>
         /// Create a new image and returns Id
         /// </summary>
@@ -123,10 +149,10 @@ namespace WebApp.ApiControllers._1._0
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
-        [Consumes("application/json")]
+        [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ImageDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> PostImage([FromBody] ImagePostDTO imageDTO)
+        public async Task<IActionResult> PostImage([FromForm] ImagePostDTO imageDTO)
         {
             if (imageDTO.ImageType != ImageType.Post && imageDTO.ImageType != ImageType.ProfileAvatar)
             {
@@ -138,18 +164,11 @@ namespace WebApp.ApiControllers._1._0
                 return BadRequest(new ErrorResponseDTO("Image should be specified!"));
             }
 
-            if (imageDTO.ImageFor == null)
-            {
-                ModelState.AddModelError(string.Empty, "Missing ImageFor");
-            }
-
-            var modelId = Guid.NewGuid();
-
             if (ModelState.IsValid)
             {
                 var image = new Image()
                 {
-                    Id = modelId,
+                    Id = Guid.NewGuid(),
                     HeightPx = imageDTO.HeightPx,
                     WidthPx = imageDTO.WidthPx,
                     PaddingTop = imageDTO.PaddingTop,
@@ -158,6 +177,7 @@ namespace WebApp.ApiControllers._1._0
                     PaddingLeft = imageDTO.PaddingLeft,
                     ImageType = imageDTO.ImageType,
                     ImageFor = imageDTO.ImageFor ?? Guid.NewGuid(),
+                    ImageFile = imageDTO.ImageFile
                 };
 
                 if (image.ImageType == ImageType.ProfileAvatar)
@@ -194,11 +214,11 @@ namespace WebApp.ApiControllers._1._0
         /// <returns></returns>
         [HttpPut("{id?}")]
         [Produces("application/json")]
-        [Consumes("application/json")]
+        [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> PutImage(Guid id, [FromBody] ImagePutDTO imageDTO)
+        public async Task<IActionResult> PutImage(Guid id, [FromForm] ImagePutDTO imageDTO)
         {
             var record = await _bll.Images.GetForUpdateAsync(id);
 
@@ -229,7 +249,6 @@ namespace WebApp.ApiControllers._1._0
                         await _bll.Images.UpdateProfileAsync(User.UserId(), record);
                         break;
                     case ImageType.Post:
-                        Debug.Assert(record.ImageFor != null, "record.ImageFor != null");
                         await _bll.Images.UpdatePostAsync((Guid) record.ImageFor, record);
                         break;
                     default:

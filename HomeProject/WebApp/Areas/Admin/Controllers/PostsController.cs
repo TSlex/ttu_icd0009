@@ -67,75 +67,13 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
             
-            var favorite = await _bll.Favorites.FindAsync(id, User.UserId());
+            var favorite = await _bll.Favorites.FindAdminAsync(id);
 
             post.IsUserFavorite = favorite != null;
             
             post.ReturnUrl = returnUrl;
 
             return View(post);
-        }
-
-        /// <summary>
-        /// Add profile to favorites
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="post"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToFavorite(Guid id, Post post)
-        {
-            var userId = User.UserId();
-            
-            if (id != post.Id)
-            {
-                return RedirectToAction(nameof(Details), post);
-            }
-            
-            var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
-
-            if (favorite == null)
-            {
-                _bll.Favorites.Create(post.Id, userId);
-                await _bll.SaveChangesAsync();
-                
-                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 1);
-            }
-            
-            post = await _bll.Posts.GetPostFull(post.Id);
-            
-            return RedirectToAction(nameof(Details), post);
-        }
-        
-        /// <summary>
-        /// Removes post from favorites
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="post"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveFromFavorite(Guid id, Post post)
-        {
-            var userId = User.UserId();
-
-            if (id != post.Id)
-            {
-                return RedirectToAction(nameof(Details), post);
-            }
-            
-            var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
-            
-            if (favorite != null)
-            {
-                await _bll.Favorites.RemoveAsync(post.Id, userId);
-                await _bll.SaveChangesAsync();
-            }
-            
-            post = await _bll.Posts.GetPostFull(post.Id);
-
-            return RedirectToAction(nameof(Details), post);
         }
 
         /// <summary>
@@ -187,7 +125,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.FindAdminAsync(id);
 
             post.ReturnUrl = returnUrl;
             
@@ -259,7 +197,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id, string? returnUrl)
         {
-            var post = await _bll.Posts.FindAsync(id);
+            var post = await _bll.Posts.FindAdminAsync(id);
 
             post.ReturnUrl = returnUrl;
 

@@ -55,7 +55,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var post = await _bll.Messages.FindAsync(id);
+            var post = await _bll.Messages.FindAdminAsync(id);
 
             if (post == null)
             {
@@ -111,7 +111,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var message = await _bll.Messages.FindAsync(id);
+            var message = await _bll.Messages.FindAdminAsync(id);
 
             if (message == null)
             {

@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var favorite = await _bll.Favorites.FindAsync(id);
+            var favorite = await _bll.Favorites.FindAdminAsync(id);
 
             if (favorite == null)
             {
@@ -59,7 +59,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
 
 
-            var favorite = await _bll.Favorites.FindAsync(id);
+            var favorite = await _bll.Favorites.FindAdminAsync(id);
 
             if (favorite == null)
             {

@@ -114,10 +114,11 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (ModelState.IsValid)
             {
+                model.RankTitleId = record.RankTitleId;
+                model.RankDescriptionId = record.RankDescriptionId;
                 await _bll.Ranks.UpdateAsync(_mapper.MapReverse(model));
                 await _bll.SaveChangesAsync();
-
-
+                
                 return NoContent();
             }
 

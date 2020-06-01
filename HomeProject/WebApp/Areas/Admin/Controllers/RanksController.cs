@@ -54,7 +54,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
 
-            var rank = await _bll.Ranks.FindAsync(id);
+            var rank = await _bll.Ranks.FindAdminAsync(id);
 
             if (rank == null)
             {
@@ -105,7 +105,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var rank = await _bll.Ranks.FindAsync(id);
+            var rank = await _bll.Ranks.FindAdminAsync(id);
 
             if (rank == null)
             {

@@ -42,7 +42,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var profileGift = await _bll.ProfileGifts.FindAsync(id);
+            var profileGift = await _bll.ProfileGifts.FindAdminAsync(id);
 
             if (profileGift == null)
             {
@@ -76,7 +76,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> CreateConfirm(string username, Guid giftId, string? returnUrl)
         {
-            var gift = await _bll.Gifts.FindAsync(giftId);
+            var gift = await _bll.Gifts.FindAdminAsync(giftId);
 
             await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
 
@@ -138,7 +138,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var profileGift = await _bll.ProfileGifts.FindAsync(id);
+            var profileGift = await _bll.ProfileGifts.FindAdminAsync(id);
 
             if (profileGift == null)
             {

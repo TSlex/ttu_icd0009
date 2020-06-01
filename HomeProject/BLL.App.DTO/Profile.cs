@@ -25,10 +25,6 @@ namespace BLL.App.DTO
         [MaxLength(300)]
         public string? ProfileStatus { get; set; }
 
-        /*[Display(Name = nameof(ProfileAvatarUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(300)]
-        public string? ProfileAvatarUrl { get; set; }*/
-
         [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         public Guid? ProfileAvatarId { get; set; }
 
@@ -123,9 +119,6 @@ namespace BLL.App.DTO
         [Display(Name = nameof(ProfileStatus), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         public string? ProfileStatus { get; set; }
 
-//        [Display(Name = nameof(ProfileAvatarUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-//        public string? ProfileAvatarUrl { get; set; }
-
         [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         public Guid? ProfileAvatarId { get; set; }
 
@@ -162,10 +155,6 @@ namespace BLL.App.DTO
         [Display(Name = nameof(ProfileStatus), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         [MaxLength(300)]
         public string? ProfileStatus { get; set; }
-
-//        [Display(Name = nameof(ProfileAvatarUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-//        [MaxLength(300)]
-//        public string? ProfileAvatarUrl { get; set; }
 
         [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         public Guid? ProfileAvatarId { get; set; }

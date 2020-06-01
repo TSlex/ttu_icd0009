@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAdminAsync(id);
 
             if (blockedProfile == null)
             {
@@ -57,7 +57,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAdminAsync(id);
 
             if (blockedProfile == null)
             {
@@ -103,7 +103,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
 
-            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAdminAsync(id);
 
             if (blockedProfile == null)
             {

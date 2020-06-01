@@ -6,6 +6,7 @@ using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using DomainEntityBaseMetaSoftUpdateDelete = BLL.App.DTO.Base.DomainEntityBaseMetaSoftUpdateDelete;
 
 namespace BLL.App.DTO
 {

@@ -54,7 +54,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var chatRole = await _bll.ChatRoles.FindAsync(id);
+            var chatRole = await _bll.ChatRoles.FindAdminAsync(id);
 
             if (chatRole == null)
             {
@@ -108,7 +108,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var chatRole = await _bll.ChatRoles.FindAsync(id);
+            var chatRole = await _bll.ChatRoles.FindAdminAsync(id);
 
             if (chatRole == null)
             {

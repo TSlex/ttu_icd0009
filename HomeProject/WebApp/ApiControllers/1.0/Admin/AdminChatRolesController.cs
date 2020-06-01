@@ -114,6 +114,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (ModelState.IsValid)
             {
+                model.RoleTitleValueId = record.RoleTitleValueId;
                 await _bll.ChatRoles.UpdateAsync(_mapper.MapReverse(model));
                 await _bll.SaveChangesAsync();
 

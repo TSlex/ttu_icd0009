@@ -56,7 +56,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id, string? returnUrl)
         {
-            var comment = await _bll.Comments.FindAsync(id);
+            var comment = await _bll.Comments.FindAdminAsync(id);
 
             if (comment == null)
             {
@@ -114,7 +114,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id, string? returnUrl)
         {
-            var comment = await _bll.Comments.FindAsync(id);
+            var comment = await _bll.Comments.FindAdminAsync(id);
 
             comment.ReturnUrl = returnUrl;
 
@@ -160,7 +160,7 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, Comment comment)
         {
-            var record = await _bll.Comments.FindAsync(id);
+            var record = await _bll.Comments.FindAdminAsync(id);
 
             _bll.Comments.Remove(id);
             await _bll.SaveChangesAsync();

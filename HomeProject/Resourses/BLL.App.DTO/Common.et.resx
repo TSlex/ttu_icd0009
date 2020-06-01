@@ -36,4 +36,31 @@
     <data name="ErrorMessage_Range">
         <value>Väli {0} peab olema vahemikus {1} kuni {2}.</value>
     </data>
+    <data name="MasterId" >
+        <value>Meister (ID)</value>
+    </data>
+    <data name="Id">
+        <value>(ID)</value>
+    </data>
+    <data name="CreatedBy">
+        <value>Loodud</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Loodud kell</value>
+    </data>
+    <data name="ChangedBy">
+        <value>Muudetud</value>
+    </data>
+    <data name="ChangedAt">
+        <value>Muudetud kell</value>
+    </data>
+    <data name="DeletedBy">
+        <value>Kustutatud</value>
+    </data>
+    <data name="DeletedAt">
+        <value>Kustutatud kell</value>
+    </data>
+    <data name="ReturnUrl" >
+        <value>URL naasmiseks</value>
+    </data>
 </root>

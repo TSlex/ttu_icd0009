@@ -22,6 +22,7 @@ namespace Contracts.DAL.Base.Repositories
 
         TDALEntity Find(TKey id);
         Task<TDALEntity> FindAsync(TKey id);
+        Task<TDALEntity> FindAdminAsync(TKey id);
         Task<TDALEntity> GetForUpdateAsync(Guid id);
 
         TDALEntity Add(TDALEntity entity);

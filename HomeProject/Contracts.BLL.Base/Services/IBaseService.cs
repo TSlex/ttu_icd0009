@@ -23,6 +23,8 @@ namespace Contracts.BLL.Base.Services
 
         TBLLEntity Find(Guid id);
         Task<TBLLEntity> FindAsync(Guid id);
+        Task<TBLLEntity> FindAdminAsync(Guid id);
+        
         Task<TBLLEntity> GetForUpdateAsync(Guid id);
 
         TBLLEntity Add(TBLLEntity entity);

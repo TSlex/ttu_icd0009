@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var follower = await _bll.Followers.FindAsync(id);
+            var follower = await _bll.Followers.FindAdminAsync(id);
 
             if (follower == null)
             {
@@ -58,7 +58,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
 
-            var follower = await _bll.Followers.FindAsync(id);
+            var follower = await _bll.Followers.FindAdminAsync(id);
 
             if (follower == null)
             {

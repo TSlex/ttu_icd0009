@@ -60,7 +60,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var image = await _bll.Images.FindAsync(id);
+            var image = await _bll.Images.FindAdminAsync(id);
             if (image == null)
             {
                 return NotFound();
@@ -135,7 +135,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var image = await _bll.Images.FindAsync(id);
+            var image = await _bll.Images.FindAdminAsync(id);
             if (image == null)
             {
                 return NotFound();
@@ -209,7 +209,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Delete(Guid id)
         {
-            var image = await _bll.Images.FindAsync(id);
+            var image = await _bll.Images.FindAdminAsync(id);
             if (image == null)
             {
                 return NotFound();
@@ -227,7 +227,7 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var image = await _bll.Images.FindAsync(id);
+            var image = await _bll.Images.FindAdminAsync(id);
             _bll.Images.Remove(image);
             await _bll.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

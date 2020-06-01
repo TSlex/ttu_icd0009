@@ -114,9 +114,9 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (ModelState.IsValid)
             {
+                model.GiftNameId = record.GiftNameId;
                 await _bll.Gifts.UpdateAsync(_mapper.MapReverse(model));
                 await _bll.SaveChangesAsync();
-
 
                 return NoContent();
             }

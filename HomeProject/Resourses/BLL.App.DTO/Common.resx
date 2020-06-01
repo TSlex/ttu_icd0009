@@ -117,32 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangedAt" >
-    <value />
-  </data>
-  <data name="ChangedBy" >
-    <value />
-  </data>
-  <data name="CreatedAt" >
-    <value />
-  </data>
-  <data name="CreatedBy" >
-    <value />
-  </data>
-  <data name="DeletedAt" >
-    <value />
-  </data>
-  <data name="DeletedBy" >
-    <value />
-  </data>
-  <data name="Id" >
-    <value />
+  <data name="ReturnUrl" >
+    <value>Url to return</value>
   </data>
   <data name="MasterId" >
-    <value />
+    <value>Master (ID)</value>
   </data>
-  <data name="ReturnUrl" >
-    <value />
+  <data name="Id">
+    <value>(ID)</value>
+  </data>
+  <data name="CreatedBy">
+    <value>Created by</value>
+  </data>
+  <data name="CreatedAt">
+    <value>Created at</value>
+  </data>
+  <data name="ChangedBy">
+    <value>Changed by</value>
+  </data>
+  <data name="ChangedAt">
+    <value>Changed at</value>
+  </data>
+  <data name="DeletedBy">
+    <value>Deleted by</value>
+  </data>
+  <data name="DeletedAt">
+    <value>Deleted at</value>
   </data>
   <data name="ErrorMessage_MaxLength">
     <value>The field {0} must be a string or array type with a maximum length of '{1}'.</value>

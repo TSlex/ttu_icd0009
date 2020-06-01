@@ -53,7 +53,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var chatMember = await _bll.ChatMembers.FindAsync(id);
+            var chatMember = await _bll.ChatMembers.FindAdminAsync(id);
 
             if (chatMember == null)
             {
@@ -69,7 +69,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var chatMember = await _bll.ChatMembers.FindAsync(id);
+            var chatMember = await _bll.ChatMembers.FindAdminAsync(id);
 
             if (chatMember == null)
             {

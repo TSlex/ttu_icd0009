@@ -60,41 +60,16 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id.ToString());
-            
-            var isAuthorized = _signInManager.IsSignedIn(User);
+            var user = await _bll.Profiles.FindAdminAsync(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            // ReSharper disable EF1001
-            if (!(await _bll.ProfileRanks.AllUserAsync(user.Id)).Any())
-            {
-                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
-                {
-                    ProfileId = user.Id,
-                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
-                });
-                
-                await _bll.SaveChangesAsync();
-            };
+            
 
-            var profileModel = await _bll.Profiles.GetProfileAsync(user.Id, User.UserId());
-
-            if (profileModel == null)
-            {
-                return NotFound();
-            }
-
-            if (isAuthorized)
-            {
-                profileModel.IsUserFollows = await _bll.Followers.FindAsync(User.UserId(), user.Id) != null;
-                profileModel.IsUserBlocks = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id) != null;   
-            }
-
-            return View(profileModel);
+            return View(user);
         }
         
         /// <summary>
@@ -103,7 +78,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var profile = await _bll.Profiles.FindAsync(id);
+            var profile = await _bll.Profiles.FindAdminAsync(id);
 
             if (profile == null)
             {
@@ -114,7 +89,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (profile.ProfileAvatarId != null)
             {
-                avatar = await _bll.Images.FindAsync((Guid) profile.ProfileAvatarId);
+                avatar = await _bll.Images.FindAdminAsync((Guid) profile.ProfileAvatarId);
             }
             
             return View(new ProfileEdit()
