@@ -137,4 +137,46 @@
     <data name="Rank">
         <value>Järk</value>
     </data>
+    <data name="ErrorChangeUsername" >
+        <value>Viga kasutajanime muutmisel!</value>
+    </data>
+    <data name="ErrorChangeEmail" >
+        <value>Viga e-posti muutmisel!</value>
+    </data>
+    <data name="ErrorSetPassword" >
+        <value>Viga parooli määramisel!</value>
+    </data>
+    <data name="ErrorFollowYouSelf" >
+        <value>Te ei saa ennast jälgida!</value>
+    </data>
+    <data name="ErrorBlockYouSelf" >
+        <value>Te ei saa ennast blokeerida!</value>
+    </data>
+    <data name="ErrorCannotFollowDueBlock" >
+        <value>Te ei saa järgneda kasutajale, kes teid blokeerib!</value>
+    </data>
+    <data name="ResponseNowFollow" >
+        <value>Teid jälgitakse {0}</value>
+    </data>
+    <data name="ResponseNowUnFollow" >
+        <value>Te ei jälgi enam {0}.</value>
+    </data>
+    <data name="ResponseAlreadyFollow" >
+        <value>Jälgite juba kasutajat {0}.</value>
+    </data>
+    <data name="ResponseNotFollow" >
+        <value>Te ei jälgi {0}.</value>
+    </data>
+    <data name="ResponseNowBlock" >
+        <value>{0} blokeeriti.</value>
+    </data>
+    <data name="ResponseNowUnBlock" >
+        <value>{0} blokeering eemaldati.</value>
+    </data>
+    <data name="ResponseAlreadyBlock" >
+        <value>{0} on juba blokeeritud.</value>
+    </data>
+    <data name="ResponseNotBlock" >
+        <value>{0} pole blokeeritud.</value>
+    </data>
 </root>

@@ -62,4 +62,16 @@
     <data name="ProfileId">
         <value>Профиль (ID)</value>
     </data>
+    <data name="ResponseNowFavorited">
+        <value>Пост в избранном.</value>
+    </data>
+    <data name="ResponseNowUnFavorited">
+        <value>Пост больше не в избранном.</value>
+    </data>
+    <data name="ResponseAlreadyFavorited">
+        <value>Пост уже в избранном.</value>
+    </data>
+    <data name="ResponseNotFavorited">
+        <value>Пост не в избранном.</value>
+    </data>
 </root>

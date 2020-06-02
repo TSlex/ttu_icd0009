@@ -63,4 +63,16 @@
     <data name="ImageRequired">
         <value>Pilt on kohustuslik!</value>
     </data>
+    <data name="ErrorForIdRequired">
+        <value>Kellele (ID) tuleks täpsustada, kui tüüp pole määratlemata!</value>
+    </data>
+    <data name="ExtensionsSupported">
+        <value>Ainult laiendit toetatakse: [.png, .jpg, .jpeg]!</value>
+    </data>
+    <data name="ErrorMaxImageResolution">
+        <value>Pilt ei tohiks olla suurem kui 4000x4000!</value>
+    </data>
+    <data name="ErrorImageSupportedRatio">
+        <value>Kujutise suhe peaks olema vahemikus 0,1–10!</value>
+    </data>
 </root>

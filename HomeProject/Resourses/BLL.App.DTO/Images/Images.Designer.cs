@@ -70,7 +70,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        ///   Looks up a localized string similar to Image ratio should be between 0.1 and 10!.
         /// </summary>
         public static string ErrorImageSupportedRatio {
             get {
@@ -79,7 +79,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        ///   Looks up a localized string similar to Image should be not bigger that 4000x4000!.
         /// </summary>
         public static string ErrorMaxImageResolution {
             get {
@@ -88,7 +88,7 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        ///   Looks up a localized string similar to Extension supported only: [.png, .jpg, .jpeg]!.
         /// </summary>
         public static string ExtensionsSupported {
             get {

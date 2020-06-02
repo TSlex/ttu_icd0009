@@ -126,9 +126,9 @@ namespace Resourses.BLL.App.DTO.Profiles {
         /// <summary>
         ///   Looks up a localized string similar to You cannot block yourself!.
         /// </summary>
-        public static string ErrorBlockYouself {
+        public static string ErrorBlockYouSelf {
             get {
-                return ResourceManager.GetString("ErrorBlockYouself", resourceCulture);
+                return ResourceManager.GetString("ErrorBlockYouSelf", resourceCulture);
             }
         }
         
@@ -162,9 +162,9 @@ namespace Resourses.BLL.App.DTO.Profiles {
         /// <summary>
         ///   Looks up a localized string similar to You cannot follow yourself!.
         /// </summary>
-        public static string ErrorFollowYouself {
+        public static string ErrorFollowYouSelf {
             get {
-                return ResourceManager.GetString("ErrorFollowYouself", resourceCulture);
+                return ResourceManager.GetString("ErrorFollowYouSelf", resourceCulture);
             }
         }
         

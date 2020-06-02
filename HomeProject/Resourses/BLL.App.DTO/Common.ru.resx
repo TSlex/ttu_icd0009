@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -13,10 +14,14 @@
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <data name="ErrorMessage_MaxLength">
         <value>Значение {0} должно быть строкой или массивом с длинной до '{1}'.</value>
@@ -36,7 +41,7 @@
     <data name="ErrorMessage_Range">
         <value>Значение {0} должно быть между {1} и {2}.</value>
     </data>
-    <data name="MasterId" >
+    <data name="MasterId">
         <value>Мастер (ID)</value>
     </data>
     <data name="Id">
@@ -60,7 +65,28 @@
     <data name="DeletedAt">
         <value>Удален в</value>
     </data>
-    <data name="ReturnUrl" >
+    <data name="ReturnUrl">
         <value>Url для возврата</value>
+    </data>
+    <data name="ErrorIdMatch">
+        <value>Идентификаторы должны совпадать!</value>
+    </data>
+    <data name="ErrorNotFound">
+        <value>Запись не найдена!</value>
+    </data>
+    <data name="ErrorUserNotFound">
+        <value>Пользователь не найден!</value>
+    </data>
+    <data name="ErrorAccessDenied">
+        <value>Доступ закрыт!</value>
+    </data>
+    <data name="ErrorBadData">
+        <value>Данные записи неверны!</value>
+    </data>
+    <data name="SuccessDeleted">
+        <value>Запись была удалена.</value>
+    </data>
+    <data name="SuccessRestored">
+        <value>Запись была восстановлена.</value>
     </data>
 </root>

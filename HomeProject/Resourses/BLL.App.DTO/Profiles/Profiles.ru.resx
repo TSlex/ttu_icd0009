@@ -137,4 +137,46 @@
     <data name="Rank">
         <value>Ранк</value>
     </data>
+    <data name="ErrorChangeUsername" >
+        <value>Ошибка изменения имени пользователя!</value>
+    </data>
+    <data name="ErrorChangeEmail" >
+        <value>Ошибка смены электронной почты!</value>
+    </data>
+    <data name="ErrorSetPassword" >
+        <value>Ошибка установки пароля!</value>
+    </data>
+    <data name="ErrorFollowYouSelf" >
+        <value>Вы не можете подписаться на себя!</value>
+    </data>
+    <data name="ErrorBlockYouSelf" >
+        <value>Вы не можете заблокировать себя!</value>
+    </data>
+    <data name="ErrorCannotFollowDueBlock" >
+        <value>Вы не можете подписаться на пользователя, который блокирует вас!</value>
+    </data>
+    <data name="ResponseNowFollow" >
+        <value>Вы подписаны на {0}.</value>
+    </data>
+    <data name="ResponseNowUnFollow" >
+        <value>Вы больше не подписаны на {0}.</value>
+    </data>
+    <data name="ResponseAlreadyFollow" >
+        <value>Вы уже подписаны на {0}.</value>
+    </data>
+    <data name="ResponseNotFollow" >
+        <value>Вы не подписаны на {0}.</value>
+    </data>
+    <data name="ResponseNowBlock" >
+        <value>{0} был заблокирован.</value>
+    </data>
+    <data name="ResponseNowUnBlock" >
+        <value>{0} был разблокирован.</value>
+    </data>
+    <data name="ResponseAlreadyBlock" >
+        <value>{0} уже заблокирован.</value>
+    </data>
+    <data name="ResponseNotBlock" >
+        <value>{0} не заблокирован.</value>
+    </data>
 </root>

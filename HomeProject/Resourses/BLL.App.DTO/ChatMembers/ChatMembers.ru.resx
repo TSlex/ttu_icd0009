@@ -45,4 +45,22 @@
     <data name="ProfileId" >
         <value>Профиль (ID)</value>
      </data>
+    <data name="ErrorCreatorAssign" >
+        <value>Роль создателя не присваивается!</value>
+    </data>
+    <data name="ErrorCreatorDemote" >
+        <value>Создатель не может быть понижен в должности!</value>
+    </data>
+    <data name="ErrorMemberNotFound" >
+        <value>Участник не найден!</value>
+    </data>
+    <data name="ErrorRoleNotFound" >
+        <value>Роль не найдена!</value>
+    </data>
+    <data name="ErrorCannotRename" >
+        <value>Вы не можете переименовать эту комнату!</value>
+    </data>
+    <data name="ErrorCannotWrite" >
+        <value>Вы не можете писать в этой комнате!</value>
+    </data>
 </root>

@@ -50,4 +50,7 @@
     <data name="GiftNameId">
         <value>Nimetus (ID)</value>
     </data>
+    <data name="ErrorGiftToYourself">
+        <value>Te ei saa endale kingitust saata!</value>
+    </data>
 </root>

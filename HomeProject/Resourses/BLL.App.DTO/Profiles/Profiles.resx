@@ -240,10 +240,10 @@
   <data name="ErrorSetPassword" >
     <value>Cannot set password!</value>
   </data>
-  <data name="ErrorFollowYouself" >
+  <data name="ErrorFollowYouSelf" >
     <value>You cannot follow yourself!</value>
   </data>
-  <data name="ErrorBlockYouself" >
+  <data name="ErrorBlockYouSelf" >
     <value>You cannot block yourself!</value>
   </data>
   <data name="ErrorCannotFollowDueBlock" >

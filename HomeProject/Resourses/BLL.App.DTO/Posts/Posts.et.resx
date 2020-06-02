@@ -62,4 +62,16 @@
     <data name="ProfileId">
         <value>Profiil (ID)</value>
     </data>
+    <data name="ResponseNowFavorited">
+        <value>Postitamine on nüüd lemmik.</value>
+    </data>
+    <data name="ResponseNowUnFavorited">
+        <value>Postitust enam ei ole lemmik.</value>
+    </data>
+    <data name="ResponseAlreadyFavorited">
+        <value>Postitamine on juba nüüd lemmik.</value>
+    </data>
+    <data name="ResponseNotFavorited">
+        <value>Postitust ei ole lemmik.</value>
+    </data>
 </root>

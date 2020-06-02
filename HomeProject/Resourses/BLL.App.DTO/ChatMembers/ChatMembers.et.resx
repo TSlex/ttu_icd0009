@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -13,30 +14,52 @@
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
-    <data name="ChatRole" >
-    <value>Roll</value>
-  </data>
-    <data name="ChatRoleId" >
-    <value>Roll (ID)</value>
-  </data>
-    <data name="ChatRoom" >
-    <value>Jututuba</value>
-  </data>
-    <data name="ChatRoomId" >
-    <value>Jututuba (ID)</value>
-  </data>
-    <data name="ChatRoomTitle" >
-    <value>Jututoa pealkiri</value>
-  </data>
-    <data name="Profile" >
-    <value>Profiil</value>
-  </data>
-    <data name="ProfileId" >
-    <value>Profiil (ID)</value>
-  </data>
+    <data name="ChatRole">
+        <value>Roll</value>
+    </data>
+    <data name="ChatRoleId">
+        <value>Roll (ID)</value>
+    </data>
+    <data name="ChatRoom">
+        <value>Jututuba</value>
+    </data>
+    <data name="ChatRoomId">
+        <value>Jututuba (ID)</value>
+    </data>
+    <data name="ChatRoomTitle">
+        <value>Jututoa pealkiri</value>
+    </data>
+    <data name="Profile">
+        <value>Profiil</value>
+    </data>
+    <data name="ProfileId">
+        <value>Profiil (ID)</value>
+    </data>
+    <data name="ErrorCreatorAssign">
+        <value>Looja roll pole määratav!</value>
+    </data>
+    <data name="ErrorCreatorDemote">
+        <value>Loojat ei saa alandada!</value>
+    </data>
+    <data name="ErrorMemberNotFound">
+        <value>Liiget ei leitud!</value>
+    </data>
+    <data name="ErrorRoleNotFound">
+        <value>Rollit ei leitud!</value>
+    </data>
+    <data name="ErrorCannotRename">
+        <value>Te ei saa seda tuba ümber nimetada!</value>
+    </data>
+    <data name="ErrorCannotWrite">
+        <value>Te ei saa selles toas kirjutada!</value>
+    </data>
 </root>

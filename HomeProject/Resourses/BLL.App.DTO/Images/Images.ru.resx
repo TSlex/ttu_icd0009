@@ -63,4 +63,16 @@
     <data name="ImageRequired">
         <value>Картинка должна быть указана!</value>
     </data>
+    <data name="ErrorForIdRequired">
+        <value>Идентификатор "для кого" должен быть указан, если тип не определен!</value>
+    </data>
+    <data name="ExtensionsSupported">
+        <value>Поддерживается только расширение: [.png, .jpg, .jpeg]!</value>
+    </data>
+    <data name="ErrorMaxImageResolution">
+        <value>Изображение должно быть не больше 4000х4000!</value>
+    </data>
+    <data name="ErrorImageSupportedRatio">
+        <value>Соотношение изображений должно быть от 0,1 до 10!</value>
+    </data>
 </root>

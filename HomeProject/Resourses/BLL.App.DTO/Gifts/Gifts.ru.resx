@@ -50,4 +50,7 @@
     <data name="GiftNameId">
         <value>Название (ID)</value>
     </data>
+    <data name="ErrorGiftToYourself">
+        <value>Вы не можете отправить подарок себе!</value>
+    </data>
 </root>

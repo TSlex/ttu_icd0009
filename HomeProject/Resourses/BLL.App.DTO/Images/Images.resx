@@ -171,12 +171,12 @@
         <value>For Id should be specified if type is not undefined!</value>
     </data>
     <data name="ExtensionsSupported">
-        <value>For Id should be specified if type is not undefined!</value>
+        <value>Extension supported only: [.png, .jpg, .jpeg]!</value>
     </data>
     <data name="ErrorMaxImageResolution">
-        <value>For Id should be specified if type is not undefined!</value>
+        <value>Image should be not bigger that 4000x4000!</value>
     </data>
     <data name="ErrorImageSupportedRatio">
-        <value>For Id should be specified if type is not undefined!</value>
+        <value>Image ratio should be between 0.1 and 10!</value>
     </data>
 </root>
