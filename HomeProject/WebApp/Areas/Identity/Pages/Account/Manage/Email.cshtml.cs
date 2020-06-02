@@ -46,7 +46,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         {
             [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
                 ErrorMessageResourceName = "ErrorMessage_Required")]
-            [Display(Name = nameof(Email),
+            [Display(Name = "Email",
                 ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
             [EmailAddress(ErrorMessageResourceType = typeof(Resourses.Views.Identity.Identity),
                 ErrorMessageResourceName = "InvalidEmail")]
