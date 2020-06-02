@@ -468,15 +468,17 @@
         <EmbeddedResource Update="Views\Home\Home.ru.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
+        <EmbeddedResource Update="Views\Identity\Identity.ru.resx">
+          <LastGenOutput>Identity.Designer.cs</LastGenOutput>
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
         <EmbeddedResource Update="Views\Identity\Identity.et.resx">
+          <LastGenOutput>Identity.Designer.cs</LastGenOutput>
           <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
         <EmbeddedResource Update="Views\Identity\Identity.resx">
           <Generator>PublicResXFileCodeGenerator</Generator>
           <LastGenOutput>Identity.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Views\Identity\Identity.ru.resx">
-          <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
         <EmbeddedResource Update="Views\Images\Images.et.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

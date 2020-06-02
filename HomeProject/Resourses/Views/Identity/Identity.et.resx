@@ -3,7 +3,7 @@
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -113,5 +113,14 @@
     </data>
     <data name="PasswordDataUpdateStatusSuccess">
         <value>Teie parool on muudetud</value>
+    </data>
+    <data name="LoginFailed">
+        <value>Kehtetu sisselogimiskatse.</value>
+    </data>
+    <data name="PasswordMatchError">
+        <value>Parool ja kinnitusparool ei kattu.</value>
+    </data>
+    <data name="InvalidEmail">
+        <value>Väli {0} pole kehtiv e-posti aadress.</value>
     </data>
 </root>

@@ -51,23 +51,40 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
+            [EmailAddress(ErrorMessageResourceType = typeof(Resourses.Views.Identity.Identity),
+                ErrorMessageResourceName = "InvalidEmail")]
+            [Display(Name = nameof(Email),
+                ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
             public string Email { get; set; } = default!;
 
-            [MaxLength(300)] public string Username { get; set; } = default!;
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
+            [Display(Name = "UserName",
+                ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+            [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+            public string Username { get; set; } = default!;
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
-                MinimumLength = 6)]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
+            [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+            [MinLength(6, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MinLength")]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = nameof(Password),
+                ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
             public string Password { get; set; } = default!;
 
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "PasswordConfirm",
+                ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+            [Compare("Password", ErrorMessageResourceType = typeof(Resourses.Views.Identity.Identity),
+                ErrorMessageResourceName = "PasswordMatchError")]
             public string ConfirmPassword { get; set; } = default!;
         }
 

@@ -3,7 +3,7 @@
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -113,5 +113,14 @@
     </data>
     <data name="PasswordDataUpdateStatusSuccess">
         <value>Your password has been changed</value>
+    </data>
+    <data name="LoginFailed">
+        <value>Invalid login attempt.</value>
+    </data>
+    <data name="PasswordMatchError">
+        <value>The password and confirmation password do not match.</value>
+    </data>
+    <data name="InvalidEmail">
+        <value>The {0} field is not a valid e-mail address.</value>
     </data>
 </root>
