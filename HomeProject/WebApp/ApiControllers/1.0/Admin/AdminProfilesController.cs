@@ -83,7 +83,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return CreatedAtAction("Create", model);
             }
 
-            return BadRequest("Record data is invalid!");
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
         [HttpPut("{id}")]
@@ -96,14 +96,14 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             if (id != model.Id)
             {
-                return BadRequest("Id's should match!");
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
             
             var record = await _userManager.FindByIdAsync(id.ToString());
 
             if (record == null)
             {
-                return NotFound("Record was not found!");
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (ModelState.IsValid)
@@ -113,7 +113,8 @@ namespace WebApp.ApiControllers._1._0.Admin
                     var result = await _userManager.SetUserNameAsync(record, model.UserName);
                     if (!result.Succeeded)
                     {
-                        return BadRequest("Cannot change username!");
+
+                        return BadRequest(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername);
                     }
                 }
                 
@@ -122,7 +123,8 @@ namespace WebApp.ApiControllers._1._0.Admin
                     var result = await _userManager.SetEmailAsync(record, model.Email);
                     if (!result.Succeeded)
                     {
-                        return BadRequest("Cannot change email!");
+
+                        return BadRequest(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail);
                     }
                 }
                 
@@ -136,7 +138,8 @@ namespace WebApp.ApiControllers._1._0.Admin
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
                         }
-                        return BadRequest("Cannot set password!");
+                        
+                        return BadRequest(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorSetPassword);
                     }
                 }
                 
@@ -158,7 +161,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return NoContent();
             }
 
-            return BadRequest("Record data is invalid!");
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
         [HttpDelete("{id}")]
@@ -169,7 +172,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll.Profiles.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Record was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
         
         [HttpPost("{restore}/{id}")]
@@ -181,7 +184,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll.Profiles.Restore(record);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Record was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessRestored});
         }
     }
 }

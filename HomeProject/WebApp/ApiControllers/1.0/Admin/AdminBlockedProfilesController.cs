@@ -73,14 +73,14 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             if (id != blockedProfile.Id)
             {
-                return BadRequest("Id's should match!");
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
             
             var record = await _bll.BlockedProfiles.GetForUpdateAsync(id);
 
             if (record == null)
             {
-                return NotFound("Record was not found!");
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return NoContent();
             }
 
-            return BadRequest("Record data is invalid!");
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
         [HttpDelete("{id}")]
@@ -103,7 +103,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll.BlockedProfiles.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Record was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
     }
 }

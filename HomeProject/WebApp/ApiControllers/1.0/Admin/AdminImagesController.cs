@@ -86,12 +86,12 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             if (model.ImageFile == null)
             {
-                return BadRequest("Image file is missing!");
+                return BadRequest(Resourses.BLL.App.DTO.Images.Images.ImageRequired);
             }
             
             if (model.ImageType != ImageType.Undefined && model.ImageFor == null)
             {
-                return BadRequest("Id should be specified if not misc image type!");
+                return BadRequest(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
             }
             
             ModelState.Clear();
@@ -121,7 +121,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return CreatedAtAction("Create", model);
             }
 
-            return BadRequest("Record data is invalid!");
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         [HttpPut("{id}")]
@@ -135,21 +135,21 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             if (id != model.Id)
             {
-                return BadRequest("Id's should match!");
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
             
             Image? result;
             
             if (model.ImageType != ImageType.Undefined && model.ImageFor == null)
             {
-                return BadRequest("Id should be specified if not misc image type!");
+                return BadRequest(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
             }
             
             var record = await _bll.Images.GetForUpdateAsync(id);
 
             if (record == null)
             {
-                return NotFound("Record was not found!");
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             if (model.ImageFile != null)
@@ -183,7 +183,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return NoContent();
             }
 
-            return BadRequest("Record data is invalid!");
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         private Image? ValidateImage(Image imageModel)
@@ -192,7 +192,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
             {
-                ModelState.AddModelError(string.Empty, "Extension supported only: [.png, .jpg, .jpeg]");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
                 return null;
             }
 
@@ -200,14 +200,14 @@ namespace WebApp.ApiControllers._1._0.Admin
             {
                 if (image.Height > 4000 || image.Width > 4000)
                 {
-                    ModelState.AddModelError(string.Empty, "Image should be not bigger that 4000x4000");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
                     return null;
                 }
 
                 var ratio = image.Height * 1.0 / image.Width;
                 if (ratio < 0.1 || 10 < ratio)
                 {
-                    ModelState.AddModelError(string.Empty, "Image ration should be between 0.1 and 10");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
                     return null;
                 }
 
@@ -226,7 +226,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll.Images.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Record was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
         
         [HttpPost("{restore}/{id}")]
@@ -238,7 +238,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll.Images.Restore(record);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Record was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessRestored});
         }
     }
 }
