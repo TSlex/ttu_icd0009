@@ -7,6 +7,8 @@ namespace BLL.App.DTO.Base
     public abstract class DomainEntityBaseMetadata : IDomainEntityBaseMetadata
     {
         [Display(Name = nameof(Id), ResourceType = typeof(Resourses.BLL.App.DTO.Common))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid Id { get; set; } = default!;
         
         [Display(Name = nameof(CreatedBy), ResourceType = typeof(Resourses.BLL.App.DTO.Common))]
