@@ -223,4 +223,8 @@
         <Folder Include="wwwroot\localstorage\images\profiles" />
     </ItemGroup>
 
+    <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\site.ts" />
+    </ItemGroup>
+
 </Project>
