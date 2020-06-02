@@ -53,7 +53,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok(new CountResponseDTO()
@@ -77,7 +77,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok((await _bll.Followers.AllByIdPageAsync(user.Id, true, pageNumber, 10)).Select(favorite =>
@@ -104,7 +104,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok(new CountResponseDTO()
@@ -128,7 +128,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok((await _bll.Followers.AllByIdPageAsync(user.Id, false, pageNumber, 10)).Select(favorite =>
@@ -155,18 +155,18 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Follower was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (record.FollowerProfileId != User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("You cannot delete this record!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             _bll.Followers.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return NotFound(new OkResponseDTO() {Status = "Follower was deleted"});
+            return NotFound(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
     }
 }

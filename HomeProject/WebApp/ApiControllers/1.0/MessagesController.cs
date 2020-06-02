@@ -58,7 +58,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (room == null)
             {
-                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
@@ -67,7 +67,7 @@ namespace WebApp.ApiControllers._1._0
                   (currentMember.ChatRole.CanWriteMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
             
             if (TryValidateModel(message))
@@ -84,7 +84,7 @@ namespace WebApp.ApiControllers._1._0
                 return CreatedAtAction("Create", _mapper.Map(result));
             }
 
-            return BadRequest(new ErrorResponseDTO("Message is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
         /// <summary>
@@ -105,12 +105,12 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Message was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (message.Id != id)
             {
-                return NotFound(new ErrorResponseDTO("Ids should math!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
             
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
@@ -119,7 +119,7 @@ namespace WebApp.ApiControllers._1._0
                   (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             if (TryValidateModel(record))
@@ -132,7 +132,7 @@ namespace WebApp.ApiControllers._1._0
                 return NoContent();
             }
 
-            return BadRequest(new ErrorResponseDTO("Message is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -155,13 +155,13 @@ namespace WebApp.ApiControllers._1._0
                   (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
-                return NotFound(new ErrorResponseDTO("Message was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             _bll.Messages.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Message was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
     }
 }

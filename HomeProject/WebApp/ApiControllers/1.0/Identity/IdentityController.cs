@@ -76,7 +76,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             if (user == null)
             {
                 _logger.LogInformation($"Web-Api login. Profile with credentials: {model.Email} - was not found!");
-                return NotFound(new ErrorResponseDTO("User not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -92,12 +92,12 @@ namespace WebApp.ApiControllers._1._0.Identity
                 );
 
                 _logger.LogInformation($"Token generated for user {model.Email}");
-                return Ok(new JwtResponseDTO {Token = jwt, Status = "Logged in"});
+                return Ok(new JwtResponseDTO {Token = jwt, Status = "OK"});
             }
 
             _logger.LogInformation(
                 $"Web-Api login. Profile with credentials: {model.Email} - was attempted to log-in with bad password!");
-            return NotFound(new ErrorResponseDTO("User not found!"));
+            return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Created a new account with password.");
-                    return Ok(new OkResponseDTO {Status = "Registration was successful!"});
+                    return Ok(new OkResponseDTO {Status = "OK"});
                 }
 
                 _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
@@ -151,7 +151,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 return BadRequest(new ErrorResponseDTO(JsonSerializer.Serialize(errors)));
             }
 
-            return BadRequest(new ErrorResponseDTO("Invalid request!"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 {
                     return BadRequest(
                         new ErrorResponseDTO(
-                            "Unexpected error occurred while setting username!"));
+                            Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername));
                 }
             }
 
@@ -263,7 +263,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 {
                     return BadRequest(
                         new ErrorResponseDTO(
-                            "Unexpected error occurred while setting email!"));
+                            Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail));
                 }
             }
 
@@ -314,7 +314,7 @@ namespace WebApp.ApiControllers._1._0.Identity
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("Unable to load user"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             var requirePassword = await _userManager.HasPasswordAsync(user);
@@ -332,7 +332,7 @@ namespace WebApp.ApiControllers._1._0.Identity
 
             await _signInManager.SignOutAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Your account was deleted."});
+            return Ok(new OkResponseDTO() {Status = "OK"});
         }
     }
 }

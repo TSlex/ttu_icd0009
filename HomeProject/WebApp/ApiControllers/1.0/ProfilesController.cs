@@ -11,7 +11,7 @@ using PublicApi.DTO.v1.Mappers;
 using PublicApi.DTO.v1.Response;
 
 namespace WebApp.ApiControllers._1._0
-{    
+{
     /// <summary>
     /// Profiles
     /// </summary>
@@ -24,7 +24,7 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Profile, ProfileDTO> _mapper;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -34,7 +34,7 @@ namespace WebApp.ApiControllers._1._0
             _bll = bll;
             _mapper = new DTOMapper<Profile, ProfileDTO>();
         }
-        
+
         /// <summary>
         /// Get profile
         /// </summary>
@@ -48,7 +48,7 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> GetProfile(string username)
         {
             Profile user;
-            
+
             if (User.Identity.IsAuthenticated)
             {
                 user = await _bll.Profiles.FindByUsernameAsync(username, User.UserId());
@@ -60,7 +60,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok(_mapper.Map(user));
@@ -80,37 +80,40 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> FollowProfile(string username)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
-            
+
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (user.Id == User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("You cannot follow yourself!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorFollowYouSelf));
             }
-            
+
             var property = await _bll.BlockedProfiles.FindAsync(user.Id, User.UserId());
 
             if (property != null)
             {
-                return BadRequest(new ErrorResponseDTO("You cannot follow a user that blocks you!"));
+                return BadRequest(
+                    new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorCannotFollowDueBlock));
             }
-            
+
             var subscription = await _bll.Followers.FindAsync(User.UserId(), user.Id);
 
             if (subscription == null)
             {
                 _bll.Followers.AddSubscription(User.UserId(), user.Id);
                 await _bll.SaveChangesAsync();
-                
-                return Ok(new OkResponseDTO() {Status = $"You are subscribed to {username}"});
+
+                return Ok(new OkResponseDTO()
+                    {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseNowFollow, username)});
             }
-            
-            return Ok(new OkResponseDTO() {Status = $"You are already subscribed to {username}"});
+
+            return Ok(new OkResponseDTO()
+                {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseAlreadyFollow, username)});
         }
-        
+
         /// <summary>
         /// Unsubscribe from profile
         /// </summary>
@@ -125,15 +128,15 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> UnfollowProfile(string username)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
-            
+
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (user.Id == User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("You cannot unfollow yourself!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorFollowYouSelf));
             }
 
             var subscription = await _bll.Followers.FindAsync(User.UserId(), user.Id);
@@ -142,10 +145,13 @@ namespace WebApp.ApiControllers._1._0
             {
                 _bll.Followers.Remove(subscription);
                 await _bll.SaveChangesAsync();
-                return Ok(new OkResponseDTO() {Status = $"You are no longer subscribed to {username}"});
+                
+                return Ok(new OkResponseDTO()
+                    {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseNowUnFollow, username)});
             }
-            
-            return Ok(new OkResponseDTO() {Status = $"You are not subscribed to {username}"});
+
+            return Ok(new OkResponseDTO()
+                {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseNotFollow, username)});
         }
 
         /// <summary>
@@ -162,15 +168,15 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> BlockProfile(string username)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
-            
+
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (user.Id == User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("You cannot block yourself!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorBlockYouSelf));
             }
 
             var property = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id);
@@ -182,12 +188,13 @@ namespace WebApp.ApiControllers._1._0
                 {
                     _bll.Followers.Remove(subscription);
                 }
+
                 _bll.BlockedProfiles.AddBlockProperty(User.UserId(), user.Id);
                 await _bll.SaveChangesAsync();
-                return Ok(new OkResponseDTO() {Status = $"{username} was blocked"});
+                return Ok(new OkResponseDTO() {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseNowBlock, username)});
             }
-            
-            return Ok(new OkResponseDTO() {Status = $"{username} is already blocked"});
+
+            return Ok(new OkResponseDTO() {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseAlreadyBlock, username)});
         }
 
         /// <summary>
@@ -204,27 +211,27 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> UnblockProfile(string username)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
-            
+
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (user.Id == User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("You cannot unblock yourself!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorBlockYouSelf));
             }
-            
+
             var property = await _bll.BlockedProfiles.FindAsync(User.UserId(), user.Id);
 
             if (property != null)
             {
                 _bll.BlockedProfiles.Remove(property);
                 await _bll.SaveChangesAsync();
-                return Ok(new OkResponseDTO() {Status = $"{username} was unblocked"});
+                return Ok(new OkResponseDTO() {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseNowUnBlock, username)});
             }
-            
-            return Ok(new OkResponseDTO() {Status = $"{username} is not blocked"});
+
+            return Ok(new OkResponseDTO() {Status = string.Format(Resourses.BLL.App.DTO.Profiles.Profiles.ResponseNotBlock, username)});
         }
     }
 }

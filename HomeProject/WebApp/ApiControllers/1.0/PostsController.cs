@@ -53,7 +53,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetFavoritesCount(id)});
@@ -74,7 +74,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetCommentsCount(id)});
@@ -96,7 +96,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetByUserCount(user.Id)});
@@ -121,7 +121,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (User.Identity.IsAuthenticated)
@@ -158,7 +158,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(Map(post));
@@ -191,7 +191,7 @@ namespace WebApp.ApiControllers._1._0
                 return CreatedAtAction("GetPost", _postGetMapper.Map(result));
             }
 
-            return BadRequest(new ErrorResponseDTO("Post is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -212,17 +212,17 @@ namespace WebApp.ApiControllers._1._0
 
             if (post.Id != id)
             {
-                return NotFound(new ErrorResponseDTO("Ids should math!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (record.ProfileId != User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             if (TryValidateModel(post))
@@ -236,7 +236,7 @@ namespace WebApp.ApiControllers._1._0
                 return NoContent();
             }
 
-            return BadRequest(new ErrorResponseDTO("Post is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -255,13 +255,13 @@ namespace WebApp.ApiControllers._1._0
 
             if (!ValidateUserAccess(record))
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             _bll.Posts.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Post was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
 
         private bool ValidateUserAccess(Post? record)
@@ -287,7 +287,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
@@ -297,10 +297,10 @@ namespace WebApp.ApiControllers._1._0
                 _bll.Favorites.Create(post.Id, userId);
                 await _bll.SaveChangesAsync();
 
-                return Ok(new OkResponseDTO() {Status = "Post in now favorited"});
+                return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Posts.Posts.ResponseNowFavorited});
             }
 
-            return Ok(new OkResponseDTO() {Status = "Post in already favorited"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Posts.Posts.ResponseAlreadyFavorited});
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
@@ -329,10 +329,10 @@ namespace WebApp.ApiControllers._1._0
                 await _bll.Favorites.RemoveAsync(post.Id, userId);
                 await _bll.SaveChangesAsync();
 
-                return Ok(new OkResponseDTO() {Status = "Post is no longer favorited"});
+                return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Posts.Posts.ResponseNowUnFavorited});
             }
 
-            return Ok(new OkResponseDTO() {Status = "Post is not favorited"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Posts.Posts.ResponseNotFavorited});
         }
 
         private static PostGetDTO Map(Post inObj)

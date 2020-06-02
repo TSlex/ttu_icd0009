@@ -80,7 +80,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (!canAccess)
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             var result = await _bll.Messages.GetLastMessage(id);
@@ -122,7 +122,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (!canAccess)
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             return Ok(_bll.Messages.CountByRoomAsync(id));
@@ -145,14 +145,14 @@ namespace WebApp.ApiControllers._1._0
 
             if (!exist)
             {
-                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
 
             if (!canAccess)
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             return Ok((await _bll.Messages.AllByIdPageAsync(id, pageNumber, 10)).Select(message =>
@@ -182,7 +182,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (chatRoomId == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok(chatRoomId);
@@ -206,19 +206,19 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (chatRoom.Id != id)
             {
-                return NotFound(new ErrorResponseDTO("Ids should math!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
 
             var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
 
             if (!canAccess)
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             if (TryValidateModel(chatRoom))
@@ -231,7 +231,7 @@ namespace WebApp.ApiControllers._1._0
                 return NoContent();
             }
 
-            return BadRequest(new ErrorResponseDTO("Chat room is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
     }
 }

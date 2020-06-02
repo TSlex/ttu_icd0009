@@ -136,7 +136,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Not found"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(_mapper.Map(record));
@@ -156,12 +156,12 @@ namespace WebApp.ApiControllers._1._0
         {
             if (imageDTO.ImageType != ImageType.Post && imageDTO.ImageType != ImageType.ProfileAvatar)
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             if (imageDTO.ImageFile == null)
             {
-                return BadRequest(new ErrorResponseDTO("Image should be specified!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Images.Images.ImageRequired));
             }
 
             if (ModelState.IsValid)
@@ -196,14 +196,14 @@ namespace WebApp.ApiControllers._1._0
                         result = await _bll.Images.AddPostAsync((Guid) image.ImageFor, image);
                         break;
                     default:
-                        return BadRequest(new ErrorResponseDTO("Access denied!"));
+                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
                 }
 
                 await _bll.SaveChangesAsync();
                 return Ok(_mapper.Map(result));
             }
             
-            return BadRequest(new ErrorResponseDTO("Image is invalid!"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -224,13 +224,13 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null || id != imageDTO.Id)
             {
-                return NotFound(new ErrorResponseDTO("Image was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             if (record.ImageType != ImageType.Post && record.ImageType != ImageType.ProfileAvatar 
                 || record.ImageType == ImageType.ProfileAvatar && record.ImageFor != User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             if (ModelState.IsValid)
@@ -252,14 +252,14 @@ namespace WebApp.ApiControllers._1._0
                         await _bll.Images.UpdatePostAsync((Guid) record.ImageFor, record);
                         break;
                     default:
-                        return BadRequest(new ErrorResponseDTO("Access denied!"));
+                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
                 }
 
                 await _bll.SaveChangesAsync();
                 return NoContent();
             }
             
-            return BadRequest(new ErrorResponseDTO("Image is invalid!"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (user.ProfileAvatarId == null)
@@ -312,7 +312,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (post.PostImageId == null)
@@ -346,7 +346,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (gift == null)
             {
-                return NotFound(new ErrorResponseDTO("Gift was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (gift.GiftImageId == null)

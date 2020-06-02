@@ -49,7 +49,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User is not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             var ranks = (await _bll.ProfileRanks.AllUserAsync(user.Id)).ToList();
@@ -95,7 +95,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User is not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             var ranks = (await _bll.ProfileRanks.AllUserAsync(user.Id)).ToList();
@@ -142,7 +142,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (profileRank == null)
             {
-                return NotFound(new ErrorResponseDTO("Profile rank was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(new RankDTO()

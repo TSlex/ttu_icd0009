@@ -56,7 +56,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok((await _bll.Comments.AllByIdPageAsync(post.Id, pageNumber, 20)).Select(comment =>
@@ -86,7 +86,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             if (TryValidateModel(comment))
@@ -103,7 +103,7 @@ namespace WebApp.ApiControllers._1._0
                 return CreatedAtAction("GetPostsComments", _mapper.Map(result));
             }
 
-            return BadRequest(new ErrorResponseDTO("Comment is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
         /// <summary>
@@ -124,17 +124,17 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Comment was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             if (comment.Id != id)
             {
-                return NotFound(new ErrorResponseDTO("Ids should math!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
 
             if (record.ProfileId != User.UserId())
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             if (TryValidateModel(comment))
@@ -147,7 +147,7 @@ namespace WebApp.ApiControllers._1._0
                 return NoContent();
             }
 
-            return BadRequest(new ErrorResponseDTO("Comment is invalid"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -166,20 +166,20 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null)
             {
-                return NotFound(new ErrorResponseDTO("Comment was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             var post = await _bll.Posts.GetForUpdateAsync(record.PostId);
 
             if (!ValidateUserAccess(record) && !(post != null && post.ProfileId == User.UserId()))
             {
-                return NotFound(new ErrorResponseDTO("You cannot delete this comment!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
             
             _bll.Comments.Remove(record.Id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Comment was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
         
         private bool ValidateUserAccess(Comment? record)

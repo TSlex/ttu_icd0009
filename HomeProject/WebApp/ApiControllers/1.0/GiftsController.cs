@@ -94,7 +94,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User is not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             return Ok((await _bll.ProfileGifts.GetUser10ByPageAsync(user.Id, pageNumber)).Take(5)
@@ -128,7 +128,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null)
             {
-                return NotFound(new ErrorResponseDTO("User is not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(new GiftsCountDTO()
@@ -156,19 +156,19 @@ namespace WebApp.ApiControllers._1._0
 
             if (user == null || user.UserName != profileGift.Username)
             {
-                return NotFound(new ErrorResponseDTO("User was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
             if (user.Id == User.UserId())
             {
-                return NotFound(new ErrorResponseDTO("You cannot send gift to yourself!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Gifts.Gifts.ErrorGiftToYourself));
             }
 
             var gift = await _bll.Gifts.FindByCodeAsync(profileGift.GiftCode);
 
             if (gift == null)
             {
-                return BadRequest(new ErrorResponseDTO("Gift code is invalid!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
             }
 
             _bll.ProfileGifts.Add(new ProfileGift()
@@ -186,7 +186,7 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(new OkResponseDTO
             {
-                Status = "Gift was send C:"
+                Status = "OK"
             });
         }
 
@@ -206,7 +206,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (profileGift == null)
             {
-                return NotFound(new ErrorResponseDTO("Profile gift was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(new ProfileGiftDTO
@@ -238,13 +238,13 @@ namespace WebApp.ApiControllers._1._0
 
             if (record == null || record.ProfileId != User.UserId())
             {
-                return NotFound(new ErrorResponseDTO("Profile gift was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             _bll.ProfileGifts.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Profile gift was deleted"});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
     }
 }

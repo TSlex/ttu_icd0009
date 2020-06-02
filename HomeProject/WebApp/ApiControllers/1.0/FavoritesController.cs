@@ -53,7 +53,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(new CountResponseDTO()
@@ -77,7 +77,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (post == null)
             {
-                return NotFound(new ErrorResponseDTO("Post was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok((await _bll.Favorites.AllByPostIdPageAsync(postId, pageNumber, 10)).Select(favorite =>

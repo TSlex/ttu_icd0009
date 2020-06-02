@@ -53,14 +53,14 @@ namespace WebApp.ApiControllers._1._0
 
             if (!exist)
             {
-                return NotFound(new ErrorResponseDTO("Chat room was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
             
             var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(chatRoomId, User.UserId());
             
             if (!canAccess)
             {
-                return BadRequest(new ErrorResponseDTO("Access denied!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
             return Ok((await _bll.ChatMembers.RoomAllAsync(chatRoomId)).Select(member => new ChatMemberDTO
@@ -93,26 +93,26 @@ namespace WebApp.ApiControllers._1._0
         {
             if (roleTitle.Contains("Creator"))
             {
-                return BadRequest(new ErrorResponseDTO("Creator role is not assignable!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign));
             }
             
             var role = await _bll.ChatRoles.FindAsync(roleTitle);
 
             if (role == null)
             {
-                return NotFound(new ErrorResponseDTO("Role was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorRoleNotFound));
             }
 
             var member = await _bll.ChatMembers.FindAsync(id);
             
             if (member == null)
             {
-                return NotFound(new ErrorResponseDTO("Member was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorMemberNotFound));
             }
 
             if (member.ChatRole!.RoleTitle.Contains("Creator"))
             {
-                return BadRequest(new ErrorResponseDTO("Creator cannot be demoted!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote));
             }
 
             var isRoomAdministrator = await _bll.ChatRooms.IsRoomAdministratorAsync(member.ChatRoomId, User.UserId());
@@ -126,7 +126,7 @@ namespace WebApp.ApiControllers._1._0
                 return NoContent();
             }
             
-            return BadRequest(new ErrorResponseDTO("Only room administrator can assign roles!"));
+            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
         }
         
         /// <summary>
@@ -145,20 +145,20 @@ namespace WebApp.ApiControllers._1._0
 
             if (chatMember == null)
             {
-                return NotFound(new ErrorResponseDTO("Member was not found!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
             if (!currentMember.ChatRole.CanEditMembers)
             {
-                return BadRequest(new ErrorResponseDTO("You cannot edit members!"));
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
             
             _bll.ChatMembers.Remove(chatMember);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO(){Status = "Member was removed"});
+            return Ok(new OkResponseDTO(){Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
     }
 }
