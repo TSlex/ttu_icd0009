@@ -9,7 +9,10 @@ namespace BLL.App.DTO
     public class Post : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(PostTitle), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
-        [MaxLength(100)]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public string PostTitle { get; set; } = default!;
 
         [Display(Name = nameof(PostImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
@@ -19,7 +22,8 @@ namespace BLL.App.DTO
         public Image? PostImage { get; set; }
 
         [Display(Name = nameof(PostDescription), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
-        [MaxLength(500)]
+        [MaxLength(500, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? PostDescription { get; set; }
 
         [Display(Name = nameof(PostPublicationDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
@@ -32,6 +36,8 @@ namespace BLL.App.DTO
         public int PostCommentsCount { get; set; } = 0;
 
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid ProfileId { get; set; }
 
         [Display(Name = nameof(Profile), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
