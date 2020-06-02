@@ -149,4 +149,7 @@
     <data name="GiftNameId">
         <value>Name (ID)</value>
     </data>
+    <data name="ErrorGiftToYourself">
+        <value>You cannot send gift to yourself!</value>
+    </data>
 </root>

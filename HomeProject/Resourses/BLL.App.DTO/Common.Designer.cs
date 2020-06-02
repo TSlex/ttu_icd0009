@@ -115,6 +115,33 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access denied!.
+        /// </summary>
+        public static string ErrorAccessDenied {
+            get {
+                return ResourceManager.GetString("ErrorAccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record data is invalid!.
+        /// </summary>
+        public static string ErrorBadData {
+            get {
+                return ResourceManager.GetString("ErrorBadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id&apos;s should match!.
+        /// </summary>
+        public static string ErrorIdMatch {
+            get {
+                return ResourceManager.GetString("ErrorIdMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field {0} must be a string or array type with a maximum length of &apos;{1}&apos;..
         /// </summary>
         public static string ErrorMessage_MaxLength {
@@ -169,6 +196,24 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Record was not found!.
+        /// </summary>
+        public static string ErrorNotFound {
+            get {
+                return ResourceManager.GetString("ErrorNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User was not found!.
+        /// </summary>
+        public static string ErrorUserNotFound {
+            get {
+                return ResourceManager.GetString("ErrorUserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (ID).
         /// </summary>
         public static string Id {
@@ -192,6 +237,24 @@ namespace Resourses.BLL.App.DTO {
         public static string ReturnUrl {
             get {
                 return ResourceManager.GetString("ReturnUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record was deleted..
+        /// </summary>
+        public static string SuccessDeleted {
+            get {
+                return ResourceManager.GetString("SuccessDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record was restored..
+        /// </summary>
+        public static string SuccessRestored {
+            get {
+                return ResourceManager.GetString("SuccessRestored", resourceCulture);
             }
         }
     }

@@ -161,4 +161,16 @@
     <data name="ProfileId">
         <value>Profile (ID)</value>
     </data>
+    <data name="ResponseNowFavorited">
+        <value>Post in now favorited.</value>
+    </data>
+    <data name="ResponseNowUnFavorited">
+        <value>Post is no longer favorited.</value>
+    </data>
+    <data name="ResponseAlreadyFavorited">
+        <value>Post in already favorited.</value>
+    </data>
+    <data name="ResponseNotFavorited">
+        <value>Post is not favorited.</value>
+    </data>
 </root>

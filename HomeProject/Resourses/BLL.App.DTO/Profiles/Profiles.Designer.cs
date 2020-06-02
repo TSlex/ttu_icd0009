@@ -124,6 +124,60 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot block yourself!.
+        /// </summary>
+        public static string ErrorBlockYouself {
+            get {
+                return ResourceManager.GetString("ErrorBlockYouself", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot follow a user that blocks you!.
+        /// </summary>
+        public static string ErrorCannotFollowDueBlock {
+            get {
+                return ResourceManager.GetString("ErrorCannotFollowDueBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot change email!.
+        /// </summary>
+        public static string ErrorChangeEmail {
+            get {
+                return ResourceManager.GetString("ErrorChangeEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot change username!.
+        /// </summary>
+        public static string ErrorChangeUsername {
+            get {
+                return ResourceManager.GetString("ErrorChangeUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot follow yourself!.
+        /// </summary>
+        public static string ErrorFollowYouself {
+            get {
+                return ResourceManager.GetString("ErrorFollowYouself", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot set password!.
+        /// </summary>
+        public static string ErrorSetPassword {
+            get {
+                return ResourceManager.GetString("ErrorSetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Experience.
         /// </summary>
         public static string Experience {
@@ -390,6 +444,78 @@ namespace Resourses.BLL.App.DTO.Profiles {
         public static string Rank {
             get {
                 return ResourceManager.GetString("Rank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is already blocked..
+        /// </summary>
+        public static string ResponseAlreadyBlock {
+            get {
+                return ResourceManager.GetString("ResponseAlreadyBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are already subscribed to {0}..
+        /// </summary>
+        public static string ResponseAlreadyFollow {
+            get {
+                return ResourceManager.GetString("ResponseAlreadyFollow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not blocked..
+        /// </summary>
+        public static string ResponseNotBlock {
+            get {
+                return ResourceManager.GetString("ResponseNotBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not subscribed to {0}..
+        /// </summary>
+        public static string ResponseNotFollow {
+            get {
+                return ResourceManager.GetString("ResponseNotFollow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} was blocked..
+        /// </summary>
+        public static string ResponseNowBlock {
+            get {
+                return ResourceManager.GetString("ResponseNowBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are subscribed to {0}.
+        /// </summary>
+        public static string ResponseNowFollow {
+            get {
+                return ResourceManager.GetString("ResponseNowFollow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} was unblocked..
+        /// </summary>
+        public static string ResponseNowUnBlock {
+            get {
+                return ResourceManager.GetString("ResponseNowUnBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are no longer subscribed to {0}..
+        /// </summary>
+        public static string ResponseNowUnFollow {
+            get {
+                return ResourceManager.GetString("ResponseNowUnFollow", resourceCulture);
             }
         }
         

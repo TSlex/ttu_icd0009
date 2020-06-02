@@ -61,6 +61,42 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        /// </summary>
+        public static string ErrorForIdRequired {
+            get {
+                return ResourceManager.GetString("ErrorForIdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        /// </summary>
+        public static string ErrorImageSupportedRatio {
+            get {
+                return ResourceManager.GetString("ErrorImageSupportedRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        /// </summary>
+        public static string ErrorMaxImageResolution {
+            get {
+                return ResourceManager.GetString("ErrorMaxImageResolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For Id should be specified if type is not undefined!.
+        /// </summary>
+        public static string ExtensionsSupported {
+            get {
+                return ResourceManager.GetString("ExtensionsSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gifts.
         /// </summary>
         public static string Gifts {

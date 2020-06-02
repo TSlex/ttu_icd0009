@@ -138,4 +138,22 @@
   <data name="ProfileId" >
     <value>Profile (ID)</value>
   </data>
+  <data name="ErrorCreatorAssign" >
+    <value>Creator role is not assignable!</value>
+  </data>
+  <data name="ErrorCreatorDemote" >
+    <value>Creator cannot be demoted!</value>
+  </data>
+  <data name="ErrorMemberNotFound" >
+    <value>Member was not found!</value>
+  </data>
+  <data name="ErrorRoleNotFound" >
+    <value>Role was not found!</value>
+  </data>
+  <data name="ErrorCannotRename" >
+    <value>You cannot rename this room!</value>
+  </data>
+  <data name="ErrorCannotWrite" >
+    <value>You cannot write in this room!</value>
+  </data>
 </root>

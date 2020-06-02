@@ -145,7 +145,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll.ChatRoles.Restore(record);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO() {Status = "Record was deleted"});
+            return Ok(new OkResponseDTO() {Status = "Record was restored"});
         }
     }
 }

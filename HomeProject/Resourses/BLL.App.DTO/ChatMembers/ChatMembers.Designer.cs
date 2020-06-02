@@ -106,6 +106,60 @@ namespace Resourses.BLL.App.DTO.ChatMembers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot rename this room!.
+        /// </summary>
+        public static string ErrorCannotRename {
+            get {
+                return ResourceManager.GetString("ErrorCannotRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot write in this room!.
+        /// </summary>
+        public static string ErrorCannotWrite {
+            get {
+                return ResourceManager.GetString("ErrorCannotWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creator role is not assignable!.
+        /// </summary>
+        public static string ErrorCreatorAssign {
+            get {
+                return ResourceManager.GetString("ErrorCreatorAssign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creator cannot be demoted!.
+        /// </summary>
+        public static string ErrorCreatorDemote {
+            get {
+                return ResourceManager.GetString("ErrorCreatorDemote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member was not found!.
+        /// </summary>
+        public static string ErrorMemberNotFound {
+            get {
+                return ResourceManager.GetString("ErrorMemberNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role was not found!.
+        /// </summary>
+        public static string ErrorRoleNotFound {
+            get {
+                return ResourceManager.GetString("ErrorRoleNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {

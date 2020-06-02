@@ -70,6 +70,15 @@ namespace Resourses.BLL.App.DTO.Gifts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot send gift to yourself!.
+        /// </summary>
+        public static string ErrorGiftToYourself {
+            get {
+                return ResourceManager.GetString("ErrorGiftToYourself", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code.
         /// </summary>
         public static string GiftCode {

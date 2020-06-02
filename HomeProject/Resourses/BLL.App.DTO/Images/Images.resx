@@ -167,4 +167,16 @@
     <data name="ImageRequired">
         <value>Image should be specified!</value>
     </data>
+    <data name="ErrorForIdRequired">
+        <value>For Id should be specified if type is not undefined!</value>
+    </data>
+    <data name="ExtensionsSupported">
+        <value>For Id should be specified if type is not undefined!</value>
+    </data>
+    <data name="ErrorMaxImageResolution">
+        <value>For Id should be specified if type is not undefined!</value>
+    </data>
+    <data name="ErrorImageSupportedRatio">
+        <value>For Id should be specified if type is not undefined!</value>
+    </data>
 </root>

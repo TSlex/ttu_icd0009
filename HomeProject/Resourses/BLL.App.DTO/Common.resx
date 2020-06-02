@@ -162,4 +162,25 @@
   <data name="ErrorMessage_Range">
     <value>The field {0} must be between {1} and {2}.</value>
   </data>
+  <data name="ErrorIdMatch">
+    <value>Id's should match!</value>
+  </data>
+  <data name="ErrorNotFound">
+    <value>Record was not found!</value>
+  </data>
+  <data name="ErrorUserNotFound">
+    <value>User was not found!</value>
+  </data>
+  <data name="ErrorAccessDenied">
+    <value>Access denied!</value>
+  </data>
+  <data name="ErrorBadData">
+    <value>Record data is invalid!</value>
+  </data>
+  <data name="SuccessDeleted">
+    <value>Record was deleted.</value>
+  </data>
+  <data name="SuccessRestored">
+    <value>Record was restored.</value>
+  </data>
 </root>

@@ -176,5 +176,41 @@ namespace Resourses.BLL.App.DTO.Posts {
                 return ResourceManager.GetString("ProfileId", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post in already favorited..
+        /// </summary>
+        public static string ResponseAlreadyFavorited {
+            get {
+                return ResourceManager.GetString("ResponseAlreadyFavorited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post is not favorited..
+        /// </summary>
+        public static string ResponseNotFavorited {
+            get {
+                return ResourceManager.GetString("ResponseNotFavorited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post in now favorited..
+        /// </summary>
+        public static string ResponseNowFavorited {
+            get {
+                return ResourceManager.GetString("ResponseNowFavorited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post is no longer favorited..
+        /// </summary>
+        public static string ResponseNowUnFavorited {
+            get {
+                return ResourceManager.GetString("ResponseNowUnFavorited", resourceCulture);
+            }
+        }
     }
 }

@@ -231,4 +231,46 @@
   <data name="PasswordConfirm" >
     <value>Confirm password</value> 
   </data>
+  <data name="ErrorChangeUsername" >
+    <value>Cannot change username!</value>
+  </data>
+  <data name="ErrorChangeEmail" >
+    <value>Cannot change email!</value>
+  </data>
+  <data name="ErrorSetPassword" >
+    <value>Cannot set password!</value>
+  </data>
+  <data name="ErrorFollowYouself" >
+    <value>You cannot follow yourself!</value>
+  </data>
+  <data name="ErrorBlockYouself" >
+    <value>You cannot block yourself!</value>
+  </data>
+  <data name="ErrorCannotFollowDueBlock" >
+    <value>You cannot follow a user that blocks you!</value>
+  </data>
+  <data name="ResponseNowFollow" >
+    <value>You are subscribed to {0}</value>
+  </data>
+  <data name="ResponseNowUnFollow" >
+    <value>You are no longer subscribed to {0}.</value>
+  </data>
+  <data name="ResponseAlreadyFollow" >
+    <value>You are already subscribed to {0}.</value>
+  </data>
+  <data name="ResponseNotFollow" >
+    <value>You are not subscribed to {0}.</value>
+  </data>
+  <data name="ResponseNowBlock" >
+    <value>{0} was blocked.</value>
+  </data>
+  <data name="ResponseNowUnBlock" >
+    <value>{0} was unblocked.</value>
+  </data>
+  <data name="ResponseAlreadyBlock" >
+    <value>{0} is already blocked.</value>
+  </data>
+  <data name="ResponseNotBlock" >
+    <value>{0} is not blocked.</value>
+  </data>
 </root>
