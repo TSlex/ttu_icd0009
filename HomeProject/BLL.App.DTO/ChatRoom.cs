@@ -9,18 +9,23 @@ namespace BLL.App.DTO
     public class ChatRoom : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Display(Name = nameof(ChatRoomTitle), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRooms.ChatRooms))]
-        [MaxLength(100)]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public string ChatRoomTitle { get; set; } = default!;
 
         [Display(Name = nameof(LastMessageValue), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRooms.ChatRooms))]
-        [MaxLength(3000)]
+        [MaxLength(3000, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? LastMessageValue { get; set; }
 
         [Display(Name = nameof(LastMessageDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRooms.ChatRooms))]
         public DateTime? LastMessageDateTime { get; set; }
 
         [Display(Name = nameof(ChatRoomImageUrl), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRooms.ChatRooms))]
-        [MaxLength(300)]
+        [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ChatRoomImageUrl { get; set; }
 
         [Display(Name = nameof(ChatRoomImageId), ResourceType = typeof(Resourses.BLL.App.DTO.ChatRooms.ChatRooms))]
