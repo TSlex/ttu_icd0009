@@ -47,4 +47,7 @@
     <data name="ProfileGifts">
         <value>Profiilid</value>
     </data>
+    <data name="GiftNameId">
+        <value>Nimetus (ID)</value>
+    </data>
 </root>

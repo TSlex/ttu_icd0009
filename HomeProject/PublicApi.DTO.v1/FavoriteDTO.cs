@@ -12,13 +12,24 @@ namespace PublicApi.DTO.v1
 
     public class FavoriteAdminDTO : DomainEntityBaseMetadata
     {
+        [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid ProfileId { get; set; } = default!;
 
+        [Display(Name = nameof(PostId), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid PostId { get; set; } = default!;
 
         //what content user actually likes
-        [MaxLength(100)] public string? PostTitle { get; set; }
+        [Display(Name = nameof(PostTitle), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
+        public string? PostTitle { get; set; }
+
+        [Display(Name = nameof(PostImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
         public Guid? PostImageId { get; set; }
-        [MaxLength(100)] public string? PostDescription { get; set; }
+
+        [Display(Name = nameof(PostDescription), ResourceType = typeof(Resourses.BLL.App.DTO.Favorites.Favorites))]
+        public string? PostDescription { get; set; }
     }
 }

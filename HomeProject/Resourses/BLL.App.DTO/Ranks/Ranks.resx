@@ -156,4 +156,10 @@
   <data name="RankTitle" >
     <value>Title</value>
   </data>
+  <data name="RankDescriptionId" >
+    <value>Description (ID)</value>
+  </data>
+  <data name="RankTitleId" >
+    <value>Title (ID)</value>
+  </data>
 </root>

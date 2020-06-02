@@ -25,15 +25,33 @@ namespace PublicApi.DTO.v1
         public int Count { get; set; }
     }
     
-    public class GiftAdminDTO: DomainEntityBaseMetaSoftUpdateDelete
+    public class GiftAdminDTO : DomainEntityBaseMetaSoftUpdateDelete
     {
+        [Display(Name = nameof(GiftNameId), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid GiftNameId { get; set; } = default!;
-        [MaxLength(100)] public string? GiftName { get; set; } = default!;
 
-        [MaxLength(100)] public string GiftCode { get; set; } = default!;
+        [Display(Name = nameof(GiftName), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
+        public string GiftName { get; set; } = default!;
 
+        [Display(Name = nameof(GiftCode), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
+        public string GiftCode { get; set; } = default!;
+
+        [Display(Name = nameof(GiftImageId), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
         public Guid? GiftImageId { get; set; }
 
+        [Display(Name = nameof(Price), ResourceType = typeof(Resourses.BLL.App.DTO.Gifts.Gifts))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public int Price { get; set; }
     }
 }

@@ -12,10 +12,16 @@ namespace PublicApi.DTO.v1
     
     public class FollowerAdminDTO: DomainEntityBaseMetadata
     {
-        //who want to follow
-        public Guid FollowerProfileId { get; set; } = default!;
-
         //who will have new follower
+        [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Followers.Followers))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid ProfileId { get; set; } = default!;
+
+        //who want to follow
+        [Display(Name = nameof(FollowerProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Followers.Followers))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
+        public Guid FollowerProfileId { get; set; } = default!;
     }
 }

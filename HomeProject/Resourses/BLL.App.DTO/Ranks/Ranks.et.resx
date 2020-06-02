@@ -57,4 +57,10 @@
     <data name="RankTitle" >
         <value>Pealkiri</value>
     </data>
+    <data name="RankDescriptionId" >
+        <value>Kirjeldus (ID)</value>
+    </data>
+    <data name="RankTitleId" >
+        <value>Pealkiri (ID)</value>
+    </data>
 </root>

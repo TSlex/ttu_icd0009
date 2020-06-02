@@ -57,4 +57,10 @@
     <data name="RankTitle" >
         <value>Название</value>
     </data>
+    <data name="RankDescriptionId" >
+        <value>Описание (ID)</value>
+    </data>
+    <data name="RankTitleId" >
+        <value>Название (ID)</value>
+    </data>
 </root>

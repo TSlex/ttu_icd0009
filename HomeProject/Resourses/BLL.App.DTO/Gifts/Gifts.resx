@@ -146,4 +146,7 @@
     <data name="ProfileGifts">
         <value>Profiles</value>
     </data>
+    <data name="GiftNameId">
+        <value>Name (ID)</value>
+    </data>
 </root>

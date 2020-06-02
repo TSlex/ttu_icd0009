@@ -115,6 +115,15 @@ namespace Resourses.BLL.App.DTO.Gifts {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name (ID).
+        /// </summary>
+        public static string GiftNameId {
+            get {
+                return ResourceManager.GetString("GiftNameId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {

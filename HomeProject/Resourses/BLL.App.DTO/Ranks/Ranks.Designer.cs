@@ -151,6 +151,15 @@ namespace Resourses.BLL.App.DTO.Ranks {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description (ID).
+        /// </summary>
+        public static string RankDescriptionId {
+            get {
+                return ResourceManager.GetString("RankDescriptionId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon.
         /// </summary>
         public static string RankIcon {
@@ -174,6 +183,15 @@ namespace Resourses.BLL.App.DTO.Ranks {
         public static string RankTitle {
             get {
                 return ResourceManager.GetString("RankTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title (ID).
+        /// </summary>
+        public static string RankTitleId {
+            get {
+                return ResourceManager.GetString("RankTitleId", resourceCulture);
             }
         }
     }
