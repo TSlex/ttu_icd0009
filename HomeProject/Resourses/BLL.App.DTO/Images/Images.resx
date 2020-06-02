@@ -164,4 +164,7 @@
     <data name="Profiles">
         <value>Profiles</value>
     </data>
+    <data name="ImageRequired">
+        <value>Image should be specified!</value>
+    </data>
 </root>

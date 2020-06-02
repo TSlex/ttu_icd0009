@@ -60,4 +60,7 @@
     <data name="Profiles">
         <value>Профили</value>
     </data>
+    <data name="ImageRequired">
+        <value>Картинка должна быть указана!</value>
+    </data>
 </root>

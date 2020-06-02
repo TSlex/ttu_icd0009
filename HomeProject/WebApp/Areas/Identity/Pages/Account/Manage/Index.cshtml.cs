@@ -31,27 +31,45 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [MaxLength(300)]
+            [Phone(ErrorMessageResourceType = typeof(Resourses.Views.Identity.Identity),
+                ErrorMessageResourceName = "InvalidPhone")]
+            [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
             [Display(Name = nameof(PhoneNumber), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
             public string? PhoneNumber { get; set; }
-            
+
             [Display(Name = nameof(UserName), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-            [MaxLength(300)] public string UserName { get; set; } = default!;
-            
+            [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
+            public string UserName { get; set; } = default!;
+
             [Display(Name = nameof(ProfileFullName), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-            [MinLength(1)] [MaxLength(100)] public string? ProfileFullName { get; set; }
-            
+            [MinLength(1, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MinLength")]
+            [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+            public string? ProfileFullName { get; set; }
+
             [Display(Name = nameof(ProfileWorkPlace), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-            [MaxLength(300)] public string? ProfileWorkPlace { get; set; }
+            [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+            public string? ProfileWorkPlace { get; set; }
 
             [Display(Name = nameof(ProfileAbout), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-            [MaxLength(1000)] public string? ProfileAbout { get; set; }
-            
+            [MaxLength(1000, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
+            public string? ProfileAbout { get; set; }
+
             [Display(Name = nameof(ProfileGender), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
             public ProfileGender ProfileGender { get; set; } = default!;
-            
+
             [Display(Name = nameof(ProfileGenderOwn), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+            [MaxLength(20, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
             public string? ProfileGenderOwn { get; set; }
         }
 
@@ -61,7 +79,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Input = new InputModel
-            {    
+            {
                 UserName = userName,
                 ProfileFullName = user.ProfileFullName,
                 ProfileWorkPlace = user.ProfileWorkPlace,
@@ -97,7 +115,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
-            
+
             //setup new phone
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
@@ -110,7 +128,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                         $"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
-            
+
             //setup new username
             var username = await _userManager.GetUserNameAsync(user);
             if (Input.UserName != username)
@@ -122,9 +140,9 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                     StatusMessage = Resourses.Views.Identity.Identity.ProfileDataUpdateStatusUsernameExists;
                     return RedirectToPage();
                 }
-                
+
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.UserName);
-                
+
                 if (!setUserNameResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -132,19 +150,19 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                         $"Unexpected error occurred setting username for user with ID '{userId}'.");
                 }
             }
-            
+
             //setup other
             user.ProfileFullName = Input.ProfileFullName;
             user.ProfileWorkPlace = Input.ProfileWorkPlace;
             user.ProfileAbout = Input.ProfileAbout;
             user.ProfileGender = Input.ProfileGender;
             user.ProfileGenderOwn = Input.ProfileGenderOwn;
-            
+
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
-            
+
             StatusMessage = Resourses.Views.Identity.Identity.ProfileDataUpdateStatusSuccess;
-            
+
             return RedirectToPage();
         }
     }

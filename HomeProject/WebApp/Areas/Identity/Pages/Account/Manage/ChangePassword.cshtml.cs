@@ -38,20 +38,27 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
             [DataType(DataType.Password)]
             [Display(Name = "CurrentPassword", ResourceType = typeof(Resourses.Views.Identity.Identity))]
             public string OldPassword { get; set; } = default!;
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
+            [StringLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_StringLengthMinMax",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "NewPassword", ResourceType = typeof(Resourses.Views.Identity.Identity))]
             public string NewPassword { get; set; } = default!;
 
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
             [DataType(DataType.Password)]
             [Display(Name = "NewPasswordConfirm", ResourceType = typeof(Resourses.Views.Identity.Identity))]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Compare("NewPassword", ErrorMessageResourceType = typeof(Resourses.Views.Identity.Identity),
+                ErrorMessageResourceName = "PasswordMatchError")]
             public string ConfirmPassword { get; set; } = default!;
         }
 
@@ -85,13 +92,15 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
+            var changePasswordResult =
+                await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
                 foreach (var error in changePasswordResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
                 return Page();
             }
 

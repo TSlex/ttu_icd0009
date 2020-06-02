@@ -32,8 +32,10 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         }
 
         [Display(Name = "CurrentEmail", ResourceType = typeof(Resourses.Views.Identity.Identity))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public string Email { get; set; } = default!;
-
+        
         public bool IsEmailConfirmed { get; set; } = default!;
 
         [TempData] public string? StatusMessage { get; set; }
@@ -42,9 +44,12 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "NewEmail", ResourceType = typeof(Resourses.Views.Identity.Identity))]
+            [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_Required")]
+            [Display(Name = nameof(Email),
+                ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+            [EmailAddress(ErrorMessageResourceType = typeof(Resourses.Views.Identity.Identity),
+                ErrorMessageResourceName = "InvalidEmail")]
             public string NewEmail { get; set; } = default!;
         }
 

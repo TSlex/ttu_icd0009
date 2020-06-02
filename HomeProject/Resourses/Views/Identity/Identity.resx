@@ -123,4 +123,7 @@
     <data name="InvalidEmail">
         <value>The {0} field is not a valid e-mail address.</value>
     </data>
+    <data name="InvalidPhone">
+        <value>The {0} field is not a valid phone number.</value>
+    </data>
 </root>

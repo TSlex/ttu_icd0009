@@ -60,4 +60,7 @@
     <data name="Profiles">
         <value>Profiilid</value>
     </data>
+    <data name="ImageRequired">
+        <value>Pilt on kohustuslik!</value>
+    </data>
 </root>

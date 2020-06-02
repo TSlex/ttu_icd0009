@@ -123,4 +123,7 @@
     <data name="InvalidEmail">
         <value>Väli {0} pole kehtiv e-posti aadress.</value>
     </data>
+    <data name="InvalidPhone">
+        <value>Väli {0} pole kehtiv telefoninumber.</value>
+    </data>
 </root>

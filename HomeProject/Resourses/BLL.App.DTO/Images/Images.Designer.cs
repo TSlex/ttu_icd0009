@@ -97,6 +97,15 @@ namespace Resourses.BLL.App.DTO.Images {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image should be specified!.
+        /// </summary>
+        public static string ImageRequired {
+            get {
+                return ResourceManager.GetString("ImageRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string ImageType {

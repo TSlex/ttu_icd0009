@@ -121,6 +121,9 @@
         <value>Пароль и его подтверждение должны совпадать.</value>
     </data>
     <data name="InvalidEmail">
-        <value>Поле {0} не является э-адресом.</value>
+        <value>Поле {0} не является верным э-адресом.</value>
+    </data>
+    <data name="InvalidPhone">
+        <value>Поле {0} не является верным номером телефона.</value>
     </data>
 </root>

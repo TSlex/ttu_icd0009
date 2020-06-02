@@ -69,10 +69,9 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
                 ErrorMessageResourceName = "ErrorMessage_Required")]
-            [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
-                ErrorMessageResourceName = "ErrorMessage_MaxLength")]
-            [MinLength(6, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
-                ErrorMessageResourceName = "ErrorMessage_MinLength")]
+            [StringLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+                ErrorMessageResourceName = "ErrorMessage_StringLengthMinMax",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = nameof(Password),
                 ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
@@ -134,8 +133,8 @@ namespace WebApp.Areas.Identity.Pages.Account
                     }
                     else
                     {*/
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
 //                    }
                 }
 
