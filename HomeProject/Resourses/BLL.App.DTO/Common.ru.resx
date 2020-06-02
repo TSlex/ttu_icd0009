@@ -89,4 +89,7 @@
     <data name="SuccessRestored">
         <value>Запись была восстановлена.</value>
     </data>
+    <data name="ErrorTranslationRequired">
+        <value>Требуется перевод!</value>
+    </data>
 </root>

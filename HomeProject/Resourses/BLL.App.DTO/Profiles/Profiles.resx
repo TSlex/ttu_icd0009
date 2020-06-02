@@ -273,4 +273,16 @@
   <data name="ResponseNotBlock" >
     <value>{0} is not blocked.</value>
   </data>
+  <data name="ErrorUserAlreadyExists" >
+    <value>User already registered!</value>
+  </data>
+  <data name="ErrorUsernameAlreadyExists" >
+    <value>That username is already taken!</value>
+  </data>
+  <data name="ErrorChangePhone" >
+    <value>Cannot change phone!</value>
+  </data>
+  <data name="ErrorIncorrectPassword" >
+    <value>Incorrect password!</value>
+  </data>
 </root>

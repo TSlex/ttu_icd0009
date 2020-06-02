@@ -89,4 +89,7 @@
     <data name="SuccessRestored">
         <value>Kirje taastati.</value>
     </data>
+    <data name="ErrorTranslationRequired">
+        <value>Tõlge on vajalik!</value>
+    </data>
 </root>

@@ -183,4 +183,7 @@
   <data name="SuccessRestored">
     <value>Record was restored.</value>
   </data>
+  <data name="ErrorTranslationRequired">
+    <value>Translation is required!</value>
+  </data>
 </root>

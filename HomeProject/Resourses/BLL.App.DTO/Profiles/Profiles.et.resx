@@ -179,4 +179,16 @@
     <data name="ResponseNotBlock" >
         <value>{0} pole blokeeritud.</value>
     </data>
+    <data name="ErrorUserAlreadyExists" >
+        <value>Kasutaja on juba olemas!</value>
+    </data>
+    <data name="ErrorUsernameAlreadyExists" >
+        <value>See kasutajanimi on juba võetud!</value>
+    </data>
+    <data name="ErrorChangePhone" >
+        <value>Viga telefoni muutmisel!</value>
+    </data>
+    <data name="ErrorIncorrectPassword" >
+        <value>Vale salasõna!</value>
+    </data>
 </root>

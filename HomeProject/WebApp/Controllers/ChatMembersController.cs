@@ -107,12 +107,12 @@ namespace WebApp.Controllers
 
             if (member.ChatRole.CanEditMembers)
             {
-                ModelState.AddModelError(string.Empty, "You cannot remove members control ability claim!");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote);
             }
 
             if (chatRole.CanEditMembers)
             {
-                ModelState.AddModelError(string.Empty, "You cannot claim members control ability!");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign);
             }
 
             if (ModelState.IsValid)

@@ -118,7 +118,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             if (profile != null)
             {
                 _logger.LogInformation($"WebApi register. User {model.Email} already registered!");
-                return NotFound(new ErrorResponseDTO("User already registered!"));
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorUserAlreadyExists));
             }
 
             if (ModelState.IsValid)
@@ -200,7 +200,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 if (!setPhoneResult.Succeeded)
                 {
                     return BadRequest(new ErrorResponseDTO(
-                        $"Unexpected error occurred while setting phone"));
+                        Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangePhone));
                 }
             }
 
@@ -212,7 +212,7 @@ namespace WebApp.ApiControllers._1._0.Identity
 
                 if (userCheck != null && !(userCheck.Equals(user)))
                 {
-                    return BadRequest(new ErrorResponseDTO("Error. That username is already taken!"));
+                    return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorUsernameAlreadyExists));
                 }
 
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, dto.Username);
@@ -322,7 +322,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             {
                 if (deleteDTO.Password == null || !await _userManager.CheckPasswordAsync(user, deleteDTO.Password))
                 {
-                    return BadRequest(new ErrorResponseDTO("Incorrect password"));
+                    return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorIncorrectPassword));
                 }
             }
 

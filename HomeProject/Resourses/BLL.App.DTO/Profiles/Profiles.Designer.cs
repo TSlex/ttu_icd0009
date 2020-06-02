@@ -151,6 +151,15 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot change phone!.
+        /// </summary>
+        public static string ErrorChangePhone {
+            get {
+                return ResourceManager.GetString("ErrorChangePhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot change username!.
         /// </summary>
         public static string ErrorChangeUsername {
@@ -169,11 +178,38 @@ namespace Resourses.BLL.App.DTO.Profiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect password!.
+        /// </summary>
+        public static string ErrorIncorrectPassword {
+            get {
+                return ResourceManager.GetString("ErrorIncorrectPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot set password!.
         /// </summary>
         public static string ErrorSetPassword {
             get {
                 return ResourceManager.GetString("ErrorSetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already registered!.
+        /// </summary>
+        public static string ErrorUserAlreadyExists {
+            get {
+                return ResourceManager.GetString("ErrorUserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to That username is already taken!.
+        /// </summary>
+        public static string ErrorUsernameAlreadyExists {
+            get {
+                return ResourceManager.GetString("ErrorUsernameAlreadyExists", resourceCulture);
             }
         }
         

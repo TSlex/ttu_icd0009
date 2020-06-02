@@ -137,7 +137,7 @@ namespace WebApp.Controllers
         {
             if (post.PostImage!.ImageFile == null)
             {
-                ModelState.AddModelError(string.Empty, "Image should be specified");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(post);
             }
             
@@ -208,7 +208,7 @@ namespace WebApp.Controllers
             
             if (post.PostImage!.ImageFile == null && post.PostImageId == null)
             {
-                ModelState.AddModelError(string.Empty, "Image should be specified");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(post);
             }
 

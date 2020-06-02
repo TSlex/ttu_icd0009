@@ -37,7 +37,6 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
-//            return View(await _bll.Followers.AllByIdPageAsync(user.Id, false, 1, int.MaxValue));
             return View(user.Followers);
         }
         
@@ -54,7 +53,6 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             
-//            return View(await _bll.Followers.AllByIdPageAsync(user.Id, true, 1, int.MaxValue));
             return View(user.Followed);
         }
         

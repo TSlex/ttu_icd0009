@@ -97,7 +97,7 @@ namespace WebApp.Areas.Admin.Controllers
             
             if (imageModel.ImageType != ImageType.Undefined && imageModel.ImageFor == null)
             {
-                ModelState.AddModelError(string.Empty, "Id should be specified if not misc image type");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
                 return View(imageModel);
             }
             
@@ -165,7 +165,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (imageModel.ImageType != ImageType.Undefined && imageModel.ImageFor == null)
             {
-                ModelState.AddModelError(string.Empty, "Id should be specified if not misc image type");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
                 return View(imageModel);
             }
             
@@ -224,7 +224,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
             {
-                ModelState.AddModelError(string.Empty, "Extension supported only: [.png, .jpg, .jpeg]");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
                 return null;
             }
 
@@ -232,14 +232,14 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 if (image.Height > 4000 || image.Width > 4000)
                 {
-                    ModelState.AddModelError(string.Empty, "Image should be not bigger that 4000x4000");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
                     return null;
                 }
 
                 var ratio = image.Height * 1.0 / image.Width;
                 if (ratio < 0.1 || 10 < ratio)
                 {
-                    ModelState.AddModelError(string.Empty, "Image ration should be between 0.1 and 10");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
                     return null;
                 }
 

@@ -205,6 +205,15 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Translation is required!.
+        /// </summary>
+        public static string ErrorTranslationRequired {
+            get {
+                return ResourceManager.GetString("ErrorTranslationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User was not found!.
         /// </summary>
         public static string ErrorUserNotFound {

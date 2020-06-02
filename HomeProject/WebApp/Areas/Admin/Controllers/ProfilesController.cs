@@ -131,7 +131,7 @@ namespace WebApp.Areas.Admin.Controllers
             
             if (profile.ProfileAvatar!.ImageFile == null && profile.ProfileAvatarId == null)
             {
-                ModelState.AddModelError(string.Empty, "Image should be specified");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(profile);
             }
             
@@ -152,7 +152,7 @@ namespace WebApp.Areas.Admin.Controllers
 
                 if (record == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Profile does not exist");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorUserNotFound);
                     return View(profile);
                 }
                 
@@ -172,7 +172,7 @@ namespace WebApp.Areas.Admin.Controllers
                     var result = await _userManager.SetUserNameAsync(record, profile.UserName);
                     if (!result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, "Cannot change username");
+                        ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername);
                         return View(profile);
                     }
                 }
@@ -181,7 +181,7 @@ namespace WebApp.Areas.Admin.Controllers
                     var result = await _userManager.SetEmailAsync(record, profile.Email);
                     if (!result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, "Cannot change email");
+                        ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail);
                         return View(profile);
                     }
                 }

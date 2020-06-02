@@ -88,7 +88,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (chatRole.RoleTitleValue == null)
             {
-                ModelState.AddModelError(string.Empty, "Translation is required");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorTranslationRequired);
             }
 
             if (TryValidateModel(chatRole))
@@ -137,7 +137,7 @@ namespace WebApp.Areas.Admin.Controllers
             
             if (chatRole.RoleTitleValue == null)
             {
-                ModelState.AddModelError(string.Empty, "Translation is required");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorTranslationRequired);
             }
 
             if (ModelState.IsValid)

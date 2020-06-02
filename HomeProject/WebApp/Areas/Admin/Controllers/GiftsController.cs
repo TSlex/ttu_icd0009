@@ -90,7 +90,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (gift.GiftImage!.ImageFile == null)
             {
-                ModelState.AddModelError(string.Empty, "Image should be specified");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(gift);
             }
 
@@ -150,7 +150,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (gift.GiftImage!.ImageFile == null && gift.GiftImageId == null)
             {
-                ModelState.AddModelError(string.Empty, "Image should be specified");
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(gift);
             }
 

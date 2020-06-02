@@ -179,4 +179,16 @@
     <data name="ResponseNotBlock" >
         <value>{0} не заблокирован.</value>
     </data>
+    <data name="ErrorUserAlreadyExists" >
+        <value>Пользователь уже зарегистрирован!</value>
+    </data>
+    <data name="ErrorUsernameAlreadyExists" >
+        <value>Имя пользователя уже используется!</value>
+    </data>
+    <data name="ErrorChangePhone" >
+        <value>Ошибка смены телефона!</value>
+    </data>
+    <data name="ErrorIncorrectPassword" >
+        <value>Неверный пароль!</value>
+    </data>
 </root>
