@@ -13,16 +13,20 @@ namespace BLL.App.DTO
         public DateTime? LastLoginDateTime { get; set; }
 
         [Display(Name = nameof(ProfileFullName), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MinLength(1)]
-        [MaxLength(100)]
+        [MinLength(1, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MinLength")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileFullName { get; set; }
 
         [Display(Name = nameof(ProfileWorkPlace), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(300)]
+        [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileWorkPlace { get; set; }
 
         [Display(Name = nameof(ProfileStatus), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(300)]
+        [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileStatus { get; set; }
 
         [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
@@ -32,15 +36,20 @@ namespace BLL.App.DTO
         public Image? ProfileAvatar { get; set; }
 
         [Display(Name = nameof(ProfileAbout), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(1000)]
+        [MaxLength(1000, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileAbout { get; set; }
 
         [Display(Name = nameof(ProfileGender), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Range")]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public ProfileGender ProfileGender { get; set; } = ProfileGender.Undefined;
 
         [Display(Name = nameof(ProfileGenderOwn), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(20)]
+        [MaxLength(20, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileGenderOwn { get; set; }
 
         [Display(Name = nameof(FollowersCount), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
@@ -144,16 +153,20 @@ namespace BLL.App.DTO
     public class ProfileEdit : MUser
     {
         [Display(Name = nameof(ProfileFullName), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MinLength(1)]
-        [MaxLength(100)]
+        [MinLength(1, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MinLength")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileFullName { get; set; }
 
         [Display(Name = nameof(ProfileWorkPlace), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(300)]
+        [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileWorkPlace { get; set; }
 
         [Display(Name = nameof(ProfileStatus), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(300)]
+        [MaxLength(300, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileStatus { get; set; }
 
         [Display(Name = nameof(ProfileAvatarId), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
@@ -163,15 +176,20 @@ namespace BLL.App.DTO
         public Image? ProfileAvatar { get; set; }
 
         [Display(Name = nameof(ProfileAbout), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(1000)]
+        [MaxLength(1000, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileAbout { get; set; }
 
         [Display(Name = nameof(ProfileGender), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Range")]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public ProfileGender ProfileGender { get; set; } = ProfileGender.Undefined;
 
         [Display(Name = nameof(ProfileGenderOwn), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [MaxLength(20)]
+        [MaxLength(20, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? ProfileGenderOwn { get; set; }
 
         [Display(Name = nameof(Experience), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]

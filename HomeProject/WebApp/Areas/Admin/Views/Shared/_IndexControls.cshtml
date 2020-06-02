@@ -11,20 +11,12 @@
             <a asp-action="History" asp-area="Admin" asp-route-id="@Model.Id">
                 <button class="btn btn-info fa fa-history index_controls"></button>
             </a>
-            
             <a asp-action="Edit" asp-area="Admin" asp-route-id="@Model.Id">
                 <button class="btn btn-primary fa fa-edit index_controls"></button>
             </a>
-        }
-    }
-    
-    <a asp-action="Details" asp-area="Admin" asp-route-id="@Model.Id">
-        <button class="btn btn-primary fa fa-eye index_controls"></button>
-    </a>
-    
-    @{
-        if (isSoftUpdateEntity && Model.MasterId == null || isDomainEntityBaseMetadata)
-        {
+            <a asp-action="Details" asp-area="Admin" asp-route-id="@Model.Id">
+                <button class="btn btn-primary fa fa-eye index_controls"></button>
+            </a>
             if (Model.DeletedAt == null)
             {
                 <form method="post" asp-action="Delete" asp-area="Admin" class="disable_form_style">
@@ -32,13 +24,42 @@
                     <button type="submit" class="btn btn-danger fa fa-trash index_controls"/>
                 </form>
             }
-            else if (isSoftUpdateEntity && Model.MasterId == null)
+            else
             {
                 <form method="post" asp-action="Restore" asp-area="Admin" class="disable_form_style">
                     <input type="hidden" name="id" value="@Model.Id">
                     <button type="submit" class="btn btn-success fa fa-trash-restore index_controls"/>
                 </form>
             }
+        }
+        else if (!isSoftUpdateEntity && isDomainEntityBaseMetadata)
+        {
+            <a asp-action="Edit" asp-area="Admin" asp-route-id="@Model.Id">
+                <button class="btn btn-primary fa fa-edit index_controls"></button>
+            </a>
+            <a asp-action="Details" asp-area="Admin" asp-route-id="@Model.Id">
+                <button class="btn btn-primary fa fa-eye index_controls"></button>
+            </a>
+            if (Model.DeletedAt == null)
+            {
+                <form method="post" asp-action="Delete" asp-area="Admin" class="disable_form_style">
+                    <input type="hidden" name="id" value="@Model.Id">
+                    <button type="submit" class="btn btn-danger fa fa-trash index_controls"/>
+                </form>
+            }
+            else
+            {
+                <form method="post" asp-action="Restore" asp-area="Admin" class="disable_form_style">
+                    <input type="hidden" name="id" value="@Model.Id">
+                    <button type="submit" class="btn btn-success fa fa-trash-restore index_controls"/>
+                </form>
+            }
+        }
+        else
+        {
+            <a asp-action="Details" asp-area="Admin" asp-route-id="@Model.Id">
+                <button class="btn btn-primary fa fa-eye index_controls"></button>
+            </a>
         }
     }
 </div>
