@@ -9,12 +9,16 @@ namespace BLL.App.DTO
     public class ProfileGift : DomainEntityBaseMetaSoftDelete
     {
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid ProfileId { get; set; } = default!;
 
         [Display(Name = nameof(Profile), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
         public Profile? Profile { get; set; }
 
         [Display(Name = nameof(GiftId), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public Guid GiftId { get; set; } = default!;
 
         [Display(Name = nameof(Gift), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
@@ -24,6 +28,8 @@ namespace BLL.App.DTO
         public DateTime GiftDateTime { get; set; } = DateTime.Now;
 
         [Display(Name = nameof(Price), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public int Price { get; set; }
 
         [Display(Name = nameof(FromProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
@@ -33,7 +39,8 @@ namespace BLL.App.DTO
         public Profile? FromProfile { get; set; }
 
         [Display(Name = nameof(Message), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
-        [MaxLength(100)]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         public string? Message { get; set; }
 
         [Display(Name = nameof(ReturnUrl), ResourceType = typeof(Resourses.BLL.App.DTO.Common))]

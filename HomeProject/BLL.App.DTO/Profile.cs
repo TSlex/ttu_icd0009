@@ -193,6 +193,8 @@ namespace BLL.App.DTO
         public string? ProfileGenderOwn { get; set; }
 
         [Display(Name = nameof(Experience), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
+        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
+            ErrorMessageResourceName = "ErrorMessage_Required")]
         public int Experience { get; set; }
 
         [Display(Name = nameof(Password), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
