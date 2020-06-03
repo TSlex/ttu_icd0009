@@ -6,10 +6,10 @@ using Domain.Translation;
 
 namespace Domain
 {
-    public class ChatRole: DomainEntityBaseMetaSoftUpdateDelete
+    public class ChatRole : DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(200)] public string RoleTitle { get; set; } = default!;
-        
+
         public Guid RoleTitleValueId { get; set; } = default!;
         public LangString? RoleTitleValue { get; set; } = default!;
 

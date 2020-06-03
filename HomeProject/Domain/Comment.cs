@@ -4,10 +4,10 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class Comment: DomainEntityBaseMetaSoftUpdateDelete
+    public class Comment : DomainEntityBaseMetaSoftUpdateDelete
     {
-        [MaxLength(300)][MinLength(1)] public string CommentValue { get; set; } = default!;
-        public DateTime CommentDateTime { get; set; } = DateTime.Now;
+        [MaxLength(300)] [MinLength(1)] public string CommentValue { get; set; } = default!;
+        public DateTime CommentDateTime { get; set; } = default!;
 
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

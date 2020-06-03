@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Identity;
 namespace Domain.Identity
 {
     [Table("User")]
-    public class MUser: IdentityUser<Guid>, IDomainEntityBaseMetadata, ISoftDeleteEntity
+    public class MUser : IdentityUser<Guid>, IDomainEntityBaseMetadata, ISoftDeleteEntity
     {
         [MaxLength(36)] public override Guid Id { get; set; } = default!;
-        
+
         public DateTime RegistrationDateTime { get; set; } = DateTime.Now;
-        
+
         public string? CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? ChangedBy { get; set; }

@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain.Translation
 {
-    public class Translation: DomainEntityBaseMetadata
+    public class Translation : DomainEntityBaseMetadata
     {
         [MaxLength(5)] public string Culture { get; set; } = default!;
         [MaxLength(10240)] public string Value { get; set; } = default!;

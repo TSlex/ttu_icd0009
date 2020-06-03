@@ -1,0 +1,193 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using BLL.App.DTO.Identity;
+using Contracts.BLL.App;
+using Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MRole = Domain.Identity.MRole;
+
+namespace WebApp.Areas.Admin.Controllers
+{
+    /// <summary>
+    /// User roles controller
+    /// </summary>
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
+    public class UserInRolesController : Controller
+    {
+        private readonly RoleManager<MRole> _roleManager;
+        private readonly UserManager<Profile> _userManager;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bll"></param>
+        public UserInRolesController(RoleManager<MRole> roleManager, UserManager<Profile> userManager)
+        {
+            _roleManager = roleManager;
+            _userManager = userManager;
+        }
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Index()
+        {
+            var result = new Dictionary<MRole, ICollection<Profile>>();
+
+            var roles = await _roleManager.Roles.ToListAsync();
+
+            foreach (var role in roles)
+            {
+                result.Add(role, await _userManager.GetUsersInRoleAsync(role.Name));
+            }
+
+            return View(result);
+        }
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Create(UserRoleModel model)
+        {
+            ModelState.Clear();
+
+            model.OldRoleId = Guid.Empty;
+
+            if (TryValidateModel(model))
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId.ToString());
+                var role = await _roleManager.FindByIdAsync(model.NewRoleId.ToString());
+
+                if (user == null || role == null)
+                {
+                    return NotFound();
+                }
+
+                await _userManager.AddToRoleAsync(user, role.Name);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Edit(Guid userId, Guid roleId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var role = await _roleManager.FindByIdAsync(roleId.ToString());
+
+            if (user == null || role == null)
+            {
+                return NotFound();
+            }
+
+            if (user.UserName.ToLower().Contains("admin") && role.Name.ToLower().Contains("admin"))
+            {
+                return BadRequest();
+            }
+
+            if (!(await _userManager.GetRolesAsync(user)).Contains(role.Name))
+            {
+                return NotFound();
+            }
+
+            return View(new UserRoleModel {OldRoleId = role.Id, UserId = user.Id});
+        }
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid userId, Guid roleId, UserRoleModel model)
+        {
+            if (userId != model.UserId || roleId != model.OldRoleId)
+            {
+                return BadRequest();
+            }
+
+            if (model.NewRoleId == model.OldRoleId)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (TryValidateModel(model))
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId.ToString());
+
+                var oldRole = await _roleManager.FindByIdAsync(model.OldRoleId.ToString());
+                var newRole = await _roleManager.FindByIdAsync(model.NewRoleId.ToString());
+
+                if (user == null || oldRole == null || newRole == null)
+                {
+                    return NotFound();
+                }
+
+                if (user.UserName.ToLower().Contains("admin") && oldRole.Name.ToLower().Contains("admin"))
+                {
+                    return BadRequest();
+                }
+
+                if ((await _userManager.GetRolesAsync(user)).Contains(oldRole.Name))
+                {
+                    await _userManager.RemoveFromRoleAsync(user, oldRole.Name);
+                    await _userManager.AddToRoleAsync(user, newRole.Name);
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid userId, Guid roleId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var role = await _roleManager.FindByIdAsync(roleId.ToString());
+
+            if (user == null || role == null)
+            {
+                return NotFound();
+            }
+
+            if (user.UserName.ToLower().Contains("admin") && role.Name.ToLower().Contains("admin"))
+            {
+                return BadRequest();
+            }
+
+            if ((await _userManager.GetRolesAsync(user)).Contains(role.Name))
+            {
+                await _userManager.RemoveFromRoleAsync(user, role.Name);
+            }
+
+            return RedirectToAction("Index");
+        }
+    }
+}

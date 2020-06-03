@@ -18,7 +18,7 @@ namespace Domain
         [MinLength(1)] [MaxLength(100)] public string? ProfileFullName { get; set; }
 
         [MaxLength(300)] public string? ProfileWorkPlace { get; set; }
-        
+
         [MaxLength(300)] public string? ProfileStatus { get; set; }
 
         public Guid? ProfileAvatarId { get; set; }
@@ -27,9 +27,8 @@ namespace Domain
         [MaxLength(1000)] public string? ProfileAbout { get; set; }
 
         [Range(0, int.MaxValue)] public ProfileGender ProfileGender { get; set; } = ProfileGender.Undefined;
-        
-        [MaxLength(20)]
-        public string? ProfileGenderOwn { get; set; }
+
+        [MaxLength(20)] public string? ProfileGenderOwn { get; set; }
 
         public int FollowersCount { get; set; } = 0;
         public int FollowedCount { get; set; } = 0;
@@ -62,10 +61,10 @@ namespace Domain
 
         [InverseProperty(nameof(ProfileGift.Profile))]
         public ICollection<ProfileGift>? ProfileGifts { get; set; } //List of profile gifts
-        
+
         [InverseProperty(nameof(ProfileGift.FromProfile))]
         public ICollection<ProfileGift>? ProfileSendGifts { get; set; } //List of profile gifts
-        
+
         public ICollection<ProfileRank>? ProfileRanks { get; set; } //List of profile ranks
     }
 }

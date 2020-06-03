@@ -92,4 +92,19 @@
     <data name="ErrorTranslationRequired">
         <value>Tõlge on vajalik!</value>
     </data>
+    <data name="Name">
+        <value>Nimi</value>
+    </data>
+    <data name="UserRole">
+        <value>Roll</value>
+    </data>
+    <data name="UserRoleId">
+        <value>Roll (ID)</value>
+    </data>
+    <data name="User">
+        <value>Kasutaja</value>
+    </data>
+    <data name="UserId">
+        <value>Kasutaja (ID)</value>
+    </data>
 </root>

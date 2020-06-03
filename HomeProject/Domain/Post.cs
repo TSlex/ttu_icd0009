@@ -11,14 +11,14 @@ namespace Domain
 
         public Guid? PostImageId { get; set; }
         public Image? PostImage { get; set; }
-        
+
         [MaxLength(500)] public string? PostDescription { get; set; }
 
-        public DateTime PostPublicationDateTime { get; set; } = DateTime.Now;
-        
+        public DateTime PostPublicationDateTime { get; set; } = default!;
+
         public int PostFavoritesCount { get; set; }
         public int PostCommentsCount { get; set; }
-        
+
         public Guid ProfileId { get; set; }
         public Profile? Profile { get; set; }
 

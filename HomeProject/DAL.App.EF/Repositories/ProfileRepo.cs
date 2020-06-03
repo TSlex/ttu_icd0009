@@ -34,8 +34,11 @@ namespace DAL.Repositories
 
         public async Task<Profile> GetProfile(Guid id, Guid? requesterId)
         {
-            return await RepoDbSet.Where(profile => profile.Id == id
-                                                    && profile.DeletedAt == null)
+            return await RepoDbSet
+//                .Include(profile => profile.ProfileGifts)
+//                .Include(profile => profile.ProfileRanks)
+//                .ThenInclude(rank => rank.Rank)
+                .Where(profile => profile.Id == id && profile.DeletedAt == null)
                 .Select(profile => new Profile()
                 {
                     Id = profile.Id,
@@ -63,6 +66,7 @@ namespace DAL.Repositories
                         .Select(gift => new ProfileGift()
                         {
                             Id = gift.Id,
+                            GiftDateTime = gift.GiftDateTime,
                             Gift = new Gift()
                             {
                                 Id = gift.Gift.Id,
@@ -75,9 +79,11 @@ namespace DAL.Repositories
                                     .ToString(),
                             }
                         })
+                        .OrderByDescending(gift => gift.GiftDateTime)
+                        .Take(5)
                         .ToList(),
                     ProfileRanks = profile.ProfileRanks
-                        .Where(rank => rank.DeletedAt == null)
+                        .Where(rank => rank.DeletedAt == null && rank.Rank.MinExperience <= profile.Experience)
                         .Select(rank => new ProfileRank()
                         {
                             Id = rank.Id,
@@ -104,6 +110,8 @@ namespace DAL.Repositories
                                 RankTextColor = rank.Rank.RankTextColor
                             }
                         })
+                        .OrderByDescending(rank => rank.Rank.MaxExperience)
+                        .Take(1)
                         .ToList(),
                     IsUserBlocked = requesterId != null && RepoDbContext.BlockedProfiles
                                         .Any(blockedProfile => blockedProfile.ProfileId == profile.Id

@@ -241,6 +241,15 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Url to return.
         /// </summary>
         public static string ReturnUrl {
@@ -264,6 +273,42 @@ namespace Resourses.BLL.App.DTO {
         public static string SuccessRestored {
             get {
                 return ResourceManager.GetString("SuccessRestored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User (ID).
+        /// </summary>
+        public static string UserId {
+            get {
+                return ResourceManager.GetString("UserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string UserRole {
+            get {
+                return ResourceManager.GetString("UserRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role (ID).
+        /// </summary>
+        public static string UserRoleId {
+            get {
+                return ResourceManager.GetString("UserRoleId", resourceCulture);
             }
         }
     }

@@ -186,4 +186,19 @@
   <data name="ErrorTranslationRequired">
     <value>Translation is required!</value>
   </data>
+  <data name="Name">
+    <value>Name</value>
+  </data>
+  <data name="UserRole">
+    <value>Role</value>
+  </data>
+  <data name="UserRoleId">
+    <value>Role (ID)</value>
+  </data>
+  <data name="User">
+    <value>User</value>
+  </data>
+  <data name="UserId">
+    <value>User (ID)</value>
+  </data>
 </root>

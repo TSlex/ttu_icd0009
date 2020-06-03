@@ -207,7 +207,7 @@
         @{
             if (Model.ProfileGifts.Count > 0)
             {
-                foreach (var gift in Model.ProfileGifts.OrderByDescending(gift => gift.GiftDateTime).Take(5))
+                foreach (var gift in Model.ProfileGifts)
                 {
                     <a asp-action="Details" asp-controller="ProfileGifts" asp-route-id="@gift.Id">
                         <div class="profile_gift">

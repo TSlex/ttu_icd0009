@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DAL.Base\DAL.Base.csproj" />
-      <ProjectReference Include="..\Resourses\Resourses.csproj" />
+        <ProjectReference Include="..\DAL.Base\DAL.Base.csproj" />
+        <ProjectReference Include="..\Resourses\Resourses.csproj" />
     </ItemGroup>
 
 </Project>

@@ -92,4 +92,19 @@
     <data name="ErrorTranslationRequired">
         <value>Требуется перевод!</value>
     </data>
+    <data name="Name">
+        <value>Имя</value>
+    </data>
+    <data name="UserRole">
+        <value>Роль</value>
+    </data>
+    <data name="UserRoleId">
+        <value>Роль (ID)</value>
+    </data>
+    <data name="User">
+        <value>Пользователь</value>
+    </data>
+    <data name="UserId">
+        <value>Пользователь (ID)</value>
+    </data>
 </root>

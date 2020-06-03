@@ -5,9 +5,9 @@ using Contracts.DAL.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Identity
-{    
+{
     [Table("UserRole")]
-    public class MRole: IdentityRole<Guid>
+    public class MRole : IdentityRole<Guid>
     {
         [MaxLength(36)] public override Guid Id { get; set; } = default!;
     }

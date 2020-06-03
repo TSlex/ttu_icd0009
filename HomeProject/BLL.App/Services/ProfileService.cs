@@ -46,11 +46,6 @@ namespace BLL.App.Services
             profile.FollowersCount = profile.Followers?.Count ?? 0;
             profile.FollowedCount = profile.Followed?.Count ?? 0;
 
-            profile.ProfileRanks = profile.ProfileRanks
-                .OrderByDescending(rank => rank.Rank!.MaxExperience)
-                .Where(rank => rank.Rank!.MinExperience <= profile.Experience)
-                .Take(1).ToList();
-
             return Mapper.Map(profile);
         }
 

@@ -6,7 +6,7 @@ using Domain.Translation;
 
 namespace Domain
 {
-    public class Gift: DomainEntityBaseMetaSoftUpdateDelete
+    public class Gift : DomainEntityBaseMetaSoftUpdateDelete
     {
         public Guid GiftNameId { get; set; } = default!;
         public LangString? GiftName { get; set; } = default!;
@@ -17,7 +17,7 @@ namespace Domain
         public Image? GiftImage { get; set; }
 
         public int Price { get; set; }
-        
+
         public ICollection<ProfileGift>? ProfileGifts { get; set; }
     }
 }

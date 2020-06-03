@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Domain
 {
-    public class Rank: DomainEntityBaseMetaSoftUpdateDelete
+    public class Rank : DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string RankCode { get; set; } = default!;
 
@@ -24,12 +24,10 @@ namespace Domain
         public int MaxExperience { get; set; } = default!;
         public int MinExperience { get; set; } = default!;
 
-        [ForeignKey(nameof(Id))]
-        public Guid? PreviousRankId { get; set; }
+        [ForeignKey(nameof(Id))] public Guid? PreviousRankId { get; set; }
         public Rank? PreviousRank { get; set; }
-        
-        [ForeignKey(nameof(Id))]
-        public Guid? NextRankId { get; set; }
+
+        [ForeignKey(nameof(Id))] public Guid? NextRankId { get; set; }
         public Rank? NextRank { get; set; }
 
         public ICollection<ProfileRank>? ProfileRanks { get; set; }

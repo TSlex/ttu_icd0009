@@ -4,7 +4,7 @@ using DAL.Base;
 
 namespace Domain
 {
-    public class ChatMember: DomainEntityBaseMetaSoftUpdateDelete
+    public class ChatMember : DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(100)] public string? ChatRoomTitle { get; set; }
 
@@ -13,7 +13,7 @@ namespace Domain
 
         public Guid ChatRoleId { get; set; } = default!;
         public ChatRole? ChatRole { get; set; }
-        
+
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }
     }
