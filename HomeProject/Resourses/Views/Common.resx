@@ -170,4 +170,73 @@
     <data name="NoContent">
         <value>Nothing here yet</value>
     </data>
+    <data name="AdminProfileSectionHeader">
+        <value>Profile</value>
+    </data>
+    <data name="AdminImageSectionHeader">
+        <value>Image</value>
+    </data>
+    <data name="AdminChatSectionHeader">
+        <value>Chat</value>
+    </data>
+    <data name="AdminPostSectionHeader">
+        <value>Post</value>
+    </data>
+    <data name="AdminMiscSectionHeader">
+        <value>Misc</value>
+    </data>
+    <data name="AdminSystemSectionHeader">
+        <value>System</value>
+    </data>
+    <data name="AdminProfilesHeader">
+        <value>Profiles</value>
+    </data>
+    <data name="AdminProfileGiftsHeader">
+        <value>Profile gifts</value>
+    </data>
+    <data name="AdminProfileRanksHeader">
+        <value>Profile ranks</value>
+    </data>
+    <data name="AdminFavoritesHeader">
+        <value>Favorites</value>
+    </data>
+    <data name="AdminFollowersHeader">
+        <value>Followers</value>
+    </data>
+    <data name="AdminBlockedProfilesHeader">
+        <value>Blocked profiles</value>
+    </data>
+    <data name="AdminImagesHeader">
+        <value>Images</value>
+    </data>
+    <data name="AdminChatRoomsHeader">
+        <value>Chat rooms</value>
+    </data>
+    <data name="AdminChatMembersHeader">
+        <value>Chat members</value>
+    </data>
+    <data name="AdminMessagesHeader">
+        <value>Messages</value>
+    </data>
+    <data name="AdminPostsHeader">
+        <value>Posts</value>
+    </data>
+    <data name="AdminCommentsHeader">
+        <value>Comments</value>
+    </data>
+    <data name="AdminChatRolesHeader">
+        <value>Chat roles</value>
+    </data>
+    <data name="AdminRanksHeader">
+        <value>Ranks</value>
+    </data>
+    <data name="AdminGiftsHeader">
+        <value>Gifts</value>
+    </data>
+    <data name="AdminUserRolesHeader">
+        <value>User roles</value>
+    </data>
+    <data name="AdminUserInRolesHeader">
+        <value>User in roles</value>
+    </data>
 </root>

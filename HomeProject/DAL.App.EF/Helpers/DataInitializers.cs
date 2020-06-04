@@ -26,15 +26,26 @@ namespace DAL.Helpers
 
         public static async Task SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
         {
-            var roleNames = new[] {new Role {Name = "User"}, new Role {Name = "Admin"}};
+            var roleNames = new[]
+            {
+                new Role
+                {
+                    Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                    Name = "User"
+                },
+                new Role
+                {
+                    Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                    Name = "Admin"
+                }
+            };
 
             foreach (var roleName in roleNames)
             {
                 var role = roleManager.FindByNameAsync(roleName.Name).Result;
                 if (role == null)
                 {
-                    role = new MRole();
-                    role.Name = roleName.Name;
+                    role = new MRole() {Id = roleName.Id, Name = roleName.Name};
 
                     var result = roleManager.CreateAsync(role).Result;
 
@@ -46,7 +57,19 @@ namespace DAL.Helpers
             }
 
             var users = new[]
-                {new User {UserName = "admin", Email = "admin@admin.com", Password = "Admin_123", RolesNames = new[] {"User", "Admin"}}};
+            {
+                new User
+                {
+                    Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                    UserName = "admin",
+                    Email = "admin@admin.com",
+                    Password = "Admin_123",
+                    RolesNames = new[]
+                    {
+                        "User", "Admin"
+                    }
+                }
+            };
 
             foreach (var user in users)
             {
@@ -55,7 +78,7 @@ namespace DAL.Helpers
                 {
                     newUser = new Profile
                     {
-                        Id = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Id = user.Id,
                         Email = user.Email,
                         UserName = user.UserName,
                         EmailConfirmed = true,
@@ -533,8 +556,10 @@ namespace DAL.Helpers
                         Id = new Guid("00000000-0000-0000-0000-000000000001"),
                         ImageFor = new Guid("00000000-0000-0000-0000-000000000001"),
                         ImageType = ImageType.Gift,
-                        ImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000001\00000000-0000-0000-0000-000000000001.jpg",
-                        OriginalImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000001\00000000-0000-0000-0000-000000000001.jpg",
+                        ImageUrl =
+                            @"\images\gifts\00000000-0000-0000-0000-000000000001\00000000-0000-0000-0000-000000000001.jpg",
+                        OriginalImageUrl =
+                            @"\images\gifts\00000000-0000-0000-0000-000000000001\00000000-0000-0000-0000-000000000001.jpg",
                         HeightPx = 236,
                         WidthPx = 236,
                     }
@@ -570,8 +595,10 @@ namespace DAL.Helpers
                         Id = new Guid("00000000-0000-0000-0000-000000000002"),
                         ImageFor = new Guid("00000000-0000-0000-0000-000000000002"),
                         ImageType = ImageType.Gift,
-                        ImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000002\00000000-0000-0000-0000-000000000002.jpg",
-                        OriginalImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000002\00000000-0000-0000-0000-000000000002.jpg",
+                        ImageUrl =
+                            @"\images\gifts\00000000-0000-0000-0000-000000000002\00000000-0000-0000-0000-000000000002.jpg",
+                        OriginalImageUrl =
+                            @"\images\gifts\00000000-0000-0000-0000-000000000002\00000000-0000-0000-0000-000000000002.jpg",
                         HeightPx = 700,
                         WidthPx = 700,
                     }
@@ -607,8 +634,10 @@ namespace DAL.Helpers
                         Id = new Guid("00000000-0000-0000-0000-000000000003"),
                         ImageFor = new Guid("00000000-0000-0000-0000-000000000003"),
                         ImageType = ImageType.Gift,
-                        ImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000003\00000000-0000-0000-0000-000000000003.jpg",
-                        OriginalImageUrl = @"\images\gifts\00000000-0000-0000-0000-000000000003\00000000-0000-0000-0000-000000000003.jpg",
+                        ImageUrl =
+                            @"\images\gifts\00000000-0000-0000-0000-000000000003\00000000-0000-0000-0000-000000000003.jpg",
+                        OriginalImageUrl =
+                            @"\images\gifts\00000000-0000-0000-0000-000000000003\00000000-0000-0000-0000-000000000003.jpg",
                         HeightPx = 512,
                         WidthPx = 512,
                     }
@@ -628,6 +657,8 @@ namespace DAL.Helpers
 
         struct User
         {
+            public Guid Id { get; set; }
+
             public string Email { get; set; }
             public string UserName { get; set; }
             public string Password { get; set; }
@@ -637,6 +668,7 @@ namespace DAL.Helpers
 
         struct Role
         {
+            public Guid Id { get; set; }
             public string Name { get; set; }
         }
     }

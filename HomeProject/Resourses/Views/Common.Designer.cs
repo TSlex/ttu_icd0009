@@ -61,6 +61,213 @@ namespace Resourses.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blocked profiles.
+        /// </summary>
+        public static string AdminBlockedProfilesHeader {
+            get {
+                return ResourceManager.GetString("AdminBlockedProfilesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat members.
+        /// </summary>
+        public static string AdminChatMembersHeader {
+            get {
+                return ResourceManager.GetString("AdminChatMembersHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat roles.
+        /// </summary>
+        public static string AdminChatRolesHeader {
+            get {
+                return ResourceManager.GetString("AdminChatRolesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat rooms.
+        /// </summary>
+        public static string AdminChatRoomsHeader {
+            get {
+                return ResourceManager.GetString("AdminChatRoomsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        public static string AdminChatSectionHeader {
+            get {
+                return ResourceManager.GetString("AdminChatSectionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comments.
+        /// </summary>
+        public static string AdminCommentsHeader {
+            get {
+                return ResourceManager.GetString("AdminCommentsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favorites.
+        /// </summary>
+        public static string AdminFavoritesHeader {
+            get {
+                return ResourceManager.GetString("AdminFavoritesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Followers.
+        /// </summary>
+        public static string AdminFollowersHeader {
+            get {
+                return ResourceManager.GetString("AdminFollowersHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gifts.
+        /// </summary>
+        public static string AdminGiftsHeader {
+            get {
+                return ResourceManager.GetString("AdminGiftsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string AdminImageSectionHeader {
+            get {
+                return ResourceManager.GetString("AdminImageSectionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string AdminImagesHeader {
+            get {
+                return ResourceManager.GetString("AdminImagesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messages.
+        /// </summary>
+        public static string AdminMessagesHeader {
+            get {
+                return ResourceManager.GetString("AdminMessagesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Misc.
+        /// </summary>
+        public static string AdminMiscSectionHeader {
+            get {
+                return ResourceManager.GetString("AdminMiscSectionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Post.
+        /// </summary>
+        public static string AdminPostSectionHeader {
+            get {
+                return ResourceManager.GetString("AdminPostSectionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posts.
+        /// </summary>
+        public static string AdminPostsHeader {
+            get {
+                return ResourceManager.GetString("AdminPostsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile gifts.
+        /// </summary>
+        public static string AdminProfileGiftsHeader {
+            get {
+                return ResourceManager.GetString("AdminProfileGiftsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile ranks.
+        /// </summary>
+        public static string AdminProfileRanksHeader {
+            get {
+                return ResourceManager.GetString("AdminProfileRanksHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string AdminProfileSectionHeader {
+            get {
+                return ResourceManager.GetString("AdminProfileSectionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profiles.
+        /// </summary>
+        public static string AdminProfilesHeader {
+            get {
+                return ResourceManager.GetString("AdminProfilesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranks.
+        /// </summary>
+        public static string AdminRanksHeader {
+            get {
+                return ResourceManager.GetString("AdminRanksHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string AdminSystemSectionHeader {
+            get {
+                return ResourceManager.GetString("AdminSystemSectionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User in roles.
+        /// </summary>
+        public static string AdminUserInRolesHeader {
+            get {
+                return ResourceManager.GetString("AdminUserInRolesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User roles.
+        /// </summary>
+        public static string AdminUserRolesHeader {
+            get {
+                return ResourceManager.GetString("AdminUserRolesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string BackToListButton {

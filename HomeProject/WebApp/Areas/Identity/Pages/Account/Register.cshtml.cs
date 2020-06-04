@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using BLL.App.DTO;
+using Domain.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +26,7 @@ namespace WebApp.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Profile> _signInManager;
         private readonly UserManager<Profile> _userManager;
+        private readonly RoleManager<MRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IAppBLL _bll;
@@ -34,13 +36,14 @@ namespace WebApp.Areas.Identity.Pages.Account
             SignInManager<Profile> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IAppBLL bll)
+            IAppBLL bll, RoleManager<MRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _bll = bll;
+            _roleManager = roleManager;
         }
 
         [BindProperty] public InputModel Input { get; set; } = default!;
@@ -115,6 +118,18 @@ namespace WebApp.Areas.Identity.Pages.Account
                     });
 
                     await _bll.SaveChangesAsync();
+                    
+                    //add user role
+                    var role = await _roleManager.FindByNameAsync("User");
+
+                    if (role != null)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("User role - \"User\" was not found!");
+                    }
 
                     /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

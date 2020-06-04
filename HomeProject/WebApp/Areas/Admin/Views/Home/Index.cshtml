@@ -4,38 +4,72 @@
 
 <div class="admin_panel">
     <div class="panel_section">
-        <h4>Profile:</h4>
-        <a class="btn btn-primary" asp-controller="Profiles" asp-action="Index" asp-area="Admin">Profiles</a>
-        <a class="btn btn-primary" asp-controller="ProfileGifts" asp-action="Index" asp-area="Admin">Profile gifts</a>
-        <a class="btn btn-primary" asp-controller="ProfileRanks" asp-action="Index" asp-area="Admin">Profile ranks</a>
-        <a class="btn btn-primary" asp-controller="Favorites" asp-action="Index" asp-area="Admin">Favorites</a>
-        <a class="btn btn-primary" asp-controller="Followers" asp-action="Index" asp-area="Admin">Followers</a>
-        <a class="btn btn-primary" asp-controller="BlockedProfiles" asp-action="Index" asp-area="Admin">Blocked profiles</a>
+        <h4>@(Resourses.Views.Common.AdminProfileSectionHeader):</h4>
+        <a class="btn btn-primary" asp-controller="Profiles" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminProfilesHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="ProfileGifts" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminProfileGiftsHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="ProfileRanks" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminProfileRanksHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="Favorites" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminFavoritesHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="Followers" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminFollowersHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="BlockedProfiles" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminBlockedProfilesHeader
+        </a>
     </div>
     <div class="panel_section">
-        <h4>Image:</h4>
-        <a class="btn btn-primary" asp-controller="Images" asp-action="Index" asp-area="Admin">Images</a>
+        <h4>@(Resourses.Views.Common.AdminImageSectionHeader):</h4>
+        <a class="btn btn-primary" asp-controller="Images" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminImagesHeader
+        </a>
     </div>
     <div class="panel_section">
-        <h4>Chat:</h4>
-        <a class="btn btn-primary" asp-controller="ChatRooms" asp-action="Index" asp-area="Admin">Chat rooms</a>
-        <a class="btn btn-primary" asp-controller="ChatMembers" asp-action="Index" asp-area="Admin">Chat members</a>
-        <a class="btn btn-primary" asp-controller="Messages" asp-action="Index" asp-area="Admin">Messages</a>
+        <h4>@(Resourses.Views.Common.AdminChatSectionHeader):</h4>
+        <a class="btn btn-primary" asp-controller="ChatRooms" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminChatRoomsHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="ChatMembers" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminChatMembersHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="Messages" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminMessagesHeader
+        </a>
     </div>
     <div class="panel_section">
-        <h4>Post:</h4>
-        <a class="btn btn-primary" asp-controller="Posts" asp-action="Index" asp-area="Admin">Posts</a>
-        <a class="btn btn-primary" asp-controller="Comments" asp-action="Index" asp-area="Admin">Comments</a>
+        <h4>@(Resourses.Views.Common.AdminPostSectionHeader):</h4>
+        <a class="btn btn-primary" asp-controller="Posts" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminPostsHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="Comments" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminCommentsHeader
+        </a>
     </div>
     <div class="panel_section">
-        <h4>Misc:</h4>
-        <a class="btn btn-primary" asp-controller="ChatRoles" asp-action="Index" asp-area="Admin">Chat roles</a>
-        <a class="btn btn-primary" asp-controller="Ranks" asp-action="Index" asp-area="Admin">Ranks</a>
-        <a class="btn btn-primary" asp-controller="Gifts" asp-action="Index" asp-area="Admin">Gifts</a>
+        <h4>@(Resourses.Views.Common.AdminMiscSectionHeader):</h4>
+        <a class="btn btn-primary" asp-controller="ChatRoles" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminChatRolesHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="Ranks" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminRanksHeader
+        </a>
+        <a class="btn btn-primary" asp-controller="Gifts" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminGiftsHeader
+        </a>
     </div>
     <div class="panel_section">
-        <h4>Roles:</h4>
-        <a class="btn btn-danger" asp-controller="UserRoles" asp-action="Index" asp-area="Admin">Roles</a>
-        <a class="btn btn-danger" asp-controller="UserInRoles" asp-action="Index" asp-area="Admin">User Roles</a>
+        <h4>@(Resourses.Views.Common.AdminSystemSectionHeader):</h4>
+        <a class="btn btn-danger" asp-controller="UserRoles" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminUserRolesHeader
+        </a>
+        <a class="btn btn-danger" asp-controller="UserInRoles" asp-action="Index" asp-area="Admin">
+            @Resourses.Views.Common.AdminUserInRolesHeader
+        </a>
     </div>
 </div>

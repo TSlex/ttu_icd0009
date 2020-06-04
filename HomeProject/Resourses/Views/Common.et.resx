@@ -71,4 +71,73 @@
     <data name="IndexHeader">
         <value>Indeks</value>
     </data>
+    <data name="AdminProfileSectionHeader">
+        <value>Profiil</value>
+    </data>
+    <data name="AdminImageSectionHeader">
+        <value>Pilt</value>
+    </data>
+    <data name="AdminChatSectionHeader">
+        <value>Vestlus</value>
+    </data>
+    <data name="AdminPostSectionHeader">
+        <value>Post</value>
+    </data>
+    <data name="AdminMiscSectionHeader">
+        <value>Muu</value>
+    </data>
+    <data name="AdminSystemSectionHeader">
+        <value>Süsteem</value>
+    </data>
+    <data name="AdminProfilesHeader">
+        <value>Profiilid</value>
+    </data>
+    <data name="AdminProfileGiftsHeader">
+        <value>Profiilide kingitused</value>
+    </data>
+    <data name="AdminProfileRanksHeader">
+        <value>Profiilide auastmed</value>
+    </data>
+    <data name="AdminFavoritesHeader">
+        <value>Lemmikud</value>
+    </data>
+    <data name="AdminFollowersHeader">
+        <value>Jälgijad</value>
+    </data>
+    <data name="AdminBlockedProfilesHeader">
+        <value>Blokeeritud profiilid</value>
+    </data>
+    <data name="AdminImagesHeader">
+        <value>Pildid</value>
+    </data>
+    <data name="AdminChatRoomsHeader">
+        <value>Jututoad</value>
+    </data>
+    <data name="AdminChatMembersHeader">
+        <value>Vestluse osalejad</value>
+    </data>
+    <data name="AdminMessagesHeader">
+        <value>Sõnumid</value>
+    </data>
+    <data name="AdminPostsHeader">
+        <value>Postitused</value>
+    </data>
+    <data name="AdminCommentsHeader">
+        <value>Kommentaarid</value>
+    </data>
+    <data name="AdminChatRolesHeader">
+        <value>Vestlusrollid</value>
+    </data>
+    <data name="AdminRanksHeader">
+        <value>Auastmed</value>
+    </data>
+    <data name="AdminGiftsHeader">
+        <value>Kingitused</value>
+    </data>
+    <data name="AdminUserRolesHeader">
+        <value>Kasutajarollid</value>
+    </data>
+    <data name="AdminUserInRolesHeader">
+        <value>Kasutaja rollides</value>
+    </data>
 </root>

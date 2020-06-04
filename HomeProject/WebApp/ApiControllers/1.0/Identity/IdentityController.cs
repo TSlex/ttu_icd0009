@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Domain;
+using Domain.Identity;
 using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +36,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         private readonly IConfiguration _configuration;
         private readonly ILogger<IdentityController> _logger;
         private readonly UserManager<Profile> _userManager;
+        private readonly RoleManager<MRole> _roleManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly DTOMapper<BLL.App.DTO.Profile, ProfileDataDTO> _dataMapper;
         private readonly IAppBLL _bll;
@@ -47,8 +49,10 @@ namespace WebApp.ApiControllers._1._0.Identity
         /// <param name="signInManager"></param>
         /// <param name="userManager"></param>
         /// <param name="bll"></param>
+        /// <param name="roleManager"></param>
         public IdentityController(ILogger<IdentityController> logger, IConfiguration configuration,
-            SignInManager<Profile> signInManager, UserManager<Profile> userManager, IAppBLL bll)
+            SignInManager<Profile> signInManager, UserManager<Profile> userManager, IAppBLL bll,
+            RoleManager<MRole> roleManager)
         {
             _logger = logger;
             _configuration = configuration;
@@ -56,6 +60,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             _userManager = userManager;
             _dataMapper = new DTOMapper<BLL.App.DTO.Profile, ProfileDataDTO>();
             _bll = bll;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -125,6 +130,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             {
                 var user = new Profile()
                 {
+                    Id = Guid.NewGuid(),
                     UserName = model.Username,
                     Email = model.Email,
                     EmailConfirmed = true
@@ -135,16 +141,30 @@ namespace WebApp.ApiControllers._1._0.Identity
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Created a new account with password.");
+
+                    //add default rank
+                    _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
+                    {
+                        ProfileId = user.Id,
+                        RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
+                    });
+
+                    await _bll.SaveChangesAsync();
+
+                    //add user role
+                    var role = await _roleManager.FindByNameAsync("User");
+
+                    if (role != null)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("User role - \"User\" was not found!");
+                    }
+                    
                     return Ok(new OkResponseDTO {Status = "OK"});
                 }
-
-                _bll.ProfileRanks.Add(new BLL.App.DTO.ProfileRank()
-                {
-                    Id = user.Id,
-                    RankId = (await _bll.Ranks.FindByCodeAsync("X_00")).Id
-                });
-
-                await _bll.SaveChangesAsync();
 
                 var errors = result.Errors.Select(error => error.Description).ToList();
 
@@ -212,7 +232,8 @@ namespace WebApp.ApiControllers._1._0.Identity
 
                 if (userCheck != null && !(userCheck.Equals(user)))
                 {
-                    return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorUsernameAlreadyExists));
+                    return BadRequest(
+                        new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorUsernameAlreadyExists));
                 }
 
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, dto.Username);
@@ -322,7 +343,8 @@ namespace WebApp.ApiControllers._1._0.Identity
             {
                 if (deleteDTO.Password == null || !await _userManager.CheckPasswordAsync(user, deleteDTO.Password))
                 {
-                    return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorIncorrectPassword));
+                    return BadRequest(
+                        new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorIncorrectPassword));
                 }
             }
 

@@ -66,4 +66,73 @@
     <data name="IndexHeader">
         <value>Каталог</value>
     </data>
+    <data name="AdminProfileSectionHeader">
+        <value>Профиль</value>
+    </data>
+    <data name="AdminImageSectionHeader">
+        <value>Картинка</value>
+    </data>
+    <data name="AdminChatSectionHeader">
+        <value>Чат</value>
+    </data>
+    <data name="AdminPostSectionHeader">
+        <value>Пост</value>
+    </data>
+    <data name="AdminMiscSectionHeader">
+        <value>Разное</value>
+    </data>
+    <data name="AdminSystemSectionHeader">
+        <value>Система</value>
+    </data>
+    <data name="AdminProfilesHeader">
+        <value>Профили</value>
+    </data>
+    <data name="AdminProfileGiftsHeader">
+        <value>Подарки профилей</value>
+    </data>
+    <data name="AdminProfileRanksHeader">
+        <value>Ранки профилей</value>
+    </data>
+    <data name="AdminFavoritesHeader">
+        <value>Избранное</value>
+    </data>
+    <data name="AdminFollowersHeader">
+        <value>Подписки</value>
+    </data>
+    <data name="AdminBlockedProfilesHeader">
+        <value>Черные списки</value>
+    </data>
+    <data name="AdminImagesHeader">
+        <value>Картинки</value>
+    </data>
+    <data name="AdminChatRoomsHeader">
+        <value>Беседы</value>
+    </data>
+    <data name="AdminChatMembersHeader">
+        <value>Участники бесед</value>
+    </data>
+    <data name="AdminMessagesHeader">
+        <value>Сообщения</value>
+    </data>
+    <data name="AdminPostsHeader">
+        <value>Посты</value>
+    </data>
+    <data name="AdminCommentsHeader">
+        <value>Комментарии</value>
+    </data>
+    <data name="AdminChatRolesHeader">
+        <value>Роли бесед</value>
+    </data>
+    <data name="AdminRanksHeader">
+        <value>Ранки</value>
+    </data>
+    <data name="AdminGiftsHeader">
+        <value>Подарки</value>
+    </data>
+    <data name="AdminUserRolesHeader">
+        <value>Пользовательские роли</value>
+    </data>
+    <data name="AdminUserInRolesHeader">
+        <value>Пользователи в ролях</value>
+    </data>
 </root>
