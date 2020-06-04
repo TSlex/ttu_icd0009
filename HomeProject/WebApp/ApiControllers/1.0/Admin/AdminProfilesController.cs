@@ -36,10 +36,11 @@ namespace WebApp.ApiControllers._1._0.Admin
         /// </summary>
         /// <param name="bll">Application Bll</param>
         /// <param name="userManager"></param>
-        public AdminProfilesController(IAppBLL bll)
+        public AdminProfilesController(IAppBLL bll, UserManager<Domain.Profile> userManager)
         {
             _bll = bll;
-            _userManager = HttpContext.RequestServices.GetService<UserManager<Domain.Profile>>();
+            _userManager = userManager;
+//            _userManager = HttpContext.RequestServices.GetService<UserManager<Domain.Profile>>();
             _mapper = new DTOMapper<Profile, ProfileAdminDTO>();
         }
         
