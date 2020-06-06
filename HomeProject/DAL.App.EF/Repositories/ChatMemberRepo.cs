@@ -23,6 +23,9 @@ namespace DAL.Repositories
             return Mapper.Map(await RepoDbSet
                 .Where(member => member.Id == id)
                 .Include(member => member.ChatRole)
+                .ThenInclude(role => role.RoleTitleValue)
+                .ThenInclude(s => s.Translations)
+                .Include(member => member.Profile)
                 .FirstOrDefaultAsync());
         }
 
@@ -30,6 +33,9 @@ namespace DAL.Repositories
         {
             return Mapper.Map(await RepoDbSet
                 .Include(member => member.ChatRole)
+                .ThenInclude(role => role.RoleTitleValue)
+                .ThenInclude(s => s.Translations)
+                .Include(member => member.Profile)
                 .Where(member => member.ProfileId == userId && member.ChatRoomId == chatRoomId)
                 .FirstOrDefaultAsync());
         }

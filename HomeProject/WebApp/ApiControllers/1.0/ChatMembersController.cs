@@ -84,7 +84,7 @@ namespace WebApp.ApiControllers._1._0
         /// <param name="username"></param>
         /// <param name="chatRoomId"></param>
         /// <returns></returns>
-        [HttpGet("{chatRoomId}/{username}")]
+        [HttpGet("{chatRoomId}/user/{username}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChatMemberDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
@@ -124,7 +124,7 @@ namespace WebApp.ApiControllers._1._0
         /// </summary>
         /// <param name="chatRoomId"></param>
         /// <returns></returns>
-        [HttpGet("{chatRoomId}")]
+        [HttpGet("{chatRoomId}/user")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChatMemberDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
