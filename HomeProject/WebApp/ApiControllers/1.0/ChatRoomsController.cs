@@ -69,7 +69,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetLastMessage(Guid id)
         {
-            var exist = await _bll.ChatRooms.ExistAsync(id);
+            var exist = await _bll.ChatRooms.ExistsAsync(id);
 
             if (!exist)
             {
@@ -93,10 +93,25 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new MessageGetDTO()
             {
                 Id = result.Id,
+                ChatRoomId = result.ChatRoomId,
                 MessageValue = result.MessageValue,
+                MessageDateTime = result.MessageDateTime,
                 UserName = result.Profile!.UserName,
-                MessageDateTime = result.MessageDateTime
+                ProfileAvatarId = result.Profile!.ProfileAvatarId,
             });
+        }
+        
+        /// <summary>
+        /// Check if room exist
+        /// </summary>
+        /// <param name="id">Chat room id</param>
+        /// <returns></returns>
+        [HttpGet("{id}/exists")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        public async Task<IActionResult> RoomExists(Guid id)
+        {
+            return Ok(await _bll.ChatRooms.ExistsAsync(id));
         }
 
         /// <summary>
@@ -111,7 +126,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetMessagesCount(Guid id)
         {
-            var exist = await _bll.ChatRooms.ExistAsync(id);
+            var exist = await _bll.ChatRooms.ExistsAsync(id);
 
             if (!exist)
             {
@@ -125,7 +140,7 @@ namespace WebApp.ApiControllers._1._0
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
 
-            return Ok(_bll.Messages.CountByRoomAsync(id));
+            return Ok(new CountResponseDTO {Count = await _bll.Messages.CountByRoomAsync(id)});
         }
 
         /// <summary>
@@ -141,7 +156,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetRoom(Guid id, int pageNumber)
         {
-            var exist = await _bll.ChatRooms.ExistAsync(id);
+            var exist = await _bll.ChatRooms.ExistsAsync(id);
 
             if (!exist)
             {

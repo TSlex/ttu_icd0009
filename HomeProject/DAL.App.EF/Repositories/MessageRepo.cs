@@ -18,9 +18,17 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<Message> FindAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet
+                .Include(message => message.Profile)
+                .FirstOrDefaultAsync(message => message.Id == id));
+        }
+
         public override Message Add(Message entity)
         {
-            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoomId == entity.ChatRoomId && member.MasterId == null).ToList();
+            var members = RepoDbContext.ChatMembers
+                .Where(member => member.ChatRoomId == entity.ChatRoomId && member.MasterId == null).ToList();
 
             foreach (var member in members)
             {
@@ -32,13 +40,13 @@ namespace DAL.Repositories
                     RepoDbContext.ChatMembers.Update(member);
                 }
             }
-            
+
             return base.Add(entity);
         }
 
         public async Task<IEnumerable<Message>> AllAsync(Guid id)
         {
-            return await RepoDbContext.Messages.Where(message => message.ChatRoomId == id 
+            return await RepoDbContext.Messages.Where(message => message.ChatRoomId == id
                                                                  && message.DeletedAt == null)
                 .Select(message => Mapper.Map(message)).ToListAsync();
         }
@@ -54,56 +62,37 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Messages
-                    .Where(message => message.ChatRoomId == chatRoomId 
+                    .Where(message => message.ChatRoomId == chatRoomId
                                       && message.DeletedAt == null)
                     .Include(message => message.Profile)
                     .OrderByDescending(message => message.MessageDateTime)
                     .Skip(startIndex)
                     .Take(count)
-                    .Select(message => new Domain.Message()
-                    {
-                        Id = message.Id,
-                        MessageValue = message.MessageValue,
-                        Profile = new Domain.Profile()
-                        {
-                            UserName = message.Profile!.UserName,
-                            ProfileAvatarId = message.Profile!.ProfileAvatarId
-                        },
-                        MessageDateTime = message.MessageDateTime
-                    })
                     .ToListAsync())
                 .Select(post => Mapper.Map(post));
         }
 
         public async Task<int> CountByRoomAsync(Guid chatRoomId)
         {
-            return await RepoDbContext.Messages.Where(message => message.DeletedAt == null).CountAsync(message => message.ChatRoomId == chatRoomId);
+            return await RepoDbContext.Messages.Where(message => message.DeletedAt == null)
+                .CountAsync(message => message.ChatRoomId == chatRoomId);
         }
 
         public async Task<Message> GetLastMessage(Guid chatRoomId)
         {
             return Mapper.Map(await RepoDbContext.Messages
-                .Where(message => message.ChatRoomId == chatRoomId 
+                .Where(message => message.ChatRoomId == chatRoomId
                                   && message.DeletedAt == null)
                 .Include(message => message.Profile)
                 .OrderByDescending(message => message.MessageDateTime)
                 .Take(1)
-                .Select(message => new Domain.Message()
-                {
-                    Id = message.Id,
-                    MessageValue = message.MessageValue,
-                    Profile = new Domain.Profile()
-                    {
-                        UserName = message.Profile!.UserName
-                    },
-                    MessageDateTime = message.MessageDateTime
-                })
                 .FirstOrDefaultAsync());
         }
-        
+
         public override async Task<IEnumerable<Message>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
+                record => Mapper.Map(record));
         }
     }
 }

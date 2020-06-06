@@ -69,6 +69,34 @@ namespace WebApp.ApiControllers._1._0
                     CommentDateTime = comment.CommentDateTime
                 }));
         }
+        
+        /// <summary>
+        /// Get comment by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentGetDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetComment(Guid id)
+        {
+            var comment = await _bll.Comments.FindAsync(id);
+
+            if (comment == null)
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
+            }
+
+            return Ok(new CommentGetDTO
+            {
+                Id = comment.Id,
+                ProfileAvatarId = comment.Profile!.ProfileAvatarId,
+                UserName = comment.Profile!.UserName,
+                CommentValue = comment.CommentValue,
+                CommentDateTime = comment.CommentDateTime
+            });
+        }
 
         /// <summary>
         /// Creates a new post

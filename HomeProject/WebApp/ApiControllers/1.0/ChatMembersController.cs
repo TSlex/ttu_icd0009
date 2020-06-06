@@ -36,7 +36,7 @@ namespace WebApp.ApiControllers._1._0
         {
             _bll = bll;
         }
-        
+
         /// <summary>
         /// Get chat room members
         /// </summary>
@@ -49,15 +49,15 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetRoomMembers(Guid chatRoomId)
         {
-            var exist = await _bll.ChatRooms.ExistAsync(chatRoomId);
+            var exist = await _bll.ChatRooms.ExistsAsync(chatRoomId);
 
             if (!exist)
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
-            
+
             var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(chatRoomId, User.UserId());
-            
+
             if (!canAccess)
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
@@ -74,10 +74,84 @@ namespace WebApp.ApiControllers._1._0
                 CanEditMessages = member.ChatRole!.CanEditMessages,
                 CanRenameRoom = member.ChatRole!.CanRenameRoom,
                 CanWriteMessages = member.ChatRole!.CanWriteMessages,
-                CanEditAllMessages = member.ChatRole!. CanEditAllMessages
+                CanEditAllMessages = member.ChatRole!.CanEditAllMessages
             }));
         }
+
+        /// <summary>
+        /// Get chat member by username and room id
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="chatRoomId"></param>
+        /// <returns></returns>
+        [HttpGet("{chatRoomId}/{username}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChatMemberDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetMemberByUsernameAndRoom(string username, Guid chatRoomId)
+        {
+            var user = await _bll.Profiles.FindByUsernameAsync(username);
+
+            if (user == null)
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
+            }
+
+            var chatMember = await _bll.ChatMembers.FindByUserAndRoomAsync(user.Id, chatRoomId);
+
+            if (chatMember == null)
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
+            }
+
+            return Ok(new ChatMemberDTO
+            {
+                Id = chatMember.Id,
+                UserName = chatMember.Profile!.UserName,
+                ChatRole = chatMember.ChatRole!.RoleTitle,
+                ChatRoleValue = chatMember.ChatRole!.RoleTitleValue,
+                ProfileAvatarId = chatMember.Profile!.ProfileAvatarId,
+                CanEditMembers = chatMember.ChatRole!.CanEditMembers,
+                CanEditMessages = chatMember.ChatRole!.CanEditMessages,
+                CanRenameRoom = chatMember.ChatRole!.CanRenameRoom,
+                CanWriteMessages = chatMember.ChatRole!.CanWriteMessages,
+                CanEditAllMessages = chatMember.ChatRole!.CanEditAllMessages
+            });
+        }
         
+        /// <summary>
+        /// Get chat member by current user and room id
+        /// </summary>
+        /// <param name="chatRoomId"></param>
+        /// <returns></returns>
+        [HttpGet("{chatRoomId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChatMemberDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetMemberByRoom(Guid chatRoomId)
+        {
+            var chatMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatRoomId);
+
+            if (chatMember == null)
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
+            }
+
+            return Ok(new ChatMemberDTO
+            {
+                Id = chatMember.Id,
+                UserName = chatMember.Profile!.UserName,
+                ChatRole = chatMember.ChatRole!.RoleTitle,
+                ChatRoleValue = chatMember.ChatRole!.RoleTitleValue,
+                ProfileAvatarId = chatMember.Profile!.ProfileAvatarId,
+                CanEditMembers = chatMember.ChatRole!.CanEditMembers,
+                CanEditMessages = chatMember.ChatRole!.CanEditMessages,
+                CanRenameRoom = chatMember.ChatRole!.CanRenameRoom,
+                CanWriteMessages = chatMember.ChatRole!.CanWriteMessages,
+                CanEditAllMessages = chatMember.ChatRole!.CanEditAllMessages
+            });
+        }
+
         /// <summary>
         /// Changes member role if possible
         /// </summary>
@@ -93,9 +167,10 @@ namespace WebApp.ApiControllers._1._0
         {
             if (roleTitle.Contains("Creator"))
             {
-                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign));
+                return BadRequest(
+                    new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign));
             }
-            
+
             var role = await _bll.ChatRoles.FindAsync(roleTitle);
 
             if (role == null)
@@ -104,15 +179,17 @@ namespace WebApp.ApiControllers._1._0
             }
 
             var member = await _bll.ChatMembers.FindAsync(id);
-            
+
             if (member == null)
             {
-                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorMemberNotFound));
+                return NotFound(
+                    new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorMemberNotFound));
             }
 
             if (member.ChatRole!.RoleTitle.Contains("Creator"))
             {
-                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote));
+                return BadRequest(
+                    new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote));
             }
 
             var isRoomAdministrator = await _bll.ChatRooms.IsRoomAdministratorAsync(member.ChatRoomId, User.UserId());
@@ -125,10 +202,10 @@ namespace WebApp.ApiControllers._1._0
                 await _bll.SaveChangesAsync();
                 return NoContent();
             }
-            
+
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
         }
-        
+
         /// <summary>
         /// Deletes a member
         /// </summary>
@@ -154,11 +231,11 @@ namespace WebApp.ApiControllers._1._0
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
-            
+
             _bll.ChatMembers.Remove(chatMember);
             await _bll.SaveChangesAsync();
 
-            return Ok(new OkResponseDTO(){Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
+            return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
     }
 }

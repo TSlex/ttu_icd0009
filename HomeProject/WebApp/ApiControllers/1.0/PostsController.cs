@@ -101,6 +101,19 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(new CountResponseDTO() {Count = await _bll.Posts.GetByUserCount(user.Id)});
         }
+        
+        /// <summary>
+        /// Check if post exist
+        /// </summary>
+        /// <param name="id">Chat room id</param>
+        /// <returns></returns>
+        [HttpGet("{id}/exists")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        public async Task<IActionResult> PostExists(Guid id)
+        {
+            return Ok(await _bll.Posts.ExistsAsync(id));
+        }
 
         //crud========================================================
 

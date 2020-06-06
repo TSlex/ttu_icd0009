@@ -30,7 +30,7 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly IAppBLL _bll;
         private readonly DTOMapper<Message, MessageGetDTO> _mapper;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -39,6 +39,44 @@ namespace WebApp.ApiControllers._1._0
         {
             _bll = bll;
             _mapper = new DTOMapper<Message, MessageGetDTO>();
+        }
+
+        /// <summary>
+        /// Get message by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MessageGetDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        public async Task<IActionResult> GetMessage(Guid id)
+        {
+            var message = await _bll.Messages.FindAsync(id);
+
+            if (message == null)
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
+            }
+
+            var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
+
+            if (!(currentMember != null &&
+                  (message.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
+            }
+
+            return Ok(new MessageGetDTO()
+            {
+                Id = message.Id,
+                ChatRoomId = message.ChatRoomId,
+                MessageValue = message.MessageValue,
+                MessageDateTime = message.MessageDateTime,
+                UserName = message.Profile!.UserName,
+                ProfileAvatarId = message.Profile!.ProfileAvatarId,
+            });
         }
 
         /// <summary>
@@ -60,16 +98,16 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
-            
+
             if (!(currentMember != null &&
                   (currentMember.ChatRole.CanWriteMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }
-            
+
             if (TryValidateModel(message))
             {
                 var result = _bll.Messages.Add(new Message()
@@ -86,7 +124,7 @@ namespace WebApp.ApiControllers._1._0
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
-        
+
         /// <summary>
         /// Updates a message
         /// </summary>
@@ -112,9 +150,9 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
-            
+
             if (!(currentMember != null &&
                   (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
@@ -148,16 +186,16 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> DeleteMessage(Guid id)
         {
             var record = await _bll.Messages.GetForUpdateAsync(id);
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
-            
+
             if (!(currentMember != null &&
                   (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
-            
+
             _bll.Messages.Remove(id);
             await _bll.SaveChangesAsync();
 
