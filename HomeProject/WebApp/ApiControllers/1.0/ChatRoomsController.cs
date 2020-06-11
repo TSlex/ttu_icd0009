@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using PublicApi.DTO.v1;
 using PublicApi.DTO.v1.Mappers;
 using PublicApi.DTO.v1.Response;
+using WebApp.Helpers;
 
 namespace WebApp.ApiControllers._1._0
 {
@@ -100,7 +101,7 @@ namespace WebApp.ApiControllers._1._0
                 ProfileAvatarId = result.Profile!.ProfileAvatarId,
             });
         }
-        
+
         /// <summary>
         /// Check if room exist
         /// </summary>
@@ -217,7 +218,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> RenameRoom(Guid id, [FromBody] ChatRoomEditDTO chatRoom)
         {
-            var record = await _bll.ChatRooms.FindAsync(id);
+            var record = await _bll.ChatRooms.GetForUpdateAsync(id);
 
             if (record == null)
             {

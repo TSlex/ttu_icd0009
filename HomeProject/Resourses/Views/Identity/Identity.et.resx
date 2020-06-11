@@ -97,22 +97,22 @@
         <value>Nende andmete kustutamisel eemaldatakse teie konto jäädavalt ja seda ei saa taastada.</value>
     </data>
     <data name="ProfileDataUpdateStatusSuccess">
-        <value>Teie profiili on värskendatud</value>
+        <value>Teie profiili on värskendatud.</value>
     </data>
     <data name="AvatarUpdateStatusSuccess">
-        <value>Avatari värskendamine õnnestus</value>
+        <value>Avatari värskendamine õnnestus.</value>
     </data>
     <data name="ProfileDataUpdateStatusUsernameExists">
         <value>Viga. See kasutajanimi on juba võetud!</value>
     </data>
     <data name="EmailUpdateStatusConfirmationSend">
-        <value>Saadetud meilisõnumi muutmiseks kinnituslink. Palun kontrollige oma e-posti aadressi</value>
+        <value>Saadetud meilisõnumi muutmiseks kinnituslink. Palun kontrollige oma e-posti aadressi.</value>
     </data>
     <data name="EmailUpdateStatusUnchanged">
-        <value>Teie e-posti aadressi ei muudeta</value>
+        <value>Teie e-posti aadressi ei muudeta.</value>
     </data>
     <data name="PasswordDataUpdateStatusSuccess">
-        <value>Teie parool on muudetud</value>
+        <value>Teie parool on muudetud.</value>
     </data>
     <data name="LoginFailed">
         <value>Kehtetu sisselogimiskatse.</value>
@@ -125,5 +125,8 @@
     </data>
     <data name="InvalidPhone">
         <value>Väli {0} pole kehtiv telefoninumber.</value>
+    </data>
+    <data name="EmailUpdateStatusSuccess">
+        <value>E-posti aadressi värskendamine õnnestus..</value>
     </data>
 </root>

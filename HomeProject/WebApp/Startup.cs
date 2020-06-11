@@ -56,6 +56,9 @@ namespace WebApp
             services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddControllersWithViews();
+                //disable automatic parameters validation for api controllers
+//                .ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; });
+            
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddCors(options =>
@@ -188,10 +191,7 @@ namespace WebApp
             using var ctx = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
             using var userManager = serviceScope.ServiceProvider.GetService<UserManager<Profile>>();
             using var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<MRole>>();
-
-//            Console.WriteLine(ctx == null);
-//            Console.WriteLine(userManager == null);
-//            Console.WriteLine(roleManager == null);
+            
 
             if (configuration["AppDataInitialization:DropDatabase"] == "True")
             {

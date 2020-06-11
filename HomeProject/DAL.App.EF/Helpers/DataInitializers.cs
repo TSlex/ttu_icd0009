@@ -68,12 +68,23 @@ namespace DAL.Helpers
                     {
                         "User", "Admin"
                     }
+                },
+                new User
+                {
+                    Id = new Guid("00000000-0000-0000-0000-000000000002"),
+                    UserName = "root",
+                    Email = "root@root.com",
+                    Password = "Admin_123",
+                    RolesNames = new[]
+                    {
+                        "User", "Admin"
+                    }
                 }
             };
 
             foreach (var user in users)
             {
-                var newUser = await userManager.FindByEmailAsync(user.Email);
+                var newUser = userManager.FindByIdAsync(user.Id.ToString()).Result;
                 if (newUser == null)
                 {
                     newUser = new Profile
@@ -106,6 +117,15 @@ namespace DAL.Helpers
                         {
                             throw new ApplicationException("User role assigment failed!");
                         }
+                    }
+                }
+                else
+                {
+                    var resetToken = userManager.GeneratePasswordResetTokenAsync(newUser).Result;
+                    var changePasswordResult = userManager.ResetPasswordAsync(newUser, resetToken, user.Password).Result;
+                    if (!changePasswordResult.Succeeded)
+                    {
+                        throw new ApplicationException("Passwords resetting failed!");
                     }
                 }
             }

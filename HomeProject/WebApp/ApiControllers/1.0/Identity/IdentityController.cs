@@ -256,7 +256,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
 
-            return NoContent();
+            return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.ProfileDataUpdateStatusSuccess});
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> UpdateProfileEmail([FromBody] EmailDTO dto)
         {
@@ -287,8 +287,12 @@ namespace WebApp.ApiControllers._1._0.Identity
                             Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail));
                 }
             }
+            else
+            {
+                return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.EmailUpdateStatusUnchanged});
+            }
 
-            return NoContent();
+            return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.EmailUpdateStatusSuccess});
         }
 
         /// <summary>
@@ -299,7 +303,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> UpdateProfilePassword([FromBody] PasswordDTO dto)
         {
@@ -316,7 +320,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
 
-            return NoContent();
+            return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.PasswordDataUpdateStatusSuccess});
         }
 
         /// <summary>

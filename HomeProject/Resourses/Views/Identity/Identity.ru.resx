@@ -97,22 +97,22 @@
         <value>Удаление этих данных навсегда удалит вашу учетную запись. Это действие не может быть отменено.</value>
     </data>
     <data name="ProfileDataUpdateStatusSuccess">
-        <value>Ваш профиль был обновлен</value>
+        <value>Ваш профиль был обновлен.</value>
     </data>
     <data name="AvatarUpdateStatusSuccess">
-        <value>Аватар был успешно обновлен</value>
+        <value>Аватар был успешно обновлен.</value>
     </data>
     <data name="ProfileDataUpdateStatusUsernameExists">
         <value>Ошибка. Имя пользователя уже используется!</value>
     </data>
     <data name="EmailUpdateStatusConfirmationSend">
-        <value>Ссылка для подтверждения изменения отправленного электронного письма. Пожалуйста, проверьте вашу электронную почту</value>
+        <value>Ссылка для подтверждения изменения отправленного электронного письма. Пожалуйста, проверьте вашу электронную почту.</value>
     </data>
     <data name="EmailUpdateStatusUnchanged">
-        <value>Ваш электронный эл. адрес не изменился</value>
+        <value>Ваш электронный эл. адрес не изменился.</value>
     </data>
     <data name="PasswordDataUpdateStatusSuccess">
-        <value>Ваш пароль был изменен</value>
+        <value>Ваш пароль был изменен.</value>
     </data>
     <data name="LoginFailed">
         <value>Авторизация не удалась.</value>
@@ -125,5 +125,8 @@
     </data>
     <data name="InvalidPhone">
         <value>Поле {0} не является верным номером телефона.</value>
+    </data>
+    <data name="EmailUpdateStatusSuccess">
+        <value>Э-адрес был успешно обновлен.</value>
     </data>
 </root>

@@ -92,9 +92,9 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> PostMessage([FromBody] MessageCreateDTO message)
         {
-            var room = await _bll.ChatRooms.FindAsync(message.ChatRoomId);
+            var room = await _bll.ChatRooms.ExistsAsync(message.ChatRoomId);
 
-            if (room == null)
+            if (!room)
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
@@ -119,7 +119,17 @@ namespace WebApp.ApiControllers._1._0
 
                 await _bll.SaveChangesAsync();
 
-                return CreatedAtAction("Create", _mapper.Map(result));
+                var record = await _bll.Messages.FindAsync(result.Id);
+
+                return CreatedAtAction("Create", new MessageGetDTO()
+                {
+                    Id = record.Id,
+                    ChatRoomId = record.ChatRoomId,
+                    MessageValue = record.MessageValue,
+                    MessageDateTime = record.MessageDateTime,
+                    UserName = record.Profile!.UserName,
+                    ProfileAvatarId = record.Profile!.ProfileAvatarId,
+                });
             }
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));

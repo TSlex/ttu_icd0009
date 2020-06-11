@@ -88,7 +88,7 @@ namespace Resourses.Views.Identity {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Avatar was updated successfully.
+        ///   Looks up a localized string similar to Avatar was updated successfully..
         /// </summary>
         public static string AvatarUpdateStatusSuccess {
             get {
@@ -142,7 +142,7 @@ namespace Resourses.Views.Identity {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirmation link to change email sent. Please check your email.
+        ///   Looks up a localized string similar to Confirmation link to change email sent. Please check your email..
         /// </summary>
         public static string EmailUpdateStatusConfirmationSend {
             get {
@@ -151,7 +151,16 @@ namespace Resourses.Views.Identity {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your email is unchanged.
+        ///   Looks up a localized string similar to Email was updated successfully..
+        /// </summary>
+        public static string EmailUpdateStatusSuccess {
+            get {
+                return ResourceManager.GetString("EmailUpdateStatusSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your email is unchanged..
         /// </summary>
         public static string EmailUpdateStatusUnchanged {
             get {
@@ -232,7 +241,7 @@ namespace Resourses.Views.Identity {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your password has been changed.
+        ///   Looks up a localized string similar to Your password has been changed..
         /// </summary>
         public static string PasswordDataUpdateStatusSuccess {
             get {
@@ -322,7 +331,7 @@ namespace Resourses.Views.Identity {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your profile has been updated.
+        ///   Looks up a localized string similar to Your profile has been updated..
         /// </summary>
         public static string ProfileDataUpdateStatusSuccess {
             get {

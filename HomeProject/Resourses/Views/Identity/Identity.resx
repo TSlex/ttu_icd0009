@@ -97,22 +97,22 @@
         <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
     </data>
     <data name="AvatarUpdateStatusSuccess">
-        <value>Avatar was updated successfully</value>
+        <value>Avatar was updated successfully.</value>
     </data>
     <data name="ProfileDataUpdateStatusSuccess">
-        <value>Your profile has been updated</value>
+        <value>Your profile has been updated.</value>
     </data>
     <data name="ProfileDataUpdateStatusUsernameExists">
         <value>Error. That username is already taken!</value>
     </data>
     <data name="EmailUpdateStatusConfirmationSend">
-        <value>Confirmation link to change email sent. Please check your email</value>
+        <value>Confirmation link to change email sent. Please check your email.</value>
     </data>
     <data name="EmailUpdateStatusUnchanged">
-        <value>Your email is unchanged</value>
+        <value>Your email is unchanged.</value>
     </data>
     <data name="PasswordDataUpdateStatusSuccess">
-        <value>Your password has been changed</value>
+        <value>Your password has been changed.</value>
     </data>
     <data name="LoginFailed">
         <value>Invalid login attempt.</value>
@@ -125,5 +125,8 @@
     </data>
     <data name="InvalidPhone">
         <value>The {0} field is not a valid phone number.</value>
+    </data>
+    <data name="EmailUpdateStatusSuccess">
+        <value>Email was updated successfully.</value>
     </data>
 </root>
