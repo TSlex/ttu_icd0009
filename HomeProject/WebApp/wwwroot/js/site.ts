@@ -2,9 +2,9 @@
 import 'script-loader!jquery-validation/dist/jquery.validate.min';
 import 'script-loader!jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min';
 
-
 import 'script-loader!popper.js/dist/popper.min.js';
 
+import 'script-loader!bootstrap';
 import 'script-loader!bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

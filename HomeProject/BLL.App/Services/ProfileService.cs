@@ -24,6 +24,11 @@ namespace BLL.App.Services
             _uow = uow;
         }
 
+        public async Task<bool> ExistsAsync(string username)
+        {
+            return await ServiceRepository.ExistsAsync(username);
+        }
+
         public async Task<Profile> GetProfileAsync(Guid id, Guid? requesterId)
         {
             var profile = await ServiceRepository.GetProfile(id, requesterId);

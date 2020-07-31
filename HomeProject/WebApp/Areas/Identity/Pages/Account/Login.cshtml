@@ -22,23 +22,23 @@
                     <input asp-for="Input.Password" class="form-control"/>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe">
                             <input asp-for="Input.RememberMe"/>
-                            @* @Html.DisplayNameFor(m => m.Input.RememberMe) *@
+                            $1$ @Html.DisplayNameFor(m => m.Input.RememberMe) #1#
                             @Resourses.Views.Identity.Identity.RememberMe
                         </label>
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">@Resourses.Views.Shared._Layout.LoginButton</button>
                 </div>
                 <div class="form-group">
-                    <p>
-                        @* <a id="forgot-password" asp-page="./ForgotPassword">@Resourses.Views.Identity.Identity.ForgotPassword</a> *@
+                    @*<p>
+                        $1$ <a id="forgot-password" asp-page="./ForgotPassword">@Resourses.Views.Identity.Identity.ForgotPassword</a> #1#
                         <a id="forgot-password" asp-page="./ForgotPassword">@Resourses.Views.Identity.Identity.ForgotPassword</a>
-                    </p>
+                    </p>*@
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@Resourses.Views.Identity.Identity.RegisterNew</a>
                     </p>

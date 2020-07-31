@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
 using Extension;
@@ -33,6 +34,19 @@ namespace WebApp.ApiControllers._1._0
         {
             _bll = bll;
             _mapper = new DTOMapper<Profile, ProfileDTO>();
+        }
+        
+        /// <summary>
+        /// Check if profile exist
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("{username}/exists")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        public async Task<IActionResult> ProfileExists(string username)
+        {
+            return Ok(await _bll.Profiles.ExistsAsync(username));
         }
 
         /// <summary>

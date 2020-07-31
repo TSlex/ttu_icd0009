@@ -7,6 +7,8 @@ namespace Contracts.DAL.App.Repositories
 {
     public interface IProfileRepo : IBaseRepo<Profile>
     {
+        Task<bool> ExistsAsync(string username);
+        
         Task<Profile> GetProfile(Guid id, Guid? requesterId);
         
         Task<Profile> FindRankIncludeAsync(Guid id);

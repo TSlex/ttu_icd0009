@@ -36,8 +36,6 @@ namespace PublicApi.DTO.v1
     public class ProfileAdminDTO : MUser
     {
         [Display(Name = nameof(LastLoginDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
-        [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
-            ErrorMessageResourceName = "ErrorMessage_Required")]
         public DateTime? LastLoginDateTime { get; set; }
 
         [Display(Name = nameof(ProfileFullName), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]

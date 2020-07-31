@@ -32,6 +32,11 @@ namespace DAL.Repositories
             _postMapper = new PostMapper();
         }
 
+        public async Task<bool> ExistsAsync(string username)
+        {
+            return await _userManager.FindByNameAsync(username) != null;
+        }
+
         public async Task<Profile> GetProfile(Guid id, Guid? requesterId)
         {
             return await RepoDbSet

@@ -169,7 +169,7 @@ namespace DAL.Base.EF.Repositories
             return await RepoDbSet.CountAsync();
         }
 
-        public async Task<bool> Exist(Guid id)
+        public async Task<bool> ExistAsync(Guid id)
         {
             return (await RepoDbSet.FirstOrDefaultAsync(x => x.Id == id)) != null;
         }

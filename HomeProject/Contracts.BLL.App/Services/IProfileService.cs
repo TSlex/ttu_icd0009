@@ -7,6 +7,8 @@ namespace Contracts.BLL.App.Services
 {
     public interface IProfileService : IBaseEntityService<global::DAL.App.DTO.Profile, Profile>
     {
+        Task<bool> ExistsAsync(string username);
+        
         Task<Profile> GetProfileAsync(Guid id, Guid? requesterId);
 
         Task<Profile> FindByUsernameAsync(string username);

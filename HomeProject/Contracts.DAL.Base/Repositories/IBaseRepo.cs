@@ -33,7 +33,7 @@ namespace Contracts.DAL.Base.Repositories
         TDALEntity Remove(TKey id);
 
         Task<int> CountAsync();
-        Task<bool> Exist(Guid id);
+        Task<bool> ExistAsync(Guid id);
 
         void Restore(TDALEntity entity);
     }

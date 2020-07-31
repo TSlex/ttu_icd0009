@@ -105,7 +105,7 @@ namespace WebApp.ApiControllers._1._0
         /// <summary>
         /// Check if post exist
         /// </summary>
-        /// <param name="id">Chat room id</param>
+        /// <param name="id">Post id</param>
         /// <returns></returns>
         [HttpGet("{id}/exists")]
         [Produces("application/json")]

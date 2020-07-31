@@ -70,7 +70,7 @@ namespace BLL.Base.Services
 
         public async Task<bool> ExistsAsync(Guid id)
         {
-            return await ServiceRepository.Exist(id);
+            return await ServiceRepository.ExistAsync(id);
         }
     }
 }
