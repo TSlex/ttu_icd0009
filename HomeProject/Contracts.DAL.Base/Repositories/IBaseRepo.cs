@@ -37,4 +37,12 @@ namespace Contracts.DAL.Base.Repositories
 
         void Restore(TDALEntity entity);
     }
+    
+    // ReSharper disable once TypeParameterCanBeVariant
+    public interface IBaseDomainRepo<TDomainEntity, TDALEntity> : IBaseRepo<TDALEntity, Guid>
+        where TDomainEntity : class, IDomainEntityBase<Guid>, new()
+        where TDALEntity : class, IDomainEntityBase<Guid>, new()
+    {
+        Task<TDALEntity> UpdateDomainAsync(TDomainEntity entity);
+    }
 }

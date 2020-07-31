@@ -31,6 +31,7 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<Rank>> AllAdminAsync()
         {
             return (await RepoDbSet
+                    .Where(rank => rank.MasterId == null)
                     .Include(rank => rank.RankTitle)
                     .ThenInclude(s => s!.Translations)
                     .Include(rank => rank.RankDescription)
@@ -59,17 +60,20 @@ namespace DAL.Repositories
                 .Include(rank => rank.RankDescription)
                 .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync(rank => rank.Id == entity.Id);
+            
+            domainEntity.RankTitle.SetTranslation(entity.RankTitle);
+            domainEntity.RankDescription.SetTranslation(entity.RankDescription);
 
-            var rankTitle = entity.RankTitle;
-            var rankDescription = entity.RankDescription;
+            domainEntity.MaxExperience = entity.MaxExperience;
+            domainEntity.MinExperience = entity.MinExperience;
+            domainEntity.RankCode = entity.RankCode;
+            domainEntity.RankColor = entity.RankColor;
+            domainEntity.RankTextColor = entity.RankTextColor;
+            domainEntity.RankIcon = entity.RankIcon;
+            domainEntity.NextRankId = entity.NextRankId;
+            domainEntity.PreviousRankId = entity.PreviousRankId;
 
-            ((LangString) entity.RankTitle).Translations = domainEntity.RankTitle.Translations;
-            ((LangString) entity.RankDescription).Translations = domainEntity.RankDescription.Translations;
-
-            ((LangString) entity.RankTitle).Translate(rankTitle);
-            ((LangString) entity.RankDescription).Translate(rankDescription);
-
-            return await base.UpdateAsync(entity);
+            return await base.UpdateDomainAsync(domainEntity);
         }
 
         public async Task<Rank> FindByCodeAsync(string code)
@@ -97,8 +101,14 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<Rank>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
-                record => Mapper.Map(record));
+            return (await RepoDbSet
+                    .Where(record => record.Id == id || record.MasterId == id)
+                    .Include(rank => rank.RankTitle)
+                    .ThenInclude(s => s!.Translations)
+                    .Include(rank => rank.RankDescription)
+                    .ThenInclude(s => s!.Translations)
+                    .ToListAsync())
+                .Select(record => Mapper.Map(record));
         }
     }
 }

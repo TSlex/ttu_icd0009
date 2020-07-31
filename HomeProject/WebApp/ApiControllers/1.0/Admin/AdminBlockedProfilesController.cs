@@ -53,7 +53,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Details(Guid id)
         {
-            var blockedProfile = await _bll.BlockedProfiles.FindAsync(id);
+            var blockedProfile = await _bll.BlockedProfiles.FindAdminAsync(id);
 
             if (blockedProfile == null)
             {

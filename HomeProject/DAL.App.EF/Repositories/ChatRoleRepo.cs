@@ -78,7 +78,7 @@ namespace DAL.Repositories
             domainEntity.CanEditAllMessages = entity.CanEditAllMessages;
             domainEntity.CanWriteMessages = entity.CanWriteMessages;
 
-            return Mapper.Map(RepoDbSet.Update(domainEntity).Entity);
+            return await base.UpdateDomainAsync(domainEntity);
         }
 
         public override ChatRole Remove(ChatRole entity)
@@ -95,8 +95,12 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<ChatRole>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
-                record => Mapper.Map(record));
+            return (await RepoDbSet
+                .Where(record => record.Id == id || record.MasterId == id)
+                .Include(role => role.RoleTitleValue)
+                .ThenInclude(s => s.Translations)
+                .ToListAsync()).Select(role => Mapper.Map(role));
+        
         }
     }
 }

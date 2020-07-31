@@ -52,7 +52,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Details(Guid id)
         {
-            var record = await _bll.ProfileGifts.FindAsync(id);
+            var record = await _bll.ProfileGifts.FindAdminAsync(id);
 
             if (record == null)
             {

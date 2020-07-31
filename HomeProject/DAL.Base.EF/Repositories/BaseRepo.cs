@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace DAL.Base.EF.Repositories
 {
-    public class BaseRepo<TDomainEntity, TDALEntity, TDbContext> : IBaseRepo<TDALEntity>
+    public class BaseRepo<TDomainEntity, TDALEntity, TDbContext> : IBaseDomainRepo<TDomainEntity, TDALEntity>
         where TDomainEntity : class, IDomainEntityBase<Guid>, new()
         where TDALEntity : class, IDomainEntityBase<Guid>, new()
         where TDbContext : DbContext
@@ -138,6 +138,41 @@ namespace DAL.Base.EF.Repositories
 
             return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
         }
+        
+#pragma warning disable 1998
+        public virtual async Task<TDALEntity> UpdateDomainAsync(TDomainEntity entity)
+#pragma warning restore 1998
+        {
+            var trackEntity = RepoDbSet.Find(entity.Id);
+            var newEntity = entity;
+
+            var now = DateTime.Now;
+
+            if (newEntity is IDomainEntityBaseMetadata originBaseMetadata)
+            {
+                originBaseMetadata.CreatedAt = now;
+            }
+
+            RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
+
+            if (trackEntity is ISoftUpdateEntity softUpdateEntity &&
+                trackEntity is IDomainEntityBaseMetadata baseMetadata)
+            {
+                softUpdateEntity.MasterId = newEntity.Id;
+                
+                baseMetadata.ChangedBy = "history";
+                baseMetadata.ChangedAt = now;
+                baseMetadata.DeletedBy = "history";
+                baseMetadata.DeletedAt = now;
+                baseMetadata.Id = Guid.NewGuid();
+
+                RepoDbSet.Add(trackEntity);
+            }
+
+            return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
+        }
+
+
 
         public virtual TDALEntity Remove(TDALEntity entity)
         {

@@ -66,7 +66,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Details(Guid id)
         {
-            var record = await _bll.Images.FindAsync(id);
+            var record = await _bll.Images.FindAdminAsync(id);
 
             if (record == null)
             {
