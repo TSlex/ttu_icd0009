@@ -308,7 +308,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostImage(Guid postId)
         {
-            var post = await _bll.Posts.GetNoIncludes(postId, null);
+            var post = await _bll.Posts.GetForUpdateAsync(postId);
 
             if (post == null)
             {
@@ -333,16 +333,16 @@ namespace WebApp.ApiControllers._1._0
         /// <summary>
         /// Get gift image
         /// </summary>
-        /// <param name="giftCode"></param>
+        /// <param name="giftId"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet("gift/{giftCode}")]
+        [HttpGet("gift/{giftId}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> GetGiftImage(string giftCode)
+        public async Task<IActionResult> GetGiftImage(Guid giftId)
         {
-            var gift = await _bll.Gifts.FindByCodeAsync(giftCode);
+            var gift = await _bll.Gifts.GetForUpdateAsync(giftId);
 
             if (gift == null)
             {

@@ -9,6 +9,7 @@ using Contracts.BLL.App;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PublicApi.DTO.v1;
@@ -35,9 +36,11 @@ namespace WebApp.ApiControllers._1._0.Admin
         /// Constructor
         /// </summary>
         /// <param name="bll">Application Bll</param>
-        public AdminImagesController(IAppBLL bll)
+        /// <param name="hostEnvironment"></param>
+        public AdminImagesController(IAppBLL bll, IWebHostEnvironment hostEnvironment)
         {
             _bll = bll;
+            _bll.Images.RootPath = hostEnvironment.WebRootPath;
             _mapper = new DTOMapper<Image, ImageAdminDTO>();
         }
         
@@ -70,12 +73,17 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (record == null)
             {
-                return NotFound();
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
 
             return Ok(_mapper.Map(record));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(104857600)] 
         [Produces("application/json")]
@@ -104,21 +112,21 @@ namespace WebApp.ApiControllers._1._0.Admin
                 switch (result.ImageType)
                 {
                     case ImageType.ProfileAvatar:
-                        await _bll.Images.AddProfileAsync(result.ImageFor?? Guid.Empty, result);
+                        result = await _bll.Images.AddProfileAsync(result.ImageFor?? Guid.Empty, result);
                         break;
                     case ImageType.Post:
-                        await _bll.Images.AddPostAsync(result.ImageFor?? Guid.Empty, result);
+                        result = await _bll.Images.AddPostAsync(result.ImageFor?? Guid.Empty, result);
                         break;
                     case ImageType.Gift:
-                        await _bll.Images.AddGiftAsync(result.ImageFor?? Guid.Empty, result);
+                        result = await _bll.Images.AddGiftAsync(result.ImageFor?? Guid.Empty, result);
                         break;
                     default:
-                        await _bll.Images.AddUndefinedAsync(result);
+                        result = await _bll.Images.AddUndefinedAsync(result);
                         break;
                 }
                 await _bll.SaveChangesAsync();
 
-                return CreatedAtAction("Create", model);
+                return CreatedAtAction("Create", result);
             }
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
@@ -188,7 +196,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
         private Image? ValidateImage(Image imageModel)
         {
-            var extension = Path.GetExtension(imageModel.ImageFile!.FileName);
+            var extension = Path.GetExtension(imageModel.ImageFile!.FileName).ToLower();
 
             if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
             {

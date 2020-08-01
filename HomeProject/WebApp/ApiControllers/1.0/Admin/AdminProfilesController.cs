@@ -146,6 +146,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                 
                 record.ProfileFullName = model.ProfileFullName;
                 record.ProfileWorkPlace = model.ProfileWorkPlace;
+                record.ProfileAvatarId = model.ProfileAvatarId;
                 record.Experience = model.Experience;
                 record.ProfileAbout = model.ProfileAbout;
                 record.ProfileGender = model.ProfileGender;

@@ -31,7 +31,7 @@ namespace DAL.Repositories
 
             var record = Mapper.Map(raw.value);
 
-            if (record == null) return Mapper.Map(raw.value);
+            if (record == null || raw.lastMessage == null) return Mapper.Map(raw.value);
 
             record.LastMessageValue = raw.lastMessage.MessageValue;
             record.LastMessageDateTime = raw.lastMessage.MessageDateTime;
