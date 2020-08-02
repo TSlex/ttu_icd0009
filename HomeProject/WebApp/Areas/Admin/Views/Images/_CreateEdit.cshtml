@@ -1,0 +1,14 @@
+﻿@using Domain.Enums
+@model BLL.App.DTO.Image
+
+<div class="form-group mt-2">
+    <label asp-for="ImageFor" class="control-label"></label>
+    <input asp-for="ImageFor" class="form-control"/>
+    <span asp-validation-for="ImageFor" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="ImageType" class="control-label"></label>
+    <select asp-for="ImageType" asp-items="Html.GetEnumSelectList<ImageType>()" class="form-control"></select>
+    <span asp-validation-for="ImageType" class="text-danger"></span>
+</div>

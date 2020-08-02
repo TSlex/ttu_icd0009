@@ -18,25 +18,12 @@
                 <input type="file" asp-for="PostImage!.ImageFile" id="ImageFile" accept=".jpeg, .png, .jpg" class="text-left custom-file-input">
                 <label class="custom-file-label" style="overflow: hidden"> </label>
             </div>
-
-            <div class="form-group">
-                <label asp-for="ProfileId" class="control-label"></label>
-                <input asp-for="ProfileId" class="form-control"/>
-                <span asp-validation-for="ProfileId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostTitle" class="control-label"></label>
-                <input asp-for="PostTitle" class="form-control"/>
-                <span asp-validation-for="PostTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostDescription" class="control-label"></label>
-                <input asp-for="PostDescription" class="form-control"/>
-                <span asp-validation-for="PostDescription" class="text-danger"></span>
-            </div>
+            
+            <partial name="_CreateEdit"/>
+            
             <div class="form-group">
                 <label asp-for="PostPublicationDateTime" class="control-label"></label>
-                <input asp-for="PostPublicationDateTime" class="form-control"/>
+                <input asp-for="PostPublicationDateTime" value="@DateTime.Now" class="form-control"/>
                 <span asp-validation-for="PostPublicationDateTime" class="text-danger"></span>
             </div>
 

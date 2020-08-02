@@ -5,7 +5,8 @@
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
-<br><table class="table">
+<br>
+<table class="table">
     <thead>
     <tr>
         <th>
@@ -33,7 +34,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ChatRoleId)
             </td>
-            
+
             <td>
                 <partial name="_IndexControls" model="@item"/>
             </td>

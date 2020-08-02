@@ -1,0 +1,17 @@
+﻿@model BLL.App.DTO.Comment
+
+<div class="form-group">
+    <label asp-for="ProfileId" class="control-label"></label>*
+    <input asp-for="ProfileId" class="form-control"/>
+    <span asp-validation-for="ProfileId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PostId" class="control-label"></label>*
+    <input asp-for="PostId" class="form-control"/>
+    <span asp-validation-for="PostId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CommentValue" class="control-label"></label>*
+    <textarea asp-for="CommentValue" rows="5" class="form-control"></textarea>
+    <span asp-validation-for="CommentValue" class="text-danger"></span>
+</div>

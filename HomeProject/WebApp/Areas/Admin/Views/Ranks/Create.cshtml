@@ -10,56 +10,9 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RankCode" class="control-label"></label>
-                <input asp-for="RankCode" class="form-control"/>
-                <span asp-validation-for="RankCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankTitle" class="control-label"></label>
-                <input asp-for="RankTitle" class="form-control"/>
-                <span asp-validation-for="RankTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankDescription" class="control-label"></label>
-                <input asp-for="RankDescription" class="form-control"/>
-                <span asp-validation-for="RankDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankIcon" class="control-label"></label>
-                <input asp-for="RankIcon" class="form-control"/>
-                <span asp-validation-for="RankIcon" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankColor" class="control-label"></label>
-                <input asp-for="RankColor" class="form-control"/>
-                <span asp-validation-for="RankColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankTextColor" class="control-label"></label>
-                <input asp-for="RankTextColor" class="form-control"/>
-                <span asp-validation-for="RankTextColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MinExperience" class="control-label"></label>
-                <input asp-for="MinExperience" class="form-control"/>
-                <span asp-validation-for="MinExperience" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxExperience" class="control-label"></label>
-                <input asp-for="MaxExperience" class="form-control"/>
-                <span asp-validation-for="MaxExperience" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NextRankId" class="control-label"></label>
-                <input asp-for="NextRankId" class="form-control"/>
-                <span asp-validation-for="NextRankId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PreviousRankId" class="control-label"></label>
-                <input asp-for="PreviousRankId" class="form-control"/>
-                <span asp-validation-for="PreviousRankId" class="text-danger"></span>
-            </div>
+            
+            <partial name="_CreateEdit"/>
+            
             <partial name="_CreateControls"/>
         </form>
     </div>
