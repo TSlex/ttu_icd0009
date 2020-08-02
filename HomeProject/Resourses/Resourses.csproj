@@ -127,6 +127,16 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>Common.resx</DependentUpon>
         </Compile>
+        <Compile Update="Views\Enums\Gender.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Gender.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Enums\ImageType.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>ImageType.resx</DependentUpon>
+        </Compile>
         <Compile Update="Views\Favorites\Favorites.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -427,6 +437,26 @@
         </EmbeddedResource>
         <EmbeddedResource Update="Views\Common.ru.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Enums\Gender.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Enums\Gender.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>Gender.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Enums\Gender.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Enums\ImageType.et.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Enums\ImageType.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>ImageType.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Views\Enums\ImageType.ru.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
         <EmbeddedResource Update="Views\Favorites\Favorites.et.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
