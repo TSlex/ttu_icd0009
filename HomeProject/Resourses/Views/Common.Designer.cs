@@ -268,7 +268,7 @@ namespace Resourses.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Back to list.
         /// </summary>
         public static string BackToListButton {
             get {

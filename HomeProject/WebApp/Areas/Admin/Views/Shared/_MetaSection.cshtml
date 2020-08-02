@@ -1,0 +1,51 @@
+﻿@using BLL.App.DTO
+@using Contracts.DAL.Base
+
+@model IDomainEntityBaseMetadata
+
+@{
+    var isSoftDeleteEntity = Model is ISoftDeleteEntity | Model is Profile;
+}
+<dl class="row">
+    <dt class="col-sm-2">
+        @Resourses.BLL.App.DTO.Common.CreatedBy
+    </dt>
+     <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.CreatedBy)
+     </dd>
+     <dt class="col-sm-2">
+         @Resourses.BLL.App.DTO.Common.CreatedAt
+     </dt>
+     <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.CreatedAt)
+     </dd>
+     <dt class="col-sm-2">
+         @Resourses.BLL.App.DTO.Common.ChangedBy
+     </dt>
+     <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.ChangedBy)
+     </dd>
+     <dt class="col-sm-2">
+         @Resourses.BLL.App.DTO.Common.ChangedAt
+     </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ChangedAt)
+    </dd>
+     @{
+         if (isSoftDeleteEntity)
+         {
+             <dt class="col-sm-2">
+                 @Resourses.BLL.App.DTO.Common.DeletedBy
+             </dt>
+             <dd class="col-sm-10">
+                 @Html.DisplayFor(model => model.DeletedBy)
+             </dd>
+             <dt class="col-sm-2">
+                 @Resourses.BLL.App.DTO.Common.DeletedAt
+             </dt>
+             <dd class="col-sm-10">
+                 @Html.DisplayFor(model => model.DeletedAt)
+             </dd>
+         }
+     }
+</dl>
