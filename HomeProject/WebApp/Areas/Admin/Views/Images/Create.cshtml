@@ -2,25 +2,29 @@
 
 @{
     ViewData["Title"] = Resourses.Views.Common.CreateHeader;
+
+    var imageSetting = new {Styles = "width: 30rem;"};
 }
 
 <h1 class="text-center">@ViewData["Title"]</h1>
 <hr/>
 <div class="row text-center align-items-center d-flex flex-column">
-    <div class="card mb-2" id="image-miniature" style="width: 30rem; user-select: none">
+    
+    <div class="card mb-2" id="image-miniature" style="width:30rem; user-select: none">
         <img src="#" alt="" class="card-img" id="render_image" draggable="false" />
     </div>
+
     <div class="col-md-4">
         <form asp-action="Create" method="post" enctype="multipart/form-data" class="custom-file">
             <div asp-validation-summary="All" class="text-danger"></div>
-            
-            <partial name="_CreateEdit" />
-            
+
+            <partial name="_CreateEdit"/>
+
             <div class="custom-file">
                 <input type="file" asp-for="ImageFile" accept=".jpeg, .png, .jpg" class="custom-file-input">
                 <label class="custom-file-label" style="overflow: hidden"> </label>
             </div>
-
+            
             <input type="hidden" asp-for="PaddingTop" value="0"/>
             <input type="hidden" asp-for="PaddingRight" value="0"/>
             <input type="hidden" asp-for="PaddingBottom" value="0">
