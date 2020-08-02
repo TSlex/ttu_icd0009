@@ -59,21 +59,15 @@ namespace WebApp.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Details(Guid id, string? returnUrl)
+        public async Task<IActionResult> Details(Guid id)
         {
-            var post = await _bll.Posts.GetPostFull(id);
+            var post = await _bll.Posts.FindAdminAsync(id);
 
             if (post == null)
             {
                 return NotFound();
             }
             
-            var favorite = await _bll.Favorites.FindAdminAsync(id);
-
-            post.IsUserFavorite = favorite != null;
-            
-            post.ReturnUrl = returnUrl;
-
             return View(post);
         }
 

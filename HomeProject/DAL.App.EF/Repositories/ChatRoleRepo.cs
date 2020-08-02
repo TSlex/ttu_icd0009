@@ -43,8 +43,8 @@ namespace DAL.Repositories
                 .Where(role => role.MasterId == null)
                 .Include(role => role.RoleTitleValue)
                 .ThenInclude(s => s.Translations)
-                .ToListAsync()).Select(role => Mapper.Map(role));
-                 }
+                .ToListAsync())
+                .Select(role => Mapper.Map(role));}
 
         public async Task<ChatRole> FindAsync(string chatRoleTitle)
         {

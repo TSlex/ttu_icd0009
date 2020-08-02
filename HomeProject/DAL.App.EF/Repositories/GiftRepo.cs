@@ -34,7 +34,7 @@ namespace DAL.Repositories
                     .Include(gift => gift.GiftName)
                     .ThenInclude(s => s!.Translations)
                     .ToListAsync())
-                .Select(rank => Mapper.Map(rank));
+                .Select(gift => Mapper.Map(gift));
         }
 
         public override async Task<IEnumerable<Gift>> AllAsync()
@@ -54,6 +54,22 @@ namespace DAL.Repositories
                 .Include(gift => gift.GiftName)
                 .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync((gift => gift.Id == id)));
+        }
+        
+        public override async Task<Gift> UpdateAsync(Gift entity)
+        {
+            var domainEntity = await RepoDbSet
+                .Include(gift => gift.GiftName)
+                .ThenInclude(s => s!.Translations)
+                .FirstOrDefaultAsync(rank => rank.Id == entity.Id);
+            
+            domainEntity.GiftName.SetTranslation(entity.GiftName);
+
+            domainEntity.Price = entity.Price;
+            domainEntity.GiftCode = entity.GiftCode;
+            domainEntity.GiftImageId = entity.GiftImageId;
+
+            return await base.UpdateDomainAsync(domainEntity);
         }
 
         public async Task<Gift> FindByCodeAsync(string giftCode)
@@ -113,7 +129,10 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<Gift>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id)
+            return (await RepoDbSet
+                .Where(record => record.Id == id || record.MasterId == id)
+                .Include(gift => gift.GiftName)
+                .ThenInclude(s => s!.Translations)
                 .ToListAsync()).Select(record => Mapper.Map(record));
         }
     }

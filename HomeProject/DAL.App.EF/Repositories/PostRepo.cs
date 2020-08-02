@@ -17,7 +17,7 @@ namespace DAL.Repositories
     public class PostRepo : BaseRepo<Domain.Post, Post, ApplicationDbContext>, IPostRepo
     {
         private readonly BaseDALMapper<Image, DAL.App.DTO.Image> _imageMapper;
-        
+
         public PostRepo(ApplicationDbContext dbContext) :
             base(dbContext, new PostMapper())
         {
@@ -26,9 +26,25 @@ namespace DAL.Repositories
 
         public override async Task<Post> FindAdminAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbContext.Posts
+            var raw = await RepoDbContext.Posts
                 .Include(post => post.PostImage)
-                .FirstOrDefaultAsync(post => post.Id == id));
+                .Where(post => post.Id == id)
+                .Select(post => new
+                {
+                    _post = post,
+                    commentsCount =
+                        post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                    favoritesCount = post.Favorites.Count(),
+                })
+                .FirstOrDefaultAsync();
+
+            if (raw?._post != null)
+            {
+                raw._post.PostCommentsCount = raw.commentsCount;
+                raw._post.PostFavoritesCount = raw.favoritesCount;
+            }
+
+            return Mapper.Map(raw?._post);
         }
 
         public override async Task<IEnumerable<Post>> AllAsync()
@@ -63,7 +79,8 @@ namespace DAL.Repositories
                     PostImageId = post.PostImageId,
                     PostImage = _imageMapper.Map(post.PostImage),
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostCommentsCount = post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                    PostCommentsCount =
+                        post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = requesterId != null && post.Favorites.Select(favorite => favorite.ProfileId)
                                          .Contains((Guid) requesterId),
@@ -78,8 +95,8 @@ namespace DAL.Repositories
         {
             return (await RepoDbContext.Posts
                 .Where(post => (post.Profile!.Followers
-                                   .Select(follower => follower.FollowerProfileId)
-                                   .Contains(userId) || post.ProfileId == userId) 
+                                    .Select(follower => follower.FollowerProfileId)
+                                    .Contains(userId) || post.ProfileId == userId)
                                && post.DeletedAt == null && post.MasterId == null)
                 .Select(post => new Post()
                 {
@@ -89,7 +106,8 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostCommentsCount = post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                    PostCommentsCount =
+                        post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
                     Profile = new DAL.App.DTO.Profile()
@@ -112,7 +130,8 @@ namespace DAL.Repositories
                         PostDescription = post.PostDescription,
                         PostImageId = post.PostImageId,
                         PostPublicationDateTime = post.PostPublicationDateTime,
-                        PostCommentsCount = post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                        PostCommentsCount =
+                            post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                         PostFavoritesCount = post.Favorites!.Count,
                         Profile = new Profile()
                         {
@@ -125,7 +144,7 @@ namespace DAL.Repositories
 
         public async Task<int> GetByUserCount(Guid userId)
         {
-            return await RepoDbContext.Posts.CountAsync(post => post.ProfileId == userId 
+            return await RepoDbContext.Posts.CountAsync(post => post.ProfileId == userId
                                                                 && post.DeletedAt == null && post.MasterId == null);
         }
 
@@ -141,7 +160,7 @@ namespace DAL.Repositories
             }
 
             return (await RepoDbContext.Posts
-                .Where(post => post.ProfileId == userId && 
+                .Where(post => post.ProfileId == userId &&
                                post.DeletedAt == null && post.MasterId == null)
                 .OrderByDescending(post => post.PostPublicationDateTime)
                 .Select(post => new Post()
@@ -152,7 +171,8 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostCommentsCount = post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                    PostCommentsCount =
+                        post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = requesterId != null && post.Favorites.Select(favorite => favorite.ProfileId)
                                          .Contains((Guid) requesterId),
@@ -205,8 +225,8 @@ namespace DAL.Repositories
 
             return (await RepoDbContext.Posts
                 .Where(post => (post.Profile!.Followers
-                                   .Select(follower => follower.FollowerProfileId)
-                                   .Contains(userId) || post.ProfileId == userId) 
+                                    .Select(follower => follower.FollowerProfileId)
+                                    .Contains(userId) || post.ProfileId == userId)
                                && post.DeletedAt == null && post.MasterId == null)
                 .OrderByDescending(post => post.PostPublicationDateTime)
                 .Select(post => new Post()
@@ -217,7 +237,8 @@ namespace DAL.Repositories
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
                     PostPublicationDateTime = post.PostPublicationDateTime,
-                    PostCommentsCount = post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                    PostCommentsCount =
+                        post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                     PostFavoritesCount = post.Favorites!.Count,
                     IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(userId),
                     Profile = new DAL.App.DTO.Profile()
@@ -250,7 +271,8 @@ namespace DAL.Repositories
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
-                    PostCommentsCount = post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
+                    PostCommentsCount =
+                        post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                     PostFavoritesCount = post.Favorites!.Count,
                     Profile = new Profile()
                     {
@@ -284,7 +306,7 @@ namespace DAL.Repositories
             {
                 RepoDbContext.Favorites.Remove(favorite);
             }
-            
+
             var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.PostImageId);
 
             if (imageRecord != null)
@@ -294,10 +316,11 @@ namespace DAL.Repositories
 
             return base.Remove(entity);
         }
-        
+
         public override async Task<IEnumerable<Post>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
+                record => Mapper.Map(record));
         }
     }
 }

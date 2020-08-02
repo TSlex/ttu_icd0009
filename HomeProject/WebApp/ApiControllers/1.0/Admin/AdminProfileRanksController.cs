@@ -37,7 +37,7 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll = bll;
             _mapper = new DTOMapper<ProfileRank, ProfileRankAdminDTO>();
         }
-        
+
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileRankAdminDTO>))]
@@ -45,7 +45,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             return Ok((await _bll.ProfileRanks.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
-        
+
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileRankAdminDTO))]
@@ -61,7 +61,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return Ok(_mapper.Map(record));
         }
-        
+
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -80,7 +80,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
-        
+
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -93,10 +93,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
-            
+
             var record = await _bll.ProfileRanks.GetForUpdateAsync(id);
 
-            if (record == null)
+            if (record == null || !await _bll.Ranks.ExistsAsync(model.RankId) ||
+                !await _bll.Profiles.ExistsAsync(model.ProfileId))
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
@@ -112,7 +113,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
-        
+
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -123,7 +124,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
-        
+
         [HttpPost("{restore}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
