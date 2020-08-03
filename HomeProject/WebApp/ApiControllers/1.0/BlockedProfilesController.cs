@@ -60,12 +60,14 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BlockedProfileDTO>))]
         public async Task<IActionResult> GetUserBlackList(int pageNumber)
         {
-            return Ok((await _bll.BlockedProfiles.AllByIdPageAsync(User.UserId(), pageNumber, 10)).Select(favorite =>
-                new BlockedProfileDTO
-                {
-                    UserName = favorite.BProfile!.UserName,
-                    ProfileAvatarId = favorite.BProfile!.ProfileAvatarId
-                }));
+            return Ok((await _bll.BlockedProfiles
+                    .AllByIdPageAsync(User.UserId(), pageNumber, 10))
+                .Select(favorite =>
+                    new BlockedProfileDTO
+                    {
+                        UserName = favorite.BProfile!.UserName,
+                        ProfileAvatarId = favorite.BProfile!.ProfileAvatarId
+                    }));
         }
     }
 }

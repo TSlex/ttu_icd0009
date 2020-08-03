@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PublicApi.DTO.v1;
 using PublicApi.DTO.v1.Mappers;
 using PublicApi.DTO.v1.Response;
@@ -27,15 +28,18 @@ namespace WebApp.ApiControllers._1._0
     public class CommentsController : ControllerBase
     {
         private readonly IAppBLL _bll;
+        private readonly IConfiguration _configuration;
         private readonly DTOMapper<Comment, CommentGetDTO> _mapper;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="bll">Application Bll</param>
-        public CommentsController(IAppBLL bll)
+        /// <param name="configuration"></param>
+        public CommentsController(IAppBLL bll, IConfiguration configuration)
         {
             _bll = bll;
+            _configuration = configuration;
             _mapper = new DTOMapper<Comment, CommentGetDTO>();
         }
 
@@ -127,6 +131,9 @@ namespace WebApp.ApiControllers._1._0
                 });
 
                 await _bll.SaveChangesAsync();
+                
+                await _bll.Ranks.IncreaseUserExperience(User.UserId(),
+                    _configuration.GetValue<int>("Rank:CommentExperience"));
 
                 return CreatedAtAction("GetPostsComments", _mapper.Map(result));
             }

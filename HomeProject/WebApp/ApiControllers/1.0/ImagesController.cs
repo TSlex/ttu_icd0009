@@ -60,9 +60,11 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetImage(string? id)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             if (id == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             Image image;
@@ -73,12 +75,12 @@ namespace WebApp.ApiControllers._1._0
 
                 if (image == null)
                 {
-                    return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                    return undefined;
                 }
             }
             catch (Exception)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             Request.Headers.Add("imageId", id.ToString());
@@ -96,9 +98,11 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOriginalImage(string? id)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             if (id == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             Image image;
@@ -109,12 +113,12 @@ namespace WebApp.ApiControllers._1._0
 
                 if (image == null)
                 {
-                    return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                    return undefined;
                 }
             }
             catch (Exception)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             Request.Headers.Add("imageId", id.ToString());
@@ -180,6 +184,13 @@ namespace WebApp.ApiControllers._1._0
                     ImageFile = imageDTO.ImageFile
                 };
 
+                var (_, errors) = _bll.Images.ValidateImage(image);
+
+                if (errors.Length > 0)
+                {
+                    return BadRequest(new ErrorResponseDTO(errors));
+                }
+
                 if (image.ImageType == ImageType.ProfileAvatar)
                 {
                     image.ImageFor = User.UserId();
@@ -202,7 +213,7 @@ namespace WebApp.ApiControllers._1._0
                 await _bll.SaveChangesAsync();
                 return Ok(_mapper.Map(result));
             }
-            
+
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
@@ -226,8 +237,8 @@ namespace WebApp.ApiControllers._1._0
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
             }
-            
-            if (record.ImageType != ImageType.Post && record.ImageType != ImageType.ProfileAvatar 
+
+            if (record.ImageType != ImageType.Post && record.ImageType != ImageType.ProfileAvatar
                 || record.ImageType == ImageType.ProfileAvatar && record.ImageFor != User.UserId())
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
@@ -242,7 +253,17 @@ namespace WebApp.ApiControllers._1._0
                 record.PaddingBottom = imageDTO.PaddingBottom;
                 record.PaddingLeft = imageDTO.PaddingLeft;
                 record.ImageFile = imageDTO.ImageFile;
-                
+
+                if (record.ImageFile != null)
+                {
+                    var (_, errors) = _bll.Images.ValidateImage(record);
+
+                    if (errors.Length > 0)
+                    {
+                        return BadRequest(new ErrorResponseDTO(errors));
+                    }
+                }
+
                 switch (record.ImageType)
                 {
                     case ImageType.ProfileAvatar:
@@ -258,7 +279,7 @@ namespace WebApp.ApiControllers._1._0
                 await _bll.SaveChangesAsync();
                 return NoContent();
             }
-            
+
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
@@ -274,6 +295,8 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetProfileImage(string username)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             var user = await _bll.Profiles.FindByUsernameAsync(username);
 
             if (user == null)
@@ -283,14 +306,14 @@ namespace WebApp.ApiControllers._1._0
 
             if (user.ProfileAvatarId == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             var image = await _bll.Images.FindAsync((Guid) user.ProfileAvatarId);
 
             if (image == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
@@ -308,6 +331,8 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostImage(Guid postId)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             var post = await _bll.Posts.GetForUpdateAsync(postId);
 
             if (post == null)
@@ -317,14 +342,14 @@ namespace WebApp.ApiControllers._1._0
 
             if (post.PostImageId == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             var image = await _bll.Images.FindAsync((Guid) post.PostImageId);
 
             if (image == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
@@ -342,6 +367,8 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetGiftImage(Guid giftId)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             var gift = await _bll.Gifts.GetForUpdateAsync(giftId);
 
             if (gift == null)
@@ -351,14 +378,14 @@ namespace WebApp.ApiControllers._1._0
 
             if (gift.GiftImageId == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             var image = await _bll.Images.FindAsync((Guid) gift.GiftImageId);
 
             if (image == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");

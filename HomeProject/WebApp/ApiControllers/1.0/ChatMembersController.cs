@@ -165,17 +165,17 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> SetMemberRole(Guid id, string roleTitle)
         {
-            if (roleTitle.Contains("Creator"))
-            {
-                return BadRequest(
-                    new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign));
-            }
-
             var role = await _bll.ChatRoles.FindAsync(roleTitle);
 
             if (role == null)
             {
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorRoleNotFound));
+            }
+            
+            if (role.CanEditMembers)
+            {
+                return BadRequest(
+                    new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign));
             }
 
             var member = await _bll.ChatMembers.FindAsync(id);
@@ -186,7 +186,7 @@ namespace WebApp.ApiControllers._1._0
                     new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorMemberNotFound));
             }
 
-            if (member.ChatRole!.RoleTitle.Contains("Creator"))
+            if (member.ChatRole!.CanEditMembers)
             {
                 return BadRequest(
                     new ErrorResponseDTO(Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote));
@@ -197,7 +197,9 @@ namespace WebApp.ApiControllers._1._0
             if (isRoomAdministrator)
             {
                 member.ChatRole = null;
+                member.Profile = null;
                 member.ChatRoleId = role.Id;
+                
                 await _bll.ChatMembers.UpdateAsync(member);
                 await _bll.SaveChangesAsync();
                 return NoContent();
