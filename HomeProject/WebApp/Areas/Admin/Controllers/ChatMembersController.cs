@@ -41,8 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> History(Guid id)
         {
-            var history = (await _bll.ChatMembers.GetRecordHistoryAsync(id)).ToList()
-                .OrderByDescending(record => record.CreatedAt);
+            var history = (await _bll.ChatMembers.GetRecordHistoryAsync(id)).ToList();
             
             return View(nameof(Index), history);
         }
