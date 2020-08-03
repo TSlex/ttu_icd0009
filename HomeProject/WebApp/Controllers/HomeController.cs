@@ -22,7 +22,7 @@ namespace WebApp.Controllers
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -38,8 +38,8 @@ namespace WebApp.Controllers
             _bll = bll;
             _signInManager = signInManager;
         }
-        
-        
+
+
         /// <summary>
         /// Get posts for specific user subscriptions (including own posts) or all posts of all users
         /// </summary>
@@ -63,7 +63,7 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        
+
         /// <summary>
         /// Search user by username
         /// </summary>
@@ -79,19 +79,16 @@ namespace WebApp.Controllers
 
                 if (user != null)
                 {
-                    return RedirectToAction("Index", "Profiles", new
-                    {
-                        username = username
-                    });
+                    return RedirectToAction("Index", "Profiles", new {username});
                 }
             }
 
-            if (returnUrl != null)
-            {
-                return Redirect(returnUrl);
-            }
+//            if (returnUrl != null)
+//            {
+//                return Redirect(returnUrl);
+//            }
 
-            return View("Index");
+            return NotFound();
         }
 
         /// <summary>

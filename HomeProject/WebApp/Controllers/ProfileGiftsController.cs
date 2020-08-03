@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApp.Controllers
 {
@@ -16,14 +17,17 @@ namespace WebApp.Controllers
     public class ProfileGiftsController : Controller
     {
         private readonly IAppBLL _bll;
+        private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="bll"></param>
-        public ProfileGiftsController(IAppBLL bll)
+        /// <param name="configuration"></param>
+        public ProfileGiftsController(IAppBLL bll, IConfiguration configuration)
         {
             _bll = bll;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -107,8 +111,7 @@ namespace WebApp.Controllers
             {
                 from = await _bll.Profiles.FindByUsernameAsync(profileGift.FromProfile!.UserName);
             }
-
-
+            
             ModelState.Clear();
 
             profileGift.FromProfile = null;
@@ -116,7 +119,8 @@ namespace WebApp.Controllers
 
             if (TryValidateModel(profileGift))
             {
-                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 10);
+                await _bll.Ranks.IncreaseUserExperience(User.UserId(),
+                    _configuration.GetValue<int>("Rank:GiftSendExperience"));
 
                 if (from != null)
                 {
@@ -135,14 +139,6 @@ namespace WebApp.Controllers
                 }
 
                 return RedirectToAction("Index", "Home");
-            }
-
-            foreach (var modelState in ViewData.ModelState.Values)
-            {
-                foreach (ModelError error in modelState.Errors)
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
             }
 
             return View(profileGift);

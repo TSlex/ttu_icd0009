@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
-{    
+{
     /// <summary>
     /// Images - avatar, post, gifts etc...
     /// </summary>
@@ -17,7 +17,7 @@ namespace WebApp.Controllers
     {
         private readonly IAppBLL _bll;
         private readonly IWebHostEnvironment _hostEnvironment;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -29,7 +29,7 @@ namespace WebApp.Controllers
             _hostEnvironment = hostEnvironment;
             _bll.Images.RootPath = hostEnvironment.WebRootPath;
         }
-        
+
         /// <summary>
         /// Get image by it's id
         /// </summary>
@@ -38,26 +38,28 @@ namespace WebApp.Controllers
         [Route("{controller}/{id?}")]
         public async Task<IActionResult> GetImage(Guid? id)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             if (id == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
-            
+
             var image = await _bll.Images.FindAsync((Guid) id);
 
             if (image == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
         }
-        
+
         /// <summary>
         /// Get original image version by it's id
         /// </summary>
@@ -66,21 +68,23 @@ namespace WebApp.Controllers
         [Route("{controller}/{id?}/original")]
         public async Task<IActionResult> GetOriginalImage(Guid? id)
         {
+            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+
             if (id == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
-            
+
             var image = await _bll.Images.FindAsync((Guid) id);
 
             if (image == null)
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.OriginalImageUrl))
             {
-                return base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+                return undefined;
             }
 
             return base.File("~/localstorage" + image.OriginalImageUrl, "image/jpeg");

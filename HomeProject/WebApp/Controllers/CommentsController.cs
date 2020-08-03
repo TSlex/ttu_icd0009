@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
 using Extension;
@@ -15,14 +16,17 @@ namespace WebApp.Controllers
     public class CommentsController : Controller
     {
         private readonly IAppBLL _bll;
-        
+        private readonly IConfiguration _configuration;
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="bll"></param>
-        public CommentsController(IAppBLL bll)
+        /// <param name="configuration"></param>
+        public CommentsController(IAppBLL bll, IConfiguration configuration)
         {
             _bll = bll;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -37,14 +41,13 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             var comment = new Comment
             {
-                PostId = postId, 
+                PostId = postId,
                 Post = post,
                 ReturnUrl = returnUrl
             };
-
 
             return View(comment);
         }
@@ -65,9 +68,11 @@ namespace WebApp.Controllers
             {
                 comment.Id = Guid.NewGuid();
                 _bll.Comments.Add(comment);
-                await _bll.SaveChangesAsync();
                 
-                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 2);
+                await _bll.SaveChangesAsync();
+
+                await _bll.Ranks.IncreaseUserExperience(User.UserId(),
+                    _configuration.GetValue<int>("Rank:CommentExperience"));
 
                 return RedirectToAction("Details", "Posts", new {id = comment.PostId});
             }
@@ -87,7 +92,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             comment.ReturnUrl = returnUrl;
 
             return View(comment);
@@ -101,11 +106,10 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            Comment comment)
+        public async Task<IActionResult> Edit(Guid id,  Comment comment)
         {
             var record = await _bll.Comments.GetForUpdateAsync(id);
-            
+
             if (!ValidateUserAccess(record) || id != comment.Id)
             {
                 return NotFound();
@@ -114,7 +118,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 record.CommentValue = comment.CommentValue;
-                
+
                 await _bll.Comments.UpdateAsync(record);
                 await _bll.SaveChangesAsync();
 
@@ -141,7 +145,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             _bll.Comments.Remove(record.Id);
             await _bll.SaveChangesAsync();
 
@@ -152,7 +156,7 @@ namespace WebApp.Controllers
 
             return RedirectToAction("Details", "Posts", new {id = record.PostId});
         }
-        
+
         private bool ValidateUserAccess(Comment? record)
         {
             return record != null && record.ProfileId == User.UserId();

@@ -17,7 +17,7 @@ namespace WebApp.Controllers
     public class ChatMembersController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -29,6 +29,7 @@ namespace WebApp.Controllers
 
         /// <summary>
         /// Get all records
+        /// Can access only if member of this room
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Index(Guid chatRoomId)
@@ -39,13 +40,23 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(members);
         }
-        
+
+        /// <summary>
+        /// Model object for transfer member and available roles
+        /// </summary>
         public class ChatMemberRoleModel
         {
+            /// <summary>
+            /// ChatRoles
+            /// </summary>
             public IEnumerable<ChatRole>? ChatRoles { get; set; }
+
+            /// <summary>
+            /// Member
+            /// </summary>
             public ChatMember ChatMember { get; set; } = default!;
         }
 
@@ -56,15 +67,15 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var chatMember = await _bll.ChatMembers.FindAsync(id);
-            var chatRoles = (await _bll.ChatRoles.AllAsync());
+            var chatRoles = await _bll.ChatRoles.AllAsync();
 
             if (chatMember == null)
             {
                 return NotFound();
             }
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
-            
+
             if (currentMember == null || !currentMember.ChatRole.CanEditMembers)
             {
                 return NotFound();
@@ -73,7 +84,7 @@ namespace WebApp.Controllers
             var model = new ChatMemberRoleModel()
             {
                 ChatRoles = chatRoles,
-                ChatMember = chatMember
+                ChatMember = chatMember,
             };
 
             return View(model);
@@ -87,56 +98,69 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            ChatMemberRoleModel model)
+        public async Task<IActionResult> Edit(Guid id, ChatMemberRoleModel model)
         {
             var member = await _bll.ChatMembers.FindAsync(id);
-            var chatRole = await _bll.ChatRoles.FindAsync(model.ChatMember.ChatRoleId);
-            
+            var chatRole = await _bll.ChatRoles.GetForUpdateAsync(model.ChatMember.ChatRoleId);
+            var chatRoles = await _bll.ChatRoles.AllAsync();
+
             if (member == null || chatRole == null || id != model.ChatMember.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                
+                model.ChatMember = member;
+                model.ChatRoles = chatRoles;
+                return View(model);
             }
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), member.ChatRoomId);
-            
+
             if (currentMember == null || !currentMember.ChatRole.CanEditMembers)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                
+                model.ChatMember = member;
+                model.ChatRoles = chatRoles;
+                return View(model);
             }
 
             if (member.ChatRole.CanEditMembers)
             {
-                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote);
+                ModelState.AddModelError(string.Empty,
+                    Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote);
+                
+                model.ChatMember = member;
+                model.ChatRoles = chatRoles;
+                return View(model);
             }
 
             if (chatRole.CanEditMembers)
             {
-                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign);
+                ModelState.AddModelError(string.Empty,
+                    Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorAssign);
+                
+                model.ChatMember = member;
+                model.ChatRoles = chatRoles;
+                return View(model);
             }
 
             if (ModelState.IsValid)
             {
-                model.ChatMember.ChatRoomId = member.ChatRoomId;
-                model.ChatMember.ProfileId = member.ProfileId;
-                
-                await _bll.ChatMembers.UpdateAsync(model.ChatMember);
+                member.ChatRoleId = model.ChatMember.ChatRoleId;
+                member.ChatRole = null;
+                member.Profile = null;
+
+                await _bll.ChatMembers.UpdateAsync(member);
                 await _bll.SaveChangesAsync();
-
-
-                return RedirectToAction(nameof(Index), new { chatRoomId = member.ChatRoomId});
+                
+                return RedirectToAction(nameof(Index), new {chatRoomId = member.ChatRoomId});
             }
-            
-            var chatRoles = await _bll.ChatRoles.AllAsync();
 
-            model.ChatMember = member;
-            model.ChatRoles = chatRoles;
-            
             return View(model);
         }
 
         /// <summary>
-        /// Deletes a record
+        /// Deletes a record if have access to
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -157,7 +181,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             _bll.ChatMembers.Remove(chatMember);
             await _bll.SaveChangesAsync();
 

@@ -81,6 +81,19 @@ namespace BLL.App.Services
                 .Select(room => Mapper.Map(room));
         }
 
+        public override async Task<ChatRoom> FindAsync(Guid id)
+        {
+            var result = await ServiceRepository.FindAsync(id);
+
+            result.Messages = result.Messages
+                .Where(message =>
+                    message.DeletedAt == null &&
+                    message.MasterId == null)
+                .ToList();
+
+            return Mapper.Map(result);
+        }
+
         private static bool FilterByMemberDeleted(DAL.App.DTO.ChatRoom chatRoom, Guid userId)
         {
             var member = chatRoom?.ChatMembers.FirstOrDefault(chatMember => chatMember.ProfileId == userId);

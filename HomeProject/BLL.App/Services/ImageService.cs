@@ -31,15 +31,15 @@ namespace BLL.App.Services
             if (imageModel.ImageFile == null)
             {
                 errors.Add(Resourses.BLL.App.DTO.Images.Images.ImageRequired);
-                return null;
+                return new Tuple<Image, string[]>(null, errors.ToArray());
             }
 
-            var extension = Path.GetExtension(imageModel.ImageFile!.FileName);
+            var extension = Path.GetExtension(imageModel.ImageFile!.FileName)?.ToLower();
 
             if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
             {
                 errors.Add(Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
-                return null;
+                return new Tuple<Image, string[]>(null, errors.ToArray());
             }
 
             using (var image = System.Drawing.Image.FromStream(imageModel.ImageFile.OpenReadStream()))
@@ -47,14 +47,14 @@ namespace BLL.App.Services
                 if (image.Height > 4000 || image.Width > 4000)
                 {
                     errors.Add(Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
-                    return null;
+                    return new Tuple<Image, string[]>(null, errors.ToArray());
                 }
 
                 var ratio = image.Height * 1.0 / image.Width;
                 if (ratio < 0.1 || 10 < ratio)
                 {
                     errors.Add(Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
-                    return null;
+                    return new Tuple<Image, string[]>(null, errors.ToArray());
                 }
 
                 imageModel.HeightPx = image.Height;

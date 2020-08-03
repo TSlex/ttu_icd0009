@@ -73,8 +73,6 @@ namespace WebApp.Controllers
             {
                 _bll.Favorites.Create(post.Id, userId);
                 await _bll.SaveChangesAsync();
-                
-                await _bll.Ranks.IncreaseUserExperience(User.UserId(), 1);
             }
             
             post = await _bll.Posts.GetPostFull(post.Id);
@@ -133,22 +131,34 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)] 
         public async Task<IActionResult> Create(Post post)
         {
+            ModelState.Clear();
+            
             if (post.PostImage!.ImageFile == null)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(post);
             }
             
-            ModelState.Clear();
+            var (imageModel, errors) = _bll.Images.ValidateImage(post.PostImage);
+            
+            if (errors.Length > 0)
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                    return View(post);
+                }
+            }
+
             post.ProfileId = User.UserId();
 
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
                 
-                var imageModel = post.PostImage;
                 imageModel.Id = Guid.NewGuid();
                 imageModel.ImageType = ImageType.Post;
                 imageModel.ImageFor = post.Id;
@@ -197,13 +207,15 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)] 
         public async Task<IActionResult> Edit(Guid id, Post post)
         {
             var record = await _bll.Posts.GetForUpdateAsync(id);
 
             if (!ValidateUserAccess(record) || id != post.Id || post.PostImageId != post.PostImage.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorAccessDenied);
+                return View(post);
             }
             
             if (post.PostImage!.ImageFile == null && post.PostImageId == null)
@@ -217,6 +229,20 @@ namespace WebApp.Controllers
             post.PostPublicationDateTime = record.PostPublicationDateTime;
             
             var imageModel = post.PostImage;
+            
+            if (post.PostImage.ImageFile != null)
+            {
+                var (_, errors) = _bll.Images.ValidateImage(post.PostImage);
+
+                if (errors.Length > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
+            }
+            
             if (post.PostImageId == null)
             {
                 imageModel.Id = Guid.NewGuid();

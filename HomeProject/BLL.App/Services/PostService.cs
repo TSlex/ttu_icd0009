@@ -20,6 +20,9 @@ namespace BLL.App.Services
 
         public async Task<Post> GetPostFull(Guid id)
         {
+            //strange asp error. he tries execute function twice with empty id
+            if (id == Guid.Empty) return null;
+            
             var post = Mapper.Map(await ServiceRepository.FindAsync(id));
             
             post.Comments = post.Comments

@@ -51,15 +51,11 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            chatRoom.Messages = chatRoom.Messages
-                .Where(message => message.DeletedAt == null && message.MasterId == null)
-                .ToList();
-
             return View(chatRoom);
         }
 
         /// <summary>
-        /// Opens chat room with user (if not exist - creates)
+        /// Opens chat room with user (if not exist - creates a new one)
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -73,6 +69,11 @@ namespace WebApp.Controllers
             });
         }
 
+        /// <summary>
+        /// Leaves room (member deletes, messages not)
+        /// </summary>
+        /// <param name="chatRoomId"></param>
+        /// <returns></returns>
         public async Task<IActionResult> LeaveChat(Guid chatRoomId)
         {
             var chatMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatRoomId);
@@ -113,14 +114,15 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ChatRoom chatRoom)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.ChatRoom chatRoom)
         {
             var record = await _bll.ChatRooms.GetForUpdateAsync(id);
             var member = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatRoom.Id);
 
             if (record == null || id != chatRoom.Id || member == null || !member.ChatRole.CanRenameRoom)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                return View(chatRoom);
             }
 
             if (ModelState.IsValid)

@@ -7,7 +7,7 @@ using Extension;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
-{    
+{
     /// <summary>
     /// Messages
     /// </summary>
@@ -15,7 +15,7 @@ namespace WebApp.Controllers
     public class MessagesController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -35,7 +35,7 @@ namespace WebApp.Controllers
             {
                 ChatRoomId = chatRoomId,
             };
-            
+
             return View(message);
         }
 
@@ -46,20 +46,20 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            Message message)
+        public async Task<IActionResult> Create(Message message)
         {
             ModelState.Clear();
-            
+
             message.ProfileId = User.UserId();
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
-            
+
             if (!(currentMember != null &&
                   (message.ProfileId == User.UserId() && currentMember.ChatRole.CanWriteMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorAccessDenied);
+                return View(message);
             }
 
             if (TryValidateModel(message))
@@ -86,16 +86,16 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
-            
+
             if (!(currentMember != null &&
-                (message.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
-                 currentMember.ChatRole.CanEditAllMessages)))
+                  (message.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
+                   currentMember.ChatRole.CanEditAllMessages)))
             {
                 return NotFound();
             }
-            
+
             return View(message);
         }
 
@@ -110,28 +110,29 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Edit(Guid id, Message message)
         {
             var record = await _bll.Messages.GetForUpdateAsync(id);
-            
+
             if (record == null || id != message.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+                return View(message);
             }
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
-            
+
             if (!(currentMember != null &&
                   (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorAccessDenied);
+                return View(message);
             }
 
             if (ModelState.IsValid)
             {
                 record.MessageValue = message.MessageValue;
-                
+
                 await _bll.Messages.UpdateAsync(record);
                 await _bll.SaveChangesAsync();
-
 
                 return RedirectToAction("Details", "ChatRooms", new {id = record.ChatRoomId});
             }
@@ -149,16 +150,16 @@ namespace WebApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var record = await _bll.Messages.GetForUpdateAsync(id);
-            
+
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
-            
+
             if (!(currentMember != null &&
                   (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
                    currentMember.ChatRole.CanEditAllMessages)))
             {
                 return NotFound();
             }
-            
+
             _bll.Messages.Remove(id);
             await _bll.SaveChangesAsync();
 
