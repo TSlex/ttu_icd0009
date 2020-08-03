@@ -82,8 +82,11 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BLL.App.DTO.Rank rank)
         {
-            if (rank.PreviousRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.PreviousRankId) ||
-                rank.NextRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.NextRankId))
+            if (rank.PreviousRankId != null && (!await _bll.Ranks.ExistsAsync((Guid) rank.PreviousRankId) ||
+                                                await _bll.Ranks.PreviousRankExists((Guid) rank.PreviousRankId,
+                                                    null)) ||
+                rank.NextRankId != null && (!await _bll.Ranks.ExistsAsync((Guid) rank.NextRankId) ||
+                                            await _bll.Ranks.NextRankExists((Guid) rank.NextRankId, null)))
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
@@ -130,13 +133,20 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
             }
-            
-            if (rank.PreviousRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.PreviousRankId) ||
-                rank.NextRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.NextRankId))
+
+            if (rank.PreviousRankId != null &&
+                (!await _bll.Ranks.ExistsAsync((Guid) rank.PreviousRankId) ||
+                 await _bll.Ranks.PreviousRankExists((Guid) rank.PreviousRankId,
+                     id)) ||
+                rank.NextRankId != null &&
+                (!await _bll.Ranks.ExistsAsync((Guid) rank.NextRankId) ||
+                 await _bll.Ranks.NextRankExists((Guid) rank.NextRankId, id)) ||
+                rank.PreviousRankId == id || rank.NextRankId == id
+            )
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
-            
+
             if (ModelState.IsValid)
             {
                 await _bll.Ranks.UpdateAsync(rank);

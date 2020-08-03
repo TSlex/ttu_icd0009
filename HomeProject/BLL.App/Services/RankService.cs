@@ -21,6 +21,16 @@ namespace BLL.App.Services
             _uow = uow;
         }
 
+        public async Task<bool> NextRankExists(Guid id, Guid? reqGuid)
+        {
+            return await ServiceRepository.NextRankExists(id, reqGuid);
+        }
+
+        public async Task<bool> PreviousRankExists(Guid id, Guid? reqGuid)
+        {
+            return await ServiceRepository.PreviousRankExists(id, reqGuid);
+        }
+
         public async Task<Rank> FindByCodeAsync(string code)
         {
             return Mapper.Map(await ServiceRepository.FindByCodeAsync(code));

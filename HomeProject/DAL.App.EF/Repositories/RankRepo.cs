@@ -18,6 +18,34 @@ namespace DAL.Repositories
             base(dbContext, new RankMapper())
         {
         }
+        
+        public async Task<bool> NextRankExists(Guid id, Guid? reqGuid)
+        {
+            if (reqGuid == null)
+            {
+                return await RepoDbSet.Where(rank => 
+                               rank.NextRankId == id)
+                           .FirstOrDefaultAsync() != null;
+            }
+            
+            return await RepoDbSet.Where(rank => 
+                           rank.NextRankId == id && rank.Id != reqGuid)
+                       .FirstOrDefaultAsync() != null;
+        }
+        
+        public async Task<bool> PreviousRankExists(Guid id, Guid? reqGuid)
+        {
+            if (reqGuid == null)
+            {
+                return await RepoDbSet.Where(rank => 
+                               rank.PreviousRankId == id)
+                           .FirstOrDefaultAsync() != null;
+            }
+            
+            return await RepoDbSet.Where(rank => 
+                           rank.PreviousRankId == id && rank.Id != reqGuid)
+                       .FirstOrDefaultAsync() != null;
+        }
 
         public override async Task<Rank> FindAdminAsync(Guid id)
         {
