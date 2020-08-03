@@ -10,6 +10,5 @@ namespace Contracts.DAL.App.Repositories
     public interface IProfileRankRepo : IBaseRepo<ProfileRank>
     {
         Task<IEnumerable<ProfileRank>> AllUserAsync(Guid profileId);
-        Task<ProfileRank> ActiveUserAsync(Guid profileId);
     }
 }

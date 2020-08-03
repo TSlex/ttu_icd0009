@@ -9,6 +9,5 @@ namespace Contracts.BLL.App.Services
     public interface IProfileRankService: IBaseEntityService<global::DAL.App.DTO.ProfileRank, ProfileRank>
     {
         Task<IEnumerable<ProfileRank>> AllUserAsync(Guid profileId);
-        Task<ProfileRank> ActiveUserAsync(Guid profileId);
     }
 }

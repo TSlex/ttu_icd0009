@@ -24,10 +24,5 @@ namespace BLL.App.Services
         {
             return (await ServiceRepository.AllUserAsync(profileId)).Select(rank => Mapper.Map(rank));
         }
-
-        public async Task<ProfileRank> ActiveUserAsync(Guid profileId)
-        {
-            return Mapper.Map(await ServiceRepository.ActiveUserAsync(profileId));
-        }
     }
 }

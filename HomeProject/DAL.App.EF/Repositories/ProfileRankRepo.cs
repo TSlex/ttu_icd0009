@@ -42,11 +42,6 @@ namespace DAL.Repositories
             return base.Add(entity);
         }
 
-        public Task<ProfileRank> ActiveUserAsync(Guid profileId)
-        {
-            throw new NotImplementedException();
-        }
-
         private IQueryable<Domain.ProfileRank> GetQuery()
         {
             return RepoDbSet
