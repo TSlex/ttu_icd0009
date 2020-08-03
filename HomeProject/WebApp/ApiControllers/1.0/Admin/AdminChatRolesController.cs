@@ -60,7 +60,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         public async Task<IActionResult> History(Guid id)
         {
             var history = (await _bll.ChatRoles.GetRecordHistoryAsync(id)).ToList()
-                .OrderByDescending(record => record.CreatedAt).Select(record => _mapper.Map(record));
+                .Select(record => _mapper.Map(record));
             
             return Ok(history);
         }

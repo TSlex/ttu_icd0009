@@ -31,17 +31,21 @@ namespace BLL.Base.Services
             (await ServiceRepository.AllAsync()).Select(entity => Mapper.Map(entity));
 
         public async Task<IEnumerable<TBLLEntity>> AllAdminAsync() =>
-            (await ServiceRepository.AllAdminAsync()).Select(entity => Mapper.Map(entity));
+            (await ServiceRepository.AllAdminAsync())
+            .OrderByDescending(entity => entity.CreatedAt)
+            .Select(entity => Mapper.Map(entity));
 
         public async Task<IEnumerable<TBLLEntity>> GetRecordHistoryAsync(Guid id) =>
-            (await ServiceRepository.GetRecordHistoryAsync(id)).Select(entity => Mapper.Map(entity));
+            (await ServiceRepository.GetRecordHistoryAsync(id))
+            .OrderByDescending(entity => entity.CreatedAt)
+            .Select(entity => Mapper.Map(entity));
 
         public virtual TBLLEntity Find(Guid id) =>
             Mapper.Map(ServiceRepository.Find(id));
 
         public virtual async Task<TBLLEntity> FindAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.FindAsync(id));
-        
+
         public virtual async Task<TBLLEntity> FindAdminAsync(Guid id) =>
             Mapper.Map(await ServiceRepository.FindAdminAsync(id));
 
