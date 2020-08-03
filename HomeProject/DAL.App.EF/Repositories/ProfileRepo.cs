@@ -40,9 +40,6 @@ namespace DAL.Repositories
         public async Task<Profile> GetProfile(Guid id, Guid? requesterId)
         {
             return await RepoDbSet
-//                .Include(profile => profile.ProfileGifts)
-//                .Include(profile => profile.ProfileRanks)
-//                .ThenInclude(rank => rank.Rank)
                 .Where(profile => profile.Id == id && profile.DeletedAt == null)
                 .Select(profile => new Profile()
                 {

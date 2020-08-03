@@ -13,10 +13,9 @@ namespace DAL.Repositories
 {
     public class FollowerRepo : BaseRepo<Domain.Follower, Follower, ApplicationDbContext>, IFollowerRepo
     {
-        public FollowerRepo(ApplicationDbContext dbContext) : 
+        public FollowerRepo(ApplicationDbContext dbContext) :
             base(dbContext, new FollowerMapper())
         {
-            
         }
 
         public async Task<Follower> FindAsync(Guid userId, Guid profileId)
@@ -29,10 +28,10 @@ namespace DAL.Repositories
         {
             if (reversed)
             {
-                return await RepoDbContext.Followers.CountAsync(follower => follower.FollowerProfileId == userId);   
+                return await RepoDbContext.Followers.CountAsync(follower => follower.FollowerProfileId == userId);
             }
-            
-            return await RepoDbContext.Followers.CountAsync(follower => follower.ProfileId == userId);   
+
+            return await RepoDbContext.Followers.CountAsync(follower => follower.ProfileId == userId);
         }
 
         public async Task<IEnumerable<Follower>> AllByIdPageAsync(Guid userId, bool reversed, int pageNumber, int count)
@@ -44,27 +43,31 @@ namespace DAL.Repositories
             {
                 return new Follower[] { };
             }
-            
+
             if (reversed)
             {
-                return (await RepoDbContext.Followers
+                return (await GetQuery()
                         .Where(follower => follower.FollowerProfileId == userId)
-                        .Include(follower => follower.Profile)
-                        .Include(follower => follower.FollowerProfile)
                         .Skip(startIndex)
                         .Take(count)
                         .ToListAsync())
                     .Select(post => Mapper.Map(post));
             }
-            
-            return (await RepoDbContext.Followers
+
+            return (await GetQuery()
                     .Where(follower => follower.ProfileId == userId)
-                    .Include(follower => follower.Profile)
-                    .Include(follower => follower.FollowerProfile)
                     .Skip(startIndex)
                     .Take(count)
                     .ToListAsync())
                 .Select(post => Mapper.Map(post));
+        }
+
+        private IQueryable<Domain.Follower> GetQuery()
+        {
+            return RepoDbSet
+                .Include(follower => follower.Profile)
+                .Include(follower => follower.FollowerProfile)
+                .AsQueryable();
         }
     }
 }

@@ -32,8 +32,7 @@ namespace DAL.Repositories
 
         public override async Task<ProfileGift> FindAsync(Guid id)
         {
-            return Mapper.Map(
-                await GetQuery(GetFindBaseQuery(id))
+            return Mapper.Map(await GetQuery(GetFindBaseQuery(id))
                     .FirstOrDefaultAsync());
         }
 
@@ -53,6 +52,11 @@ namespace DAL.Repositories
                     .Take(onPageCount)
                     .ToListAsync())
                 .Select(gift => Mapper.Map(gift));
+        }
+        
+        public async Task<int> GetUserCountAsync(Guid userId)
+        {
+            return await RepoDbContext.ProfileGifts.CountAsync(gift => gift.ProfileId == userId);
         }
 
         private IQueryable<Domain.ProfileGift> GetFindBaseQuery(Guid id)
@@ -75,11 +79,6 @@ namespace DAL.Repositories
                 .Include(gift => gift.Profile)
                 .Include(gift => gift.FromProfile)
                 .AsQueryable();
-        }
-
-        public async Task<int> GetUserCountAsync(Guid userId)
-        {
-            return await RepoDbContext.ProfileGifts.CountAsync(gift => gift.ProfileId == userId);
         }
     }
 }

@@ -20,43 +20,43 @@ namespace DAL.Repositories
 
         public override async Task<ChatMember> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet
+            return Mapper.Map(await GetQuery()
                 .Where(member => member.Id == id)
-                .Include(member => member.ChatRole)
-                .ThenInclude(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
-                .Include(member => member.Profile)
                 .FirstOrDefaultAsync());
         }
 
         public async Task<ChatMember> FindByUserAndRoomAsync(Guid userId, Guid chatRoomId)
         {
-            return Mapper.Map(await RepoDbSet
-                .Include(member => member.ChatRole)
-                .ThenInclude(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
-                .Include(member => member.Profile)
+            return Mapper.Map(await GetQuery()
                 .Where(member => member.ProfileId == userId && member.ChatRoomId == chatRoomId)
                 .FirstOrDefaultAsync());
         }
 
         public async Task<IEnumerable<ChatMember>> RoomAllAsync(Guid chatRoomId)
         {
-            return (await RepoDbContext.ChatMembers
-                    .Where(member => member.ChatRoomId == chatRoomId 
-                                     && member.DeletedAt == null
-                                     && member.MasterId == null)
-                    .Include(member => member.ChatRole)
-                    .ThenInclude(role => role.RoleTitleValue)
-                    .ThenInclude(s => s.Translations)
-                    .Include(member => member.Profile)
+            return (await GetQuery()
+                    .Where(member =>
+                        member.ChatRoomId == chatRoomId &&
+                        member.DeletedAt == null &&
+                        member.MasterId == null)
                     .ToListAsync())
                 .Select(member => Mapper.Map(member));
         }
 
         public override async Task<IEnumerable<ChatMember>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
+                record => Mapper.Map(record));
+        }
+
+        private IQueryable<Domain.ChatMember> GetQuery()
+        {
+            return RepoDbSet
+                .Include(member => member.ChatRole)
+                .ThenInclude(role => role.RoleTitleValue)
+                .ThenInclude(s => s.Translations)
+                .Include(member => member.Profile)
+                .AsQueryable();
         }
     }
 }

@@ -20,9 +20,8 @@ namespace DAL.Repositories
 
         public override async Task<ChatRoom> FindAdminAsync(Guid id)
         {
-            var raw = await RepoDbSet.Where(room => room.Id == id)
-                .Include(room => room.Messages)
-                .ThenInclude(message => message.Profile)
+            var raw = await GetQuery()
+                .Where(room => room.Id == id)
                 .Select(room => new
                 {
                     value = room,
@@ -42,9 +41,7 @@ namespace DAL.Repositories
 
         public override async Task<ChatRoom> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet
-                .Include(room => room.Messages)
-                .ThenInclude(message => message.Profile)
+            return Mapper.Map(await GetQuery()
                 .Include(room => room.ChatMembers)
                 .ThenInclude(member => member.ChatRole)
                 .ThenInclude(role => role.RoleTitleValue)
@@ -91,10 +88,8 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
         {
-            return (await RepoDbContext.ChatRooms
+            return (await GetQuery()
                     .Include(room => room.ChatMembers)
-                    .Include(room => room.Messages)
-                    .ThenInclude(message => message.Profile)
                     .Where(room => room.ChatMembers
                                        .Select(member => member.ProfileId)
                                        .Contains(userId)
@@ -154,6 +149,14 @@ namespace DAL.Repositories
         {
             return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
                 record => Mapper.Map(record));
+        }
+        
+        private IQueryable<Domain.ChatRoom> GetQuery()
+        {
+            return RepoDbSet
+                .Include(room => room.Messages)
+                .ThenInclude(message => message.Profile)
+                .AsQueryable();
         }
     }
 }

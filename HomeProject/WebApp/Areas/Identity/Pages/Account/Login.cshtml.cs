@@ -97,7 +97,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                 if (user == null)
                 {
 //                    return NotFound($"Unable to load user with Email '{Input.Email}'.");
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorUserNotFound);
                     return Page();
                 }
 
@@ -123,7 +123,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorUserNotFound);
                     return Page();
                 }
             }

@@ -20,22 +20,21 @@ namespace DAL.Repositories
 
         public override async Task<Comment> FindAdminAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbContext.Comments
+            return Mapper.Map(await GetQuery()
                 .Include(p => p.Post)
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
 
         public override async Task<IEnumerable<Comment>> AllAsync()
         {
-            return (await RepoDbContext.Comments.Where(comment => comment.DeletedAt == null)
-                .Include(post => post.Profile)
+            return (await GetQuery()
+                .Where(comment => comment.DeletedAt == null)
                 .ToListAsync()).Select(comment => Mapper.Map(comment));
         }
 
         public override async Task<Comment> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbContext.Comments
-                .Include(p => p.Profile)
+            return Mapper.Map(await GetQuery()
                 .Include(p => p.Post)
                 .FirstOrDefaultAsync(m => m.Id == id));
         }
@@ -50,10 +49,9 @@ namespace DAL.Repositories
                 return new Comment[] { };
             }
 
-            return (await RepoDbContext.Comments
+            return (await GetQuery()
                     .Where(comment => comment.PostId == postId 
                                       && comment.DeletedAt == null)
-                    .Include(comment => comment.Profile)
                     .OrderByDescending(comment => comment.CommentDateTime)
                     .Skip(startIndex)
                     .Take(count)
@@ -64,6 +62,13 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<Comment>> GetRecordHistoryAsync(Guid id)
         {
             return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(record => Mapper.Map(record));
+        }
+        
+        private IQueryable<Domain.Comment> GetQuery()
+        {
+            return RepoDbSet
+                .Include(comment => comment.Profile)
+                .AsQueryable();
         }
     }
 }

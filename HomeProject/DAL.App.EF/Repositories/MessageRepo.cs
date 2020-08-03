@@ -20,15 +20,17 @@ namespace DAL.Repositories
 
         public override async Task<Message> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet
-                .Include(message => message.Profile)
+            return Mapper.Map(await GetQuery()
                 .FirstOrDefaultAsync(message => message.Id == id));
         }
 
         public override Message Add(Message entity)
         {
             var members = RepoDbContext.ChatMembers
-                .Where(member => member.ChatRoomId == entity.ChatRoomId && member.MasterId == null).ToList();
+                .Where(member =>
+                    member.ChatRoomId == entity.ChatRoomId
+                    && member.MasterId == null)
+                .ToList();
 
             foreach (var member in members)
             {
@@ -46,9 +48,18 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<Message>> AllAsync(Guid id)
         {
-            return await RepoDbContext.Messages.Where(message => message.ChatRoomId == id
-                                                                 && message.DeletedAt == null)
-                .Select(message => Mapper.Map(message)).ToListAsync();
+            return await RepoDbContext.Messages
+                .Where(message =>
+                    message.ChatRoomId == id &&
+                    message.DeletedAt == null)
+                .Select(message => Mapper.Map(message))
+                .ToListAsync();
+        }
+
+        public async Task<int> CountByRoomAsync(Guid chatRoomId)
+        {
+            return await RepoDbContext.Messages.Where(message => message.DeletedAt == null)
+                .CountAsync(message => message.ChatRoomId == chatRoomId);
         }
 
         public async Task<IEnumerable<Message>> AllByIdPageAsync(Guid chatRoomId, int pageNumber, int count)
@@ -61,10 +72,10 @@ namespace DAL.Repositories
                 return new Message[] { };
             }
 
-            return (await RepoDbContext.Messages
-                    .Where(message => message.ChatRoomId == chatRoomId
-                                      && message.DeletedAt == null)
-                    .Include(message => message.Profile)
+            return (await GetQuery()
+                    .Where(message =>
+                        message.ChatRoomId == chatRoomId &&
+                        message.DeletedAt == null)
                     .OrderByDescending(message => message.MessageDateTime)
                     .Skip(startIndex)
                     .Take(count)
@@ -72,18 +83,12 @@ namespace DAL.Repositories
                 .Select(post => Mapper.Map(post));
         }
 
-        public async Task<int> CountByRoomAsync(Guid chatRoomId)
-        {
-            return await RepoDbContext.Messages.Where(message => message.DeletedAt == null)
-                .CountAsync(message => message.ChatRoomId == chatRoomId);
-        }
-
         public async Task<Message> GetLastMessage(Guid chatRoomId)
         {
-            return Mapper.Map(await RepoDbContext.Messages
-                .Where(message => message.ChatRoomId == chatRoomId
-                                  && message.DeletedAt == null)
-                .Include(message => message.Profile)
+            return Mapper.Map(await GetQuery()
+                .Where(message =>
+                    message.ChatRoomId == chatRoomId &&
+                    message.DeletedAt == null)
                 .OrderByDescending(message => message.MessageDateTime)
                 .Take(1)
                 .FirstOrDefaultAsync());
@@ -91,8 +96,17 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<Message>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(record => record.Id == id || record.MasterId == id).ToListAsync()).Select(
-                record => Mapper.Map(record));
+            return (await RepoDbSet
+                    .Where(record => record.Id == id || record.MasterId == id)
+                    .ToListAsync())
+                .Select(record => Mapper.Map(record));
+        }
+
+        private IQueryable<Domain.Message> GetQuery()
+        {
+            return RepoDbSet
+                .Include(message => message.Profile)
+                .AsQueryable();
         }
     }
 }

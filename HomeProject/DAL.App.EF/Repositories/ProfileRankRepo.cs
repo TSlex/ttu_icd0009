@@ -15,35 +15,24 @@ namespace DAL.Repositories
 {
     public class ProfileRankRepo : BaseRepo<Domain.ProfileRank, ProfileRank, ApplicationDbContext>, IProfileRankRepo
     {
-        public ProfileRankRepo(ApplicationDbContext dbContext) : 
+        public ProfileRankRepo(ApplicationDbContext dbContext) :
             base(dbContext, new ProfileRankMapper())
         {
         }
 
         public override async Task<ProfileRank> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet
+            return Mapper.Map(await GetQuery()
                 .Include(rank => rank.Profile)
-                .Include(rank => rank.Rank)
-                .ThenInclude(rank => rank!.RankTitle)
-                .ThenInclude(title => title!.Translations)
-                .Include(rank => rank.Rank)
-                .ThenInclude(rank => rank!.RankDescription)
-                .ThenInclude(desc => desc!.Translations)
                 .FirstOrDefaultAsync(rank => rank.Id == id));
         }
 
         public async Task<IEnumerable<ProfileRank>> AllUserAsync(Guid profileId)
         {
-            return await RepoDbContext.ProfileRanks
-                .Where(rank => rank.ProfileId == profileId 
-                               && rank.DeletedAt == null)
-                .Include(rank => rank.Rank)
-                .ThenInclude(rank => rank!.RankTitle)
-                .ThenInclude(title => title!.Translations)
-                .Include(rank => rank.Rank)
-                .ThenInclude(rank => rank!.RankDescription)
-                .ThenInclude(desc => desc!.Translations)
+            return await GetQuery()
+                .Where(rank =>
+                    rank.ProfileId == profileId &&
+                    rank.DeletedAt == null)
                 .Select(rank => Mapper.Map(rank)).ToListAsync();
         }
 
@@ -56,6 +45,18 @@ namespace DAL.Repositories
         public Task<ProfileRank> ActiveUserAsync(Guid profileId)
         {
             throw new NotImplementedException();
+        }
+
+        private IQueryable<Domain.ProfileRank> GetQuery()
+        {
+            return RepoDbSet
+                .Include(rank => rank.Rank)
+                .ThenInclude(rank => rank!.RankTitle)
+                .ThenInclude(title => title!.Translations)
+                .Include(rank => rank.Rank)
+                .ThenInclude(rank => rank!.RankDescription)
+                .ThenInclude(desc => desc!.Translations)
+                .AsQueryable();
         }
     }
 }

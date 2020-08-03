@@ -22,50 +22,39 @@ namespace DAL.Repositories
 
         public override async Task<ChatRole> FindAdminAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbContext.ChatRoles
-                .Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+            return Mapper.Map(await GetQuery()
                 .FirstOrDefaultAsync((role => role.Id == id)));
         }
 
         public override async Task<IEnumerable<ChatRole>> AllAsync()
         {
-            return (await RepoDbSet
+            return (await GetQuery()
                 .Where(role => !role.CanEditMembers)
-                .Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
                 .ToListAsync()).Select(role => Mapper.Map(role));
         }
 
         public override async Task<IEnumerable<ChatRole>> AllAdminAsync()
         {
-            return (await RepoDbSet
+            return (await GetQuery()
                 .Where(role => role.MasterId == null)
-                .Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
                 .ToListAsync())
                 .Select(role => Mapper.Map(role));}
 
         public async Task<ChatRole> FindAsync(string chatRoleTitle)
         {
-            return Mapper.Map(await RepoDbContext.ChatRoles
-                .Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+            return Mapper.Map(await GetQuery()
                 .FirstOrDefaultAsync((role => role.RoleTitle == chatRoleTitle)));
         }
 
         public override async Task<ChatRole> FindAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbContext.ChatRoles
-                .Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+            return Mapper.Map(await GetQuery()
                 .FirstOrDefaultAsync((role => role.Id == id)));
         }
 
         public override async Task<ChatRole> UpdateAsync(ChatRole entity)
         {
-            var domainEntity = await RepoDbSet.Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+            var domainEntity = await GetQuery()
                 .FirstOrDefaultAsync((role => role.Id == entity.Id));
             
             domainEntity!.RoleTitleValue.SetTranslation(entity.RoleTitleValue);
@@ -95,12 +84,17 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<ChatRole>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet
+            return (await GetQuery()
                 .Where(record => record.Id == id || record.MasterId == id)
+                .ToListAsync()).Select(role => Mapper.Map(role));
+        }
+        
+        private IQueryable<Domain.ChatRole> GetQuery()
+        {
+            return RepoDbSet
                 .Include(role => role.RoleTitleValue)
                 .ThenInclude(s => s.Translations)
-                .ToListAsync()).Select(role => Mapper.Map(role));
-        
+                .AsQueryable();
         }
     }
 }

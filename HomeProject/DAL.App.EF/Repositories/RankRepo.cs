@@ -21,32 +21,21 @@ namespace DAL.Repositories
 
         public override async Task<Rank> FindAdminAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet
-                .Include(rank => rank.RankTitle)
-                .ThenInclude(s => s!.Translations)
-                .Include(rank => rank.RankDescription)
-                .ThenInclude(s => s!.Translations).FirstOrDefaultAsync(rank => rank.Id == id));
+            return Mapper.Map(await GetQuery()
+                .FirstOrDefaultAsync(rank => rank.Id == id));
         }
 
         public override async Task<IEnumerable<Rank>> AllAdminAsync()
         {
-            return (await RepoDbSet
+            return (await GetQuery()
                     .Where(rank => rank.MasterId == null)
-                    .Include(rank => rank.RankTitle)
-                    .ThenInclude(s => s!.Translations)
-                    .Include(rank => rank.RankDescription)
-                    .ThenInclude(s => s!.Translations)
                     .ToListAsync())
                 .Select(rank => Mapper.Map(rank));
         }
 
         public override async Task<IEnumerable<Rank>> AllAsync()
         {
-            return (await RepoDbSet
-                    .Include(rank => rank.RankTitle)
-                    .ThenInclude(s => s!.Translations)
-                    .Include(rank => rank.RankDescription)
-                    .ThenInclude(s => s!.Translations)
+            return (await GetQuery()
                     .Where(rank => rank.DeletedAt == null && rank.MasterId == null)
                     .ToListAsync())
                 .Select(rank => Mapper.Map(rank));
@@ -54,13 +43,9 @@ namespace DAL.Repositories
 
         public override async Task<Rank> UpdateAsync(Rank entity)
         {
-            var domainEntity = await RepoDbSet
-                .Include(rank => rank.RankTitle)
-                .ThenInclude(s => s!.Translations)
-                .Include(rank => rank.RankDescription)
-                .ThenInclude(s => s!.Translations)
+            var domainEntity = await GetQuery()
                 .FirstOrDefaultAsync(rank => rank.Id == entity.Id);
-            
+
             domainEntity.RankTitle.SetTranslation(entity.RankTitle);
             domainEntity.RankDescription.SetTranslation(entity.RankDescription);
 
@@ -78,12 +63,10 @@ namespace DAL.Repositories
 
         public async Task<Rank> FindByCodeAsync(string code)
         {
-            return Mapper.Map(await RepoDbContext.Ranks
-                .Where(rank => rank.DeletedAt == null && rank.MasterId == null)
-                .Include(rank => rank.RankTitle)
-                .ThenInclude(s => s!.Translations)
-                .Include(rank => rank.RankDescription)
-                .ThenInclude(s => s!.Translations)
+            return Mapper.Map(await GetQuery()
+                .Where(rank =>
+                    rank.DeletedAt == null
+                    && rank.MasterId == null)
                 .FirstOrDefaultAsync(rank => rank.RankCode == code && rank.MasterId == null));
         }
 
@@ -101,14 +84,20 @@ namespace DAL.Repositories
 
         public override async Task<IEnumerable<Rank>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet
+            return (await GetQuery()
                     .Where(record => record.Id == id || record.MasterId == id)
-                    .Include(rank => rank.RankTitle)
-                    .ThenInclude(s => s!.Translations)
-                    .Include(rank => rank.RankDescription)
-                    .ThenInclude(s => s!.Translations)
                     .ToListAsync())
                 .Select(record => Mapper.Map(record));
+        }
+
+        private IQueryable<Domain.Rank> GetQuery()
+        {
+            return RepoDbSet
+                .Include(rank => rank.RankTitle)
+                .ThenInclude(s => s!.Translations)
+                .Include(rank => rank.RankDescription)
+                .ThenInclude(s => s!.Translations)
+                .AsQueryable();
         }
     }
 }
