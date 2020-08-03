@@ -69,6 +69,14 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProfileGift profileGift)
         {
+            if (!await _bll.Profiles.ExistsAsync(profileGift.ProfileId) ||
+                profileGift.FromProfileId != null &&
+                !await _bll.Profiles.ExistsAsync((Guid) profileGift.FromProfileId) ||
+                !await _bll.Gifts.ExistsAsync(profileGift.GiftId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+            }
+
             if (TryValidateModel(profileGift))
             {
                 profileGift.Id = Guid.NewGuid();
@@ -110,14 +118,21 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != profileGift.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+
+            if (!await _bll.Profiles.ExistsAsync(profileGift.ProfileId) ||
+                profileGift.FromProfileId != null &&
+                !await _bll.Profiles.ExistsAsync((Guid) profileGift.FromProfileId) ||
+                !await _bll.Gifts.ExistsAsync(profileGift.GiftId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)
             {
                 await _bll.ProfileGifts.UpdateAsync(profileGift);
                 await _bll.SaveChangesAsync();
-
 
                 return RedirectToAction(nameof(Index));
             }

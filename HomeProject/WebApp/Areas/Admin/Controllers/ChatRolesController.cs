@@ -17,7 +17,7 @@ namespace WebApp.Areas.Admin.Controllers
     public class ChatRolesController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -35,7 +35,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View(await _bll.ChatRoles.AllAdminAsync());
         }
-        
+
         /// <summary>
         /// Get record history
         /// </summary>
@@ -44,7 +44,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var history = (await _bll.ChatRoles.GetRecordHistoryAsync(id)).ToList()
                 .OrderByDescending(record => record.CreatedAt);
-            
+
             return View(nameof(Index), history);
         }
 
@@ -81,8 +81,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.ChatRole chatRole)
+        public async Task<IActionResult> Create(BLL.App.DTO.ChatRole chatRole)
         {
             ModelState.Clear();
 
@@ -115,7 +114,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(chatRole);
         }
 
@@ -127,14 +126,13 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.ChatRole chatRole)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.ChatRole chatRole)
         {
             if (id != chatRole.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
             }
-            
+
             if (chatRole.RoleTitleValue == null)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorTranslationRequired);
@@ -166,7 +164,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         /// <summary>
         /// Restores a record
         /// </summary>

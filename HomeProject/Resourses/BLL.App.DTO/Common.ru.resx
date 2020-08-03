@@ -41,6 +41,9 @@
     <data name="ErrorMessage_Range">
         <value>Значение {0} должно быть между {1} и {2}.</value>
     </data>
+    <data name="ErrorMessage_InvalidValue">
+        <value>{0} значение недопустимо для поля {1}.</value>
+    </data>
     <data name="MasterId">
         <value>Мастер (ID)</value>
     </data>

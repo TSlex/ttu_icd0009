@@ -78,12 +78,17 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.Follower follower)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.Follower follower)
         {
             if (id != follower.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(follower.ProfileId) ||
+                !await _bll.Profiles.ExistsAsync(follower.FollowerProfileId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)

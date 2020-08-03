@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
-{    
+{
     /// <summary>
     /// Ranks
     /// </summary>
@@ -34,7 +34,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View(await _bll.Ranks.AllAdminAsync());
         }
-        
+
         /// <summary>
         /// Get record history
         /// </summary>
@@ -43,7 +43,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var history = (await _bll.Ranks.GetRecordHistoryAsync(id)).ToList()
                 .OrderByDescending(record => record.CreatedAt);
-            
+
             return View(nameof(Index), history);
         }
 
@@ -54,7 +54,6 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
-
             var rank = await _bll.Ranks.FindAdminAsync(id);
 
             if (rank == null)
@@ -81,12 +80,13 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            BLL.App.DTO.Rank rank)
+        public async Task<IActionResult> Create(BLL.App.DTO.Rank rank)
         {
-            ModelState.Clear();
-            rank.ChangedAt = DateTime.Now;
-            rank.CreatedAt = DateTime.Now;
+            if (rank.PreviousRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.PreviousRankId) ||
+                rank.NextRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.NextRankId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+            }
 
             if (TryValidateModel(rank))
             {
@@ -112,7 +112,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(rank);
         }
 
@@ -124,19 +124,23 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.Rank rank)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.Rank rank)
         {
             if (id != rank.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
             }
-
+            
+            if (rank.PreviousRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.PreviousRankId) ||
+                rank.NextRankId != null && !await _bll.Ranks.ExistsAsync((Guid) rank.NextRankId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+            }
+            
             if (ModelState.IsValid)
             {
                 await _bll.Ranks.UpdateAsync(rank);
                 await _bll.SaveChangesAsync();
-
 
                 return RedirectToAction(nameof(Index));
             }
@@ -158,7 +162,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         /// <summary>
         /// Restores a record
         /// </summary>

@@ -22,7 +22,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="bll"></param>
+        /// <param name="roleManager"></param>
         public UserRolesController(RoleManager<MRole> roleManager)
         {
             _roleManager = roleManager;

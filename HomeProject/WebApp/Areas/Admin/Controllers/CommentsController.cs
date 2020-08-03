@@ -85,6 +85,12 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Comment comment)
         {
+            if (!await _bll.Profiles.ExistsAsync(comment.ProfileId) ||
+                !await _bll.Posts.ExistsAsync(comment.PostId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+            }
+            
             if (TryValidateModel(comment))
             {
                 comment.Id = Guid.NewGuid();
@@ -123,14 +129,17 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            Comment comment)
+        public async Task<IActionResult> Edit(Guid id, Comment comment)
         {
-            var record = await _bll.Comments.GetForUpdateAsync(id);
-
-            if (record == null || id != comment.Id)
+            if (id != comment.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(comment.ProfileId) ||
+                !await _bll.Posts.ExistsAsync(comment.PostId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)
@@ -141,7 +150,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(comment);
+            return View(await _bll.Comments.FindAdminAsync(id));
         }
 
         /// <summary>
@@ -154,8 +163,6 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, Comment comment)
         {
-            var record = await _bll.Comments.FindAdminAsync(id);
-
             _bll.Comments.Remove(id);
             await _bll.SaveChangesAsync();
 

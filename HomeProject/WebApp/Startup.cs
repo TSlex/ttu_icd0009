@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -39,6 +40,16 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+//            services.AddLocalization(options => options.ResourcesPath = "Resources");
+//            services.AddMvc(options =>
+//            {
+//                var f = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+//                var l = f.Create()
+//            })
+
+            services.AddMvc(options => options.ModelBindingMessageProvider
+                    .SetAttemptedValueIsInvalidAccessor((value, name) => string.Format(Resourses.BLL.App.DTO.Common.ErrorMessage_InvalidValue, value, name)));
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
                     .EnableSensitiveDataLogging()

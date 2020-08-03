@@ -24,7 +24,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             _bll = bll;
         }
-        
+
         /// <summary>
         /// Get all records
         /// </summary>
@@ -34,7 +34,7 @@ namespace WebApp.Areas.Admin.Controllers
             return View(await _bll.BlockedProfiles.AllAdminAsync());
         }
 
-        
+
         /// <summary>
         /// Get record details
         /// </summary>
@@ -64,10 +64,10 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(blockedProfile);
         }
-        
+
         /// <summary>
         /// Updates a record
         /// </summary>
@@ -81,7 +81,13 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != blockedProfile.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+
+            if (!await _bll.Profiles.ExistsAsync(blockedProfile.ProfileId) ||
+                !await _bll.Profiles.ExistsAsync(blockedProfile.BProfileId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)

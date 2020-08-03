@@ -125,7 +125,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (userId != model.UserId || roleId != model.OldRoleId)
             {
-                return BadRequest();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
             }
 
             if (model.NewRoleId == model.OldRoleId)

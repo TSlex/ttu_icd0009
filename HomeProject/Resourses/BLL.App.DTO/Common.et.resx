@@ -41,6 +41,9 @@
     <data name="ErrorMessage_Range">
         <value>Väli {0} peab olema vahemikus {1} kuni {2}.</value>
     </data>
+    <data name="ErrorMessage_InvalidValue">
+        <value>Väärtus {0} pole kehtiv {1} väli poole.</value>
+    </data>
     <data name="MasterId">
         <value>Meister (ID)</value>
     </data>

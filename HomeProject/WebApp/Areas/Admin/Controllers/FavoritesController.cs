@@ -78,12 +78,17 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.Favorite favorite)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.Favorite favorite)
         {
             if (id != favorite.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(favorite.ProfileId) ||
+                !await _bll.Posts.ExistsAsync(favorite.PostId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)

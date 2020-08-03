@@ -70,6 +70,12 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProfileRank profileRank)
         {
+            if (!await _bll.Profiles.ExistsAsync(profileRank.ProfileId) ||
+                !await _bll.Ranks.ExistsAsync(profileRank.RankId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+            }
+            
             if (TryValidateModel(profileRank))
             {
                 profileRank.Id = Guid.NewGuid();
@@ -106,19 +112,23 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            ProfileRank profileRank)
+        public async Task<IActionResult> Edit(Guid id, ProfileRank profileRank)
         {
             if (id != profileRank.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(profileRank.ProfileId) ||
+                !await _bll.Ranks.ExistsAsync(profileRank.RankId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)
             {
                 await _bll.ProfileRanks.UpdateAsync(profileRank);
                 await _bll.SaveChangesAsync();
-
 
                 return RedirectToAction(nameof(Index));
             }

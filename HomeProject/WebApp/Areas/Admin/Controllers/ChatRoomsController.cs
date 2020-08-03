@@ -88,7 +88,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != chatRoom.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
             }
 
             if (ModelState.IsValid)

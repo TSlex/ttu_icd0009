@@ -93,14 +93,20 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != chatMember.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(chatMember.ProfileId) ||
+                !await _bll.ChatRoles.ExistsAsync(chatMember.ChatRoleId) ||
+                !await _bll.ChatRooms.ExistsAsync(chatMember.ChatRoomId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)
             {
                 await _bll.ChatMembers.UpdateAsync(chatMember);
                 await _bll.SaveChangesAsync();
-
 
                 return RedirectToAction(nameof(Index));
             }

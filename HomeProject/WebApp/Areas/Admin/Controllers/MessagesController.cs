@@ -85,6 +85,12 @@ namespace WebApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Message message)
         {
+            if (!await _bll.Profiles.ExistsAsync(message.ProfileId) ||
+                !await _bll.ChatRooms.ExistsAsync(message.ChatRoomId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+            }
+            
             if (TryValidateModel(message))
             {
                 message.Id = Guid.NewGuid();
@@ -125,7 +131,13 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != message.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(message.ProfileId) ||
+                !await _bll.ChatRooms.ExistsAsync(message.ChatRoomId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
             }
 
             if (ModelState.IsValid)

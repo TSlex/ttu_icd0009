@@ -142,6 +142,15 @@ namespace Resourses.BLL.App.DTO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not valid value for {1} field..
+        /// </summary>
+        public static string ErrorMessage_InvalidValue {
+            get {
+                return ResourceManager.GetString("ErrorMessage_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field {0} must be a string or array type with a maximum length of &apos;{1}&apos;..
         /// </summary>
         public static string ErrorMessage_MaxLength {

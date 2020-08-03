@@ -34,6 +34,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <param name="userManager"></param>
         /// <param name="bll"></param>
         /// <param name="signInManager"></param>
+        /// <param name="hostEnvironment"></param>
         public ProfilesController(UserManager<Profile> userManager, 
             IAppBLL bll, SignInManager<Profile> signInManager, 
             IWebHostEnvironment hostEnvironment)
@@ -66,8 +67,6 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            
 
             return View(user);
         }
@@ -126,7 +125,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != profile.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
             }
             
             if (profile.ProfileAvatar!.ImageFile == null && profile.ProfileAvatarId == null)

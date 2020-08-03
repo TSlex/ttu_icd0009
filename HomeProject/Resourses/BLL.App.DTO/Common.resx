@@ -162,6 +162,9 @@
   <data name="ErrorMessage_Range">
     <value>The field {0} must be between {1} and {2}.</value>
   </data>
+  <data name="ErrorMessage_InvalidValue">
+    <value>{0} is not valid value for {1} field.</value>
+  </data>
   <data name="ErrorIdMatch">
     <value>Id's should match!</value>
   </data>
