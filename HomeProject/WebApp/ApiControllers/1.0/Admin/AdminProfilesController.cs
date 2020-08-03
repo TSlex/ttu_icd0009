@@ -76,30 +76,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return Ok(_mapper.Map(record));
         }
-        
-        /// <summary>
-        /// Get record editing page
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Produces("application/json")]
-        [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProfileAdminDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
-        public async Task<IActionResult> Create([FromBody] ProfileAdminDTO model)
-        {
-            if (TryValidateModel(model))
-            {
-                model.Id = Guid.NewGuid();
-                _bll.Profiles.Add(_mapper.MapReverse(model));
-                await _bll.SaveChangesAsync();
 
-                return CreatedAtAction("Create", model);
-            }
-
-            return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
-        }
-        
         /// <summary>
         /// Updates a record
         /// </summary>
