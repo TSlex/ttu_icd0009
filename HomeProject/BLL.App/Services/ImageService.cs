@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -22,13 +23,52 @@ namespace BLL.App.Services
             base(uow.Images, new BaseBLLMapper<DAL.App.DTO.Image, Image>())
         {
         }
-        
+
+        public Tuple<Image, string[]> ValidateImage(Image imageModel)
+        {
+            var errors = new List<string>();
+
+            if (imageModel.ImageFile == null)
+            {
+                errors.Add(Resourses.BLL.App.DTO.Images.Images.ImageRequired);
+                return null;
+            }
+
+            var extension = Path.GetExtension(imageModel.ImageFile!.FileName);
+
+            if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
+            {
+                errors.Add(Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
+                return null;
+            }
+
+            using (var image = System.Drawing.Image.FromStream(imageModel.ImageFile.OpenReadStream()))
+            {
+                if (image.Height > 4000 || image.Width > 4000)
+                {
+                    errors.Add(Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
+                    return null;
+                }
+
+                var ratio = image.Height * 1.0 / image.Width;
+                if (ratio < 0.1 || 10 < ratio)
+                {
+                    errors.Add(Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
+                    return null;
+                }
+
+                imageModel.HeightPx = image.Height;
+                imageModel.WidthPx = image.Width;
+            }
+
+            return new Tuple<Image, string[]>(imageModel, errors.ToArray());
+        }
 
         public async Task<Image> FindProfileAsync(Guid userId)
         {
             return Mapper.Map(await ServiceRepository.FindProfileAsync(userId));
         }
-        
+
         public async Task<Image> AddProfileAsync(Guid profileId, Image entity)
         {
             string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
@@ -48,7 +88,7 @@ namespace BLL.App.Services
 
             return await UpdateAsync(entity, folderPath);
         }
-        
+
         public async Task<Image> FindPostAsync(Guid postId)
         {
             return Mapper.Map(await ServiceRepository.FindPostAsync(postId));
@@ -73,7 +113,7 @@ namespace BLL.App.Services
 
             return await UpdateAsync(entity, folderPath);
         }
-        
+
         public async Task<Image> FindGiftAsync(Guid giftId)
         {
             return Mapper.Map(await ServiceRepository.FindPostAsync(giftId));
@@ -134,10 +174,10 @@ namespace BLL.App.Services
             if (entity.ImageFile != null)
             {
                 await CreateImagesAsync(entity, path, true);
-                return await UpdateAsync(entity);
+//                return await UpdateAsync(entity);
             }
 
-            if ((entity.PaddingTop != record.PaddingTop || entity.PaddingRight != record.PaddingRight ||
+            else if ((entity.PaddingTop != record.PaddingTop || entity.PaddingRight != record.PaddingRight ||
                       entity.PaddingBottom != record.PaddingBottom || entity.PaddingLeft != record.PaddingLeft) &&
                      (entity.PaddingTop != 0 || entity.PaddingRight != 0 ||
                       entity.PaddingBottom != 0 || entity.PaddingLeft != 0))
@@ -159,18 +199,19 @@ namespace BLL.App.Services
                 {
                     newImage.Save(stream, ImageFormat.Png);
                 }
-                
-                return await UpdateAsync(entity);
+
+//                return await UpdateAsync(entity);
             }
 
-            if (entity.PaddingTop == 0 && entity.PaddingRight == 0 &&
+            else if (entity.PaddingTop == 0 && entity.PaddingRight == 0 &&
                      entity.PaddingBottom == 0 && entity.PaddingLeft == 0)
             {
                 entity.ImageUrl = entity.OriginalImageUrl;
-                return await UpdateAsync(entity);
+//                return await UpdateAsync(entity);
             }
 
-            return entity;
+            return await UpdateAsync(entity);
+//            return entity;
         }
 
         public override Image Remove(Image entity)

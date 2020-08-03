@@ -87,13 +87,35 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)] 
         public async Task<IActionResult> Create(Post post)
         {
+            if (!await _bll.Profiles.ExistsAsync(post.ProfileId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                return View(post);
+            }
+            
+            if (post.PostImage!.ImageFile == null)
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
+                return View(post);
+            }
+            
+            var (imageModel, errors) = _bll.Images.ValidateImage(post.PostImage);
+            
+            if (errors.Length > 0)
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
+            
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
                 
-                var imageModel = post.PostImage;
                 imageModel.Id = Guid.NewGuid();
                 imageModel.ImageType = ImageType.Post;
                 imageModel.ImageFor = post.Id;
@@ -133,11 +155,19 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)] 
         public async Task<IActionResult> Edit(Guid id, Post post)
         {
             if (id != post.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+                return View(post);
+            }
+            
+            if (!await _bll.Profiles.ExistsAsync(post.ProfileId))
+            {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                return View(post);
             }
             
             if (post.PostImage!.ImageFile == null && post.PostImageId == null)
@@ -149,6 +179,19 @@ namespace WebApp.Areas.Admin.Controllers
             ModelState.Clear();
             
             var imageModel = post.PostImage;
+            
+            if (post.PostImage.ImageFile != null)
+            {
+                var (_, errors) = _bll.Images.ValidateImage(post.PostImage);
+
+                if (errors.Length > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
+            }
 
             if (post.PostImageId == null)
             {

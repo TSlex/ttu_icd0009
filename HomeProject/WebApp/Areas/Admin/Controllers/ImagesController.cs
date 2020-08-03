@@ -92,6 +92,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (imageModel.ImageFile == null)
             {
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(imageModel);
             }
             
@@ -103,7 +104,15 @@ namespace WebApp.Areas.Admin.Controllers
             
             ModelState.Clear();
             
-            var result = ValidateImage(imageModel);
+            var (result, errors) = _bll.Images.ValidateImage(imageModel);
+
+            if (errors.Length > 0)
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
             
             if (result != null && ModelState.IsValid)
             {
@@ -158,10 +167,9 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id != imageModel.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+                return View(imageModel);
             }
-
-            Image? result;
 
             if (imageModel.ImageType != ImageType.Undefined && imageModel.ImageFor == null)
             {
@@ -169,9 +177,20 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(imageModel);
             }
             
+            Image? result;
+
             if (imageModel.ImageFile != null)
             {
-                result = ValidateImage(imageModel);
+                string[] errors;
+                (result, errors) = _bll.Images.ValidateImage(imageModel);
+
+                if (errors.Length > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
             }
             else
             {
@@ -218,38 +237,6 @@ namespace WebApp.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private Image? ValidateImage(Image imageModel)
-        {
-            var extension = Path.GetExtension(imageModel.ImageFile!.FileName);
-
-            if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
-            {
-                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
-                return null;
-            }
-
-            using (var image = System.Drawing.Image.FromStream(imageModel.ImageFile.OpenReadStream()))
-            {
-                if (image.Height > 4000 || image.Width > 4000)
-                {
-                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
-                    return null;
-                }
-
-                var ratio = image.Height * 1.0 / image.Width;
-                if (ratio < 0.1 || 10 < ratio)
-                {
-                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
-                    return null;
-                }
-
-                imageModel.HeightPx = image.Height;
-                imageModel.WidthPx = image.Width;
-            }
-
-            return imageModel;
-        }
-        
         /// <summary>
         /// Restores a record
         /// </summary>

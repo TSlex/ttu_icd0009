@@ -40,7 +40,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View(await _bll.Gifts.AllAdminAsync());
         }
-        
+
         /// <summary>
         /// Get record history
         /// </summary>
@@ -49,7 +49,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var history = (await _bll.Gifts.GetRecordHistoryAsync(id)).ToList()
                 .OrderByDescending(record => record.CreatedAt);
-            
+
             return View(nameof(Index), history);
         }
 
@@ -86,6 +86,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)] 
         public async Task<IActionResult> Create(Gift gift)
         {
             if (gift.GiftImage!.ImageFile == null)
@@ -94,11 +95,20 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(gift);
             }
 
+            var (imageModel, errors) = _bll.Images.ValidateImage(gift.GiftImage);
+
+            if (errors.Length > 0)
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
+
             if (TryValidateModel(gift))
             {
                 gift.Id = Guid.NewGuid();
 
-                var imageModel = gift.GiftImage;
                 imageModel.Id = Guid.NewGuid();
                 imageModel.ImageType = ImageType.Gift;
                 imageModel.ImageFor = gift.Id;
@@ -107,8 +117,8 @@ namespace WebApp.Areas.Admin.Controllers
                 gift.GiftImage = null;
 
                 await _bll.Images.AddGiftAsync(gift.Id, imageModel);
-                
                 _bll.Gifts.Add(gift);
+
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -141,11 +151,13 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)]
         public async Task<IActionResult> Edit(Guid id, Gift gift)
         {
             if (id != gift.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+                return View(gift);
             }
 
             if (gift.GiftImage!.ImageFile == null && gift.GiftImageId == null)
@@ -157,6 +169,19 @@ namespace WebApp.Areas.Admin.Controllers
             ModelState.Clear();
 
             var imageModel = gift.GiftImage;
+
+            if (gift.GiftImage.ImageFile != null)
+            {
+                var (_, errors) = _bll.Images.ValidateImage(gift.GiftImage);
+
+                if (errors.Length > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
+            }
 
             if (gift.GiftImageId == null)
             {
@@ -202,7 +227,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         /// <summary>
         /// Restores a record
         /// </summary>

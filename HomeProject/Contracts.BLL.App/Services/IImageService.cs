@@ -8,6 +8,8 @@ namespace Contracts.BLL.App.Services
     public interface IImageService: IBaseEntityService<global::DAL.App.DTO.Image, Image>
     {
         string RootPath { get; set; }
+
+        Tuple<Image, string[]> ValidateImage(Image imageModel);
         
         Task<Image> AddProfileAsync(Guid profileId, Image entity);
         Task<Image> UpdateProfileAsync(Guid profileId, Image entity);

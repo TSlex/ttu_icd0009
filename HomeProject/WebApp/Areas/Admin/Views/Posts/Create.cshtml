@@ -27,12 +27,12 @@
                 <span asp-validation-for="PostPublicationDateTime" class="text-danger"></span>
             </div>
 
-            <input type="hidden" asp-for="PostImage!.PaddingTop" id="PaddingTop"/>
-            <input type="hidden" asp-for="PostImage!.PaddingRight" id="PaddingRight"/>
-            <input type="hidden" asp-for="PostImage!.PaddingBottom" id="PaddingBottom">
-            <input type="hidden" asp-for="PostImage!.PaddingLeft" id="PaddingLeft"/>
-            <input type="hidden" asp-for="PostImage!.HeightPx" id="HeightPx"/>
-            <input type="hidden" asp-for="PostImage!.WidthPx" id="WidthPx"/>
+            <input type="hidden" asp-for="PostImage!.PaddingTop" id="PaddingTop" value="0"/>
+            <input type="hidden" asp-for="PostImage!.PaddingRight" id="PaddingRight" value="0"/>
+            <input type="hidden" asp-for="PostImage!.PaddingBottom" id="PaddingBottom" value="0">
+            <input type="hidden" asp-for="PostImage!.PaddingLeft" id="PaddingLeft" value="0"/>
+            <input type="hidden" asp-for="PostImage!.HeightPx" id="HeightPx" value="0"/>
+            <input type="hidden" asp-for="PostImage!.WidthPx" id="WidthPx" value="0"/>
 
             <partial name="_CreateControls"/>
         </form>
