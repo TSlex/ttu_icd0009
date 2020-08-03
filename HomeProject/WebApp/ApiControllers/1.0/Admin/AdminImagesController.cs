@@ -93,7 +93,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         }
 
         /// <summary>
-        /// 
+        /// Load image, validate it, and save to localstorage
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -117,7 +117,15 @@ namespace WebApp.ApiControllers._1._0.Admin
             
             ModelState.Clear();
             
-            var result = ValidateImage(_mapper.MapReverse(model));
+            var (result, errors) = _bll.Images.ValidateImage(_mapper.MapReverse(model));
+
+            if (errors.Length > 0)
+            {
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
             
             if (result != null && ModelState.IsValid)
             {
@@ -145,6 +153,12 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
+        /// <summary>
+        /// Edit images, and save as new image
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [RequestSizeLimit(104857600)] 
         [Consumes("multipart/form-data")]
@@ -158,30 +172,32 @@ namespace WebApp.ApiControllers._1._0.Admin
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
-            
-            Image? result;
-            
+
             if (model.ImageType != ImageType.Undefined && model.ImageFor == null)
             {
                 return BadRequest(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
             }
-            
-            var record = await _bll.Images.GetForUpdateAsync(id);
 
-            if (record == null)
-            {
-                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorNotFound));
-            }
+            Image? result;
             
             if (model.ImageFile != null)
             {
-                result = ValidateImage(_mapper.MapReverse(model));
+                string[] errors;
+                (result, errors) = _bll.Images.ValidateImage(_mapper.MapReverse(model));
+
+                if (errors.Length > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
             }
             else
             {
                 result = _mapper.MapReverse(model);
             }
-            
+
             if (result != null && ModelState.IsValid)
             {
                 switch (result.ImageType)
@@ -207,38 +223,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
-        private Image? ValidateImage(Image imageModel)
-        {
-            var extension = Path.GetExtension(imageModel.ImageFile!.FileName).ToLower();
-
-            if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
-            {
-                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
-                return null;
-            }
-
-            using (var image = System.Drawing.Image.FromStream(imageModel.ImageFile.OpenReadStream()))
-            {
-                if (image.Height > 4000 || image.Width > 4000)
-                {
-                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
-                    return null;
-                }
-
-                var ratio = image.Height * 1.0 / image.Width;
-                if (ratio < 0.1 || 10 < ratio)
-                {
-                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
-                    return null;
-                }
-
-                imageModel.HeightPx = image.Height;
-                imageModel.WidthPx = image.Width;
-            }
-
-            return imageModel;
-        }
-        
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -250,6 +239,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
         
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{restore}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

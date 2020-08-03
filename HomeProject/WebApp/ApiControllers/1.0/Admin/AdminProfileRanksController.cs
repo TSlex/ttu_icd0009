@@ -38,6 +38,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             _mapper = new DTOMapper<ProfileRank, ProfileRankAdminDTO>();
         }
 
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileRankAdminDTO>))]
@@ -46,6 +50,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok((await _bll.ProfileRanks.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
 
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileRankAdminDTO))]
@@ -62,6 +71,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(_mapper.Map(record));
         }
 
+        /// <summary>
+        /// Create a new record
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -69,6 +83,12 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Create([FromBody] ProfileRankAdminDTO model)
         {
+            if (!await _bll.Profiles.ExistsAsync(model.ProfileId) ||
+                !await _bll.Ranks.ExistsAsync(model.RankId))
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
+            }
+            
             if (TryValidateModel(model))
             {
                 model.Id = Guid.NewGuid();
@@ -81,6 +101,12 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -94,6 +120,12 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
 
+            if (!await _bll.Profiles.ExistsAsync(model.ProfileId) ||
+                !await _bll.Ranks.ExistsAsync(model.RankId))
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
+            }
+            
             var record = await _bll.ProfileRanks.GetForUpdateAsync(id);
 
             if (record == null || !await _bll.Ranks.ExistsAsync(model.RankId) ||
@@ -114,6 +146,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
 
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -125,6 +162,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
 
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{restore}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

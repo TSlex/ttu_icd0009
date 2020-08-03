@@ -37,7 +37,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll = bll;
             _mapper = new DTOMapper<Rank, RankAdminDTO>();
         }
-        
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RankAdminDTO>))]
@@ -45,7 +49,11 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             return Ok((await _bll.Ranks.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
-        
+
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{history}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RankAdminDTO>))]
@@ -53,10 +61,15 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             var history = (await _bll.Ranks.GetRecordHistoryAsync(id)).ToList()
                 .OrderByDescending(record => record.CreatedAt).Select(record => _mapper.Map(record));
-            
+
             return Ok(history);
         }
-        
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RankAdminDTO))]
@@ -72,7 +85,12 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return Ok(_mapper.Map(record));
         }
-        
+
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -80,6 +98,19 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Create([FromBody] RankAdminDTO model)
         {
+            if (model.PreviousRankId != null &&
+                (!await _bll.Ranks.ExistsAsync((Guid) model.PreviousRankId) ||
+                 await _bll.Ranks.PreviousRankExists((Guid) model.PreviousRankId,
+                     null)) ||
+                model.NextRankId != null &&
+                (!await _bll.Ranks.ExistsAsync((Guid) model.NextRankId) ||
+                 await _bll.Ranks.NextRankExists((Guid) model.NextRankId, null)) ||
+                model.PreviousRankId == null || model.NextRankId == null
+            )
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
+            }
+
             if (TryValidateModel(model))
             {
                 model.Id = Guid.NewGuid();
@@ -91,7 +122,13 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
-        
+
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -104,7 +141,20 @@ namespace WebApp.ApiControllers._1._0.Admin
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
-            
+
+            if (model.PreviousRankId != null &&
+                (!await _bll.Ranks.ExistsAsync((Guid) model.PreviousRankId) ||
+                 await _bll.Ranks.PreviousRankExists((Guid) model.PreviousRankId,
+                     id)) ||
+                model.NextRankId != null &&
+                (!await _bll.Ranks.ExistsAsync((Guid) model.NextRankId) ||
+                 await _bll.Ranks.NextRankExists((Guid) model.NextRankId, id)) ||
+                model.PreviousRankId == id || model.NextRankId == id
+            )
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
+            }
+
             var record = await _bll.Ranks.GetForUpdateAsync(id);
 
             if (record == null)
@@ -118,13 +168,18 @@ namespace WebApp.ApiControllers._1._0.Admin
                 model.RankDescriptionId = record.RankDescriptionId;
                 await _bll.Ranks.UpdateAsync(_mapper.MapReverse(model));
                 await _bll.SaveChangesAsync();
-                
+
                 return NoContent();
             }
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
-        
+
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -135,7 +190,12 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
-        
+
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{restore}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

@@ -63,7 +63,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Get record creating confirmation page
+        /// Create a new record
         /// </summary>
         /// <param name="profileRank"></param>
         /// <returns></returns>

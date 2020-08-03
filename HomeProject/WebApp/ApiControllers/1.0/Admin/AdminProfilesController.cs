@@ -44,6 +44,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             _mapper = new DTOMapper<Profile, ProfileAdminDTO>();
         }
         
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileAdminDTO>))]
@@ -52,6 +56,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok((await _bll.Profiles.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
         
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileAdminDTO))]
@@ -68,6 +77,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(_mapper.Map(record));
         }
         
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -87,6 +100,12 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -166,6 +185,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -177,6 +201,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
         
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{restore}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

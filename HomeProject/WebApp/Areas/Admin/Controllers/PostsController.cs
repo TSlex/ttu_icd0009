@@ -57,7 +57,6 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record details
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="returnUrl"></param>
         /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {

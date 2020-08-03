@@ -41,7 +41,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View(await _bll.Images.AllAdminAsync());
         }
-        
+
         /// <summary>
         /// Get record history
         /// </summary>
@@ -50,7 +50,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var history = (await _bll.Images.GetRecordHistoryAsync(id)).ToList()
                 .OrderByDescending(record => record.CreatedAt);
-            
+
             return View(nameof(Index), history);
         }
 
@@ -79,15 +79,15 @@ namespace WebApp.Areas.Admin.Controllers
             return View();
         }
 
-        
+
         /// <summary>
-        /// Load image, validate it, and save to lacolstorage
+        /// Load image, validate it, and save to localstorage
         /// </summary>
         /// <param name="imageModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequestSizeLimit(104857600)] 
+        [RequestSizeLimit(104857600)]
         public async Task<IActionResult> Create(Image imageModel)
         {
             if (imageModel.ImageFile == null)
@@ -95,15 +95,15 @@ namespace WebApp.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(imageModel);
             }
-            
+
             if (imageModel.ImageType != ImageType.Undefined && imageModel.ImageFor == null)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
                 return View(imageModel);
             }
-            
+
             ModelState.Clear();
-            
+
             var (result, errors) = _bll.Images.ValidateImage(imageModel);
 
             if (errors.Length > 0)
@@ -113,25 +113,26 @@ namespace WebApp.Areas.Admin.Controllers
                     ModelState.AddModelError(string.Empty, error);
                 }
             }
-            
+
             if (result != null && ModelState.IsValid)
             {
                 result.Id = Guid.NewGuid();
                 switch (result.ImageType)
                 {
                     case ImageType.ProfileAvatar:
-                        await _bll.Images.AddProfileAsync(result.ImageFor?? Guid.Empty, result);
+                        await _bll.Images.AddProfileAsync(result.ImageFor ?? Guid.Empty, result);
                         break;
                     case ImageType.Post:
-                        await _bll.Images.AddPostAsync(result.ImageFor?? Guid.Empty, result);
+                        await _bll.Images.AddPostAsync(result.ImageFor ?? Guid.Empty, result);
                         break;
                     case ImageType.Gift:
-                        await _bll.Images.AddGiftAsync(result.ImageFor?? Guid.Empty, result);
+                        await _bll.Images.AddGiftAsync(result.ImageFor ?? Guid.Empty, result);
                         break;
                     default:
                         await _bll.Images.AddUndefinedAsync(result);
                         break;
                 }
+
                 await _bll.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -153,7 +154,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(image);
         }
-        
+
         /// <summary>
         /// Edit images, and save as new image
         /// </summary>
@@ -162,7 +163,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequestSizeLimit(104857600)] 
+        [RequestSizeLimit(104857600)]
         public async Task<IActionResult> Edit(Guid id, Image imageModel)
         {
             if (id != imageModel.Id)
@@ -176,7 +177,7 @@ namespace WebApp.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
                 return View(imageModel);
             }
-            
+
             Image? result;
 
             if (imageModel.ImageFile != null)
@@ -202,18 +203,19 @@ namespace WebApp.Areas.Admin.Controllers
                 switch (result.ImageType)
                 {
                     case ImageType.ProfileAvatar:
-                        await _bll.Images.UpdateProfileAsync(result.ImageFor?? Guid.Empty, result);
+                        await _bll.Images.UpdateProfileAsync(result.ImageFor ?? Guid.Empty, result);
                         break;
                     case ImageType.Post:
-                        await _bll.Images.UpdatePostAsync(result.ImageFor?? Guid.Empty, result);
+                        await _bll.Images.UpdatePostAsync(result.ImageFor ?? Guid.Empty, result);
                         break;
                     case ImageType.Gift:
-                        await _bll.Images.UpdateGiftAsync(result.ImageFor?? Guid.Empty, result);
+                        await _bll.Images.UpdateGiftAsync(result.ImageFor ?? Guid.Empty, result);
                         break;
                     default:
                         await _bll.Images.UpdateUndefinedAsync(result);
                         break;
                 }
+
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
