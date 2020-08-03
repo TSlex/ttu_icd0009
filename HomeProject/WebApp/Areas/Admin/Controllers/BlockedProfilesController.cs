@@ -76,8 +76,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id,
-            BLL.App.DTO.BlockedProfile blockedProfile)
+        public async Task<IActionResult> Edit(Guid id, BLL.App.DTO.BlockedProfile blockedProfile)
         {
             if (id != blockedProfile.Id)
             {

@@ -24,6 +24,51 @@ namespace BLL.App.Services
             _uow = uow;
         }
 
+        public async Task<Tuple<ProfileEdit, string[]>> UpdateProfileAdminAsync(ProfileEdit entity)
+        {
+            return await ServiceRepository.UpdateProfileAdminAsync(entity);
+        }
+
+        public async Task<ProfileEdit?> GetAdminEditModel(Guid id)
+        {
+            var profile = await FindAdminAsync(id);
+
+            if (profile == null)
+            {
+                return null;
+            }
+            
+            Image? avatar = null;
+
+            var imageMapper = new BaseBLLMapper<DAL.App.DTO.Image, Image>();
+
+            if (profile.ProfileAvatarId != null)
+            {
+                avatar = imageMapper.Map(await _uow.Images.FindAdminAsync((Guid) profile.ProfileAvatarId));
+            }
+
+            return new ProfileEdit()
+            {
+                Email = profile.Email,
+                Id = profile.Id,
+                UserName = profile.UserName,
+                ProfileFullName = profile.ProfileFullName,
+                ProfileWorkPlace = profile.ProfileWorkPlace,
+                Experience = profile.Experience,
+                ProfileAbout = profile.ProfileAbout,
+                ProfileAvatarId = profile.ProfileAvatarId,
+                ProfileAvatar = avatar,
+                ProfileGender = profile.ProfileGender,
+                ProfileGenderOwn = profile.ProfileGenderOwn,
+                ProfileStatus = profile.ProfileStatus,
+                PhoneNumber = profile.PhoneNumber,
+                PhoneNumberConfirmed = profile.PhoneNumberConfirmed,
+                LockoutEnabled = profile.LockoutEnabled,
+                EmailConfirmed = profile.EmailConfirmed,
+                AccessFailedCount = profile.AccessFailedCount
+            };
+        }
+
         public async Task<bool> ExistsAsync(string username)
         {
             return await ServiceRepository.ExistsAsync(username);

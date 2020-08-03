@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.App.DTO;
+using BLL.App.DTO;
 using Contracts.DAL.App.Repositories;
 using DAL.Base.EF.Repositories;
 using DAL.Helpers;
@@ -12,6 +12,12 @@ using Domain.Translation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Follower = DAL.App.DTO.Follower;
+using Gift = DAL.App.DTO.Gift;
+using Profile = DAL.App.DTO.Profile;
+using ProfileGift = DAL.App.DTO.ProfileGift;
+using ProfileRank = DAL.App.DTO.ProfileRank;
+using Rank = DAL.App.DTO.Rank;
 
 namespace DAL.Repositories
 {
@@ -30,6 +36,70 @@ namespace DAL.Repositories
             _followerMapper = new FollowerMapper();
             _blockedProfileMapper = new BlockedProfileMapper();
             _postMapper = new PostMapper();
+        }
+
+        public async Task<Tuple<ProfileEdit, string[]>> UpdateProfileAdminAsync(ProfileEdit entity)
+        {
+            var record = await _userManager.FindByIdAsync(entity.Id.ToString());
+            var errors = new List<string>();
+
+            if (record == null)
+            {
+                errors.Add(Resourses.BLL.App.DTO.Common.ErrorUserNotFound);
+                return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
+            }
+
+            if (record.UserName != entity.UserName)
+            {
+                var result = await _userManager.SetUserNameAsync(record, entity.UserName);
+                if (!result.Succeeded)
+                {
+                    errors.Add(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername);
+                    return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
+                }
+            }
+
+            if (record.Email != entity.Email)
+            {
+                var result = await _userManager.SetEmailAsync(record, entity.Email);
+                if (!result.Succeeded)
+                {
+                    errors.Add(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail);
+                    return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
+                }
+            }
+
+            if (entity.Password != null)
+            {
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(record);
+                var changePasswordResult = await _userManager.ResetPasswordAsync(record, resetToken, entity.Password);
+                if (!changePasswordResult.Succeeded)
+                {
+                    foreach (var error in changePasswordResult.Errors)
+                    {
+                        errors.Add(error.Description);
+                    }
+
+                    return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
+                }
+            }
+
+            record.ProfileFullName = entity.ProfileFullName;
+            record.ProfileWorkPlace = entity.ProfileWorkPlace;
+            record.Experience = entity.Experience;
+            record.ProfileAbout = entity.ProfileAbout;
+            record.ProfileGender = entity.ProfileGender;
+            record.ProfileGenderOwn = entity.ProfileGenderOwn;
+            record.ProfileStatus = entity.ProfileStatus;
+            record.PhoneNumber = entity.PhoneNumber;
+            record.PhoneNumberConfirmed = entity.PhoneNumberConfirmed;
+            record.LockoutEnabled = entity.LockoutEnabled;
+            record.EmailConfirmed = entity.EmailConfirmed;
+            record.AccessFailedCount = entity.AccessFailedCount;
+
+            await _userManager.UpdateAsync(record);
+            
+            return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
         }
 
         public async Task<bool> ExistsAsync(string username)
@@ -140,7 +210,6 @@ namespace DAL.Repositories
                 .ThenInclude(desc => desc!.Translations)
                 .FirstOrDefaultAsync(profile => profile.Id == id));
         }
-
 
         public async Task<Profile> FindByUsernameAsync(string username)
         {

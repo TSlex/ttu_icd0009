@@ -9,6 +9,9 @@ namespace Contracts.BLL.App.Services
     {
         Task<bool> ExistsAsync(string username);
         
+        Task<Tuple<ProfileEdit, string[]>> UpdateProfileAdminAsync(ProfileEdit entity);
+
+        Task<ProfileEdit?> GetAdminEditModel(Guid id);
         Task<Profile> GetProfileAsync(Guid id, Guid? requesterId);
 
         Task<Profile> FindByUsernameAsync(string username);

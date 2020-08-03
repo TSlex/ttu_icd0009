@@ -77,40 +77,14 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var profile = await _bll.Profiles.FindAdminAsync(id);
+            var profile = await _bll.Profiles.GetAdminEditModel(id);
 
             if (profile == null)
             {
                 return NotFound();
             }
 
-            BLL.App.DTO.Image? avatar = null;
-
-            if (profile.ProfileAvatarId != null)
-            {
-                avatar = await _bll.Images.FindAdminAsync((Guid) profile.ProfileAvatarId);
-            }
-            
-            return View(new ProfileEdit()
-            {
-                Email = profile.Email,
-                Id = profile.Id,
-                UserName = profile.UserName,
-                ProfileFullName = profile.ProfileFullName,
-                ProfileWorkPlace = profile.ProfileWorkPlace,
-                Experience = profile.Experience,
-                ProfileAbout = profile.ProfileAbout,
-                ProfileAvatarId = profile.ProfileAvatarId,
-                ProfileAvatar = avatar,
-                ProfileGender = profile.ProfileGender,
-                ProfileGenderOwn = profile.ProfileGenderOwn,
-                ProfileStatus = profile.ProfileStatus,
-                PhoneNumber = profile.PhoneNumber,
-                PhoneNumberConfirmed = profile.PhoneNumberConfirmed,
-                LockoutEnabled = profile.LockoutEnabled,
-                EmailConfirmed = profile.EmailConfirmed,
-                AccessFailedCount = profile.AccessFailedCount
-            });
+            return View(profile);
         }
         
         /// <summary>
@@ -126,6 +100,7 @@ namespace WebApp.Areas.Admin.Controllers
             if (id != profile.Id)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorIdMatch);
+                return View(profile);
             }
             
             if (profile.ProfileAvatar!.ImageFile == null && profile.ProfileAvatarId == null)
@@ -166,52 +141,17 @@ namespace WebApp.Areas.Admin.Controllers
                 
                 profile.ProfileAvatarId = imageModel.Id;
 
-                if (record.UserName != profile.UserName)
-                {
-                    var result = await _userManager.SetUserNameAsync(record, profile.UserName);
-                    if (!result.Succeeded)
-                    {
-                        ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername);
-                        return View(profile);
-                    }
-                }
-                if (record.Email != profile.Email)
-                {
-                    var result = await _userManager.SetEmailAsync(record, profile.Email);
-                    if (!result.Succeeded)
-                    {
-                        ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail);
-                        return View(profile);
-                    }
-                }
-                if (profile.Password != null)
-                {
-                    var resetToken = await _userManager.GeneratePasswordResetTokenAsync(record);
-                    var changePasswordResult = await _userManager.ResetPasswordAsync(record, resetToken,profile.Password);
-                    if (!changePasswordResult.Succeeded)
-                    {
-                        foreach (var error in changePasswordResult.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                        return View(profile);
-                    }
-                }
+                var (result, errors) = await _bll.Profiles.UpdateProfileAdminAsync(profile);
                 
-                record.ProfileFullName = profile.ProfileFullName;
-                record.ProfileWorkPlace = profile.ProfileWorkPlace;
-                record.Experience = profile.Experience;
-                record.ProfileAbout = profile.ProfileAbout;
-                record.ProfileGender = profile.ProfileGender;
-                record.ProfileGenderOwn = profile.ProfileGenderOwn;
-                record.ProfileStatus = profile.ProfileStatus;
-                record.PhoneNumber = profile.PhoneNumber;
-                record.PhoneNumberConfirmed = profile.PhoneNumberConfirmed;
-                record.LockoutEnabled = profile.LockoutEnabled;
-                record.EmailConfirmed = profile.EmailConfirmed;
-                record.AccessFailedCount = profile.AccessFailedCount;
+                if (errors.Length > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
 
-                await _userManager.UpdateAsync(record);
+                    return View(result);
+                }
 
                 return RedirectToAction(nameof(Index));
             }

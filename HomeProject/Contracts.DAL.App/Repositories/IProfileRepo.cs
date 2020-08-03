@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Contracts.DAL.Base.Repositories;
-using DAL.App.DTO;
+using Profile = DAL.App.DTO.Profile;
 
 namespace Contracts.DAL.App.Repositories
 {
     public interface IProfileRepo : IBaseRepo<Profile>
     {
         Task<bool> ExistsAsync(string username);
+
+        Task<Tuple<ProfileEdit, string[]>> UpdateProfileAdminAsync(ProfileEdit entity);
         
         Task<Profile> GetProfile(Guid id, Guid? requesterId);
         
