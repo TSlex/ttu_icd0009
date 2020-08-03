@@ -100,12 +100,14 @@ namespace DAL
             
             foreach (var entityEntry in markedAsDeleted)
             {
-                if (!(entityEntry.Entity is ISoftDeleteEntity softDeleteEntity)) continue;
+                if (entityEntry.Entity is ISoftDeleteEntity softDeleteEntity)
+                {
 
-                softDeleteEntity.DeletedAt = DateTime.Now;
-                softDeleteEntity.DeletedBy = _userNameProvider.CurrentUserName;
+                    softDeleteEntity.DeletedAt = DateTime.Now;
+                    softDeleteEntity.DeletedBy = _userNameProvider.CurrentUserName;
 
-                entityEntry.State = EntityState.Modified;
+                    entityEntry.State = EntityState.Modified;
+                }
             }
 
             var markedAsModified = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);

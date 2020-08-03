@@ -183,13 +183,11 @@ namespace DAL.Base.EF.Repositories
 
             return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
         }
-
-
-
-        public virtual TDALEntity Remove(TDALEntity entity)
+        
+        public virtual TDALEntity Remove(TDALEntity tEntity)
         {
-            var trackEntity = RepoDbSet.Find(entity.Id);
-            var newEntity = Mapper.MapReverse(entity);
+            var trackEntity = RepoDbSet.Find(tEntity.Id);
+            var newEntity = Mapper.MapReverse(tEntity);
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
 

@@ -291,30 +291,30 @@ namespace DAL.Repositories
                                                                     .Contains(userId))) != null;
         }
 
-        public override Post Remove(Post entity)
+        public override Post Remove(Post tEntity)
         {
-            var comments = RepoDbContext.Comments.Where(comment => comment.PostId == entity.Id).ToList();
+            var comments = RepoDbContext.Comments.Where(comment => comment.PostId == tEntity.Id).ToList();
 
             foreach (var comment in comments)
             {
                 RepoDbContext.Comments.Remove(comment);
             }
 
-            var favorites = RepoDbContext.Favorites.Where(favorite => favorite.PostId == entity.Id).ToList();
+            var favorites = RepoDbContext.Favorites.Where(favorite => favorite.PostId == tEntity.Id).ToList();
 
             foreach (var favorite in favorites)
             {
                 RepoDbContext.Favorites.Remove(favorite);
             }
 
-            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.PostImageId);
+            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == tEntity.PostImageId);
 
             if (imageRecord != null)
             {
                 RepoDbContext.Images.Remove(imageRecord);
             }
 
-            return base.Remove(entity);
+            return base.Remove(tEntity);
         }
 
         public override async Task<IEnumerable<Post>> GetRecordHistoryAsync(Guid id)

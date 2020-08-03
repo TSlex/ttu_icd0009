@@ -92,10 +92,10 @@ namespace DAL.Repositories
                 .Where(gift => gift.DeletedAt == null && gift.MasterId == null).CountAsync();
         }
 
-        public override Gift Remove(Gift entity)
+        public override Gift Remove(Gift tEntity)
         {
             var profileGifts = RepoDbContext.ProfileGifts
-                .Where(gift => gift.GiftId == entity.Id);
+                .Where(gift => gift.GiftId == tEntity.Id);
 
             foreach (var profileGift in profileGifts)
             {
@@ -103,14 +103,14 @@ namespace DAL.Repositories
             }
 
             var imageRecord = RepoDbContext.Images
-                .FirstOrDefault(image => image.Id == entity.GiftImageId);
+                .FirstOrDefault(image => image.Id == tEntity.GiftImageId);
 
             if (imageRecord != null)
             {
                 RepoDbContext.Images.Remove(imageRecord);
             }
 
-            return base.Remove(entity);
+            return base.Remove(tEntity);
         }
 
         public override async Task<IEnumerable<Gift>> GetRecordHistoryAsync(Guid id)

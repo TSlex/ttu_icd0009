@@ -98,16 +98,16 @@ namespace DAL.Repositories
                 .FirstOrDefaultAsync(rank => rank.RankCode == code && rank.MasterId == null));
         }
 
-        public override Rank Remove(Rank entity)
+        public override Rank Remove(Rank tEntity)
         {
-            var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.RankId == entity.Id).ToList();
+            var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.RankId == tEntity.Id).ToList();
 
             foreach (var rank in ranks)
             {
                 RepoDbContext.ProfileRanks.Remove(rank);
             }
 
-            return base.Remove(entity);
+            return base.Remove(tEntity);
         }
 
         public override async Task<IEnumerable<Rank>> GetRecordHistoryAsync(Guid id)

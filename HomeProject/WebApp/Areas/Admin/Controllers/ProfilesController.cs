@@ -95,6 +95,7 @@ namespace WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(104857600)]
         public async Task<IActionResult> Edit(Guid id, ProfileEdit profile)
         {
             if (id != profile.Id)
@@ -138,11 +139,11 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     await _bll.Images.UpdateProfileAsync(profile.Id, imageModel);
                 }
-                
-                profile.ProfileAvatarId = imageModel.Id;
 
-                var (result, errors) = await _bll.Profiles.UpdateProfileAdminAsync(profile);
+                profile.ProfileAvatarId = imageModel.Id;
                 
+                var (result, errors) = await _bll.Profiles.UpdateProfileAdminAsync(profile);
+
                 if (errors.Length > 0)
                 {
                     foreach (var error in errors)

@@ -96,6 +96,7 @@ namespace DAL.Repositories
             record.LockoutEnabled = entity.LockoutEnabled;
             record.EmailConfirmed = entity.EmailConfirmed;
             record.AccessFailedCount = entity.AccessFailedCount;
+            record.ProfileAvatarId = entity.ProfileAvatarId;
 
             await _userManager.UpdateAsync(record);
             
@@ -298,8 +299,22 @@ namespace DAL.Repositories
             throw new NotSupportedException();
         }
 
-        public override Profile Remove(Profile entity)
+        public override void Restore(Profile tEntity)
         {
+            var entity = _userManager.FindByIdAsync(tEntity.Id.ToString()).Result;
+            
+            RepoDbContext.Entry(entity).State = EntityState.Modified;
+
+            entity.DeletedAt = null;
+            entity.DeletedBy = null;
+
+            RepoDbContext.SaveChanges();
+        }
+
+        public override Profile Remove(Profile tEntity)
+        {
+            var entity = _userManager.FindByIdAsync(tEntity.Id.ToString()).Result;
+            
             var blockedProfiles =
                 RepoDbContext.BlockedProfiles.Where(profile => profile.ProfileId == entity.Id).ToList();
 
@@ -351,12 +366,12 @@ namespace DAL.Repositories
                 RepoDbContext.Comments.Remove(comment);
             }
 
-            var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.ProfileId == entity.Id).ToList();
-
-            foreach (var rank in ranks)
-            {
-                RepoDbContext.ProfileRanks.Remove(rank);
-            }
+//            var ranks = RepoDbContext.ProfileRanks.Where(rank => rank.ProfileId == entity.Id).ToList();
+//
+//            foreach (var rank in ranks)
+//            {
+//                RepoDbContext.ProfileRanks.Remove(rank);
+//            }
 
             var profileGifts = RepoDbContext.ProfileGifts.Where(gift => gift.ProfileId == entity.Id);
 
@@ -371,8 +386,17 @@ namespace DAL.Repositories
             {
                 RepoDbContext.Images.Remove(imageRecord);
             }
+            
+            RepoDbContext.Entry(entity).State = EntityState.Modified;
 
-            return base.Remove(entity);
+            entity.DeletedAt = DateTime.Now;
+            entity.DeletedBy = "system";
+
+            RepoDbContext.SaveChanges();
+
+            return tEntity;
+
+//            return base.Remove(_entity);
         }
     }
 }

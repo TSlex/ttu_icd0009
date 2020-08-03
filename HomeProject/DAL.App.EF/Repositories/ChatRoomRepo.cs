@@ -126,23 +126,23 @@ namespace DAL.Repositories
                        ))) != null;
         }
 
-        public override ChatRoom Remove(ChatRoom entity)
+        public override ChatRoom Remove(ChatRoom tEntity)
         {
-            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoomId == entity.Id).ToList();
+            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoomId == tEntity.Id).ToList();
 
             foreach (var chatMember in members)
             {
                 RepoDbContext.ChatMembers.Remove(chatMember);
             }
 
-            var messages = RepoDbContext.Messages.Where(message => message.ChatRoomId == entity.Id).ToList();
+            var messages = RepoDbContext.Messages.Where(message => message.ChatRoomId == tEntity.Id).ToList();
 
             foreach (var message in messages)
             {
                 RepoDbContext.Messages.Remove(message);
             }
 
-            return base.Remove(entity);
+            return base.Remove(tEntity);
         }
 
         public override async Task<IEnumerable<ChatRoom>> GetRecordHistoryAsync(Guid id)

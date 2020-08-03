@@ -70,16 +70,16 @@ namespace DAL.Repositories
             return await base.UpdateDomainAsync(domainEntity);
         }
 
-        public override ChatRole Remove(ChatRole entity)
+        public override ChatRole Remove(ChatRole tEntity)
         {
-            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoleId == entity.Id).ToList();
+            var members = RepoDbContext.ChatMembers.Where(member => member.ChatRoleId == tEntity.Id).ToList();
 
             foreach (var chatMember in members)
             {
                 RepoDbContext.ChatMembers.Remove(chatMember);
             }
 
-            return base.Remove(entity);
+            return base.Remove(tEntity);
         }
 
         public override async Task<IEnumerable<ChatRole>> GetRecordHistoryAsync(Guid id)

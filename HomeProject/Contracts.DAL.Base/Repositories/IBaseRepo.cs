@@ -29,7 +29,7 @@ namespace Contracts.DAL.Base.Repositories
 
         Task<TDALEntity> UpdateAsync(TDALEntity entity);
 
-        TDALEntity Remove(TDALEntity entity);
+        TDALEntity Remove(TDALEntity tEntity);
         TDALEntity Remove(TKey id);
 
         Task<int> CountAsync();
