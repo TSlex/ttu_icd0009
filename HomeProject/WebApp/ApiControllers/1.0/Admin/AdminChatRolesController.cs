@@ -38,6 +38,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             _mapper = new DTOMapper<ChatRole, ChatRoleAdminDTO>();
         }
 
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChatRoleAdminDTO>))]
@@ -46,6 +50,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok((await _bll.ChatRoles.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
         
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{history}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChatRoleAdminDTO>))]
@@ -57,6 +65,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(history);
         }
         
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChatRoleAdminDTO))]
@@ -73,6 +86,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(_mapper.Map(record));
         }
         
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
         [Consumes("application/json")]
@@ -80,6 +98,11 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Create([FromBody] ChatRoleAdminDTO model)
         {
+            if (model.RoleTitleValue == null)
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorTranslationRequired));
+            }
+
             if (TryValidateModel(model))
             {
                 model.Id = Guid.NewGuid();
@@ -92,6 +115,12 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -103,6 +132,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             if (id != model.Id)
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
+            }
+            
+            if (model.RoleTitleValue == null)
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorTranslationRequired));
             }
             
             var record = await _bll.ChatRoles.GetForUpdateAsync(id);
@@ -125,6 +159,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
@@ -136,6 +175,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(new OkResponseDTO() {Status = Resourses.BLL.App.DTO.Common.SuccessDeleted});
         }
         
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{restore}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

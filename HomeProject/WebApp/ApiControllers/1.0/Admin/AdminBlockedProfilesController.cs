@@ -38,7 +38,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             _bll = bll;
             _mapper = new DTOMapper<BlockedProfile, BlockedProfileAdminDTO>();
         }
-        
+
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BlockedProfileAdminDTO>))]
@@ -46,7 +50,12 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             return Ok((await _bll.BlockedProfiles.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
-        
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BlockedProfileAdminDTO))]
@@ -62,7 +71,13 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             return Ok(_mapper.Map(blockedProfile));
         }
-        
+
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="blockedProfile"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -75,7 +90,13 @@ namespace WebApp.ApiControllers._1._0.Admin
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
-            
+
+            if (!await _bll.Profiles.ExistsAsync(blockedProfile.ProfileId) ||
+                !await _bll.Profiles.ExistsAsync(blockedProfile.BProfileId))
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
+            }
+
             var record = await _bll.BlockedProfiles.GetForUpdateAsync(id);
 
             if (record == null)
@@ -88,13 +109,17 @@ namespace WebApp.ApiControllers._1._0.Admin
                 await _bll.BlockedProfiles.UpdateAsync(_mapper.MapReverse(blockedProfile));
                 await _bll.SaveChangesAsync();
 
-
                 return NoContent();
             }
 
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
-        
+
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

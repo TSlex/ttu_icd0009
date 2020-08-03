@@ -38,6 +38,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             _mapper = new DTOMapper<Favorite, FavoriteAdminDTO>();
         }
         
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FavoriteAdminDTO>))]
@@ -46,6 +50,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok((await _bll.Favorites.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
 
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FavoriteAdminDTO))]
@@ -62,6 +71,12 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(_mapper.Map(record));
         }
         
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -75,7 +90,14 @@ namespace WebApp.ApiControllers._1._0.Admin
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
             }
             
+            if (!await _bll.Profiles.ExistsAsync(model.ProfileId) ||
+                !await _bll.Posts.ExistsAsync(model.PostId))
+            {
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
+            }
+            
             var record = await _bll.Favorites.GetForUpdateAsync(id);
+            
 
             if (record == null)
             {
@@ -94,6 +116,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorBadData));
         }
         
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]

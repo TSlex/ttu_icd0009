@@ -44,6 +44,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             _mapper = new DTOMapper<Image, ImageAdminDTO>();
         }
         
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ImageAdminDTO>))]
@@ -52,6 +56,10 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok((await _bll.Images.AllAdminAsync()).Select(record => _mapper.Map(record)));
         }
         
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{history}/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ImageAdminDTO>))]
@@ -63,6 +71,11 @@ namespace WebApp.ApiControllers._1._0.Admin
             return Ok(history);
         }
         
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ImageAdminDTO))]
