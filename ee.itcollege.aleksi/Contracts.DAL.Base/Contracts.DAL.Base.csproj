@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Configurations>Debug;Release;TEST</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <AssemblyName>ee.itcollege.aleksi.Contracts.DAL.Base</AssemblyName>
+        <RootNamespace>ee.itcollege.aleksi.Contracts.DAL.Base</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    </ItemGroup>
+
+</Project>

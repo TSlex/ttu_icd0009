@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Configurations>Debug;Release;TEST</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <AssemblyName>ee.itcollege.aleksi.BLL.Base</AssemblyName>
+        <RootNamespace>ee.itcollege.aleksi.BLL.Base</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Contracts.BLL.Base\Contracts.BLL.Base.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+    </ItemGroup>
+
+</Project>

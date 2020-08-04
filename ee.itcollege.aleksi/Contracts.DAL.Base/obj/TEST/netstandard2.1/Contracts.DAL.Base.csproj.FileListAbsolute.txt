@@ -1,0 +1,8 @@
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\bin\TEST\netstandard2.1\Contracts.DAL.Base.deps.json
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\bin\TEST\netstandard2.1\Contracts.DAL.Base.dll
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\bin\TEST\netstandard2.1\Contracts.DAL.Base.pdb
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\obj\TEST\netstandard2.1\Contracts.DAL.Base.csprojAssemblyReference.cache
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\obj\TEST\netstandard2.1\Contracts.DAL.Base.AssemblyInfoInputs.cache
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\obj\TEST\netstandard2.1\Contracts.DAL.Base.AssemblyInfo.cs
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\obj\TEST\netstandard2.1\Contracts.DAL.Base.dll
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.DAL.Base\obj\TEST\netstandard2.1\Contracts.DAL.Base.pdb

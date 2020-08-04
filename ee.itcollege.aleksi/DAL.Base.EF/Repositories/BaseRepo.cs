@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Contracts.DAL.Base;
-using Contracts.DAL.Base.Mappers;
-using Contracts.DAL.Base.Repositories;
+using ee.itcollege.aleksi.Contracts.DAL.Base;
+using ee.itcollege.aleksi.Contracts.DAL.Base.Mappers;
+using ee.itcollege.aleksi.Contracts.DAL.Base.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Base.EF.Repositories
+namespace ee.itcollege.aleksi.DAL.Base.EF.Repositories
 {
     public class BaseRepo<TDomainEntity, TDALEntity, TDbContext> : IBaseDomainRepo<TDomainEntity, TDALEntity>
         where TDomainEntity : class, IDomainEntityBase<Guid>, new()
@@ -118,12 +118,6 @@ namespace DAL.Base.EF.Repositories
             }
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
-            
-            if (trackEntity is Domain.Rank rankEntity)
-            {
-                rankEntity.NextRankId = null;
-                rankEntity.PreviousRankId = null;
-            }
 
             if (trackEntity is ISoftUpdateEntity softUpdateEntity &&
                 trackEntity is IDomainEntityBaseMetadata baseMetadata)
@@ -157,12 +151,6 @@ namespace DAL.Base.EF.Repositories
             }
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
-
-            if (trackEntity is Domain.Rank rankEntity)
-            {
-                rankEntity.NextRankId = null;
-                rankEntity.PreviousRankId = null;
-            }
 
             if (trackEntity is ISoftUpdateEntity softUpdateEntity &&
                 trackEntity is IDomainEntityBaseMetadata baseMetadata)

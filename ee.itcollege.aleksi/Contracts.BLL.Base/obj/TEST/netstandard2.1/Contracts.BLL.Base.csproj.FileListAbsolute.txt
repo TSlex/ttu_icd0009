@@ -1,0 +1,11 @@
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\bin\TEST\netstandard2.1\Contracts.BLL.Base.deps.json
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\bin\TEST\netstandard2.1\Contracts.BLL.Base.dll
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\bin\TEST\netstandard2.1\Contracts.BLL.Base.pdb
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\bin\TEST\netstandard2.1\Contracts.DAL.Base.dll
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\bin\TEST\netstandard2.1\Contracts.DAL.Base.pdb
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\obj\TEST\netstandard2.1\Contracts.BLL.Base.csprojAssemblyReference.cache
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\obj\TEST\netstandard2.1\Contracts.BLL.Base.AssemblyInfoInputs.cache
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\obj\TEST\netstandard2.1\Contracts.BLL.Base.AssemblyInfo.cs
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\obj\TEST\netstandard2.1\Contracts.BLL.Base.csproj.CopyComplete
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\obj\TEST\netstandard2.1\Contracts.BLL.Base.dll
+C:\Users\alex1\icd0009-2019s\HomeProject\Contracts.BLL.Base\obj\TEST\netstandard2.1\Contracts.BLL.Base.pdb
