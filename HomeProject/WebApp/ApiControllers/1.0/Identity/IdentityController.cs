@@ -331,7 +331,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         }
 
         /// <summary>
-        /// Deletes profile
+        /// Deletes profile 
         /// </summary>
         /// <param name="deleteDTO"></param>
         /// <returns></returns>
