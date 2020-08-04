@@ -12,7 +12,7 @@ namespace BLL.App.Services
     public class ChatRoleService : BaseEntityService<IChatRoleRepo, DAL.App.DTO.ChatRole, ChatRole>, IChatRoleService
     {
         public ChatRoleService(IAppUnitOfWork uow) :
-            base(uow.ChatRoles, new ChatRoleMapper())
+            base(uow.ChatRoles, new UniversalBLLMapper<DAL.App.DTO.ChatRole, ChatRole>())
         {
         }
 

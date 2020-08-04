@@ -15,7 +15,7 @@ namespace BLL.App.Services
     public class FollowerService : BaseEntityService<IFollowerRepo, DAL.App.DTO.Follower, Follower>, IFollowerService
     {
         public FollowerService(IAppUnitOfWork uow) :
-            base(uow.Followers, new FollowerMapper())
+            base(uow.Followers, new UniversalBLLMapper<DAL.App.DTO.Follower, Follower>())
         {
         }
 

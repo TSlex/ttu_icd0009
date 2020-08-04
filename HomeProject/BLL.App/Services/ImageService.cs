@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using BLL.App.Mappers;
 using BLL.Base.Mappers;
 using BLL.Base.Services;
 using Contracts.BLL.App.Services;
@@ -20,7 +21,7 @@ namespace BLL.App.Services
         public string RootPath { get; set; } = default!;
 
         public ImageService(IAppUnitOfWork uow) :
-            base(uow.Images, new BaseBLLMapper<DAL.App.DTO.Image, Image>())
+            base(uow.Images, new UniversalBLLMapper<DAL.App.DTO.Image, Image>())
         {
         }
 

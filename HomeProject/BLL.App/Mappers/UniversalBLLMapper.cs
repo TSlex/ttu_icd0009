@@ -5,11 +5,11 @@ using Profile = AutoMapper.Profile;
 
 namespace BLL.App.Mappers
 {
-    public class UniversalMapper<TInObject, TOutObject>: BaseBLLMapper<TInObject, TOutObject>
+    public class UniversalBLLMapper<TInObject, TOutObject>: BaseBLLMapper<TInObject, TOutObject>
         where TInObject : class, new()
         where TOutObject : class, new()
     {
-        public UniversalMapper(): base(
+        public UniversalBLLMapper(): base(
             new MapperConfiguration(config =>
             {
                 config.CreateMap<TInObject, TOutObject>();

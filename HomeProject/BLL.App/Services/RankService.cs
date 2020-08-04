@@ -16,7 +16,7 @@ namespace BLL.App.Services
         private readonly IAppUnitOfWork _uow;
 
         public RankService(IAppUnitOfWork uow) :
-            base(uow.Ranks, new RankMapper())
+            base(uow.Ranks, new UniversalBLLMapper<DAL.App.DTO.Rank, Rank>())
         {
             _uow = uow;
         }

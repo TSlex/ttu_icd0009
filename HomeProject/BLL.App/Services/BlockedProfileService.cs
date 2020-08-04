@@ -15,7 +15,7 @@ namespace BLL.App.Services
     public class BlockedProfileService : BaseEntityService<IBlockedProfileRepo, DAL.App.DTO.BlockedProfile, BlockedProfile>, IBlockedProfileService
     {
         public BlockedProfileService(IAppUnitOfWork uow) :
-            base(uow.BlockedProfiles, new BlockedProfileMapper())
+            base(uow.BlockedProfiles, new UniversalBLLMapper<DAL.App.DTO.BlockedProfile, BlockedProfile>())
         {
         }
 

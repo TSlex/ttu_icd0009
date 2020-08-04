@@ -15,7 +15,7 @@ namespace BLL.App.Services
     public class ProfileGiftService : BaseEntityService<IProfileGiftRepo, DAL.App.DTO.ProfileGift, ProfileGift>, IProfileGiftService
     {
         public ProfileGiftService(IAppUnitOfWork uow) :
-            base(uow.ProfileGifts, new ProfileGiftMapper())
+            base(uow.ProfileGifts, new UniversalBLLMapper<DAL.App.DTO.ProfileGift, ProfileGift>())
         {
         }
 

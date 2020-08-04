@@ -15,7 +15,7 @@ namespace BLL.App.Services
     public class ProfileRankService : BaseEntityService<IProfileRankRepo, DAL.App.DTO.ProfileRank, ProfileRank>, IProfileRankService
     {
         public ProfileRankService(IAppUnitOfWork uow) :
-            base(uow.ProfileRanks, new ProfileRankMapper())
+            base(uow.ProfileRanks, new UniversalBLLMapper<DAL.App.DTO.ProfileRank, ProfileRank>())
         {
             
         }

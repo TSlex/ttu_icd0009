@@ -14,7 +14,7 @@ namespace BLL.App.Services
     public class PostService : BaseEntityService<IPostRepo, DAL.App.DTO.Post, Post>, IPostService
     {
         public PostService(IAppUnitOfWork uow) :
-            base(uow.Posts, new PostMapper())
+            base(uow.Posts, new UniversalBLLMapper<DAL.App.DTO.Post, Post>())
         {
         }
 

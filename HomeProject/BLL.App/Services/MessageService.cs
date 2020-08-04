@@ -15,7 +15,7 @@ namespace BLL.App.Services
     public class MessageService : BaseEntityService<IMessageRepo, DAL.App.DTO.Message, Message>, IMessageService
     {
         public MessageService(IAppUnitOfWork uow) :
-            base(uow.Messages, new MessageMapper())
+            base(uow.Messages, new UniversalBLLMapper<DAL.App.DTO.Message, Message>())
         {
         }
 

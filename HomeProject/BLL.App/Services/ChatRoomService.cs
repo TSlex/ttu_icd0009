@@ -20,7 +20,7 @@ namespace BLL.App.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ChatRoomService(IAppUnitOfWork uow, IHttpContextAccessor httpContextAccessor) :
-            base(uow.ChatRooms, new ChatRoomMapper())
+            base(uow.ChatRooms, new UniversalBLLMapper<DAL.App.DTO.ChatRoom, ChatRoom>())
         {
             _uow = uow;
             _httpContextAccessor = httpContextAccessor;

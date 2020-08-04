@@ -18,7 +18,7 @@ namespace BLL.App.Services
         private readonly IAppUnitOfWork _uow;
 
         public FavoriteService(IAppUnitOfWork uow) :
-            base(uow.Favorites, new FavoriteMapper())
+            base(uow.Favorites, new UniversalBLLMapper<DAL.App.DTO.Favorite, Favorite>())
         {
             _uow = uow;
         }

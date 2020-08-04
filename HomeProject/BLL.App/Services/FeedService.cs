@@ -18,7 +18,7 @@ namespace BLL.App.Services
         public FeedService(IAppUnitOfWork uow)
         {
             _uow = uow;
-            _mapper = new PostMapper();
+            _mapper = new UniversalBLLMapper<DAL.App.DTO.Post, Post>();
         }
 
         public async Task<Feed> GetUserFeedAsync(Guid userId)

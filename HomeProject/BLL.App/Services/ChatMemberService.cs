@@ -16,7 +16,7 @@ namespace BLL.App.Services
         IChatMemberService
     {
         public ChatMemberService(IAppUnitOfWork uow) :
-            base(uow.ChatMembers, new ChatMemberMapper())
+            base(uow.ChatMembers, new UniversalBLLMapper<DAL.App.DTO.ChatMember, ChatMember>())
         {
         }
 

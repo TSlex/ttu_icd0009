@@ -19,7 +19,7 @@ namespace BLL.App.Services
         private readonly IAppUnitOfWork _uow;
 
         public ProfileService(IAppUnitOfWork uow) : base(uow.Profiles,
-            new ProfileMapper())
+            new UniversalBLLMapper<DAL.App.DTO.Profile, Profile>())
         {
             _uow = uow;
         }

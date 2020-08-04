@@ -14,7 +14,7 @@ namespace BLL.App.Services
     public class GiftService : BaseEntityService<IGiftRepo, DAL.App.DTO.Gift, Gift>, IGiftService
     {
         public GiftService(IAppUnitOfWork uow) :
-            base(uow.Gifts, new GiftMapper())
+            base(uow.Gifts, new UniversalBLLMapper<DAL.App.DTO.Gift, Gift>())
         {
         }
 

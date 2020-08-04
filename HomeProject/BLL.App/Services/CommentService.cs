@@ -15,7 +15,7 @@ namespace BLL.App.Services
     public class CommentService : BaseEntityService<ICommentRepo, DAL.App.DTO.Comment, Comment>, ICommentService
     {
         public CommentService(IAppUnitOfWork uow) :
-            base(uow.Comments, new CommentMapper())
+            base(uow.Comments, new UniversalBLLMapper<DAL.App.DTO.Comment, Comment>())
         {
         }
 
