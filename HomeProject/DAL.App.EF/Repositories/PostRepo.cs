@@ -273,6 +273,7 @@ namespace DAL.Repositories
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
+                    PostPublicationDateTime = post.PostPublicationDateTime,
                     PostCommentsCount =
                         post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),
                     PostFavoritesCount = post.Favorites!.Count,
