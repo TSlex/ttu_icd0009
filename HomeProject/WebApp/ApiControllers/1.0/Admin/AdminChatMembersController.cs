@@ -55,7 +55,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         /// Get record history
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{history}/{id}")]
+        [HttpGet("history/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ChatMemberAdminDTO>))]
         public async Task<IActionResult> History(Guid id)
@@ -153,7 +153,7 @@ namespace WebApp.ApiControllers._1._0.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost("{restore}/{id}")]
+        [HttpPost("restore/{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         public async Task<IActionResult> Restore(Guid id)
