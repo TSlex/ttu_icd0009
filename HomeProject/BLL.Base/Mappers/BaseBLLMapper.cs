@@ -9,11 +9,12 @@ namespace BLL.Base.Mappers
     {
         private readonly IMapper _mapper;
 
-        public BaseBLLMapper() : this(null)
+        public BaseBLLMapper()
         {
+            _mapper = new MapperConfiguration(config => { config.AllowNullDestinationValues = true; }).CreateMapper();
         }
 
-        public BaseBLLMapper(IMapper? mapper)
+        public BaseBLLMapper(IMapper mapper)
         {
             _mapper = mapper;
         }

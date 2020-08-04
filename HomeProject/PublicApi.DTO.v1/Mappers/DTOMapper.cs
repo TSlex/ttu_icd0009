@@ -7,8 +7,5 @@ namespace PublicApi.DTO.v1.Mappers
         where TOutObject : class, new() 
         where TInObject : class, new()
     {
-        public DTOMapper() : base(null)
-        {
-        }
     }
 }

@@ -11,11 +11,12 @@ namespace DAL.Base.EF.Mappers
     {
         private readonly IMapper _mapper;
 
-        public BaseDALMapper() : this(null)
+        public BaseDALMapper()
         {
+            _mapper = new MapperConfiguration(config => { config.AllowNullDestinationValues = true; }).CreateMapper();
         }
 
-        public BaseDALMapper(IMapper? mapper)
+        public BaseDALMapper(IMapper mapper)
         {
             _mapper = mapper;
         }
