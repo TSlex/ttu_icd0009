@@ -16,6 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{37143089-C8DA-47F9-888A-22922363966A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{92930779-0FE3-4DEB-81B6-1BE6078B43F3}"
+ProjectSection(SolutionItems) = preProject
+	BLL.Base\bin\Release\ee.itcollege.aleksi.BLL.Base.1.0.0.nupkg = BLL.Base\bin\Release\ee.itcollege.aleksi.BLL.Base.1.0.0.nupkg
+	Contracts.BLL.Base\bin\Release\ee.itcollege.aleksi.Contracts.BLL.Base.1.0.0.nupkg = Contracts.BLL.Base\bin\Release\ee.itcollege.aleksi.Contracts.BLL.Base.1.0.0.nupkg
+	Contracts.DAL.Base\bin\Release\ee.itcollege.aleksi.Contracts.DAL.Base.1.0.0.nupkg = Contracts.DAL.Base\bin\Release\ee.itcollege.aleksi.Contracts.DAL.Base.1.0.0.nupkg
+	DAL.Base\bin\Release\ee.itcollege.aleksi.DAL.Base.1.0.0.nupkg = DAL.Base\bin\Release\ee.itcollege.aleksi.DAL.Base.1.0.0.nupkg
+	DAL.Base.EF\bin\Release\ee.itcollege.aleksi.DAL.Base.EF.1.0.0.nupkg = DAL.Base.EF\bin\Release\ee.itcollege.aleksi.DAL.Base.EF.1.0.0.nupkg
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
