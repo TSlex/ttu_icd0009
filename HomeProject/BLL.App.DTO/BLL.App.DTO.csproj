@@ -11,20 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-        <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.features\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
-      </Reference>
-      <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-        <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="ee.itcollege.aleksi.BLL.Base" Version="1.0.0" />
       <PackageReference Include="ee.itcollege.aleksi.Contracts.BLL.Base" Version="1.0.0" />
       <PackageReference Include="ee.itcollege.aleksi.Contracts.DAL.Base" Version="1.0.0" />
       <PackageReference Include="ee.itcollege.aleksi.DAL.Base" Version="1.0.0" />
       <PackageReference Include="ee.itcollege.aleksi.DAL.Base.EF" Version="1.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
 </Project>

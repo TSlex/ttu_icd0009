@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ee.itcollege.aleksi.DAL.Base;
-using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 using ee.itcollege.aleksi.DAL.Base;
 using Domain.Enums;
 using Microsoft.AspNetCore.Http;
