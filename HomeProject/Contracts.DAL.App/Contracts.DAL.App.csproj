@@ -14,4 +14,12 @@
       <ProjectReference Include="..\DAL.App.DTO\DAL.App.DTO.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ee.itcollege.aleksi.BLL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.Contracts.BLL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.Contracts.DAL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.DAL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.DAL.Base.EF" Version="1.0.0" />
+    </ItemGroup>
+
 </Project>

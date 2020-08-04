@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 
 namespace Domain.Translation
 {

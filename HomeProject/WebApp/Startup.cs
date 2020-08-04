@@ -6,7 +6,7 @@ using System.Text;
 using BLL.App;
 using Contracts.BLL.App;
 using Contracts.DAL.App;
-using Contracts.DAL.Base;
+using ee.itcollege.aleksi.Contracts.DAL.Base;
 using DAL;
 using Domain;
 using Domain.Identity;

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DAL.Base.EF.Mappers;
+using ee.itcollege.aleksi.DAL.Base.EF.Mappers;
 
 namespace PublicApi.DTO.v1.Mappers
 {

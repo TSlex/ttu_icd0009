@@ -1,7 +1,6 @@
 ﻿@using BLL.App.DTO
-@using Contracts.DAL.Base
-
-@model IDomainEntityBaseMetadata
+@using ee.itcollege.aleksi.Contracts.DAL.Base
+@model ee.itcollege.aleksi.Contracts.DAL.Base.IDomainEntityBaseMetadata
 
 @{
     var isSoftDeleteEntity = Model is ISoftDeleteEntity | Model is Profile;

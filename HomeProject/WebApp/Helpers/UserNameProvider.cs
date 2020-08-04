@@ -1,4 +1,4 @@
-﻿using Contracts.DAL.Base;
+﻿using ee.itcollege.aleksi.Contracts.DAL.Base;
 using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Helpers

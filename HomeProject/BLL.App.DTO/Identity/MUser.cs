@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Contracts.DAL.Base;
+using ee.itcollege.aleksi.Contracts.DAL.Base;
 
 namespace BLL.App.DTO.Identity
 {

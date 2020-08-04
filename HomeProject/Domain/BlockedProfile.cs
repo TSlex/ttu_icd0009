@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
+
 using Domain.Translation;
 
 namespace Domain

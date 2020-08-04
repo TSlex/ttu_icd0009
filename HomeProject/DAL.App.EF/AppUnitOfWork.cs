@@ -1,7 +1,7 @@
 ﻿using Contracts.DAL.App;
 using Contracts.DAL.App.Repositories;
-using DAL.Base;
-using DAL.Base.EF;
+using ee.itcollege.aleksi.DAL.Base;
+using ee.itcollege.aleksi.DAL.Base.EF;
 using DAL.Repositories;
 using Domain;
 using Microsoft.AspNetCore.Http;

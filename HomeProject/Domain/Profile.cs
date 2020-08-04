@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Contracts.DAL.Base;
-using DAL.Base;
+using ee.itcollege.aleksi.Contracts.DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 using Domain.Enums;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;

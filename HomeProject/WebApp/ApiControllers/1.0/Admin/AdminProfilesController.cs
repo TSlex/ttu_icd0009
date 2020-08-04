@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using BLL.App.Mappers;
-using BLL.Base.Mappers;
+using ee.itcollege.aleksi.BLL.Base.Mappers;
 using Contracts.BLL.App;
 using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

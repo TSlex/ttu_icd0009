@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 using DomainEntityBaseMetadata = BLL.App.DTO.Base.DomainEntityBaseMetadata;
 
 namespace BLL.App.DTO

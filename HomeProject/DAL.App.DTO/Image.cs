@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 using Domain.Enums;
 
 namespace DAL.App.DTO

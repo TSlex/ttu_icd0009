@@ -1,7 +1,5 @@
-﻿using System;
-using BLL.App.DTO;
-using BLL.App.Services;
-using BLL.Base;
+﻿using BLL.App.Services;
+using ee.itcollege.aleksi.BLL.Base;
 using Contracts.BLL.App;
 using Contracts.BLL.App.Services;
 using Contracts.DAL.App;

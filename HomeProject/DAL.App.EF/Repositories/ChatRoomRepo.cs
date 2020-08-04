@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Contracts.DAL.App.Repositories;
 using DAL.App.DTO;
-using DAL.Base.EF.Repositories;
+using ee.itcollege.aleksi.DAL.Base.EF.Repositories;
 using DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
 

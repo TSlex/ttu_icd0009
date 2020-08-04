@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BLL.App.DTO;
-using BLL.Base.Mappers;
+using ee.itcollege.aleksi.BLL.Base.Mappers;
 using Profile = BLL.App.DTO.Profile;
 
 namespace BLL.App.Mappers

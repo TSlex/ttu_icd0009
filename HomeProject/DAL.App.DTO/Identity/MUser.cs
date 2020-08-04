@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Contracts.DAL.Base;
+using ee.itcollege.aleksi.Contracts.DAL.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAL.App.DTO.Identity

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Domain;
 using Domain.Enums;
 using Domain.Identity;
 using Domain.Translation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace DAL.Helpers
 {

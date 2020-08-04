@@ -1,5 +1,5 @@
 ﻿using System;
-using DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 
 namespace DAL.App.DTO
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 using DomainEntityBaseMetaSoftDelete = BLL.App.DTO.Base.DomainEntityBaseMetaSoftDelete;
 
 namespace BLL.App.DTO

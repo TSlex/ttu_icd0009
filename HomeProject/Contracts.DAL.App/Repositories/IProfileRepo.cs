@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BLL.App.DTO;
-using Contracts.DAL.Base.Repositories;
+using ee.itcollege.aleksi.Contracts.DAL.Base.Repositories;
 using Profile = DAL.App.DTO.Profile;
 
 namespace Contracts.DAL.App.Repositories

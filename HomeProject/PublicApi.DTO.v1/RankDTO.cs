@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Contracts.DAL.Base;
-using DAL.Base;
+using ee.itcollege.aleksi.Contracts.DAL.Base;
+using ee.itcollege.aleksi.DAL.Base;
 
 namespace PublicApi.DTO.v1
 {

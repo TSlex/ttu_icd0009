@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DAL.App.DTO;
-using DAL.Base.EF.Mappers;
+using ee.itcollege.aleksi.DAL.Base.EF.Mappers;
 using Profile = DAL.App.DTO.Profile;
 
 namespace DAL.Mappers
