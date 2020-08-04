@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.BLL.App;
+using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -111,17 +112,19 @@ namespace WebApp.ApiControllers._1._0.Admin
                     if (!result.Succeeded)
                     {
 
-                        return BadRequest(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername);
+                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername));
                     }
                 }
                 
-                if (record.Email != model.Email)
+                var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
+                
+                if (userWithSameEmail == null || userWithSameEmail.Id == User.UserId())
                 {
                     var result = await _userManager.SetEmailAsync(record, model.Email);
                     if (!result.Succeeded)
                     {
 
-                        return BadRequest(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail);
+                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail));
                     }
                 }
                 
@@ -136,7 +139,7 @@ namespace WebApp.ApiControllers._1._0.Admin
                             ModelState.AddModelError(string.Empty, error.Description);
                         }
                         
-                        return BadRequest(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorSetPassword);
+                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorSetPassword));
                     }
                 }
                 

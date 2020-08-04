@@ -59,7 +59,9 @@ namespace DAL.Repositories
                 }
             }
 
-            if (record.Email != entity.Email)
+            var userWithSameEmail = await _userManager.FindByEmailAsync(entity.Email);
+
+            if (userWithSameEmail == null || userWithSameEmail.Id == entity.Id)
             {
                 var result = await _userManager.SetEmailAsync(record, entity.Email);
                 if (!result.Succeeded)
@@ -99,7 +101,7 @@ namespace DAL.Repositories
             record.ProfileAvatarId = entity.ProfileAvatarId;
 
             await _userManager.UpdateAsync(record);
-            
+
             return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
         }
 
@@ -302,7 +304,7 @@ namespace DAL.Repositories
         public override void Restore(Profile tEntity)
         {
             var entity = _userManager.FindByIdAsync(tEntity.Id.ToString()).Result;
-            
+
             RepoDbContext.Entry(entity).State = EntityState.Modified;
 
             entity.DeletedAt = null;
@@ -314,7 +316,7 @@ namespace DAL.Repositories
         public override Profile Remove(Profile tEntity)
         {
             var entity = _userManager.FindByIdAsync(tEntity.Id.ToString()).Result;
-            
+
             var blockedProfiles =
                 RepoDbContext.BlockedProfiles.Where(profile => profile.ProfileId == entity.Id).ToList();
 
@@ -380,13 +382,13 @@ namespace DAL.Repositories
                 RepoDbContext.ProfileGifts.Remove(profileGift);
             }
 
-            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.ProfileAvatarId);
+//            var imageRecord = RepoDbContext.Images.FirstOrDefault(image => image.Id == entity.ProfileAvatarId);
+//
+//            if (imageRecord != null)
+//            {
+//                RepoDbContext.Images.Remove(imageRecord);
+//            }
 
-            if (imageRecord != null)
-            {
-                RepoDbContext.Images.Remove(imageRecord);
-            }
-            
             RepoDbContext.Entry(entity).State = EntityState.Modified;
 
             entity.DeletedAt = DateTime.Now;

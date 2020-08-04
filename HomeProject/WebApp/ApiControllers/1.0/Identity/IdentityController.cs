@@ -331,11 +331,11 @@ namespace WebApp.ApiControllers._1._0.Identity
         }
 
         /// <summary>
-        /// Deletes message
+        /// Deletes profile
         /// </summary>
         /// <param name="deleteDTO"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpPost("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]

@@ -107,12 +107,12 @@ namespace WebApp.ApiControllers._1._0.Admin
         {
             if (model.ImageFile == null)
             {
-                return BadRequest(Resourses.BLL.App.DTO.Images.Images.ImageRequired);
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Images.Images.ImageRequired));
             }
             
             if (model.ImageType != ImageType.Undefined && model.ImageFor == null)
             {
-                return BadRequest(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired));
             }
             
             ModelState.Clear();
@@ -175,7 +175,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (model.ImageType != ImageType.Undefined && model.ImageFor == null)
             {
-                return BadRequest(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired);
+                return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Images.Images.ErrorForIdRequired));
             }
 
             Image? result;
