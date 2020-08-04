@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
+using BLL.Base.Mappers;
 using Contracts.BLL.App;
 using Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -92,6 +93,9 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Edit(Guid id, [FromBody] ProfileAdminDTO model)
         {
+            var mapper = new BaseBLLMapper<ProfileAdminDTO, Profile>();
+            var mapper2 = new BaseBLLMapper<Profile, ProfileEdit>();
+                
             if (id != model.Id)
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorIdMatch));
@@ -106,58 +110,18 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (ModelState.IsValid)
             {
-                if (record.UserName != model.UserName)
-                {
-                    var result = await _userManager.SetUserNameAsync(record, model.UserName);
-                    if (!result.Succeeded)
-                    {
+                /*hell yeah*/
+                var (_, errors) = await _bll.Profiles.UpdateProfileAdminAsync(mapper2.Map(mapper.Map(model)));
 
-                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername));
-                    }
-                }
-                
-                var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
-                
-                if (userWithSameEmail == null || userWithSameEmail.Id == User.UserId())
+                if (errors.Length > 0)
                 {
-                    var result = await _userManager.SetEmailAsync(record, model.Email);
-                    if (!result.Succeeded)
+                    foreach (var error in errors)
                     {
-
-                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail));
+                        ModelState.AddModelError(string.Empty, error);
                     }
+                    
+                    return BadRequest(new ErrorResponseDTO(errors));
                 }
-                
-                if (model.Password != null)
-                {
-                    var resetToken = await _userManager.GeneratePasswordResetTokenAsync(record);
-                    var changePasswordResult = await _userManager.ResetPasswordAsync(record, resetToken,model.Password);
-                    if (!changePasswordResult.Succeeded)
-                    {
-                        foreach (var error in changePasswordResult.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                        
-                        return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorSetPassword));
-                    }
-                }
-                
-                record.ProfileFullName = model.ProfileFullName;
-                record.ProfileWorkPlace = model.ProfileWorkPlace;
-                record.ProfileAvatarId = model.ProfileAvatarId;
-                record.Experience = model.Experience;
-                record.ProfileAbout = model.ProfileAbout;
-                record.ProfileGender = model.ProfileGender;
-                record.ProfileGenderOwn = model.ProfileGenderOwn;
-                record.ProfileStatus = model.ProfileStatus;
-                record.PhoneNumber = model.PhoneNumber;
-                record.PhoneNumberConfirmed = model.PhoneNumberConfirmed;
-                record.LockoutEnabled = model.LockoutEnabled;
-                record.EmailConfirmed = model.EmailConfirmed;
-                record.AccessFailedCount = model.AccessFailedCount;
-
-                await _userManager.UpdateAsync(record);
                 
                 return NoContent();
             }

@@ -61,7 +61,12 @@ namespace DAL.Repositories
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(entity.Email);
 
-            if (userWithSameEmail == null || userWithSameEmail.Id == entity.Id)
+            if (userWithSameEmail != null && userWithSameEmail.Id != entity.Id)
+            {
+                errors.Add(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeEmail);
+                return new Tuple<ProfileEdit, string[]>(entity, errors.ToArray());
+            }
+            else if (userWithSameEmail == null)
             {
                 var result = await _userManager.SetEmailAsync(record, entity.Email);
                 if (!result.Succeeded)
