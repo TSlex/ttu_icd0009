@@ -18,31 +18,31 @@ namespace DAL.Repositories
             base(dbContext, new UniversalDALMapper<Domain.Rank, Rank>())
         {
         }
-        
+
         public async Task<bool> NextRankExists(Guid id, Guid? reqGuid)
         {
             if (reqGuid == null)
             {
-                return await RepoDbSet.Where(rank => 
+                return await RepoDbSet.Where(rank =>
                                rank.NextRankId == id)
                            .FirstOrDefaultAsync() != null;
             }
-            
-            return await RepoDbSet.Where(rank => 
+
+            return await RepoDbSet.Where(rank =>
                            rank.NextRankId == id && rank.Id != reqGuid)
                        .FirstOrDefaultAsync() != null;
         }
-        
+
         public async Task<bool> PreviousRankExists(Guid id, Guid? reqGuid)
         {
             if (reqGuid == null)
             {
-                return await RepoDbSet.Where(rank => 
+                return await RepoDbSet.Where(rank =>
                                rank.PreviousRankId == id)
                            .FirstOrDefaultAsync() != null;
             }
-            
-            return await RepoDbSet.Where(rank => 
+
+            return await RepoDbSet.Where(rank =>
                            rank.PreviousRankId == id && rank.Id != reqGuid)
                        .FirstOrDefaultAsync() != null;
         }
@@ -86,7 +86,30 @@ namespace DAL.Repositories
             domainEntity.NextRankId = entity.NextRankId;
             domainEntity.PreviousRankId = entity.PreviousRankId;
 
-            return await base.UpdateDomainAsync(domainEntity);
+            //==================================================
+
+            var trackEntity = RepoDbSet.Find(entity.Id);
+            var newEntity = domainEntity;
+            
+            var now = DateTime.Now;
+
+            newEntity.CreatedAt = now;
+            
+            RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
+
+            trackEntity.NextRankId = null;
+            trackEntity.PreviousRankId = null;
+            
+            trackEntity.MasterId = newEntity.Id;
+            trackEntity.Id = Guid.NewGuid();
+            trackEntity.ChangedBy = "history";
+            trackEntity.ChangedAt = now;
+            trackEntity.DeletedBy = "history";
+            trackEntity.DeletedAt = now;
+            
+            RepoDbSet.Add(trackEntity);
+            
+            return Mapper.Map(RepoDbSet.Update(newEntity).Entity);
         }
 
         public async Task<Rank> FindByCodeAsync(string code)

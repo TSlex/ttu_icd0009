@@ -118,12 +118,6 @@ namespace DAL.Base.EF.Repositories
             }
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
-            
-            if (trackEntity is Domain.Rank rankEntity)
-            {
-                rankEntity.NextRankId = null;
-                rankEntity.PreviousRankId = null;
-            }
 
             if (trackEntity is ISoftUpdateEntity softUpdateEntity &&
                 trackEntity is IDomainEntityBaseMetadata baseMetadata)
@@ -157,12 +151,6 @@ namespace DAL.Base.EF.Repositories
             }
 
             RepoDbContext.Entry(trackEntity).State = EntityState.Detached;
-
-            if (trackEntity is Domain.Rank rankEntity)
-            {
-                rankEntity.NextRankId = null;
-                rankEntity.PreviousRankId = null;
-            }
 
             if (trackEntity is ISoftUpdateEntity softUpdateEntity &&
                 trackEntity is IDomainEntityBaseMetadata baseMetadata)
