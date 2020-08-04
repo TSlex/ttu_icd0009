@@ -68,7 +68,7 @@ namespace WebApp.ApiControllers._1._0
                 Id = member.Id,
                 UserName = member.Profile!.UserName,
                 ChatRole = member.ChatRole!.RoleTitle,
-                ChatRoleValue = member.ChatRole!.RoleTitleValue,
+                ChatRoleValue = member.ChatRole!.RoleTitleValue!,
                 ProfileAvatarId = member.Profile!.ProfileAvatarId,
                 CanEditMembers = member.ChatRole!.CanEditMembers,
                 CanEditMessages = member.ChatRole!.CanEditMessages,
@@ -109,7 +109,7 @@ namespace WebApp.ApiControllers._1._0
                 Id = chatMember.Id,
                 UserName = chatMember.Profile!.UserName,
                 ChatRole = chatMember.ChatRole!.RoleTitle,
-                ChatRoleValue = chatMember.ChatRole!.RoleTitleValue,
+                ChatRoleValue = chatMember.ChatRole!.RoleTitleValue!,
                 ProfileAvatarId = chatMember.Profile!.ProfileAvatarId,
                 CanEditMembers = chatMember.ChatRole!.CanEditMembers,
                 CanEditMessages = chatMember.ChatRole!.CanEditMessages,
@@ -142,7 +142,7 @@ namespace WebApp.ApiControllers._1._0
                 Id = chatMember.Id,
                 UserName = chatMember.Profile!.UserName,
                 ChatRole = chatMember.ChatRole!.RoleTitle,
-                ChatRoleValue = chatMember.ChatRole!.RoleTitleValue,
+                ChatRoleValue = chatMember.ChatRole!.RoleTitleValue!,
                 ProfileAvatarId = chatMember.Profile!.ProfileAvatarId,
                 CanEditMembers = chatMember.ChatRole!.CanEditMembers,
                 CanEditMessages = chatMember.ChatRole!.CanEditMessages,
@@ -229,7 +229,7 @@ namespace WebApp.ApiControllers._1._0
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
-            if (!currentMember.ChatRole.CanEditMembers)
+            if (!currentMember.ChatRole!.CanEditMembers)
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }

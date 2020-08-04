@@ -10,9 +10,9 @@
     @{
         foreach (var follower in Model)
         {
-            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@follower.FollowerProfile.UserName">
-                <img src="~/images/@follower.FollowerProfile.ProfileAvatarId" alt="" height="100px" width="100px"/>
-                <span class="item_name">@follower.FollowerProfile.UserName</span>
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@(follower.FollowerProfile!.UserName)">
+                <img src="~/images/@(follower.FollowerProfile!.ProfileAvatarId)" alt="" height="100px" width="100px"/>
+                <span class="item_name">@(follower.FollowerProfile!.UserName)</span>
             </a>
         }
     }

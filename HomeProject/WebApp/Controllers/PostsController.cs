@@ -46,10 +46,10 @@ namespace WebApp.Controllers
             }
 
             post.IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(User.UserId());
-            
+
             return View(post);
         }
-        
+
         /// <summary>
         /// Add profile to favorites
         /// </summary>
@@ -61,12 +61,12 @@ namespace WebApp.Controllers
         public async Task<IActionResult> AddToFavorite(Guid id, Post post)
         {
             var userId = User.UserId();
-            
+
             if (id != post.Id)
             {
                 return RedirectToAction(nameof(Details), post);
             }
-            
+
             var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
 
             if (favorite == null)
@@ -74,12 +74,12 @@ namespace WebApp.Controllers
                 _bll.Favorites.Create(post.Id, userId);
                 await _bll.SaveChangesAsync();
             }
-            
+
             post = await _bll.Posts.GetPostFull(post.Id);
-            
+
             return RedirectToAction(nameof(Details), post);
         }
-        
+
         /// <summary>
         /// Removes post from favorites
         /// </summary>
@@ -96,15 +96,15 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Details), post);
             }
-            
+
             var favorite = await _bll.Favorites.FindAsync(post.Id, userId);
-            
+
             if (favorite != null)
             {
                 await _bll.Favorites.RemoveAsync(post.Id, userId);
                 await _bll.SaveChangesAsync();
             }
-            
+
             post = await _bll.Posts.GetPostFull(post.Id);
 
             return RedirectToAction(nameof(Details), post);
@@ -120,7 +120,7 @@ namespace WebApp.Controllers
             {
                 ReturnUrl = returnUrl
             };
-            
+
             return View(post);
         }
 
@@ -131,26 +131,27 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequestSizeLimit(104857600)] 
+        [RequestSizeLimit(104857600)]
         public async Task<IActionResult> Create(Post post)
         {
             ModelState.Clear();
-            
+
             if (post.PostImage!.ImageFile == null)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
                 return View(post);
             }
-            
+
             var (imageModel, errors) = _bll.Images.ValidateImage(post.PostImage);
-            
-            if (errors.Length > 0)
+
+            if (errors.Length > 0 || imageModel == null)
             {
                 foreach (var error in errors)
                 {
                     ModelState.AddModelError(string.Empty, error);
-                    return View(post);
                 }
+
+                return View(post);
             }
 
             post.ProfileId = User.UserId();
@@ -158,14 +159,14 @@ namespace WebApp.Controllers
             if (TryValidateModel(post))
             {
                 post.Id = Guid.NewGuid();
-                
+
                 imageModel.Id = Guid.NewGuid();
                 imageModel.ImageType = ImageType.Post;
                 imageModel.ImageFor = post.Id;
 
                 post.PostImageId = imageModel.Id;
                 post.PostImage = null;
-                
+
                 _bll.Posts.Add(post);
                 await _bll.Images.AddPostAsync(post.Id, imageModel);
                 await _bll.SaveChangesAsync();
@@ -195,7 +196,7 @@ namespace WebApp.Controllers
             }
 
             post.ReturnUrl = returnUrl;
-            
+
             return View(post);
         }
 
@@ -207,17 +208,17 @@ namespace WebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequestSizeLimit(104857600)] 
+        [RequestSizeLimit(104857600)]
         public async Task<IActionResult> Edit(Guid id, Post post)
         {
             var record = await _bll.Posts.GetForUpdateAsync(id);
 
-            if (!ValidateUserAccess(record) || id != post.Id || post.PostImageId != post.PostImage.Id)
+            if (!ValidateUserAccess(record) || id != post.Id || post.PostImageId != post.PostImage!.Id)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorAccessDenied);
                 return View(post);
             }
-            
+
             if (post.PostImage!.ImageFile == null && post.PostImageId == null)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Images.Images.ImageRequired);
@@ -227,9 +228,9 @@ namespace WebApp.Controllers
             ModelState.Clear();
             post.ProfileId = User.UserId();
             post.PostPublicationDateTime = record.PostPublicationDateTime;
-            
+
             var imageModel = post.PostImage;
-            
+
             if (post.PostImage.ImageFile != null)
             {
                 var (_, errors) = _bll.Images.ValidateImage(post.PostImage);
@@ -242,7 +243,7 @@ namespace WebApp.Controllers
                     }
                 }
             }
-            
+
             if (post.PostImageId == null)
             {
                 imageModel.Id = Guid.NewGuid();
@@ -264,13 +265,13 @@ namespace WebApp.Controllers
                     imageModel.ImageUrl = imageRecord.ImageUrl;
                     imageModel.ImageFor = imageRecord.ImageFor;
                     imageModel.ImageType = imageRecord.ImageType;
-                    
+
                     await _bll.Images.UpdatePostAsync(post.Id, imageModel);
                 }
 
                 post.PostImageId = imageModel.Id;
                 post.PostImage = null;
-                
+
                 await _bll.Posts.UpdateAsync(post);
                 await _bll.SaveChangesAsync();
 
@@ -294,7 +295,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             post.ReturnUrl = returnUrl;
 
             return View(post);
@@ -311,7 +312,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid id, Post post)
         {
             var record = await _bll.Posts.GetForUpdateAsync(id);
-            
+
             if (!ValidateUserAccess(record))
             {
                 return NotFound();
@@ -319,7 +320,7 @@ namespace WebApp.Controllers
 
             _bll.Posts.Remove(id);
             await _bll.SaveChangesAsync();
-            
+
             if (post.ReturnUrl != null)
             {
                 return Redirect(post.ReturnUrl);

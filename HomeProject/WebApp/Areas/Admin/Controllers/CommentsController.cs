@@ -107,7 +107,6 @@ namespace WebApp.Areas.Admin.Controllers
         /// Get record editing page
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="returnUrl"></param>
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {

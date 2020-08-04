@@ -55,8 +55,8 @@ namespace WebApp.Controllers
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
 
             if (!(currentMember != null &&
-                  (message.ProfileId == User.UserId() && currentMember.ChatRole.CanWriteMessages ||
-                   currentMember.ChatRole.CanEditAllMessages)))
+                  (message.ProfileId == User.UserId() && currentMember.ChatRole!.CanWriteMessages ||
+                   currentMember.ChatRole!.CanEditAllMessages)))
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorAccessDenied);
                 return View(message);
@@ -90,8 +90,8 @@ namespace WebApp.Controllers
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
 
             if (!(currentMember != null &&
-                  (message.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
-                   currentMember.ChatRole.CanEditAllMessages)))
+                  (message.ProfileId == User.UserId() && currentMember.ChatRole!.CanEditMessages ||
+                   currentMember.ChatRole!.CanEditAllMessages)))
             {
                 return NotFound();
             }
@@ -120,8 +120,8 @@ namespace WebApp.Controllers
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
 
             if (!(currentMember != null &&
-                  (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
-                   currentMember.ChatRole.CanEditAllMessages)))
+                  (record.ProfileId == User.UserId() && currentMember.ChatRole!.CanEditMessages ||
+                   currentMember.ChatRole!.CanEditAllMessages)))
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorAccessDenied);
                 return View(message);
@@ -154,8 +154,8 @@ namespace WebApp.Controllers
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), record.ChatRoomId);
 
             if (!(currentMember != null &&
-                  (record.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
-                   currentMember.ChatRole.CanEditAllMessages)))
+                  (record.ProfileId == User.UserId() && currentMember.ChatRole!.CanEditMessages ||
+                   currentMember.ChatRole!.CanEditAllMessages)))
             {
                 return NotFound();
             }

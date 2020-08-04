@@ -9,7 +9,7 @@ namespace Contracts.BLL.App.Services
     {
         string RootPath { get; set; }
 
-        Tuple<Image, string[]> ValidateImage(Image imageModel);
+        Tuple<Image?, string[]> ValidateImage(Image imageModel);
         
         Task<Image> AddProfileAsync(Guid profileId, Image entity);
         Task<Image> UpdateProfileAsync(Guid profileId, Image entity);

@@ -9,7 +9,7 @@
 <hr>
 <div class="feed text-center">
     @{
-        if (Model.Posts.Count > 0)
+        if (Model.Posts!.Count > 0)
         {
             foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime).Take(20))
             {

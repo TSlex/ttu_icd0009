@@ -9,18 +9,21 @@
         <div class="col-md-4 text-center">
             <form asp-action="Edit" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                 <div class="form-group">
-                     <label asp-for="ChatMember.ChatRoleId" class="control-label">@Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ChatRole</label>
-                     <select asp-for="@Model.ChatMember.ChatRoleId" class="form-control">
-                         @{
-                             foreach (var chatRole in Model.ChatRoles)
-                             {
-                                 <option value="@chatRole.Id">@chatRole.RoleTitleValue</option>
-                             }
-                         }
-                     </select>
-                 </div>
-                
+                <div class="form-group">
+                    <label asp-for="ChatMember.ChatRoleId" class="control-label">@Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ChatRole</label>
+                    <select asp-for="@Model.ChatMember.ChatRoleId" class="form-control">
+                        @{
+                            if (Model.ChatRoles.Any())
+                            {
+                                foreach (var chatRole in Model.ChatRoles!)
+                                {
+                                    <option value="@chatRole.Id">@chatRole.RoleTitleValue</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+
                 <input type="hidden" asp-for="ChatMember.Id" name="Id" id="Id">
                 <input type="hidden" asp-for="ChatMember.Id">
 

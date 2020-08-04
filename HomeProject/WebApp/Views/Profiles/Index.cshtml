@@ -12,8 +12,8 @@
         .Where(rank => rank.Rank!.MinExperience <= Model.Experience)
         .Take(1).ToList()[0];
 
-    float currentExp = Model.Experience - (profileRank!.Rank.MinExperience >= 0 ? profileRank.Rank.MinExperience : 0);
-    float needExp = profileRank.Rank.MaxExperience - (profileRank!.Rank.MinExperience >= 0 ? profileRank.Rank.MinExperience : 0);
+    float currentExp = Model.Experience - (profileRank!.Rank!.MinExperience >= 0 ? profileRank.Rank.MinExperience : 0);
+    float needExp = profileRank.Rank.MaxExperience - (profileRank!.Rank!.MinExperience >= 0 ? profileRank.Rank.MinExperience : 0);
 
     var isAuthorized = SignInManager.IsSignedIn(User);
 
@@ -200,7 +200,7 @@
         </div>
     </div>
 </div>
-@if (!(Model.ProfileGifts.Count == 0 && isAuthorized && Model.Id == User.UserId()))
+@if (!(Model.ProfileGifts!.Count == 0 && isAuthorized && Model.Id == User.UserId()))
 {
     <hr>
     <div class="profile_gift_section">
@@ -234,7 +234,7 @@
 }
 <hr>
 <div class="posts_section justify-content-center">
-    @if (Model.Posts.Count > 0)
+    @if (Model.Posts!.Count > 0)
     {
         <div class="post_row card-columns">
             @foreach (var post in Model.Posts.OrderByDescending(post => post.PostPublicationDateTime))

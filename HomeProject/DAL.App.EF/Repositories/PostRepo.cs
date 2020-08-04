@@ -24,6 +24,7 @@ namespace DAL.Repositories
             _imageMapper = new BaseDALMapper<Image, DAL.App.DTO.Image>();
         }
 
+#pragma warning disable 8604
         public override async Task<Post> FindAdminAsync(Guid id)
         {
             var raw = await RepoDbContext.Posts
@@ -46,7 +47,8 @@ namespace DAL.Repositories
 
             return Mapper.Map(raw?._post);
         }
-
+#pragma warning restore 8604
+        
         public override async Task<IEnumerable<Post>> AllAsync()
         {
             return (await RepoDbContext.Posts
@@ -77,7 +79,7 @@ namespace DAL.Repositories
                     PostTitle = post.PostTitle,
                     PostDescription = post.PostDescription,
                     PostImageId = post.PostImageId,
-                    PostImage = _imageMapper.Map(post.PostImage),
+                    PostImage = post.PostImage != null ? _imageMapper.Map(post.PostImage) : null,
                     PostPublicationDateTime = post.PostPublicationDateTime,
                     PostCommentsCount =
                         post.Comments.Count(comment => comment.DeletedAt == null && comment.MasterId == null),

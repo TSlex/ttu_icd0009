@@ -81,7 +81,7 @@
                             <span class="comment_datetime">[@comment.CommentDateTime.ToString("dd MMMM")]</span>
                         }
                     }
-                    <a class="btn-link" asp-action="Index" asp-controller="Profiles" asp-route-username="@comment.Profile.UserName">
+                    <a class="btn-link" asp-action="Index" asp-controller="Profiles" asp-route-username="@(comment.Profile!.UserName)">
                         <span class="comment_username">&#64;@comment.Profile!.UserName: </span>
                     </a>
                     <span class="comment_value">@comment.CommentValue</span>

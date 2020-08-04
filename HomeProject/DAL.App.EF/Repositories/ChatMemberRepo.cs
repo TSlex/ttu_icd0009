@@ -53,8 +53,8 @@ namespace DAL.Repositories
         {
             return RepoDbSet
                 .Include(member => member.ChatRole)
-                .ThenInclude(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+                .ThenInclude(role => role!.RoleTitleValue)
+                .ThenInclude(s => s!.Translations)
                 .Include(member => member.Profile)
                 .AsQueryable();
         }

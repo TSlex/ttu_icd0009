@@ -34,7 +34,7 @@ namespace DAL.Repositories
 
             record.LastMessageValue = raw.lastMessage.MessageValue;
             record.LastMessageDateTime = raw.lastMessage.MessageDateTime;
-            record.ChatRoomImageId = raw.lastMessage.Profile.ProfileAvatarId;
+            record.ChatRoomImageId = raw.lastMessage.Profile!.ProfileAvatarId;
 
             return record;
         }
@@ -44,11 +44,12 @@ namespace DAL.Repositories
             return Mapper.Map(await GetQuery()
                 .Include(room => room.ChatMembers)
                 .ThenInclude(member => member.ChatRole)
-                .ThenInclude(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+                .ThenInclude(role => role!.RoleTitleValue)
+                .ThenInclude(s => s!.Translations)
                 .FirstOrDefaultAsync(room => room.Id == id));
         }
 
+#pragma warning disable 8604
         public async Task<ChatRoom> GetRoomWithUserAsync(Guid userId, Guid requesterId)
         {
             var chatRoom = await RepoDbContext.ChatRooms
@@ -85,6 +86,7 @@ namespace DAL.Repositories
 
             return Mapper.Map(chatRoom);
         }
+#pragma warning restore 8604
 
         public async Task<IEnumerable<ChatRoom>> AllAsync(Guid userId)
         {

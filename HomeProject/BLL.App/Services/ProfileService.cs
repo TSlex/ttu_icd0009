@@ -78,7 +78,7 @@ namespace BLL.App.Services
         {
             var profile = await ServiceRepository.GetProfile(id, requesterId);
 
-            if (profile.ProfileRanks.Count <= 0)
+            if (profile.ProfileRanks!.Count <= 0)
             {
                 var rank = new DAL.App.DTO.ProfileRank()
                 {

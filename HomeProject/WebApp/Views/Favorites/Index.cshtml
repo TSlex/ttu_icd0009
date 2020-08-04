@@ -10,8 +10,8 @@
     @{
         foreach (var favorite in Model)
         {
-            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@favorite.Profile.UserName">
-                <img src="/images/@favorite.Profile.ProfileAvatarId" alt="gift" height="100px" width="100px"/>
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@(favorite.Profile!.UserName)">
+                <img src="/images/@(favorite.Profile!.ProfileAvatarId)" alt="gift" height="100px" width="100px"/>
                 <span class="item_name">@favorite.Profile.UserName</span>
             </a>
         }

@@ -53,7 +53,7 @@ namespace DAL.Repositories
             var domainEntity = await GetQuery()
                 .FirstOrDefaultAsync(rank => rank.Id == entity.Id);
             
-            domainEntity.GiftName.SetTranslation(entity.GiftName);
+            domainEntity.GiftName!.SetTranslation(entity.GiftName!);
 
             domainEntity.Price = entity.Price;
             domainEntity.GiftCode = entity.GiftCode;

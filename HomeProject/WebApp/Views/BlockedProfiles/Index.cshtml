@@ -10,7 +10,7 @@
     @{
         foreach (var profile in Model)
         {
-            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@profile.BProfile.UserName">
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@(profile.BProfile!.UserName)">
 
                 <form asp-action="Delete">
                     <button type="submit" class="item_controls btn-link">
@@ -19,7 +19,7 @@
                     <input type="hidden" asp-for="@profile.Id" name="Id">
                 </form>
                 
-                <img src="images/@profile.BProfile.ProfileAvatarId" alt="gift" height="100px" width="100px"/>
+                <img src="images/@(profile.BProfile!.ProfileAvatarId)" alt="gift" height="100px" width="100px"/>
 
                 <span class="item_name">@profile.BProfile.UserName</span>
             </a>

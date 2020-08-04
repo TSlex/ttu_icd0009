@@ -22,14 +22,14 @@
                     {
                         <li class="nav-item mt-3">
                             <a class="btn-link" asp-action="Details" asp-route-id="@item.Id">
-                                @if (item.Messages.Count > 0)
+                                @if (item.Messages!.Count > 0)
                                 {
                                     var message = item.Messages.First();
                                     
                                     <div class="message text-center" style="width: 300px !important; max-width: unset; margin-top: 25px">
                                         <div class="message_profile" style="width: 280px;">
                                             <div class="message_avatar">
-                                                <img src="/images/@message.Profile.ProfileAvatarId" alt="profile" height="50px" width="50px"/>
+                                                <img src="/images/@(message.Profile!.ProfileAvatarId)" alt="profile" height="50px" width="50px"/>
                                             </div>
                                             <div class="profile_name"
                                                   style="color: black !important; margin: auto; max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">

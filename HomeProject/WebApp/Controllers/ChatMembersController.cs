@@ -36,7 +36,7 @@ namespace WebApp.Controllers
         {
             var members = await _bll.ChatMembers.RoomAllAsync(chatRoomId);
 
-            if (!members.Select(member => member.Profile.UserName).Contains(User.Identity.Name))
+            if (!members.Select(member => member.Profile!.UserName).Contains(User.Identity.Name))
             {
                 return NotFound();
             }
@@ -76,7 +76,7 @@ namespace WebApp.Controllers
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
-            if (currentMember == null || !currentMember.ChatRole.CanEditMembers)
+            if (currentMember == null || !currentMember.ChatRole!.CanEditMembers)
             {
                 return NotFound();
             }
@@ -108,14 +108,12 @@ namespace WebApp.Controllers
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
                 
-                model.ChatMember = member;
-                model.ChatRoles = chatRoles;
                 return View(model);
             }
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), member.ChatRoomId);
 
-            if (currentMember == null || !currentMember.ChatRole.CanEditMembers)
+            if (currentMember == null || !currentMember.ChatRole!.CanEditMembers)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
                 
@@ -124,7 +122,7 @@ namespace WebApp.Controllers
                 return View(model);
             }
 
-            if (member.ChatRole.CanEditMembers)
+            if (member.ChatRole!.CanEditMembers)
             {
                 ModelState.AddModelError(string.Empty,
                     Resourses.BLL.App.DTO.ChatMembers.ChatMembers.ErrorCreatorDemote);
@@ -177,7 +175,7 @@ namespace WebApp.Controllers
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
-            if (!currentMember.ChatRole.CanEditMembers)
+            if (!currentMember.ChatRole!.CanEditMembers)
             {
                 return NotFound();
             }

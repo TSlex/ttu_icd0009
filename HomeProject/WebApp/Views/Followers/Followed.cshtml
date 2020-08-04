@@ -10,7 +10,7 @@
     @{
         foreach (var follower in Model)
         {
-            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@follower.Profile.UserName">
+            <a class="gallery_item" asp-controller="Profiles" asp-action="Index" asp-route-username="@(follower.Profile!.UserName)">
 
                 <form asp-action="Delete">
                     <button type="submit" class="item_controls btn-link">
@@ -19,7 +19,7 @@
                     <input type="hidden" asp-for="@follower.Id" name="Id">
                 </form>
 
-                <img src="~/images/@follower.Profile.ProfileAvatarId" alt="" height="100px" width="100px"/>
+                <img src="~/images/@(follower.Profile!.ProfileAvatarId)" alt="" height="100px" width="100px"/>
                 <span class="item_name">@follower.Profile.UserName</span>
             </a>
         }

@@ -97,12 +97,13 @@ namespace WebApp.Areas.Admin.Controllers
 
             var (imageModel, errors) = _bll.Images.ValidateImage(gift.GiftImage);
 
-            if (errors.Length > 0)
+            if (errors.Length > 0 || imageModel == null)
             {
                 foreach (var error in errors)
                 {
                     ModelState.AddModelError(string.Empty, error);
                 }
+                return View(gift);
             }
 
             if (TryValidateModel(gift))

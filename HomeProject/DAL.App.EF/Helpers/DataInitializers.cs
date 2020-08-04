@@ -24,7 +24,7 @@ namespace DAL.Helpers
             return context.Database.EnsureDeleted();
         }
 
-        public static async Task SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
+        public static void SeedIdentity(UserManager<Profile> userManager, RoleManager<MRole> roleManager)
         {
             var roleNames = new[]
             {

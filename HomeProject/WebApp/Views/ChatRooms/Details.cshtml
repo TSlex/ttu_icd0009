@@ -20,6 +20,7 @@
         }
         catch (Exception exception)
         {
+            Console.WriteLine(exception.Message);
             return false;
         }
     }
@@ -48,8 +49,8 @@
                     </a>
 
                     @{
-                        var currentMember = Model.ChatMembers.FirstOrDefault(member => member.ProfileId == User.UserId());
-                        if (currentMember != null && currentMember.ChatRole.CanRenameRoom)
+                        var currentMember = Model.ChatMembers!.FirstOrDefault(member => member.ProfileId == User.UserId());
+                        if (currentMember != null && currentMember.ChatRole!.CanRenameRoom)
                         {
                             <a class="btn-link" asp-action="Edit" asp-controller="ChatRooms" asp-route-id="@Model.Id">
                                 @Resourses.Views.ChatRooms.ChatRooms.RenameNav
@@ -76,8 +77,8 @@
 
                     @{
                         if (currentMember != null &&
-                            (item.ProfileId == User.UserId() && currentMember.ChatRole.CanEditMessages ||
-                             currentMember.ChatRole.CanEditAllMessages))
+                            (item.ProfileId == User.UserId() && currentMember.ChatRole!.CanEditMessages ||
+                             currentMember.ChatRole!.CanEditAllMessages))
                         {
                             <div class="message_controls">
                                 <a class="fa fa-edit" asp-action="Edit" asp-controller="Messages" asp-route-id="@item.Id"></a>
@@ -90,9 +91,9 @@
                         }
                     }
 
-                    <a class="message_profile" asp-controller="Profiles" asp-action="Index" asp-route-username="@item.Profile.UserName">
+                    <a class="message_profile" asp-controller="Profiles" asp-action="Index" asp-route-username="@(item.Profile!.UserName)">
                         <div class="message_avatar">
-                            <img src="/images/@item.Profile.ProfileAvatarId" alt="profile" height="50px" width="50px"/>
+                            <img src="/images/@(item.Profile!.ProfileAvatarId)" alt="profile" height="50px" width="50px"/>
                         </div>
                         <span class="profile_name" style="color: black !important;">@item.Profile.UserName</span>
                     </a>
@@ -115,7 +116,7 @@
     </div>
     <div class="chat_footer d-flex justify-content-center">
         @{
-            if (currentMember != null && currentMember.ChatRole.CanWriteMessages)
+            if (currentMember != null && currentMember.ChatRole!.CanWriteMessages)
             {
                 <a asp-action="Create" asp-controller="Messages" asp-route-chatRoomId="@Model.Id"
                    class="btn btn-primary">

@@ -24,14 +24,14 @@ namespace BLL.App.Services
         {
         }
 
-        public Tuple<Image, string[]> ValidateImage(Image imageModel)
+        public Tuple<Image?, string[]> ValidateImage(Image imageModel)
         {
             var errors = new List<string>();
 
             if (imageModel.ImageFile == null)
             {
                 errors.Add(Resourses.BLL.App.DTO.Images.Images.ImageRequired);
-                return new Tuple<Image, string[]>(null, errors.ToArray());
+                return new Tuple<Image?, string[]>(null, errors.ToArray());
             }
 
             var extension = Path.GetExtension(imageModel.ImageFile!.FileName)?.ToLower();
@@ -39,7 +39,7 @@ namespace BLL.App.Services
             if (!(extension == ".png" || extension == ".jpg" || extension == ".jpeg"))
             {
                 errors.Add(Resourses.BLL.App.DTO.Images.Images.ExtensionsSupported);
-                return new Tuple<Image, string[]>(null, errors.ToArray());
+                return new Tuple<Image?, string[]>(null, errors.ToArray());
             }
 
             using (var image = System.Drawing.Image.FromStream(imageModel.ImageFile.OpenReadStream()))
@@ -47,21 +47,21 @@ namespace BLL.App.Services
                 if (image.Height > 4000 || image.Width > 4000)
                 {
                     errors.Add(Resourses.BLL.App.DTO.Images.Images.ErrorMaxImageResolution);
-                    return new Tuple<Image, string[]>(null, errors.ToArray());
+                    return new Tuple<Image?, string[]>(null, errors.ToArray());
                 }
 
                 var ratio = image.Height * 1.0 / image.Width;
                 if (ratio < 0.1 || 10 < ratio)
                 {
                     errors.Add(Resourses.BLL.App.DTO.Images.Images.ErrorImageSupportedRatio);
-                    return new Tuple<Image, string[]>(null, errors.ToArray());
+                    return new Tuple<Image?, string[]>(null, errors.ToArray());
                 }
 
                 imageModel.HeightPx = image.Height;
                 imageModel.WidthPx = image.Width;
             }
 
-            return new Tuple<Image, string[]>(imageModel, errors.ToArray());
+            return new Tuple<Image?, string[]>(imageModel, errors.ToArray());
         }
 
         public async Task<Image> FindProfileAsync(Guid userId)

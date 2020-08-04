@@ -147,13 +147,13 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(new RankDTO()
             {
-                MaxExperience = profileRank.Rank.MaxExperience,
-                MinExperience = profileRank.Rank.MinExperience,
-                RankColor = profileRank.Rank.RankColor,
-                RankDescription = profileRank.Rank.RankDescription,
-                RankIcon = profileRank.Rank.RankIcon,
-                RankTitle = profileRank.Rank.RankTitle,
-                RankTextColor = profileRank.Rank.RankTextColor
+                MaxExperience = profileRank.Rank!.MaxExperience,
+                MinExperience = profileRank.Rank!.MinExperience,
+                RankColor = profileRank.Rank!.RankColor,
+                RankDescription = profileRank.Rank!.RankDescription,
+                RankIcon = profileRank.Rank!.RankIcon,
+                RankTitle = profileRank.Rank!.RankTitle,
+                RankTextColor = profileRank.Rank!.RankTextColor
             });
         }
     }

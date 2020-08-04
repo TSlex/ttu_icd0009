@@ -102,8 +102,8 @@ namespace WebApp.ApiControllers._1._0
                     gift => new ProfileGiftDTO()
                     {
                         Id = gift.Id,
-                        GiftName = gift.Gift.GiftName,
-                        Username = gift.Profile.UserName,
+                        GiftName = gift.Gift!.GiftName,
+                        Username = gift.Profile!.UserName,
                         FromUsername = gift.FromProfile?.UserName,
                         Message = gift.Message,
                         Price = gift.Price,
@@ -152,7 +152,10 @@ namespace WebApp.ApiControllers._1._0
         public async Task<IActionResult> SendGiftToUser(string username, ProfileGiftCreateDTO profileGift)
         {
             var user = await _bll.Profiles.FindByUsernameAsync(username);
-            var fromUser = await _bll.Profiles.FindByUsernameAsync(profileGift.FromUsername);
+
+            var fromUser = profileGift.FromUsername != null
+                ? await _bll.Profiles.FindByUsernameAsync(profileGift.FromUsername)
+                : null;
 
             if (user == null || user.UserName != profileGift.Username)
             {
@@ -212,9 +215,9 @@ namespace WebApp.ApiControllers._1._0
             return Ok(new ProfileGiftDTO
             {
                 Id = profileGift.Id,
-                GiftName = profileGift.Gift.GiftName,
-                Username = profileGift.Profile.UserName,
-                FromUsername = profileGift.FromProfile.UserName,
+                GiftName = profileGift.Gift!.GiftName,
+                Username = profileGift.Profile!.UserName,
+                FromUsername = profileGift.FromProfile?.UserName,
                 Message = profileGift.Message,
                 Price = profileGift.Price,
                 GiftDateTime = profileGift.GiftDateTime,

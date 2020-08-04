@@ -18,6 +18,7 @@ namespace BLL.App.Services
         {
         }
 
+#pragma warning disable 8603
         public async Task<Post> GetPostFull(Guid id)
         {
             //strange asp error. he tries execute function twice with empty id
@@ -29,11 +30,12 @@ namespace BLL.App.Services
                 .Where(comment => comment.DeletedAt == null && comment.MasterId == null)
                 .ToList();
             
-            post.PostCommentsCount = post.Comments.Count;
-            post.PostFavoritesCount = post.Favorites.Count;
+            post.PostCommentsCount = post.Comments!.Count;
+            post.PostFavoritesCount = post.Favorites!.Count;
 
             return post;
         }
+#pragma warning restore 8603
 
         public async Task<Post> GetNoIncludes(Guid id, Guid? requesterId)
         {

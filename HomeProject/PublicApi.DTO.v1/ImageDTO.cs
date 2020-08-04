@@ -78,7 +78,7 @@ namespace PublicApi.DTO.v1
         [Display(Name = nameof(ImageFile), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
             ErrorMessageResourceName = "ErrorMessage_Required")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; } = default!;
 
         [Display(Name = nameof(ImageType), ResourceType = typeof(Resourses.BLL.App.DTO.Images.Images))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),

@@ -11,10 +11,10 @@
     @{
         foreach (var chatMember in Model)
         {
-            <a class="gallery_item" style="width: 200px; height: 200px;" asp-controller="Profiles" asp-action="Index" asp-route-username="@chatMember.Profile.UserName">
+            <a class="gallery_item" style="width: 200px; height: 200px;" asp-controller="Profiles" asp-action="Index" asp-route-username="@(chatMember.Profile!.UserName)">
                 @{
-                    var currentMember = Model.FirstOrDefault(member => member.Profile.UserName == User.Identity.Name);
-                    if (currentMember != null && currentMember.ChatRole.CanEditMembers && chatMember.ProfileId != currentMember.ProfileId)
+                    var currentMember = Model.FirstOrDefault(member => member.Profile!.UserName == User.Identity.Name);
+                    if (currentMember != null && currentMember.ChatRole!.CanEditMembers && chatMember.ProfileId != currentMember.ProfileId)
                     {
                         <form asp-action="Edit" method="get">
                             <button type="submit" class="item_controls btn-link" style="right: 0; left: initial">
@@ -32,9 +32,9 @@
                     }
                 }
 
-                <img src="/images/@chatMember.Profile.ProfileAvatarId" alt="gift" height="200px" width="200px"/>
-                <span class="item_name" style="bottom: 15px">@chatMember.ChatRole.RoleTitleValue</span>
-                <span class="item_name">@chatMember.Profile.UserName</span>
+                <img src="/images/@(chatMember.Profile!.ProfileAvatarId)" alt="gift" height="200px" width="200px"/>
+                <span class="item_name" style="bottom: 15px">@(chatMember.ChatRole!.RoleTitleValue)</span>
+                <span class="item_name">@(chatMember.Profile!.UserName)</span>
             </a>
         }
     }

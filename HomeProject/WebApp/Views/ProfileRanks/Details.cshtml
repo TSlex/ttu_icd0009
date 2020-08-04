@@ -1,9 +1,9 @@
 ﻿@model BLL.App.DTO.ProfileRank
 
 @{
-    ViewData["Title"] = Model.Rank.RankTitle;
+    ViewData["Title"] = Model.Rank!.RankTitle;
 
-    float currentExp = Model.Profile.Experience - (Model!.Rank.MinExperience >= 0 ? Model.Rank.MinExperience : 0);
+    float currentExp = Model.Profile!.Experience - (Model!.Rank.MinExperience >= 0 ? Model.Rank.MinExperience : 0);
     float needExp = Model.Rank.MaxExperience - (Model!.Rank.MinExperience >= 0 ? Model.Rank.MinExperience : 0);
 
     var progress = Math.Round(currentExp / needExp, 3) * 100;

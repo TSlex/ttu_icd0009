@@ -142,12 +142,12 @@ namespace DAL.Repositories
                             GiftDateTime = gift.GiftDateTime,
                             Gift = new Gift()
                             {
-                                Id = gift.Gift.Id,
+                                Id = gift.Gift!.Id,
                                 GiftImageId = gift.Gift.GiftImageId,
                                 GiftName = new LangString()
                                     {
-                                        Id = gift.Gift.GiftName.Id,
-                                        Translations = gift.Gift.GiftName.Translations,
+                                        Id = gift.Gift.GiftName!.Id,
+                                        Translations = gift.Gift.GiftName!.Translations,
                                     }
                                     .ToString(),
                             }
@@ -156,34 +156,34 @@ namespace DAL.Repositories
                         .Take(5)
                         .ToList(),
                     ProfileRanks = profile.ProfileRanks
-                        .Where(rank => rank.DeletedAt == null && rank.Rank.MinExperience <= profile.Experience)
+                        .Where(rank => rank.DeletedAt == null && rank.Rank!.MinExperience <= profile.Experience)
                         .Select(rank => new ProfileRank()
                         {
                             Id = rank.Id,
                             Rank = new Rank()
                             {
-                                Id = rank.Rank.Id,
-                                MaxExperience = rank.Rank.MaxExperience,
-                                MinExperience = rank.Rank.MinExperience,
-                                RankCode = rank.Rank.RankCode,
-                                RankColor = rank.Rank.RankColor,
+                                Id = rank.Rank!.Id,
+                                MaxExperience = rank.Rank!.MaxExperience,
+                                MinExperience = rank.Rank!.MinExperience,
+                                RankCode = rank.Rank!.RankCode,
+                                RankColor = rank.Rank!.RankColor,
                                 RankDescription = new LangString()
                                     {
-                                        Id = rank.Rank.RankDescription.Id,
-                                        Translations = rank.Rank.RankDescription.Translations,
+                                        Id = rank.Rank.RankDescription!.Id,
+                                        Translations = rank.Rank.RankDescription!.Translations,
                                     }
                                     .ToString(),
                                 RankIcon = rank.Rank.RankIcon,
                                 RankTitle = new LangString()
                                     {
-                                        Id = rank.Rank.RankTitle.Id,
-                                        Translations = rank.Rank.RankTitle.Translations,
+                                        Id = rank.Rank.RankTitle!.Id,
+                                        Translations = rank.Rank.RankTitle!.Translations,
                                     }
                                     .ToString(),
                                 RankTextColor = rank.Rank.RankTextColor
                             }
                         })
-                        .OrderByDescending(rank => rank.Rank.MaxExperience)
+                        .OrderByDescending(rank => rank.Rank!.MaxExperience)
                         .Take(1)
                         .ToList(),
                     IsUserBlocked = requesterId != null && RepoDbContext.BlockedProfiles
@@ -228,8 +228,8 @@ namespace DAL.Repositories
                         Id = follower.Id,
                         Profile = new Profile()
                         {
-                            UserName = follower.Profile.UserName,
-                            ProfileAvatarId = follower.Profile.ProfileAvatarId,
+                            UserName = follower.Profile!.UserName,
+                            ProfileAvatarId = follower.Profile!.ProfileAvatarId,
                         }
                     }).ToList(),
                     Followers = profile.Followers.Select(follower => new Follower()
@@ -237,8 +237,8 @@ namespace DAL.Repositories
                         Id = follower.Id,
                         FollowerProfile = new Profile()
                         {
-                            UserName = follower.FollowerProfile.UserName,
-                            ProfileAvatarId = follower.FollowerProfile.ProfileAvatarId,
+                            UserName = follower.FollowerProfile!.UserName,
+                            ProfileAvatarId = follower.FollowerProfile!.ProfileAvatarId,
                         }
                     }).ToList()
                 })
@@ -264,8 +264,8 @@ namespace DAL.Repositories
                     Followers = profile.Followers
                         .Select(follower => _followerMapper.Map(follower))
                         .ToList(),
-                    FollowedCount = profile.Followed.Count,
-                    FollowersCount = profile.Followers.Count,
+                    FollowedCount = profile.Followed!.Count,
+                    FollowersCount = profile.Followers!.Count,
                     PostsCount = profile.Posts.Count(post => post.DeletedAt == null && post.MasterId == null),
                     IsUserBlocked = requesterId != null && RepoDbContext.BlockedProfiles
                                         .Any(blockedProfile => blockedProfile.ProfileId == profile.Id

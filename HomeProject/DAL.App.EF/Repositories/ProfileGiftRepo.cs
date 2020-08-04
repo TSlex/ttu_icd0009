@@ -74,8 +74,8 @@ namespace DAL.Repositories
             return baseQuery
                 .Where(gift => gift.DeletedAt == null)
                 .Include(gift => gift.Gift)
-                .ThenInclude(gift => gift.GiftName)
-                .ThenInclude(s => s.Translations)
+                .ThenInclude(gift => gift!.GiftName)
+                .ThenInclude(s => s!.Translations)
                 .Include(gift => gift.Profile)
                 .Include(gift => gift.FromProfile)
                 .AsQueryable();

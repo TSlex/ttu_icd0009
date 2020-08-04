@@ -98,7 +98,7 @@ namespace WebApp.Controllers
             var chatRoom = await _bll.ChatRooms.FindAsync(id);
             var member = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), id);
 
-            if (chatRoom == null || member == null || !member.ChatRole.CanRenameRoom)
+            if (chatRoom == null || member == null || !member.ChatRole!.CanRenameRoom)
             {
                 return NotFound();
             }
@@ -119,7 +119,7 @@ namespace WebApp.Controllers
             var record = await _bll.ChatRooms.GetForUpdateAsync(id);
             var member = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatRoom.Id);
 
-            if (record == null || id != chatRoom.Id || member == null || !member.ChatRole.CanRenameRoom)
+            if (record == null || id != chatRoom.Id || member == null || !member.ChatRole!.CanRenameRoom)
             {
                 ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
                 return View(chatRoom);

@@ -57,7 +57,7 @@ namespace DAL.Repositories
             var domainEntity = await GetQuery()
                 .FirstOrDefaultAsync((role => role.Id == entity.Id));
             
-            domainEntity!.RoleTitleValue.SetTranslation(entity.RoleTitleValue);
+            domainEntity!.RoleTitleValue!.SetTranslation(entity.RoleTitleValue!);
 
             domainEntity.RoleTitle = entity.RoleTitle;
 
@@ -92,8 +92,8 @@ namespace DAL.Repositories
         private IQueryable<Domain.ChatRole> GetQuery()
         {
             return RepoDbSet
-                .Include(role => role.RoleTitleValue)
-                .ThenInclude(s => s.Translations)
+                .Include(role => role.RoleTitleValue!)
+                .ThenInclude(s => s.Translations!)
                 .AsQueryable();
         }
     }

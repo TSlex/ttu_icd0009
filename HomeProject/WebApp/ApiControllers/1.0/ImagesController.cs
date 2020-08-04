@@ -270,7 +270,7 @@ namespace WebApp.ApiControllers._1._0
                         await _bll.Images.UpdateProfileAsync(User.UserId(), record);
                         break;
                     case ImageType.Post:
-                        await _bll.Images.UpdatePostAsync((Guid) record.ImageFor, record);
+                        await _bll.Images.UpdatePostAsync((record.ImageFor ?? Guid.Empty), record);
                         break;
                     default:
                         return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));

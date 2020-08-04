@@ -10,7 +10,7 @@ namespace PublicApi.DTO.v1.Identity
             ErrorMessageResourceName = "ErrorMessage_MaxLength")]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
             ErrorMessageResourceName = "ErrorMessage_Required")]
-        public string Username { set; get; }
+        public string Username { set; get; } = default!;
 
         [Display(Name = nameof(ProfileFullName), ResourceType = typeof(Resourses.BLL.App.DTO.Profiles.Profiles))]
         [MinLength(1, ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),

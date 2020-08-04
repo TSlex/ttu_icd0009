@@ -74,8 +74,8 @@ namespace DAL.Repositories
             var domainEntity = await GetQuery()
                 .FirstOrDefaultAsync(rank => rank.Id == entity.Id);
 
-            domainEntity.RankTitle.SetTranslation(entity.RankTitle);
-            domainEntity.RankDescription.SetTranslation(entity.RankDescription);
+            domainEntity.RankTitle!.SetTranslation(entity.RankTitle!);
+            domainEntity.RankDescription!.SetTranslation(entity.RankDescription!);
 
             domainEntity.MaxExperience = entity.MaxExperience;
             domainEntity.MinExperience = entity.MinExperience;
