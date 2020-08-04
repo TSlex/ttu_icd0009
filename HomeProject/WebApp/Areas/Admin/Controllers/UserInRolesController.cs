@@ -26,7 +26,8 @@ namespace WebApp.Areas.Admin.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="bll"></param>
+        /// <param name="roleManager"></param>
+        /// <param name="userManager"></param>
         public UserInRolesController(RoleManager<MRole> roleManager, UserManager<Profile> userManager)
         {
             _roleManager = roleManager;
@@ -78,7 +79,8 @@ namespace WebApp.Areas.Admin.Controllers
 
                 if (user == null || role == null)
                 {
-                    return NotFound();
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                    return View(model);
                 }
 
                 await _userManager.AddToRoleAsync(user, role.Name);
@@ -104,6 +106,11 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             if (user.UserName.ToLower().Contains("admin") && role.Name.ToLower().Contains("admin"))
+            {
+                return BadRequest();
+            }
+
+            if (user.UserName.ToLower().Contains("root"))
             {
                 return BadRequest();
             }
@@ -142,12 +149,20 @@ namespace WebApp.Areas.Admin.Controllers
 
                 if (user == null || oldRole == null || newRole == null)
                 {
-                    return NotFound();
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                    return View(model);
                 }
 
                 if (user.UserName.ToLower().Contains("admin") && oldRole.Name.ToLower().Contains("admin"))
                 {
-                    return BadRequest();
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                    return View(model);
+                }
+
+                if (user.UserName.ToLower().Contains("root"))
+                {
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorBadData);
+                    return View(model);
                 }
 
                 if ((await _userManager.GetRolesAsync(user)).Contains(oldRole.Name))
@@ -178,6 +193,11 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             if (user.UserName.ToLower().Contains("admin") && role.Name.ToLower().Contains("admin"))
+            {
+                return BadRequest();
+            }
+
+            if (user.UserName.ToLower().Contains("root"))
             {
                 return BadRequest();
             }

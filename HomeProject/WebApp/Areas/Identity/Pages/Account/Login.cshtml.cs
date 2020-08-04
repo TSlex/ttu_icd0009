@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Domain;
+using Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -20,17 +21,18 @@ namespace WebApp.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly RoleManager<MRole> _roleManager;
         private readonly UserManager<Profile> _userManager;
         private readonly SignInManager<Profile> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IAppBLL _bll;
 
-        public LoginModel(SignInManager<Profile> signInManager,
-            ILogger<LoginModel> logger,
-            UserManager<Profile> userManager, IAppBLL bll)
+        public LoginModel(SignInManager<Profile> signInManager, ILogger<LoginModel> logger,
+            UserManager<Profile> userManager, IAppBLL bll, RoleManager<MRole> roleManager)
         {
             _userManager = userManager;
             _bll = bll;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -84,7 +86,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
 
             if (ModelState.IsValid)
             {
@@ -93,10 +95,17 @@ namespace WebApp.Areas.Identity.Pages.Account
                 // var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-
+                
                 if (user == null)
                 {
-//                    return NotFound($"Unable to load user with Email '{Input.Email}'.");
+                    ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorUserNotFound);
+                    return Page();
+                }
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                if (!userRoles.Select(role => role.ToLower()).Contains("admin") && user.DeletedAt != null)
+                {
                     ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Common.ErrorUserNotFound);
                     return Page();
                 }

@@ -84,6 +84,13 @@ namespace WebApp.ApiControllers._1._0.Identity
                 return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
             }
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            if (!userRoles.Select(role => role.ToLower()).Contains("admin") && user.DeletedAt != null)
+            {
+                return NotFound(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorUserNotFound));
+            }
+
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (result.Succeeded)
@@ -162,7 +169,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                     {
                         _logger.LogWarning("User role - \"User\" was not found!");
                     }
-                    
+
                     return Ok(new OkResponseDTO {Status = "OK"});
                 }
 
@@ -256,7 +263,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
 
-            return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.ProfileDataUpdateStatusSuccess});
+            return Ok(new OkResponseDTO() {Status = Resourses.Views.Identity.Identity.ProfileDataUpdateStatusSuccess});
         }
 
         /// <summary>
@@ -289,10 +296,10 @@ namespace WebApp.ApiControllers._1._0.Identity
             }
             else
             {
-                return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.EmailUpdateStatusUnchanged});
+                return Ok(new OkResponseDTO() {Status = Resourses.Views.Identity.Identity.EmailUpdateStatusUnchanged});
             }
 
-            return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.EmailUpdateStatusSuccess});
+            return Ok(new OkResponseDTO() {Status = Resourses.Views.Identity.Identity.EmailUpdateStatusSuccess});
         }
 
         /// <summary>
@@ -320,7 +327,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
 
-            return Ok(new OkResponseDTO(){Status = Resourses.Views.Identity.Identity.PasswordDataUpdateStatusSuccess});
+            return Ok(new OkResponseDTO() {Status = Resourses.Views.Identity.Identity.PasswordDataUpdateStatusSuccess});
         }
 
         /// <summary>
@@ -352,13 +359,18 @@ namespace WebApp.ApiControllers._1._0.Identity
                 }
             }
 
-            var profile = await _bll.Profiles.GetForUpdateAsync(user.Id);
-            _bll.Profiles.Remove(profile);
-            await _bll.SaveChangesAsync();
+            _bll.Profiles.Remove(user.Id);
+
+            var result = await _bll.Profiles.GetForUpdateAsync(user.Id);
+
+            if (result.DeletedAt == null)
+            {
+                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{user.Id}'.");
+            }
 
             await _signInManager.SignOutAsync();
 
-            return Ok(new OkResponseDTO() {Status = "OK"});
+            return Ok(new OkResponseDTO {Status = "OK"});
         }
     }
 }
