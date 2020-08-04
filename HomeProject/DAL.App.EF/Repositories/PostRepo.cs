@@ -19,9 +19,9 @@ namespace DAL.Repositories
         private readonly BaseDALMapper<Image, DAL.App.DTO.Image> _imageMapper;
 
         public PostRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new PostMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Post, Post>())
         {
-            _imageMapper = new BaseDALMapper<Image, DAL.App.DTO.Image>();
+            _imageMapper = new UniversalDALMapper<Image, DAL.App.DTO.Image>();
         }
 
 #pragma warning disable 8604

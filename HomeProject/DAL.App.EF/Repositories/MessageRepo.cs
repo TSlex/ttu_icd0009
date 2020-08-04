@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class MessageRepo : BaseRepo<Domain.Message, Message, ApplicationDbContext>, IMessageRepo
     {
         public MessageRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new MessageMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Message, Message>())
         {
         }
 

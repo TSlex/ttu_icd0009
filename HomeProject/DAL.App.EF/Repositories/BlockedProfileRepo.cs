@@ -14,7 +14,7 @@ namespace DAL.Repositories
         IBlockedProfileRepo
     {
         public BlockedProfileRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new BlockedProfileMapper())
+            base(dbContext, new UniversalDALMapper<Domain.BlockedProfile, BlockedProfile>())
         {
         }
 

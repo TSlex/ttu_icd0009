@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class CommentRepo : BaseRepo<Domain.Comment, Comment, ApplicationDbContext>, ICommentRepo
     {
         public CommentRepo(ApplicationDbContext dbContext) : 
-            base(dbContext, new CommentMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Comment, Comment>())
         {
         }
 

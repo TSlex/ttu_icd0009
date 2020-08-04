@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class FollowerRepo : BaseRepo<Domain.Follower, Follower, ApplicationDbContext>, IFollowerRepo
     {
         public FollowerRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new FollowerMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Follower, Follower>())
         {
         }
 

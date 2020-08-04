@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class ProfileGiftRepo : BaseRepo<Domain.ProfileGift, ProfileGift, ApplicationDbContext>, IProfileGiftRepo
     {
         public ProfileGiftRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new ProfileGiftMapper())
+            base(dbContext, new UniversalDALMapper<Domain.ProfileGift, ProfileGift>())
         {
         }
 

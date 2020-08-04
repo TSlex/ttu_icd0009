@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class GiftRepo : BaseRepo<Domain.Gift, Gift, ApplicationDbContext>, IGiftRepo
     {
         public GiftRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new GiftMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Gift, Gift>())
         {
         }
 

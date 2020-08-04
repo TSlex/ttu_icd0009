@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class FavoriteRepo : BaseRepo<Domain.Favorite, Favorite, ApplicationDbContext>, IFavoriteRepo
     {
         public FavoriteRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new FavoriteMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Favorite, Favorite>())
         {
         }
 

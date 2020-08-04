@@ -7,6 +7,7 @@ using Contracts.DAL.App.Repositories;
 using Contracts.DAL.Base.Mappers;
 using DAL.Base.EF.Mappers;
 using DAL.Base.EF.Repositories;
+using DAL.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
@@ -14,7 +15,7 @@ namespace DAL.Repositories
     public class ImageRepo : BaseRepo<Domain.Image, Image, ApplicationDbContext>, IImageRepo
     {
         public ImageRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new BaseDALMapper<Domain.Image, Image>())
+            base(dbContext, new UniversalDALMapper<Domain.Image, Image>())
         {
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
+using BLL.App.Mappers;
 using BLL.Base.Mappers;
 using Contracts.BLL.App;
 using Extension;
@@ -93,8 +94,8 @@ namespace WebApp.ApiControllers._1._0.Admin
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> Edit(Guid id, [FromBody] ProfileAdminDTO model)
         {
-            var mapper = new BaseBLLMapper<ProfileAdminDTO, Profile>();
-            var mapper2 = new BaseBLLMapper<Profile, ProfileEdit>();
+            var mapper = new UniversalBLLMapper<ProfileAdminDTO, Profile>();
+            var mapper2 = new UniversalBLLMapper<Profile, ProfileEdit>();
                 
             if (id != model.Id)
             {

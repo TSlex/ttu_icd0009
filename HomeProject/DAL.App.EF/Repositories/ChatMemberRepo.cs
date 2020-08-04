@@ -14,7 +14,7 @@ namespace DAL.Repositories
     public class ChatMemberRepo : BaseRepo<Domain.ChatMember, ChatMember, ApplicationDbContext>, IChatMemberRepo
     {
         public ChatMemberRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new ChatMemberMapper())
+            base(dbContext, new UniversalDALMapper<Domain.ChatMember, ChatMember>())
         {
         }
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BLL.App.DTO;
 using BLL.Base.Mappers;
-using Profile = AutoMapper.Profile;
+using Profile = BLL.App.DTO.Profile;
 
 namespace BLL.App.Mappers
 {

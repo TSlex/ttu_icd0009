@@ -16,7 +16,7 @@ namespace DAL.Repositories
     public class ChatRoleRepo : BaseRepo<Domain.ChatRole, ChatRole, ApplicationDbContext>, IChatRoleRepo
     {
         public ChatRoleRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new ChatRoleMapper())
+            base(dbContext, new UniversalDALMapper<Domain.ChatRole, ChatRole>())
         {
         }
 

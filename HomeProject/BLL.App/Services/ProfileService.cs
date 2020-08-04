@@ -40,7 +40,7 @@ namespace BLL.App.Services
             
             Image? avatar = null;
 
-            var imageMapper = new BaseBLLMapper<DAL.App.DTO.Image, Image>();
+            var imageMapper = new UniversalBLLMapper<DAL.App.DTO.Image, Image>();
 
             if (profile.ProfileAvatarId != null)
             {

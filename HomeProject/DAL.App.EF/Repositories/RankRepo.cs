@@ -15,7 +15,7 @@ namespace DAL.Repositories
     public class RankRepo : BaseRepo<Domain.Rank, Rank, ApplicationDbContext>, IRankRepo
     {
         public RankRepo(ApplicationDbContext dbContext) :
-            base(dbContext, new RankMapper())
+            base(dbContext, new UniversalDALMapper<Domain.Rank, Rank>())
         {
         }
         

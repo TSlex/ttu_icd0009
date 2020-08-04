@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.DTO;
 using Contracts.DAL.App.Repositories;
+using Contracts.DAL.Base.Mappers;
 using DAL.Base.EF.Repositories;
-using DAL.Helpers;
 using DAL.Mappers;
 using Domain.Translation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+using BlockedProfile = DAL.App.DTO.BlockedProfile;
 using Follower = DAL.App.DTO.Follower;
 using Gift = DAL.App.DTO.Gift;
+using Post = DAL.App.DTO.Post;
 using Profile = DAL.App.DTO.Profile;
 using ProfileGift = DAL.App.DTO.ProfileGift;
 using ProfileRank = DAL.App.DTO.ProfileRank;
@@ -25,17 +25,17 @@ namespace DAL.Repositories
     {
         private readonly UserManager<Domain.Profile> _userManager;
 
-        private readonly FollowerMapper _followerMapper;
-        private readonly BlockedProfileMapper _blockedProfileMapper;
-        private readonly PostMapper _postMapper;
+        private readonly IBaseDALMapper<Domain.Follower, Follower> _followerMapper;
+        private readonly IBaseDALMapper<Domain.BlockedProfile, BlockedProfile> _blockedProfileMapper;
+        private readonly IBaseDALMapper<Domain.Post, Post> _postMapper;
 
         public ProfileRepo(ApplicationDbContext dbContext, UserManager<Domain.Profile> userManager)
-            : base(dbContext, new ProfileMapper())
+            : base(dbContext, new UniversalDALMapper<Domain.Profile, Profile>())
         {
             _userManager = userManager;
-            _followerMapper = new FollowerMapper();
-            _blockedProfileMapper = new BlockedProfileMapper();
-            _postMapper = new PostMapper();
+            _followerMapper = new UniversalDALMapper<Domain.Follower, Follower>();
+            _blockedProfileMapper = new UniversalDALMapper<Domain.BlockedProfile, BlockedProfile>();
+            _postMapper = new UniversalDALMapper<Domain.Post, Post>();
         }
 
         public async Task<Tuple<ProfileEdit, string[]>> UpdateProfileAdminAsync(ProfileEdit entity)
