@@ -54,6 +54,14 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:latest AS runtime
 WORKDIR /app
 EXPOSE 80
 
+# install System.Drawing native dependencies
+RUN apt-get update \
+    && apt-get install -y --allow-unauthenticated \
+        libc6-dev \
+        libgdiplus \
+        libx11-dev \
+     && rm -rf /var/lib/apt/lists/*
+
 #enviroments
 ENV ConnectionStrings:MySqlConnection="server=80.66.248.96;port=3306;database=asp_project_3;user=aleksi_asp2;password=AdolfHitler"
 

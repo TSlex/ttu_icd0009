@@ -72,20 +72,34 @@ namespace BLL.App.Services
 
         public async Task<Image> AddProfileAsync(Guid profileId, Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "profiles", profileId.ToString());
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await AddAsync(entity, folderPath);
         }
 
         public async Task<Image> UpdateProfileAsync(Guid profileId, Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\profiles\\{profileId.ToString()}\\";
+            
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "profiles", profileId.ToString());
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await UpdateAsync(entity, folderPath);
         }
@@ -97,20 +111,34 @@ namespace BLL.App.Services
 
         public async Task<Image> AddPostAsync(Guid postId, Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\posts\\{postId.ToString()}\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\posts\\{postId.ToString()}\\";
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "posts", postId.ToString());
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await AddAsync(entity, folderPath);
         }
 
         public async Task<Image> UpdatePostAsync(Guid postId, Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\posts\\{postId.ToString()}\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\posts\\{postId.ToString()}\\";
+            
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "posts", postId.ToString());
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await UpdateAsync(entity, folderPath);
         }
@@ -122,40 +150,68 @@ namespace BLL.App.Services
 
         public async Task<Image> AddGiftAsync(Guid giftId, Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\gifts\\{giftId.ToString()}\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\gifts\\{giftId.ToString()}\\";
+            
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "gifts", giftId.ToString());
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await AddAsync(entity, folderPath);
         }
 
         public async Task<Image> UpdateGiftAsync(Guid giftId, Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\gifts\\{giftId.ToString()}\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\gifts\\{giftId.ToString()}\\";
+            
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "gifts", giftId.ToString());
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await UpdateAsync(entity, folderPath);
         }
 
         public async Task<Image> AddUndefinedAsync(Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\misc\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\misc\\";
+            
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "misc");
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await AddAsync(entity, folderPath);
         }
 
         public async Task<Image> UpdateUndefinedAsync(Image entity)
         {
-            string folderPath = RootPath + $"\\localstorage\\images\\misc\\";
+//            string folderPath = RootPath + $"\\localstorage\\images\\misc\\";
+            
+            var folderPath = Path.Combine(RootPath, "localstorage", "images", "misc");
+            
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
 
-            FileInfo directory = new FileInfo(folderPath);
-            directory.Directory?.Create();
+//            FileInfo directory = new FileInfo(folderPath);
+//            directory.Directory?.Create();
 
             return await UpdateAsync(entity, folderPath);
         }
@@ -189,8 +245,11 @@ namespace BLL.App.Services
                 entity.ImageUrl = filename.Split("localstorage")[1];
 
                 Bitmap newImage;
+                
+//                var filePath = RootPath + "\\localstorage\\" + entity.OriginalImageUrl;
+                var filePath = Path.Combine(RootPath, "localstorage", entity.OriginalImageUrl);
 
-                await using (var file = File.OpenRead(RootPath + "\\localstorage\\" + entity.OriginalImageUrl))
+                await using (var file = File.OpenRead(filePath))
                 {
                     newImage = CropImageStreamByPaddings(file, entity.PaddingTop,
                         entity.PaddingRight, entity.PaddingBottom, entity.PaddingLeft, entity.WidthPx, entity.HeightPx);
@@ -217,7 +276,7 @@ namespace BLL.App.Services
 
         public override Image Remove(Image entity)
         {
-            var filename = RootPath + "\\localstorage\\" + entity.ImageUrl;
+//            var filename = RootPath + "\\localstorage\\" + entity.ImageUrl;
 
 //            if (File.Exists(filename))
 //            {
