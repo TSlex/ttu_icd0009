@@ -60,7 +60,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetImage(string? id)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             if (id == null)
             {
@@ -84,7 +84,7 @@ namespace WebApp.ApiControllers._1._0
             }
 
             Request.Headers.Add("imageId", id.ToString());
-            return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOriginalImage(string? id)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             if (id == null)
             {
@@ -122,7 +122,7 @@ namespace WebApp.ApiControllers._1._0
             }
 
             Request.Headers.Add("imageId", id.ToString());
-            return base.File("~/localstorage" + image.OriginalImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.OriginalImageUrl), "image/jpeg");
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetProfileImage(string username)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             var user = await _bll.Profiles.FindByUsernameAsync(username);
 
@@ -316,7 +316,7 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetPostImage(Guid postId)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             var post = await _bll.Posts.GetForUpdateAsync(postId);
 
@@ -352,7 +352,7 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> GetGiftImage(Guid giftId)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             var gift = await _bll.Gifts.GetForUpdateAsync(giftId);
 
@@ -388,7 +388,7 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
         }
     }
 }

@@ -38,7 +38,7 @@ namespace WebApp.Controllers
         [Route("{controller}/{id?}")]
         public async Task<IActionResult> GetImage(Guid? id)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             if (id == null)
             {
@@ -52,12 +52,17 @@ namespace WebApp.Controllers
                 return undefined;
             }
 
-            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
+//            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
+//            {
+//                return undefined;
+//            }
+            
+            if (!_bll.Images.ImagePathExists(image.ImageUrl))
             {
                 return undefined;
             }
 
-            return base.File("~/localstorage" + image.ImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace WebApp.Controllers
         [Route("{controller}/{id?}/original")]
         public async Task<IActionResult> GetOriginalImage(Guid? id)
         {
-            var undefined = base.File("~/localstorage/images/misc/404.png", "image/jpeg");
+            var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
             if (id == null)
             {
@@ -82,12 +87,17 @@ namespace WebApp.Controllers
                 return undefined;
             }
 
-            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.OriginalImageUrl))
+//            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.OriginalImageUrl))
+//            {
+//                return undefined;
+//            }
+
+            if (!_bll.Images.ImagePathExists(image.OriginalImageUrl))
             {
                 return undefined;
             }
 
-            return base.File("~/localstorage" + image.OriginalImageUrl, "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
         }
     }
 }

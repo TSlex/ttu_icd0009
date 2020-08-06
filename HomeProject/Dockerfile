@@ -67,7 +67,7 @@ RUN echo "Europe/Tallinn" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 #enviroments
-ENV ConnectionStrings:MySqlConnection="server=80.66.248.96;port=3306;database=asp_project_3;user=aleksi_asp2;password=AdolfHitler"
+ENV ConnectionStrings:MySqlConnection="server=80.66.248.96;port=3306;database=asp_project_4;user=aleksi_asp2;password=AdolfHitler"
 
 ENV Rank:GiftSendExperience="10"
 ENV Rank:CommentExperience="2"
