@@ -6,7 +6,7 @@ using Extension;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
-{    
+{
     /// <summary>
     /// Followers and followed
     /// </summary>
@@ -14,7 +14,7 @@ namespace WebApp.Controllers
     public class FollowersController : Controller
     {
         private readonly IAppBLL _bll;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -36,10 +36,10 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(user.Followers);
         }
-        
+
         /// <summary>
         /// Get user followed
         /// </summary>
@@ -52,10 +52,10 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(user.Followed);
         }
-        
+
         /// <summary>
         /// Deletes a record
         /// </summary>
@@ -71,11 +71,11 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             _bll.Followers.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Followed), new {User.Identity.Name});
+            return RedirectToAction(nameof(Followed), new {username = User.Identity.Name});
         }
     }
 }

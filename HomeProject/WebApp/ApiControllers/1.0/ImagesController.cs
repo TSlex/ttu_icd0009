@@ -58,7 +58,7 @@ namespace WebApp.ApiControllers._1._0
         [HttpGet("{id?}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetImage(string? id)
+        public async Task<IActionResult> GetImage(Guid? id)
         {
             var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
@@ -67,7 +67,7 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            var image = await _bll.Images.FindAsync(new Guid(id));
+            var image = await _bll.Images.FindAsync((Guid) id);
 
             if (image == null)
             {
@@ -92,7 +92,7 @@ namespace WebApp.ApiControllers._1._0
         [HttpGet("{id?}/original")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetOriginalImage(string? id)
+        public async Task<IActionResult> GetOriginalImage(Guid? id)
         {
             var undefined = base.File(_bll.Images.GetImageUndefinedPath(), "image/jpeg");
 
@@ -101,7 +101,7 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            var image = await _bll.Images.FindAsync(new Guid(id));
+            var image = await _bll.Images.FindAsync((Guid) id);
 
             if (image == null)
             {
