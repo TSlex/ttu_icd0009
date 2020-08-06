@@ -52,7 +52,7 @@ namespace DAL.Repositories
 #pragma warning disable 8604
         public async Task<ChatRoom> GetRoomWithUserAsync(Guid userId, Guid requesterId)
         {
-            var chatRoom = await RepoDbContext.ChatRooms
+            var chatRoom = await RepoDbSet
                 .Include(room => room.ChatMembers)
                 .Where(room => room.ChatMembers!.Count == 2
                                && room.MasterId == null

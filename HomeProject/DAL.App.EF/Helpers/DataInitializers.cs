@@ -234,7 +234,7 @@ namespace DAL.Helpers
 
             foreach (var chatRole in chatRoles)
             {
-                if (!ctx.ChatRoles.Any(r => r.RoleTitle == chatRole.RoleTitle))
+                if (!ctx.ChatRoles.Any(r => r.Id == chatRole.Id))
                 {
                     ctx.ChatRoles.Add(chatRole);
                 }
@@ -513,7 +513,7 @@ namespace DAL.Helpers
 
             foreach (var rank in ranks)
             {
-                if (!ctx.Ranks.Any(r => r.RankCode == rank.RankCode))
+                if (!ctx.Ranks.Any(r => r.Id == rank.Id))
                 {
                     ctx.Ranks.Add(rank);
                 }
@@ -521,7 +521,7 @@ namespace DAL.Helpers
 
             ctx.SaveChanges();
 
-            var dbRanks = ctx.Ranks.AsNoTracking().Where(rank => rank.RankCode.Contains("X_")).ToList()
+            var dbRanks = ctx.Ranks.AsNoTracking().Where(rank => rank.RankCode.Contains("X_") && rank.MasterId == null).ToList()
                 .OrderBy(rank => rank.RankCode).ToArray();
 
             for (int index = 0; index < dbRanks.Length; index++)
@@ -665,7 +665,7 @@ namespace DAL.Helpers
 
             foreach (var gift in gifts)
             {
-                if (!ctx.Gifts.Any(g => g.GiftCode == gift.GiftCode))
+                if (!ctx.Gifts.Any(g => g.Id == gift.Id))
                 {
                     ctx.Gifts.Add(gift);
                 }
@@ -674,7 +674,7 @@ namespace DAL.Helpers
             ctx.SaveChanges();
         }
 
-        struct User
+        private struct User
         {
             public Guid Id { get; set; }
 
@@ -685,7 +685,7 @@ namespace DAL.Helpers
             public ICollection<string>? RolesNames { get; set; }
         }
 
-        struct Role
+        private struct Role
         {
             public Guid Id { get; set; }
             public string Name { get; set; }

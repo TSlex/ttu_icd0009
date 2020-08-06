@@ -24,8 +24,6 @@
     box4.style.right = PaddingRight.value / zoomX + 'px';
     box4.style.bottom = PaddingBottom.value / zoomY + 'px';
 
-    console.log(zoomY);
-
     cover.style.marginTop = PaddingTop.value / zoomY + 'px';
     cover.style.marginRight = PaddingRight.value / zoomX + 'px';
     cover.style.marginBottom = PaddingBottom.value / zoomY + 'px';

@@ -52,11 +52,6 @@ namespace WebApp.Controllers
                 return undefined;
             }
 
-//            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.ImageUrl))
-//            {
-//                return undefined;
-//            }
-            
             if (!_bll.Images.ImagePathExists(image.ImageUrl))
             {
                 return undefined;
@@ -86,18 +81,14 @@ namespace WebApp.Controllers
             {
                 return undefined;
             }
-
-//            if (!System.IO.File.Exists(_hostEnvironment.WebRootPath + "/localstorage" + image.OriginalImageUrl))
-//            {
-//                return undefined;
-//            }
+            
 
             if (!_bll.Images.ImagePathExists(image.OriginalImageUrl))
             {
                 return undefined;
             }
 
-            return base.File(_bll.Images.GetImagePath(image.ImageUrl), "image/jpeg");
+            return base.File(_bll.Images.GetImagePath(image.OriginalImageUrl), "image/jpeg");
         }
     }
 }
