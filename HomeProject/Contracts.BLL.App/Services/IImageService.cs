@@ -10,8 +10,8 @@ namespace Contracts.BLL.App.Services
         string RootPath { get; set; }
 
         string GetImageUndefinedPath();
-        string GetImagePath(string path);
-        bool ImagePathExists(string path);
+        string GetImagePath(string? path);
+        bool ImagePathExists(string? path);
 
         Tuple<Image?, string[]> ValidateImage(Image imageModel);
 

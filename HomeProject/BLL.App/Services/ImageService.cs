@@ -25,19 +25,25 @@ namespace BLL.App.Services
         {
         }
 
+        private static string FormatPath(string? path)
+        {
+            return (path ?? "").Replace(@"\", Path.DirectorySeparatorChar.ToString())
+                .Replace(@"/", Path.DirectorySeparatorChar.ToString()).Trim(Path.DirectorySeparatorChar);
+        }
+
         public string GetImageUndefinedPath()
         {
-            return "~/localstorage/images/misc/404.png".Replace('/', Path.DirectorySeparatorChar);
+            return FormatPath("~/localstorage/images/misc/404.png");
         }
 
-        public string GetImagePath(string path)
+        public string GetImagePath(string? path)
         {
-            return ("~/localstorage" + path).Replace('/', Path.DirectorySeparatorChar);
+            return FormatPath("~/localstorage" + (path ?? ""));
         }
 
-        public bool ImagePathExists(string path)
+        public bool ImagePathExists(string? path)
         {
-            return File.Exists(Path.Combine(RootPath, "localstorage", path.Replace('/', Path.DirectorySeparatorChar)));
+            return File.Exists(Path.Combine(RootPath, "localstorage", FormatPath(path ?? "")));
         }
 
         public Tuple<Image?, string[]> ValidateImage(Image imageModel)
@@ -256,13 +262,13 @@ namespace BLL.App.Services
             {
                 //save new file
                 var filename = Guid.NewGuid() + "." + entity.OriginalImageUrl!.Split('.')[1];
-                filename = Path.Combine(path, filename);
+                filename = Path.Combine(path, FormatPath(filename));
                 entity.ImageUrl = filename.Split("localstorage")[1];
 
                 Bitmap newImage;
 
 //                var filePath = RootPath + "\\localstorage\\" + entity.OriginalImageUrl;
-                var filePath = Path.Combine(RootPath, "localstorage", entity.OriginalImageUrl);
+                var filePath = Path.Combine(RootPath, "localstorage", FormatPath(entity.OriginalImageUrl));
 
                 await using (var file = File.OpenRead(filePath))
                 {
@@ -304,7 +310,7 @@ namespace BLL.App.Services
                 originalFilename = entity.Id + extension;
             }
 
-            originalFilename = Path.Combine(path, originalFilename);
+            originalFilename = Path.Combine(path, FormatPath(originalFilename));
             entity.OriginalImageUrl = originalFilename.Split("localstorage")[1];
 
             await using (var stream = File.Create(originalFilename))
@@ -317,7 +323,7 @@ namespace BLL.App.Services
             {
                 //save new file
                 var filename = Guid.NewGuid() + extension;
-                filename = Path.Combine(path, filename);
+                filename = Path.Combine(path, FormatPath(filename));
                 entity.ImageUrl = filename.Split("localstorage")[1];
 
                 var newImage = CropImageByPaddings(entity.ImageFile, entity.PaddingTop,

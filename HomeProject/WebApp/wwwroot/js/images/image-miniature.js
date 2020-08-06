@@ -62,7 +62,6 @@ let WidthPx = document.getElementById("WidthPx");
 let HeightPx = document.getElementById("HeightPx");
 
 let container = document.getElementById("image-miniature");
-console.log(container);
 let cover = createElement("miniature-cover");
 let box1 = createElement("miniature-control");
 let box2 = createElement("miniature-control");

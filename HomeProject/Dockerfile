@@ -72,6 +72,8 @@ ENV ConnectionStrings:MySqlConnection="server=80.66.248.96;port=3306;database=as
 ENV Rank:GiftSendExperience="10"
 ENV Rank:CommentExperience="2"
 
+ENV TZ="Europe/Tallinn"
+
 COPY --from=build /app/WebApp/out ./
 
 ENTRYPOINT ["dotnet", "WebApp.dll"]
