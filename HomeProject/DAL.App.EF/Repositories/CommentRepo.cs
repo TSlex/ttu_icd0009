@@ -28,7 +28,7 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<Comment>> AllAsync()
         {
             return (await GetQuery()
-                .Where(comment => comment.DeletedAt == null)
+                .Where(comment => comment.DeletedAt == null && comment.MasterId == null)
                 .ToListAsync()).Select(comment => Mapper.Map(comment));
         }
 
@@ -51,7 +51,7 @@ namespace DAL.Repositories
 
             return (await GetQuery()
                     .Where(comment => comment.PostId == postId 
-                                      && comment.DeletedAt == null)
+                                      && comment.DeletedAt == null && comment.MasterId == null)
                     .OrderByDescending(comment => comment.CommentDateTime)
                     .Skip(startIndex)
                     .Take(count)

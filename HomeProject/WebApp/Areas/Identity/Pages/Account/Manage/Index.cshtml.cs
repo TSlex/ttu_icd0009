@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Enums;
+using Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -150,6 +151,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                         $"Unexpected error occurred setting username for user with ID '{userId}'.");
                 }
             }
+            
+            user = await _userManager.GetUserAsync(User);
 
             //setup other
             user.ProfileFullName = Input.ProfileFullName;

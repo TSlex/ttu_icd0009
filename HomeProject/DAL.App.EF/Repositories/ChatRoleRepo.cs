@@ -29,7 +29,7 @@ namespace DAL.Repositories
         public override async Task<IEnumerable<ChatRole>> AllAsync()
         {
             return (await GetQuery()
-                .Where(role => !role.CanEditMembers)
+                .Where(role => !role.CanEditMembers && role.MasterId == null)
                 .ToListAsync()).Select(role => Mapper.Map(role));
         }
 

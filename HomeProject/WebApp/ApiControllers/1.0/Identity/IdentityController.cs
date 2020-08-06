@@ -252,6 +252,8 @@ namespace WebApp.ApiControllers._1._0.Identity
                             Resourses.BLL.App.DTO.Profiles.Profiles.ErrorChangeUsername));
                 }
             }
+            
+            user = await _userManager.FindByIdAsync(User.UserId().ToString());
 
             //setup other
             user.ProfileFullName = dto.ProfileFullName;
@@ -321,7 +323,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             if (!changePasswordResult.Succeeded)
             {
                 return BadRequest(
-                    new ErrorResponseDTO(changePasswordResult.Errors.Select(error => error.Description).ToArray()));
+                    new ErrorResponseDTO(Resourses.BLL.App.DTO.Profiles.Profiles.ErrorIncorrectPassword));
             }
 
             await _signInManager.RefreshSignInAsync(user);

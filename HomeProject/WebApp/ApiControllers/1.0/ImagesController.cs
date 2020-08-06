@@ -67,18 +67,14 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            Image image;
+            var image = await _bll.Images.FindAsync(new Guid(id));
 
-            try
+            if (image == null)
             {
-                image = await _bll.Images.FindAsync(new Guid(id));
-
-                if (image == null)
-                {
-                    return undefined;
-                }
+                return undefined;
             }
-            catch (Exception)
+
+            if (!_bll.Images.ImagePathExists(image.ImageUrl))
             {
                 return undefined;
             }
@@ -105,18 +101,14 @@ namespace WebApp.ApiControllers._1._0
                 return undefined;
             }
 
-            Image image;
+            var image = await _bll.Images.FindAsync(new Guid(id));
 
-            try
+            if (image == null)
             {
-                image = await _bll.Images.FindAsync(new Guid(id));
-
-                if (image == null)
-                {
-                    return undefined;
-                }
+                return undefined;
             }
-            catch (Exception)
+
+            if (!_bll.Images.ImagePathExists(image.OriginalImageUrl))
             {
                 return undefined;
             }

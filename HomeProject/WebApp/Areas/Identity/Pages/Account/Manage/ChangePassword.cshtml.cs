@@ -96,10 +96,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
-                foreach (var error in changePasswordResult.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                ModelState.AddModelError(string.Empty, Resourses.BLL.App.DTO.Profiles.Profiles.ErrorIncorrectPassword);
 
                 return Page();
             }

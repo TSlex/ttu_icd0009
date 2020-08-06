@@ -229,7 +229,7 @@ namespace WebApp.ApiControllers._1._0
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
-            if (!currentMember.ChatRole!.CanEditMembers)
+            if (currentMember.Id != id && !currentMember.ChatRole!.CanEditMembers)
             {
                 return BadRequest(new ErrorResponseDTO(Resourses.BLL.App.DTO.Common.ErrorAccessDenied));
             }

@@ -75,7 +75,7 @@ namespace WebApp.Controllers
             _bll.Followers.Remove(id);
             await _bll.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Followed));
+            return RedirectToAction(nameof(Followed), new {User.Identity.Name});
         }
     }
 }

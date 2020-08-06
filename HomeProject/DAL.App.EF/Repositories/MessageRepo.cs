@@ -51,7 +51,8 @@ namespace DAL.Repositories
             return await RepoDbContext.Messages
                 .Where(message =>
                     message.ChatRoomId == id &&
-                    message.DeletedAt == null)
+                    message.DeletedAt == null &&
+                    message.MasterId == null)
                 .Select(message => Mapper.Map(message))
                 .ToListAsync();
         }
@@ -75,7 +76,8 @@ namespace DAL.Repositories
             return (await GetQuery()
                     .Where(message =>
                         message.ChatRoomId == chatRoomId &&
-                        message.DeletedAt == null)
+                        message.DeletedAt == null && 
+                        message.MasterId == null)
                     .OrderByDescending(message => message.MessageDateTime)
                     .Skip(startIndex)
                     .Take(count)
