@@ -64,7 +64,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (post == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(post);

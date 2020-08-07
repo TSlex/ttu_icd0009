@@ -57,7 +57,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (chatMember == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(chatMember);
@@ -73,7 +73,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (chatMember == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
             
             return View(chatMember);

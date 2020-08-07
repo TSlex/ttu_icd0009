@@ -65,7 +65,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(user);
@@ -81,7 +81,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (profile == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(profile);

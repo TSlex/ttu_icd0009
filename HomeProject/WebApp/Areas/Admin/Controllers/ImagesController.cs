@@ -64,7 +64,7 @@ namespace WebApp.Areas.Admin.Controllers
             var image = await _bll.Images.FindAdminAsync(id);
             if (image == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(image);
@@ -149,7 +149,7 @@ namespace WebApp.Areas.Admin.Controllers
             var image = await _bll.Images.FindAdminAsync(id);
             if (image == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(image);

@@ -38,7 +38,7 @@ namespace WebApp.Controllers
 
             if (!members.Select(member => member.Profile!.UserName).Contains(User.Identity.Name))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(members);
@@ -71,14 +71,14 @@ namespace WebApp.Controllers
 
             if (chatMember == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
             if (currentMember == null || !currentMember.ChatRole!.CanEditMembers)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var model = new ChatMemberRoleModel()
@@ -170,14 +170,14 @@ namespace WebApp.Controllers
 
             if (chatMember == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), chatMember.ChatRoomId);
 
             if (!currentMember.ChatRole!.CanEditMembers)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.ChatMembers.Remove(chatMember);

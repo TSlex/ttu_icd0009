@@ -41,7 +41,7 @@ namespace WebApp.Controllers
 
             if (profileGift == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(profileGift);
@@ -157,7 +157,7 @@ namespace WebApp.Controllers
 
             if (record == null || record.ProfileId != User.UserId())
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.ProfileGifts.Remove(id);

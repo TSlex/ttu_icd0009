@@ -66,7 +66,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (blockedProfile == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return Ok(_mapper.Map(blockedProfile));

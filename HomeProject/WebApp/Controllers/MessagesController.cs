@@ -84,7 +84,7 @@ namespace WebApp.Controllers
 
             if (message == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var currentMember = await _bll.ChatMembers.FindByUserAndRoomAsync(User.UserId(), message.ChatRoomId);
@@ -93,7 +93,7 @@ namespace WebApp.Controllers
                   (message.ProfileId == User.UserId() && currentMember.ChatRole!.CanEditMessages ||
                    currentMember.ChatRole!.CanEditAllMessages)))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(message);
@@ -157,7 +157,7 @@ namespace WebApp.Controllers
                   (record.ProfileId == User.UserId() && currentMember.ChatRole!.CanEditMessages ||
                    currentMember.ChatRole!.CanEditAllMessages)))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.Messages.Remove(id);

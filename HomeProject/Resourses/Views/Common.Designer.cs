@@ -394,6 +394,15 @@ namespace Resourses.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The page you are looking for was not found!.
+        /// </summary>
+        public static string PageNotFound {
+            get {
+                return ResourceManager.GetString("PageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string SaveButton {

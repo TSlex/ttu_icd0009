@@ -46,7 +46,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (favorite == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(favorite);
@@ -64,7 +64,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (favorite == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
             
             return View(favorite);

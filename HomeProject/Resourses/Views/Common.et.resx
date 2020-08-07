@@ -140,4 +140,7 @@
     <data name="AdminUserInRolesHeader">
         <value>Kasutaja rollides</value>
     </data>
+    <data name="PageNotFound">
+        <value>Lehte, mida otsisite, ei leitud!</value>
+    </data>
 </root>

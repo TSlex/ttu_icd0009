@@ -65,7 +65,7 @@ namespace WebApp.ApiControllers._1._0.Admin
 
             if (record == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return Ok(_mapper.Map(record));

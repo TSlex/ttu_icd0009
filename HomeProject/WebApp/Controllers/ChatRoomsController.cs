@@ -48,7 +48,7 @@ namespace WebApp.Controllers
 
             if (!chatRoom.ChatMembers.Select(member => member.ProfileId).Contains(User.UserId()))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(chatRoom);
@@ -80,7 +80,7 @@ namespace WebApp.Controllers
 
             if (chatMember == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.ChatMembers.Remove(chatMember);
@@ -100,7 +100,7 @@ namespace WebApp.Controllers
 
             if (chatRoom == null || member == null || !member.ChatRole!.CanRenameRoom)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(chatRoom);

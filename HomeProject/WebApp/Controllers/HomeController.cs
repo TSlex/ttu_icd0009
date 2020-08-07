@@ -88,7 +88,7 @@ namespace WebApp.Controllers
 //                return Redirect(returnUrl);
 //            }
 
-            return NotFound();
+            return RedirectToAction("PageNotFound", "Home", new {area = ""});
         }
 
         /// <summary>

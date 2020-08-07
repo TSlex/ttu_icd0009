@@ -46,7 +46,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (blockedProfile == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(blockedProfile);
@@ -62,7 +62,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (blockedProfile == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(blockedProfile);

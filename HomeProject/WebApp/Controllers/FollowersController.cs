@@ -34,7 +34,7 @@ namespace WebApp.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(user.Followers);
@@ -50,7 +50,7 @@ namespace WebApp.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(user.Followed);
@@ -69,7 +69,7 @@ namespace WebApp.Controllers
 
             if (record == null || record.FollowerProfileId != User.UserId())
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.Followers.Remove(id);

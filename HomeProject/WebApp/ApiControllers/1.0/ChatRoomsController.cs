@@ -74,7 +74,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (!exist)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());
@@ -88,7 +88,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (result == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return Ok(new MessageGetDTO()
@@ -131,7 +131,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (!exist)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var canAccess = await _bll.ChatRooms.IsRoomMemberAsync(id, User.UserId());

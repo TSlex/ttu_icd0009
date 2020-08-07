@@ -42,7 +42,7 @@ namespace WebApp.Controllers
 
             if (post == null || post.DeletedAt != null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             post.IsUserFavorite = post.Favorites.Select(favorite => favorite.ProfileId).Contains(User.UserId());
@@ -192,7 +192,7 @@ namespace WebApp.Controllers
 
             if (!ValidateUserAccess(post))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             post.ReturnUrl = returnUrl;
@@ -293,7 +293,7 @@ namespace WebApp.Controllers
 
             if (!ValidateUserAccess(post))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             post.ReturnUrl = returnUrl;
@@ -315,7 +315,7 @@ namespace WebApp.Controllers
 
             if (!ValidateUserAccess(record))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.Posts.Remove(id);

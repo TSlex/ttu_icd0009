@@ -239,4 +239,7 @@
     <data name="AdminUserInRolesHeader">
         <value>User in roles</value>
     </data>
+    <data name="PageNotFound">
+        <value>The page you are looking for was not found!</value>
+    </data>
 </root>

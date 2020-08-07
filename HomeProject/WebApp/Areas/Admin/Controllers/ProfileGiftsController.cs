@@ -47,7 +47,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (profileGift == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(profileGift);
@@ -99,7 +99,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (profileGift == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
 

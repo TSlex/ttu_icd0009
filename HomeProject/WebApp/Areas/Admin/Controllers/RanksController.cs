@@ -58,7 +58,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (rank == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(rank);
@@ -113,7 +113,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (rank == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(rank);

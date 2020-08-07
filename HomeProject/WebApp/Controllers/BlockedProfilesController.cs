@@ -46,7 +46,7 @@ namespace WebApp.Controllers
 
             if (record == null || record.ProfileId != User.UserId())
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
             
             _bll.BlockedProfiles.Remove(id);

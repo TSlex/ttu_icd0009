@@ -135,4 +135,7 @@
     <data name="AdminUserInRolesHeader">
         <value>Пользователи в ролях</value>
     </data>
+    <data name="PageNotFound">
+        <value>Страница, которую вы ищете, не найдена!</value>
+    </data>
 </root>

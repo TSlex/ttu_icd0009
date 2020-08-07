@@ -59,7 +59,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (chatRoom == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(chatRoom);

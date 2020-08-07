@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 
             if (profileRank == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(profileRank);

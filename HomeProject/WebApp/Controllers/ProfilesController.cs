@@ -46,7 +46,7 @@ namespace WebApp.Controllers
 
             if (user == null || user.DeletedAt != null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             Profile record;

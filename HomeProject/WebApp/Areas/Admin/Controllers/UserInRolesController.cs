@@ -102,22 +102,22 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (user == null || role == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if (user.UserName.ToLower().Contains("admin") && role.Name.ToLower().Contains("admin"))
             {
-                return BadRequest();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if (user.UserName.ToLower().Contains("root"))
             {
-                return BadRequest();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if (!(await _userManager.GetRolesAsync(user)).Contains(role.Name))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(new UserRoleModel {OldRoleId = role.Id, UserId = user.Id});
@@ -189,17 +189,17 @@ namespace WebApp.Areas.Admin.Controllers
 
             if (user == null || role == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if (user.UserName.ToLower().Contains("admin") && role.Name.ToLower().Contains("admin"))
             {
-                return BadRequest();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if (user.UserName.ToLower().Contains("root"))
             {
-                return BadRequest();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if ((await _userManager.GetRolesAsync(user)).Contains(role.Name))

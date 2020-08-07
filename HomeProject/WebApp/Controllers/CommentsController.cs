@@ -39,7 +39,7 @@ namespace WebApp.Controllers
 
             if (post == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             var comment = new Comment
@@ -90,7 +90,7 @@ namespace WebApp.Controllers
 
             if (!ValidateUserAccess(comment))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             comment.ReturnUrl = returnUrl;
@@ -112,7 +112,7 @@ namespace WebApp.Controllers
 
             if (!ValidateUserAccess(record) || id != comment.Id)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             if (ModelState.IsValid)
@@ -143,7 +143,7 @@ namespace WebApp.Controllers
 
             if (!ValidateUserAccess(record) && !(post != null && post.ProfileId == User.UserId()))
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             _bll.Comments.Remove(record.Id);
