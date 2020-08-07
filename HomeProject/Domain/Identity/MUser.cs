@@ -11,7 +11,7 @@ namespace Domain.Identity
     {
         public override Guid Id { get; set; } = default!;
 
-        public DateTime RegistrationDateTime { get; set; } = DateTime.Now;
+        public DateTime RegistrationDateTime { get; set; } = DateTime.UtcNow;
 
         public string? CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }

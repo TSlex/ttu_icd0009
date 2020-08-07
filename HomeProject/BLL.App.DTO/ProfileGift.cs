@@ -25,7 +25,7 @@ namespace BLL.App.DTO
         public Gift? Gift { get; set; }
 
         [Display(Name = nameof(GiftDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
-        public DateTime GiftDateTime { get; set; } = DateTime.Now;
+        public DateTime GiftDateTime { get; set; } = DateTime.UtcNow;
 
         [Display(Name = nameof(Price), ResourceType = typeof(Resourses.BLL.App.DTO.ProfileGifts.ProfileGifts))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),

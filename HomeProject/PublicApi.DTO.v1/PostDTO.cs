@@ -86,7 +86,7 @@ namespace PublicApi.DTO.v1
         [Display(Name = nameof(PostPublicationDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
             ErrorMessageResourceName = "ErrorMessage_Required")]
-        public DateTime PostPublicationDateTime { get; set; } = DateTime.Now;
+        public DateTime PostPublicationDateTime { get; set; } = DateTime.UtcNow;
 
         [Display(Name = nameof(PostFavoritesCount), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         public int PostFavoritesCount { get; set; } = 0;

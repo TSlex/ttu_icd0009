@@ -128,7 +128,7 @@ namespace WebApp.Controllers
                 }
 
                 profileGift.Id = Guid.NewGuid();
-                profileGift.GiftDateTime = DateTime.Now;
+                profileGift.GiftDateTime = DateTime.UtcNow;
 
                 _bll.ProfileGifts.Add(profileGift);
                 await _bll.SaveChangesAsync();

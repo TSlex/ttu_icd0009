@@ -82,7 +82,7 @@ namespace DAL
                 if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
                 if (entityEntry.Entity is ISoftUpdateEntity softUpdateEntity && softUpdateEntity.MasterId != null) continue;
                 
-                entityWithMetaData.CreatedAt = DateTime.Now;
+                entityWithMetaData.CreatedAt = DateTime.UtcNow;
 
                 if (entityWithMetaData.CreatedBy == null)
                 {
@@ -100,7 +100,7 @@ namespace DAL
                 if (entityEntry.Entity is ISoftDeleteEntity softDeleteEntity)
                 {
 
-                    softDeleteEntity.DeletedAt = DateTime.Now;
+                    softDeleteEntity.DeletedAt = DateTime.UtcNow;
                     softDeleteEntity.DeletedBy = _userNameProvider.CurrentUserName;
 
                     entityEntry.State = EntityState.Modified;
@@ -114,7 +114,7 @@ namespace DAL
                 // check for IDomainEntityMetadata
                 if (!(entityEntry.Entity is IDomainEntityMetadata entityWithMetaData)) continue;
 
-                entityWithMetaData.ChangedAt = DateTime.Now;
+                entityWithMetaData.ChangedAt = DateTime.UtcNow;
                 entityWithMetaData.ChangedBy = _userNameProvider.CurrentUserName;
 
                 if (entityEntry.Entity is ISoftUpdateEntity) continue;

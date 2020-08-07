@@ -39,7 +39,7 @@
                                         <div class="message_value" style="max-height: 50px; overflow: hidden; text-overflow: ellipsis;">
                                             @message.MessageValue
                                         </div>
-                                        <span class="message_datetime">@message.MessageDateTime</span>
+                                        <span class="message_datetime">@message.MessageDateTime.ToLocalTime()</span>
                                     </div>
                                 }
                                 else

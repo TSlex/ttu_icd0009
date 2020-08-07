@@ -17,7 +17,7 @@ namespace BLL.App.DTO
         [Display(Name = nameof(MessageDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Messages.Messages))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
             ErrorMessageResourceName = "ErrorMessage_Required")]
-        public DateTime MessageDateTime { get; set; } = DateTime.Now;
+        public DateTime MessageDateTime { get; set; } = DateTime.UtcNow;
 
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Messages.Messages))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),

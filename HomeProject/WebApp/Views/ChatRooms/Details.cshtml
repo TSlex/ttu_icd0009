@@ -8,6 +8,11 @@
 
     bool IsImageUrl(string url)
     {
+        if (!url.StartsWith("http"))
+        {
+            return false;
+        }
+        
         try
         {
             var req = (HttpWebRequest) WebRequest.Create(url);
@@ -109,7 +114,7 @@
                         <span class="message_value">@item.MessageValue</span>
                     }
 
-                    <span class="message_datetime">@item.MessageDateTime</span>
+                    <span class="message_datetime">@item.MessageDateTime.ToLocalTime()</span>
                 </div>
             }
         </div>

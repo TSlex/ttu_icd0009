@@ -17,7 +17,7 @@ namespace BLL.App.DTO
         public string CommentValue { get; set; } = default!;
 
         [Display(Name = nameof(CommentDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Comments.Comments))]
-        public DateTime CommentDateTime { get; set; } = DateTime.Now;
+        public DateTime CommentDateTime { get; set; } = DateTime.UtcNow;
 
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Comments.Comments))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),

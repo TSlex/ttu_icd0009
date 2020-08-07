@@ -396,7 +396,7 @@ namespace DAL.Repositories
 
             RepoDbContext.Entry(entity).State = EntityState.Modified;
 
-            entity.DeletedAt = DateTime.Now;
+            entity.DeletedAt = DateTime.UtcNow;
             entity.DeletedBy = "system";
 
             RepoDbContext.SaveChanges();

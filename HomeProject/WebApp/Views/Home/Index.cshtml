@@ -24,7 +24,7 @@
                             <span>@post.PostDescription</span>
                             <ul class="post_meta_section">
                                 <li class="post_meta">
-                                    <span class="meta_title">@post.PostPublicationDateTime</span>
+                                    <span class="meta_title">@post.PostPublicationDateTime.ToLocalTime()</span>
                                 </li>
                                 <li class="post_meta">
                                     <span class="meta_counter">@post.PostFavoritesCount</span>

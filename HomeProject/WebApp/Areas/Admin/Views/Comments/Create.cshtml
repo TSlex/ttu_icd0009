@@ -14,7 +14,7 @@
             <partial name="_CreateEdit" />
             <div class="form-group">
                 <label asp-for="CommentDateTime" class="control-label"></label>*
-                <input asp-for="CommentDateTime" value="@DateTime.Now" class="form-control"/>
+                <input asp-for="CommentDateTime" value="@DateTime.UtcNow" class="form-control"/>
                 <span asp-validation-for="CommentDateTime" class="text-danger"></span>
             </div>
 

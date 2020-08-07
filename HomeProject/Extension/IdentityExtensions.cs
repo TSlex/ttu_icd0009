@@ -21,7 +21,7 @@ namespace Extension
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
             var singingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
-            var expires = DateTime.Now.AddDays(expiresInDays);
+            var expires = DateTime.UtcNow.AddDays(expiresInDays);
             
             var token = new JwtSecurityToken(
                 issuer,

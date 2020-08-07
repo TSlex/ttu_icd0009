@@ -15,7 +15,7 @@
             
             <div class="form-group">
                 <label asp-for="GiftDateTime" class="control-label"></label>
-                <input asp-for="GiftDateTime" value="@DateTime.Now" class="form-control"/>
+                <input asp-for="GiftDateTime" value="@DateTime.UtcNow" class="form-control"/>
                 <span asp-validation-for="GiftDateTime" class="text-danger"></span>
             </div>
             <partial name="_CreateControls"/>

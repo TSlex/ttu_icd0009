@@ -11,7 +11,7 @@ namespace DAL.App.DTO
         public Guid GiftId { get; set; } = default!;
         public Gift? Gift { get; set; }
         
-        public DateTime GiftDateTime { get; set; } = DateTime.Now;
+        public DateTime GiftDateTime { get; set; } = DateTime.UtcNow;
         public int Price { get; set; }
         
         public Guid? FromProfileId { get; set; }

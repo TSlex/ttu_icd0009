@@ -27,7 +27,7 @@ namespace BLL.App.DTO
         public string? PostDescription { get; set; }
 
         [Display(Name = nameof(PostPublicationDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
-        public DateTime PostPublicationDateTime { get; set; } = DateTime.Now;
+        public DateTime PostPublicationDateTime { get; set; } = DateTime.UtcNow;
 
         [Display(Name = nameof(PostFavoritesCount), ResourceType = typeof(Resourses.BLL.App.DTO.Posts.Posts))]
         public int PostFavoritesCount { get; set; } = 0;

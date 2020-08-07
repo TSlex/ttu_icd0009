@@ -7,7 +7,7 @@ namespace DAL.App.DTO
     public class Comment: DomainEntityBaseMetaSoftUpdateDelete
     {
         [MaxLength(300)][MinLength(1)] public string CommentValue { get; set; } = default!;
-        public DateTime CommentDateTime { get; set; } = DateTime.Now;
+        public DateTime CommentDateTime { get; set; } = DateTime.UtcNow;
 
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }

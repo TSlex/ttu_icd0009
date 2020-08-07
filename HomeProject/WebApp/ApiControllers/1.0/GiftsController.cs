@@ -180,7 +180,7 @@ namespace WebApp.ApiControllers._1._0
                 FromProfileId = fromUser?.Id,
                 GiftId = gift.Id,
                 Price = gift.Price,
-                GiftDateTime = DateTime.Now,
+                GiftDateTime = DateTime.UtcNow,
                 Message = profileGift.Message,
             });
 

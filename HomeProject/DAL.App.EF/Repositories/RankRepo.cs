@@ -91,7 +91,7 @@ namespace DAL.Repositories
             var trackEntity = RepoDbSet.Find(entity.Id);
             var newEntity = domainEntity;
             
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             newEntity.CreatedAt = now;
             

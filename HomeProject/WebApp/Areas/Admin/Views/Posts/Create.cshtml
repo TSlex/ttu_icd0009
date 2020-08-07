@@ -23,7 +23,7 @@
             
             <div class="form-group">
                 <label asp-for="PostPublicationDateTime" class="control-label"></label>
-                <input asp-for="PostPublicationDateTime" value="@DateTime.Now" class="form-control"/>
+                <input asp-for="PostPublicationDateTime" value="@DateTime.UtcNow" class="form-control"/>
                 <span asp-validation-for="PostPublicationDateTime" class="text-danger"></span>
             </div>
 

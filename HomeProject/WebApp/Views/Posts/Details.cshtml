@@ -32,7 +32,7 @@
             <span>@Model.PostDescription</span>
             <ul class="post_meta_section">
                 <li class="post_meta">
-                    <span class="meta_title">@Model.PostPublicationDateTime</span>
+                    <span class="meta_title">@Model.PostPublicationDateTime.ToLocalTime()</span>
                 </li>
                 <li class="post_meta">
                     <a class="btn-link" asp-action="Index" asp-route-postId="@Model.Id" asp-controller="Favorites">
@@ -74,11 +74,11 @@
                     @{
                         if (comment.CommentDateTime.Date == DateTime.Today)
                         {
-                            <span class="comment_datetime">[@comment.CommentDateTime.ToString("t")]</span>
+                            <span class="comment_datetime">[@comment.CommentDateTime.ToLocalTime().ToString("t")]</span>
                         }
                         else
                         {
-                            <span class="comment_datetime">[@comment.CommentDateTime.ToString("dd MMMM")]</span>
+                            <span class="comment_datetime">[@comment.CommentDateTime.ToLocalTime().ToString("dd MMMM")]</span>
                         }
                     }
                     <a class="btn-link" asp-action="Index" asp-controller="Profiles" asp-route-username="@(comment.Profile!.UserName)">

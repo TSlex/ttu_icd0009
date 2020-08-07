@@ -19,7 +19,7 @@ namespace DAL.App.DTO
         [MaxLength(500)]
         public string? PostDescription { get; set; }
         
-        public DateTime PostPublicationDateTime { get; set; } = DateTime.Now;
+        public DateTime PostPublicationDateTime { get; set; } = DateTime.UtcNow;
         
         public int PostFavoritesCount { get; set; } = 0;
         

@@ -52,7 +52,7 @@ namespace PublicApi.DTO.v1
         [Display(Name = nameof(CommentDateTime), ResourceType = typeof(Resourses.BLL.App.DTO.Comments.Comments))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),
             ErrorMessageResourceName = "ErrorMessage_Required")]
-        public DateTime CommentDateTime { get; set; } = DateTime.Now;
+        public DateTime CommentDateTime { get; set; } = DateTime.UtcNow;
 
         [Display(Name = nameof(ProfileId), ResourceType = typeof(Resourses.BLL.App.DTO.Comments.Comments))]
         [Required(ErrorMessageResourceType = typeof(Resourses.BLL.App.DTO.Common),

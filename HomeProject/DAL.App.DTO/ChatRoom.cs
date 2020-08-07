@@ -10,7 +10,7 @@ namespace DAL.App.DTO
         [MaxLength(100)] public string ChatRoomTitle { get; set; } = default!;
 
         [MaxLength(3000)] public string? LastMessageValue { get; set; }
-        public DateTime? LastMessageDateTime { get; set; } = DateTime.Now;
+        public DateTime? LastMessageDateTime { get; set; } = DateTime.UtcNow;
 
         [MaxLength(300)] public string? ChatRoomImageUrl { get; set; }
         public Guid? ChatRoomImageId { get; set; }

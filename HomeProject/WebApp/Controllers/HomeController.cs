@@ -120,5 +120,14 @@ namespace WebApp.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+
+        /// <summary>
+        /// Not found page
+        /// </summary>
+        /// <returns></returns>
+        public  IActionResult PageNotFound()
+        {
+            return View("404");
+        }
     }
 }

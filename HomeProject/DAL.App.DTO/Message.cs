@@ -8,7 +8,7 @@ namespace DAL.App.DTO
     {
         [MaxLength(3000)] public string MessageValue { get; set; } = default!;
         
-        public DateTime MessageDateTime { get; set; } = DateTime.Now;
+        public DateTime MessageDateTime { get; set; } = DateTime.UtcNow;
         
         public Guid ProfileId { get; set; } = default!;
         public Profile? Profile { get; set; }
