@@ -63,8 +63,8 @@ RUN apt-get update \
      && rm -rf /var/lib/apt/lists/*
      
 # change timezone
-RUN echo "Europe/Tallinn" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+#RUN echo "Europe/Tallinn" > /etc/timezone
+#RUN dpkg-reconfigure -f noninteractive tzdata
 
 #enviroments
 ENV ConnectionStrings:MySqlConnection="server=80.66.248.96;port=3306;database=asp_project_4;user=aleksi_asp2;password=AdolfHitler"
@@ -72,7 +72,7 @@ ENV ConnectionStrings:MySqlConnection="server=80.66.248.96;port=3306;database=as
 ENV Rank:GiftSendExperience="10"
 ENV Rank:CommentExperience="2"
 
-ENV TZ="Europe/Tallinn"
+#ENV TZ="Europe/Tallinn"
 
 COPY --from=build /app/WebApp/out ./
 
