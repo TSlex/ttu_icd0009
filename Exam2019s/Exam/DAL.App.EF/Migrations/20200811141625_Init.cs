@@ -69,32 +69,13 @@ namespace DAL.App.EF.Migrations
                     ChangedAt = table.Column<DateTime>(nullable: false),
                     DeletedBy = table.Column<string>(nullable: true),
                     DeletedAt = table.Column<DateTime>(nullable: true),
+                    MasterId = table.Column<Guid>(nullable: true),
                     Title = table.Column<string>(maxLength: 128, nullable: false),
                     Code = table.Column<string>(maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Semesters", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Templates",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    ChangedBy = table.Column<string>(nullable: true),
-                    ChangedAt = table.Column<DateTime>(nullable: false),
-                    DeletedBy = table.Column<string>(nullable: true),
-                    DeletedAt = table.Column<DateTime>(nullable: true),
-                    MasterId = table.Column<Guid>(nullable: true),
-                    TestValue = table.Column<string>(nullable: false),
-                    TestDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Templates", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +190,7 @@ namespace DAL.App.EF.Migrations
                     ChangedAt = table.Column<DateTime>(nullable: false),
                     DeletedBy = table.Column<string>(nullable: true),
                     DeletedAt = table.Column<DateTime>(nullable: true),
+                    MasterId = table.Column<Guid>(nullable: true),
                     SubjectTitle = table.Column<string>(maxLength: 128, nullable: false),
                     SubjectCode = table.Column<string>(maxLength: 128, nullable: false),
                     TeacherId = table.Column<Guid>(nullable: false),
@@ -287,6 +269,7 @@ namespace DAL.App.EF.Migrations
                     ChangedAt = table.Column<DateTime>(nullable: false),
                     DeletedBy = table.Column<string>(nullable: true),
                     DeletedAt = table.Column<DateTime>(nullable: true),
+                    MasterId = table.Column<Guid>(nullable: true),
                     Title = table.Column<string>(maxLength: 128, nullable: false),
                     Description = table.Column<string>(maxLength: 4096, nullable: false),
                     Deadline = table.Column<DateTime>(nullable: true),
@@ -314,6 +297,7 @@ namespace DAL.App.EF.Migrations
                     ChangedAt = table.Column<DateTime>(nullable: false),
                     DeletedBy = table.Column<string>(nullable: true),
                     DeletedAt = table.Column<DateTime>(nullable: true),
+                    MasterId = table.Column<Guid>(nullable: true),
                     StudentId = table.Column<Guid>(nullable: false),
                     SubjectId = table.Column<Guid>(nullable: false),
                     Grade = table.Column<int>(nullable: false),
@@ -347,6 +331,7 @@ namespace DAL.App.EF.Migrations
                     ChangedAt = table.Column<DateTime>(nullable: false),
                     DeletedBy = table.Column<string>(nullable: true),
                     DeletedAt = table.Column<DateTime>(nullable: true),
+                    MasterId = table.Column<Guid>(nullable: true),
                     HomeWorkId = table.Column<Guid>(nullable: false),
                     StudentSubjectId = table.Column<Guid>(nullable: false),
                     Grade = table.Column<int>(nullable: false),
@@ -470,9 +455,6 @@ namespace DAL.App.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "StudentHomeWorks");
-
-            migrationBuilder.DropTable(
-                name: "Templates");
 
             migrationBuilder.DropTable(
                 name: "Translations");

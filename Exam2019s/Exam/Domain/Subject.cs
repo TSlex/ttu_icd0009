@@ -6,7 +6,7 @@ using ee.itcollege.aleksi.DAL.Base;
 
 namespace Domain
 {
-    public class Subject : DomainEntityBaseMetadata
+    public class Subject : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Required]
         [MinLength(1)]

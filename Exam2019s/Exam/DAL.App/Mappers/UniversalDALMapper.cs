@@ -15,8 +15,7 @@ namespace DAL.App.Mappers
                 config.CreateMap<TOutObject, TInObject>();
                 
                 // own mapping for composite entities
-                config.CreateMap<Domain.Template, Template>();
-                config.CreateMap<Template, Domain.Template>();
+
 
                 config.AllowNullDestinationValues = true;
             }).CreateMapper())

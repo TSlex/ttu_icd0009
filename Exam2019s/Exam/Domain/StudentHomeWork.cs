@@ -4,7 +4,7 @@ using ee.itcollege.aleksi.DAL.Base;
 
 namespace Domain
 {
-    public class StudentHomeWork : DomainEntityBaseMetadata
+    public class StudentHomeWork : DomainEntityBaseMetaSoftUpdateDelete
     {
         [Required] public Guid HomeWorkId { get; set; } = default!;
         public HomeWork? HomeWork { get; set; }

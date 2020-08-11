@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain
 {
-    public class HomeWork: DomainEntityBaseMetadata
+    public class HomeWork: DomainEntityBaseMetaSoftUpdateDelete
     {
         [Required]
         [MinLength(1)]

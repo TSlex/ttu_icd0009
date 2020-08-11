@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.App.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200811130428_Init")]
+    [Migration("20200811141625_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,9 @@ namespace DAL.App.EF.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
                         .HasMaxLength(4096);
+
+                    b.Property<Guid?>("MasterId")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("char(36)");
@@ -215,6 +218,9 @@ namespace DAL.App.EF.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<Guid?>("MasterId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("varchar(128) CHARACTER SET utf8mb4")
@@ -264,6 +270,9 @@ namespace DAL.App.EF.Migrations
                     b.Property<bool>("IsChecked")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<Guid?>("MasterId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("StudentAnswer")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4")
@@ -311,6 +320,9 @@ namespace DAL.App.EF.Migrations
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<Guid?>("MasterId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("StudentId")
                         .HasColumnType("char(36)");
 
@@ -350,6 +362,9 @@ namespace DAL.App.EF.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<Guid?>("MasterId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("SemesterId")
                         .HasColumnType("char(36)");
 
@@ -374,45 +389,6 @@ namespace DAL.App.EF.Migrations
                         .IsUnique();
 
                     b.ToTable("Subjects");
-                });
-
-            modelBuilder.Entity("Domain.Template", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("ChangedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ChangedBy")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<Guid?>("MasterId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("TestDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("TestValue")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Templates");
                 });
 
             modelBuilder.Entity("Domain.Translation.LangString", b =>

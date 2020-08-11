@@ -14,8 +14,6 @@ namespace DAL.App.EF
     public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         //add own DbSets here
-        public DbSet<Template> Templates { get; set; } = default!;
-        
         public DbSet<HomeWork> HomeWorks { get; set; } = default!;
         public DbSet<Semester> Semesters { get; set; } = default!;
         public DbSet<StudentSubject> StudentSubjects { get; set; } = default!;

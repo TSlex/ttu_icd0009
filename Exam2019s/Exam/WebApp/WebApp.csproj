@@ -43,10 +43,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Admin\Controllers" />
-    </ItemGroup>
-
-    <ItemGroup>
       <TypeScriptCompile Include="wwwroot\js\site.ts" />
     </ItemGroup>
 
