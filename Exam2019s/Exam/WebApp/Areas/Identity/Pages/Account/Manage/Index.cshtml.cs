@@ -45,9 +45,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             /// <summary>
             /// 
             /// </summary>
-            [Required]
             [Display(Name = nameof(Username))]
-            public string Username { get; set; } = default!;
+            public string? Username { get; set; }
             
             /// <summary>
             /// 

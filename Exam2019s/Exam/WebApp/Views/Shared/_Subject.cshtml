@@ -1,0 +1,10 @@
+﻿@model Domain.Subject
+
+<a class="btn-link" asp-action="Details" asp-controller="Subjects" asp-area="" asp-route-id="@Model.Id">
+    <div class="card text-center" style="padding: 10px; user-select: none">
+        <h5 class="card-title">@Model.SubjectTitle</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h6>
+        <h6 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h6>
+    </div>
+</a>

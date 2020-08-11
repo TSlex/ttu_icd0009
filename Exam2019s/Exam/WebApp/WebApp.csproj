@@ -1802,6 +1802,7 @@
     <ItemGroup>
       <Compile Remove="Areas\Admin\VIews1\**" />
       <Compile Remove="ApiControllers\1.0\TemplatesController.cs" />
+      <Compile Remove="Controllers\HomeWorksController - Copy.cs" />
     </ItemGroup>
 
     <ItemGroup>

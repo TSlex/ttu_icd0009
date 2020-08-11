@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Domain.Subject>
+
+<div class="justify-content-center">
+    <div class="card-columns">
+        @foreach (var subject in Model)
+        {
+            <partial name="_Subject" model="@subject"/>
+        }
+    </div>
+</div>

@@ -19,10 +19,32 @@ namespace DAL.App.Repositories
         {
         }
         
+        public override async Task<IEnumerable<StudentSubject>> AllAsync()
+        {
+            return (await RepoDbSet.IgnoreQueryFilters().Where(entity => entity.DeletedAt == null).ToListAsync())
+                .Select(Mapper.Map);
+        }
+
+        public override async Task<StudentSubject> FindAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet.IgnoreQueryFilters().FirstOrDefaultAsync(entity => entity.Id == id && entity.DeletedAt == null));
+        }
+        
         public override async Task<IEnumerable<StudentSubject>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.Where(entity => entity.MasterId == id || entity.Id == id).ToListAsync())
+            return (await RepoDbSet.IgnoreQueryFilters().Where(entity => entity.MasterId == id || entity.Id == id).ToListAsync())
                 .Select(Mapper.Map);
+        }
+        
+        public override async Task<IEnumerable<StudentSubject>> AllAdminAsync()
+        {
+            return (await RepoDbSet.IgnoreQueryFilters().Where(entity => entity.MasterId == null).ToListAsync())
+                .Select(Mapper.Map);
+        }
+
+        public override async Task<StudentSubject> FindAdminAsync(Guid id)
+        {
+            return Mapper.Map(await RepoDbSet.IgnoreQueryFilters().FirstOrDefaultAsync(entity => entity.Id == id));
         }
     }
 }

@@ -216,17 +216,17 @@ namespace WebApp
                 logger.LogInformation("MigrateDatabase");
                 DAL.App.EF.Helpers.DataInitializers.MigrateDatabase(ctx);
             }
+            
+            if (configuration["AppDataInitialization:SeedIdentity"] == "True")
+            {
+                logger.LogInformation("SeedIdentity");
+                DAL.App.EF.Helpers.DataInitializers.SeedIdentity(userManager, roleManager);
+            }
 
             if (configuration.GetValue<bool>("AppDataInitialization:SeedData"))
             {
                 logger.LogInformation("SeedData");
                 DAL.App.EF.Helpers.DataInitializers.SeedData(ctx);
-            }
-
-            if (configuration["AppDataInitialization:SeedIdentity"] == "True")
-            {
-                logger.LogInformation("SeedIdentity");
-                DAL.App.EF.Helpers.DataInitializers.SeedIdentity(userManager, roleManager);
             }
         }
     }

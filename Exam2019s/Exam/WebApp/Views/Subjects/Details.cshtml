@@ -4,75 +4,25 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1 class="card-title">@Model.SubjectTitle</h1>
+<h3 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h3>
+<hr>
+<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
+<h4 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h4>
 
-<div>
-    <h4>Subject</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SubjectTitle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubjectTitle)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SubjectCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubjectCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Teacher)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Teacher.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Semester)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Semester.Code)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ChangedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ChangedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ChangedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ChangedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedBy)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedAt)
-        </dd>
-    </dl>
+<br>
+<br>
+<h3 class="card-subtitle mb-2">Homeworks</h3>
+<hr>
+<div class="d-flex flex-column">
+    @foreach (var homework in @Model.HomeWorks)
+    {
+        <span>@homework.Title</span>
+    }
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<button class="btn btn-primary">View all</button>
+<hr>
+
+
+<button class="btn btn-primary">Students</button>
+<button class="btn btn-primary">Enrol me</button>
