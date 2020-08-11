@@ -70,7 +70,6 @@ namespace DAL.App.EF.Helpers
                     Password = "Admin_123",
                     FirstName = "Administrator",
                     LastName = "",
-                    StudentCode = "ADMIN",
                     RolesNames = new[]
                     {
                         "User", "Admin"
@@ -84,7 +83,6 @@ namespace DAL.App.EF.Helpers
                     Password = "Admin_123",
                     FirstName = "Root",
                     LastName = "",
-                    StudentCode = "ROOT",
                     RolesNames = new[]
                     {
                         "User", "Admin"
@@ -104,7 +102,6 @@ namespace DAL.App.EF.Helpers
                         UserName = user.UserName,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
-                        StudentCode = user.StudentCode,
                         EmailConfirmed = true,
                     };
 
@@ -150,8 +147,6 @@ namespace DAL.App.EF.Helpers
             public string FirstName { get; set; }
             public string LastName { get; set; }
             
-            public string StudentCode { get; set; }
-
             public string Email { get; set; }
             public string UserName { get; set; }
             public string Password { get; set; }

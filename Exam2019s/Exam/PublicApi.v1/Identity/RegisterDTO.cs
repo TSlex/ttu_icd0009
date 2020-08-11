@@ -5,8 +5,14 @@
     public class RegisterDTO
     {
         [Required]
-        [MaxLength(300)]
-        public string Username { get; set; } = default!;
+        [MinLength(1)]
+        [MaxLength(128)]
+        public string FirstName { get; set; } = default!;
+        
+        [Required]
+        [MinLength(1)]
+        [MaxLength(128)]
+        public string LastName { get; set; } = default!;
 
         [Required]
         [EmailAddress]

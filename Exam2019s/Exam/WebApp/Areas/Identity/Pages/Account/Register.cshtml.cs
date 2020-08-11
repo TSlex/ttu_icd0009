@@ -72,22 +72,17 @@ namespace WebApp.Areas.Identity.Pages.Account
             /// 
             /// </summary>
             [Required]
-            [Display(Name = "Username")]
-            public string Username { get; set; } = default!;
-            
-            /// <summary>
-            /// 
-            /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [Display(Name = "FirstName")]
             public string FirstName { get; set; } = default!;
-            
+
             /// <summary>
             /// 
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [Display(Name = "LastName")]
             public string LastName { get; set; } = default!;
 
@@ -95,7 +90,8 @@ namespace WebApp.Areas.Identity.Pages.Account
             /// 
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; } = default!;
@@ -131,7 +127,12 @@ namespace WebApp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = Input.Username, Email = Input.Email, EmailConfirmed = true, FirstName = Input.FirstName, LastName = Input.LastName};
+                var user = new AppUser
+                {
+                    UserName = (await GenerateStudentCode(Input.FirstName, Input.LastName, Input.Email)).ToLower(), 
+                    Email = Input.Email, EmailConfirmed = true, 
+                    FirstName = Input.FirstName, LastName = Input.LastName
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -142,7 +143,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new {area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl},
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -150,7 +151,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
                     }
                     else
                     {
@@ -158,6 +159,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -166,6 +168,46 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        /// <summary>
+        /// generates a unique student code
+        /// </summary>
+        /// <returns></returns>
+        private async Task<string> GenerateStudentCode(string firstName, string lastName, string email)
+        {
+            var fLenght = firstName.Length;
+            var fNameLeft = firstName.Substring(0, fLenght / 2);
+            
+            var lLenght = lastName.Length;
+            var lNameRight = lastName.Substring(lLenght / 2);
+
+            var name = fNameLeft + lNameRight;
+            var result = await _userManager.FindByNameAsync(name);
+
+            if (result == null)
+            {
+                return name;
+            }
+
+            var counter = 1;
+            
+            while (true)
+            {
+                if (counter > 15)
+                {
+                    return email.Split("@")[0];
+                }
+                
+                result = await _userManager.FindByNameAsync(name + counter);
+                
+                if (result == null)
+                {
+                    return name;
+                }
+
+                counter++;
+            }
         }
     }
 }

@@ -23,9 +23,6 @@ namespace Domain.Identity
         [PersonalData]
         // ReSharper disable once MemberCanBePrivate.Global
         public string LastName { get; set; } = default!;
-        
-        [PersonalData]
-        public string StudentCode { get; set; } = default!;
 
         public string FirstLastName => FirstName + " " + LastName;
         public string LastFirstName => LastName + " " + FirstName;

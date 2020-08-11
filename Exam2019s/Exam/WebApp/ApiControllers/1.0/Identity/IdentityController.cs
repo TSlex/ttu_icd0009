@@ -135,7 +135,9 @@ namespace WebApp.ApiControllers._1._0.Identity
                 var user = new AppUser()
                 {
                     Id = Guid.NewGuid(),
-                    UserName = model.Username,
+                    UserName = (await GenerateStudentCode(model.FirstName, model.LastName, model.Email)).ToLower(),
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     Email = model.Email,
                     EmailConfirmed = true
                 };
@@ -195,7 +197,6 @@ namespace WebApp.ApiControllers._1._0.Identity
             var user = await _userManager.FindByIdAsync(User.UserId().ToString());
             return Ok(new UserDataDTO
             {
-                UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber
@@ -228,28 +229,6 @@ namespace WebApp.ApiControllers._1._0.Identity
                 }
             }
 
-            //setup new username
-            var username = await _userManager.GetUserNameAsync(user);
-            if (dto.UserName != username)
-            {
-                var userCheck = await _userManager.FindByNameAsync(dto.UserName);
-
-                if (userCheck != null && !(userCheck.Equals(user)))
-                {
-                    return BadRequest(
-                        new ResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorUsernameAlreadyExists));
-                }
-
-                var setUserNameResult = await _userManager.SetUserNameAsync(user, dto.UserName);
-
-                if (!setUserNameResult.Succeeded)
-                {
-                    return BadRequest(
-                        new ResponseDTO(
-                            Resources.Domain.AppUsers.AppUser.ErrorChangeUsername));
-                }
-            }
-            
             user = await _userManager.FindByIdAsync(User.UserId().ToString());
 
             //setup other
@@ -369,6 +348,46 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _signInManager.SignOutAsync();
 
             return Ok();
+        }
+        
+        /// <summary>
+        /// generates a unique student code
+        /// </summary>
+        /// <returns></returns>
+        private async Task<string> GenerateStudentCode(string firstName, string lastName, string email)
+        {
+            var fLenght = firstName.Length;
+            var fNameLeft = firstName.Substring(0, fLenght / 2);
+            
+            var lLenght = lastName.Length;
+            var lNameRight = lastName.Substring(lLenght / 2);
+
+            var name = fNameLeft + lNameRight;
+            var result = await _userManager.FindByNameAsync(name);
+
+            if (result == null)
+            {
+                return name;
+            }
+
+            var counter = 1;
+            
+            while (true)
+            {
+                if (counter > 15)
+                {
+                    return email.Split("@")[0];
+                }
+                
+                result = await _userManager.FindByNameAsync(name + counter);
+                
+                if (result == null)
+                {
+                    return name;
+                }
+
+                counter++;
+            }
         }
     }
 }

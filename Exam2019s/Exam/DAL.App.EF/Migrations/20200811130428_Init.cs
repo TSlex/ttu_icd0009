@@ -29,7 +29,6 @@ namespace DAL.App.EF.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 128, nullable: false),
                     LastName = table.Column<string>(maxLength: 128, nullable: false),
-                    StudentCode = table.Column<string>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     ChangedBy = table.Column<string>(nullable: true),
@@ -60,7 +59,7 @@ namespace DAL.App.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Semester",
+                name: "Semesters",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -75,7 +74,7 @@ namespace DAL.App.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Semester", x => x.Id);
+                    table.PrimaryKey("PK_Semesters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,7 +199,7 @@ namespace DAL.App.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subject",
+                name: "Subjects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -217,15 +216,15 @@ namespace DAL.App.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subject", x => x.Id);
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subject_Semester_SemesterId",
+                        name: "FK_Subjects_Semesters_SemesterId",
                         column: x => x.SemesterId,
-                        principalTable: "Semester",
+                        principalTable: "Semesters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Subject_AppUser_TeacherId",
+                        name: "FK_Subjects_AppUser_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "AppUser",
                         principalColumn: "Id",
@@ -278,7 +277,7 @@ namespace DAL.App.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HomeWork",
+                name: "HomeWorks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -295,17 +294,17 @@ namespace DAL.App.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HomeWork", x => x.Id);
+                    table.PrimaryKey("PK_HomeWorks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HomeWork_Subject_SubjectId",
+                        name: "FK_HomeWorks_Subjects_SubjectId",
                         column: x => x.SubjectId,
-                        principalTable: "Subject",
+                        principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentSubject",
+                name: "StudentSubjects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -322,23 +321,23 @@ namespace DAL.App.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentSubject", x => x.Id);
+                    table.PrimaryKey("PK_StudentSubjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentSubject_AppUser_StudentId",
+                        name: "FK_StudentSubjects_AppUser_StudentId",
                         column: x => x.StudentId,
                         principalTable: "AppUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentSubject_Subject_SubjectId",
+                        name: "FK_StudentSubjects_Subjects_SubjectId",
                         column: x => x.SubjectId,
-                        principalTable: "Subject",
+                        principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentHomeWork",
+                name: "StudentHomeWorks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -358,17 +357,17 @@ namespace DAL.App.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentHomeWork", x => x.Id);
+                    table.PrimaryKey("PK_StudentHomeWorks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentHomeWork_HomeWork_HomeWorkId",
+                        name: "FK_StudentHomeWorks_HomeWorks_HomeWorkId",
                         column: x => x.HomeWorkId,
-                        principalTable: "HomeWork",
+                        principalTable: "HomeWorks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentHomeWork_StudentSubject_StudentSubjectId",
+                        name: "FK_StudentHomeWorks_StudentSubjects_StudentSubjectId",
                         column: x => x.StudentSubjectId,
-                        principalTable: "StudentSubject",
+                        principalTable: "StudentSubjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -405,38 +404,38 @@ namespace DAL.App.EF.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HomeWork_SubjectId",
-                table: "HomeWork",
+                name: "IX_HomeWorks_SubjectId",
+                table: "HomeWorks",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentHomeWork_HomeWorkId",
-                table: "StudentHomeWork",
+                name: "IX_StudentHomeWorks_HomeWorkId",
+                table: "StudentHomeWorks",
                 column: "HomeWorkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentHomeWork_StudentSubjectId",
-                table: "StudentHomeWork",
+                name: "IX_StudentHomeWorks_StudentSubjectId",
+                table: "StudentHomeWorks",
                 column: "StudentSubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentSubject_StudentId",
-                table: "StudentSubject",
+                name: "IX_StudentSubjects_StudentId",
+                table: "StudentSubjects",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentSubject_SubjectId",
-                table: "StudentSubject",
+                name: "IX_StudentSubjects_SubjectId",
+                table: "StudentSubjects",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subject_SemesterId",
-                table: "Subject",
+                name: "IX_Subjects_SemesterId",
+                table: "Subjects",
                 column: "SemesterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subject_TeacherId",
-                table: "Subject",
+                name: "IX_Subjects_TeacherId",
+                table: "Subjects",
                 column: "TeacherId",
                 unique: true);
 
@@ -470,7 +469,7 @@ namespace DAL.App.EF.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "StudentHomeWork");
+                name: "StudentHomeWorks");
 
             migrationBuilder.DropTable(
                 name: "Templates");
@@ -482,19 +481,19 @@ namespace DAL.App.EF.Migrations
                 name: "UserRole");
 
             migrationBuilder.DropTable(
-                name: "HomeWork");
+                name: "HomeWorks");
 
             migrationBuilder.DropTable(
-                name: "StudentSubject");
+                name: "StudentSubjects");
 
             migrationBuilder.DropTable(
                 name: "LangStrings");
 
             migrationBuilder.DropTable(
-                name: "Subject");
+                name: "Subjects");
 
             migrationBuilder.DropTable(
-                name: "Semester");
+                name: "Semesters");
 
             migrationBuilder.DropTable(
                 name: "AppUser");

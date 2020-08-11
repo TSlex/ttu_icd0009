@@ -61,7 +61,7 @@ namespace DAL.App.EF.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("HomeWork");
+                    b.ToTable("HomeWorks");
                 });
 
             modelBuilder.Entity("Domain.Identity.AppRole", b =>
@@ -165,10 +165,6 @@ namespace DAL.App.EF.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("StudentCode")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -224,7 +220,7 @@ namespace DAL.App.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Semester");
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("Domain.StudentHomeWork", b =>
@@ -280,7 +276,7 @@ namespace DAL.App.EF.Migrations
 
                     b.HasIndex("StudentSubjectId");
 
-                    b.ToTable("StudentHomeWork");
+                    b.ToTable("StudentHomeWorks");
                 });
 
             modelBuilder.Entity("Domain.StudentSubject", b =>
@@ -325,7 +321,7 @@ namespace DAL.App.EF.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("StudentSubject");
+                    b.ToTable("StudentSubjects");
                 });
 
             modelBuilder.Entity("Domain.Subject", b =>
@@ -375,7 +371,7 @@ namespace DAL.App.EF.Migrations
                     b.HasIndex("TeacherId")
                         .IsUnique();
 
-                    b.ToTable("Subject");
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Domain.Template", b =>

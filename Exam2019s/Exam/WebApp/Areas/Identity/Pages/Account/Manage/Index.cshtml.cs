@@ -133,28 +133,6 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            //setup new username
-            var username = await _userManager.GetUserNameAsync(user);
-            if (Input.Username != username)
-            {
-                var userCheck = await _userManager.FindByNameAsync(Input.Username);
-
-                if (userCheck != null && !(userCheck.Equals(user)))
-                {
-                    StatusMessage = Resources.Views.Identity.Identity.ProfileDataUpdateStatusUsernameExists;
-                    return RedirectToPage();
-                }
-
-                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Username);
-
-                if (!setUserNameResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException(
-                        $"Unexpected error occurred setting username for user with ID '{userId}'.");
-                }
-            }
-            
             //setup other
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
