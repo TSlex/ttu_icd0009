@@ -54,8 +54,14 @@ namespace ee.itcollege.aleksi.BLL.Base.Services
 
         public virtual TBLLEntity Add(TBLLEntity entity) =>
             Mapper.Map(ServiceRepository.Add(Mapper.MapReverse(entity)));
+        
+        public virtual TBLLEntity AddAdmin(TBLLEntity entity) =>
+            Mapper.Map(ServiceRepository.Add(Mapper.MapReverse(entity)));
 
         public virtual async Task<TBLLEntity> UpdateAsync(TBLLEntity entity) =>
+            Mapper.Map(await ServiceRepository.UpdateAsync(Mapper.MapReverse(entity)));
+        
+        public virtual async Task<TBLLEntity> UpdateAdminAsync(TBLLEntity entity) =>
             Mapper.Map(await ServiceRepository.UpdateAsync(Mapper.MapReverse(entity)));
 
         public virtual TBLLEntity Remove(TBLLEntity entity) =>
@@ -74,7 +80,12 @@ namespace ee.itcollege.aleksi.BLL.Base.Services
 
         public async Task<bool> ExistsAsync(Guid id)
         {
-            return await ServiceRepository.ExistAsync(id);
+            return await ServiceRepository.ExistsAsync(id);
+        }
+        
+        public async Task<bool> ExistsUserAsync(Guid id, Guid? userId)
+        {
+            return await ServiceRepository.ExistsUserAsync(id, userId);
         }
     }
 }

@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UserSecretsId>aspnet-WebApp-18E382EE-CE67-4E37-9AF0-4EB665CB1635</UserSecretsId>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\WebApp.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ee.itcollege.aleksi.BLL.Base" Version="1.0.0" />
+        <PackageReference Include="ee.itcollege.aleksi.Contracts.BLL.Base" Version="1.0.0" />
+        <PackageReference Include="ee.itcollege.aleksi.Contracts.DAL.Base" Version="1.0.0" />
+        <PackageReference Include="ee.itcollege.aleksi.DAL.Base" Version="1.0.0" />
+        <PackageReference Include="ee.itcollege.aleksi.DAL.Base.EF" Version="1.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6" />
+        <PackageReference Include="Microsoft.OpenApi" Version="1.2.2" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.5.1" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BLL.App\BLL.App.csproj" />
+      <ProjectReference Include="..\Contracts.BLL.App\Contracts.BLL.App.csproj" />
+      <ProjectReference Include="..\DAL.App.EF\DAL.App.EF.csproj" />
+      <ProjectReference Include="..\DAL.App\DAL.App.csproj" />
+      <ProjectReference Include="..\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\PublicApi.v1\PublicApi.v1.csproj" />
+      <ProjectReference Include="..\Resources\Resources.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\Admin\Controllers" />
+      <Folder Include="Areas\Admin\VIews" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\site.ts" />
+    </ItemGroup>
+
+</Project>

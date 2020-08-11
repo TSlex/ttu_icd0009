@@ -15,9 +15,9 @@ dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2q
 ```
 
 ```
-dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 BLL.Base\bin\Release\ee.itcollege.aleksi.BLL.Base.1.0.0.nupkg
-dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 Contracts.BLL.Base\bin\Release\ee.itcollege.aleksi.Contracts.BLL.Base.1.0.0.nupkg
-dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 Contracts.DAL.Base\bin\Release\ee.itcollege.aleksi.Contracts.DAL.Base.1.0.0.nupkg
-dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 DAL.Base\bin\Release\ee.itcollege.aleksi.DAL.Base.1.0.0.nupkg
-dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 DAL.Base.EF\bin\Release\ee.itcollege.aleksi.DAL.Base.EF.1.0.0.nupkg
-```git
+dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 BLL.Base\bin\Release\ee.itcollege.aleksi.BLL.Base.1.0.1.nupkg
+dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 Contracts.BLL.Base\bin\Release\ee.itcollege.aleksi.Contracts.BLL.Base.1.0.1.nupkg
+dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 Contracts.DAL.Base\bin\Release\ee.itcollege.aleksi.Contracts.DAL.Base.1.0.1.nupkg
+dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 DAL.Base\bin\Release\ee.itcollege.aleksi.DAL.Base.1.0.1.nupkg
+dotnet nuget push --source https://api.nuget.org/v3/index.json --api-key oy2kp2qkwajgpkawbu7qft7mm4f6xx3efpib6724e2lwp4 DAL.Base.EF\bin\Release\ee.itcollege.aleksi.DAL.Base.EF.1.0.1.nupkg
+```

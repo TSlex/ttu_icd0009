@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="CreateButton">
+        <value>Luua</value>
+    </data>
+    <data name="CancelButton">
+        <value>Tagasi</value>
+    </data>
+    <data name="SaveButton">
+        <value>Salvesta</value>
+    </data>
+    <data name="EditButton">
+        <value>Muuda</value>
+    </data>
+    <data name="InspectButton">
+        <value>Vaata</value>
+    </data>
+    <data name="DeleteButton">
+        <value>Kustuta</value>
+    </data>
+    <data name="CreateHeader">
+        <value>Loomine</value>
+    </data>
+    <data name="DetailsHeader">
+        <value>Detailid</value>
+    </data>
+    <data name="EditHeader">
+        <value>Muutus</value>
+    </data>
+    <data name="DeleteHeader">
+        <value>Kustutamine</value>
+    </data>
+    <data name="SendButton">
+        <value>Saada</value>
+    </data>
+    <data name="DeleteConfirm">
+        <value>Kas soovite selle kindlasti kustutada?</value>
+    </data>
+    <data name="DownloadButton">
+        <value>Lae alla</value>
+    </data>
+    <data name="NoContent">
+        <value>Midagi siin veel pole</value>
+    </data>
+    <data name="BackToListButton">
+        <value>Tagasi nimekirja</value>
+    </data>
+    <data name="IndexHeader">
+        <value>Indeks</value>
+    </data>
+    <data name="AdminProfileSectionHeader">
+        <value>Profiil</value>
+    </data>
+    <data name="AdminImageSectionHeader">
+        <value>Pilt</value>
+    </data>
+    <data name="AdminChatSectionHeader">
+        <value>Vestlus</value>
+    </data>
+    <data name="AdminPostSectionHeader">
+        <value>Post</value>
+    </data>
+    <data name="AdminMiscSectionHeader">
+        <value>Muu</value>
+    </data>
+    <data name="AdminSystemSectionHeader">
+        <value>Süsteem</value>
+    </data>
+    <data name="AdminProfilesHeader">
+        <value>Profiilid</value>
+    </data>
+    <data name="AdminProfileGiftsHeader">
+        <value>Profiilide kingitused</value>
+    </data>
+    <data name="AdminProfileRanksHeader">
+        <value>Profiilide auastmed</value>
+    </data>
+    <data name="AdminFavoritesHeader">
+        <value>Lemmikud</value>
+    </data>
+    <data name="AdminFollowersHeader">
+        <value>Jälgijad</value>
+    </data>
+    <data name="AdminBlockedProfilesHeader">
+        <value>Blokeeritud profiilid</value>
+    </data>
+    <data name="AdminImagesHeader">
+        <value>Pildid</value>
+    </data>
+    <data name="AdminChatRoomsHeader">
+        <value>Jututoad</value>
+    </data>
+    <data name="AdminChatMembersHeader">
+        <value>Vestluse osalejad</value>
+    </data>
+    <data name="AdminMessagesHeader">
+        <value>Sõnumid</value>
+    </data>
+    <data name="AdminPostsHeader">
+        <value>Postitused</value>
+    </data>
+    <data name="AdminCommentsHeader">
+        <value>Kommentaarid</value>
+    </data>
+    <data name="AdminChatRolesHeader">
+        <value>Vestlusrollid</value>
+    </data>
+    <data name="AdminRanksHeader">
+        <value>Auastmed</value>
+    </data>
+    <data name="AdminGiftsHeader">
+        <value>Kingitused</value>
+    </data>
+    <data name="AdminUserRolesHeader">
+        <value>Kasutajarollid</value>
+    </data>
+    <data name="AdminUserInRolesHeader">
+        <value>Kasutaja rollides</value>
+    </data>
+    <data name="PageNotFound">
+        <value>Lehte, mida otsisite, ei leitud!</value>
+    </data>
+</root>

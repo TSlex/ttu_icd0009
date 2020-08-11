@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="ReturnUrl" >
+        <value>Url to return</value>
+    </data>
+    <data name="MasterId" >
+        <value>Master (ID)</value>
+    </data>
+    <data name="Id">
+        <value>(ID)</value>
+    </data>
+    <data name="CreatedBy">
+        <value>Created by</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Created at</value>
+    </data>
+    <data name="ChangedBy">
+        <value>Changed by</value>
+    </data>
+    <data name="ChangedAt">
+        <value>Changed at</value>
+    </data>
+    <data name="DeletedBy">
+        <value>Deleted by</value>
+    </data>
+    <data name="DeletedAt">
+        <value>Deleted at</value>
+    </data>
+    <data name="ErrorMessage_MaxLength">
+        <value>The field {0} must be a string or array type with a maximum length of '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_MinLength">
+        <value>The field {0} must be a string or array type with a minimum length of '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_Required">
+        <value>The {0} field is required.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMax">
+        <value>The field {0} must be a string with a maximum length of {1}.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMinMax">
+        <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
+    </data>
+    <data name="ErrorMessage_Range">
+        <value>The field {0} must be between {1} and {2}.</value>
+    </data>
+    <data name="ErrorMessage_InvalidValue">
+        <value>{0} is not valid value for {1} field.</value>
+    </data>
+    <data name="ErrorIdMatch">
+        <value>Id's should match!</value>
+    </data>
+    <data name="ErrorNotFound">
+        <value>Record was not found!</value>
+    </data>
+    <data name="ErrorUserNotFound">
+        <value>User was not found!</value>
+    </data>
+    <data name="ErrorAccessDenied">
+        <value>Access denied!</value>
+    </data>
+    <data name="ErrorBadData">
+        <value>Record data is invalid!</value>
+    </data>
+    <data name="SuccessDeleted">
+        <value>Record was deleted.</value>
+    </data>
+    <data name="SuccessRestored">
+        <value>Record was restored.</value>
+    </data>
+    <data name="ErrorTranslationRequired">
+        <value>Translation is required!</value>
+    </data>
+    <data name="Name">
+        <value>Name</value>
+    </data>
+    <data name="UserRole">
+        <value>Role</value>
+    </data>
+    <data name="UserRoleId">
+        <value>Role (ID)</value>
+    </data>
+    <data name="User">
+        <value>User</value>
+    </data>
+    <data name="UserId">
+        <value>User (ID)</value>
+    </data>
+</root>

@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="Email">
+        <value>Э-адрес</value>
+    </data>
+    <data name="Password">
+        <value>Пароль</value>
+    </data>
+    <data name="UserName">
+        <value>Имя пользователя</value>
+    </data>
+    <data name="PasswordConfirm">
+        <value>Подтвердите пароль</value>
+    </data>
+    <data name="ProfileFullName">
+        <value>Имя и фамилия</value>
+    </data>
+    <data name="ProfileWorkPlace">
+        <value>Место работы</value>
+    </data>
+    <data name="ProfileAbout">
+        <value>О себе</value>
+    </data>
+    <data name="PhoneNumber">
+        <value>Номер телефона</value>
+    </data>
+    <data name="ProfileGender">
+        <value>Пол</value>
+    </data>
+    <data name="ProfileGenderOwn">
+        <value>Свой вариант</value>
+    </data>
+    <data name="AccessFailedCount">
+        <value>Количество провальных попыток входа</value>
+    </data>
+    <data name="BlockedByProfiles">
+        <value>В черном списке</value>
+    </data>
+    <data name="BlockedProfiles">
+        <value>Черный список</value>
+    </data>
+    <data name="ChatMembers">
+        <value>Участники</value>
+    </data>
+    <data name="Comments">
+        <value>Комментарии</value>
+    </data>
+    <data name="EmailConfirmed">
+        <value>Эл. адрес подтвержден?</value>
+    </data>
+    <data name="Experience">
+        <value>Опыт</value>
+    </data>
+    <data name="Favorites">
+        <value>Понравившиеся</value>
+    </data>
+    <data name="Followed">
+        <value>Подписки</value>
+    </data>
+    <data name="FollowedCount">
+        <value>Количество подписок</value>
+    </data>
+    <data name="Followers">
+        <value>Подписчики</value>
+    </data>
+    <data name="FollowersCount">
+        <value>Количество подписчиков</value>
+    </data>
+    <data name="IsUserBlocked">
+        <value>Вы в черном списке?</value>
+    </data>
+    <data name="IsUserBlocks">
+        <value>У вас в черном списке?</value>
+    </data>
+    <data name="IsUserFollows">
+        <value>Вы подписаны?</value>
+    </data>
+    <data name="LastLoginDateTime">
+        <value>Посдений вход</value>
+    </data>
+    <data name="LockoutEnabled">
+        <value>Блокировка включена?</value>
+    </data>
+    <data name="Messages">
+        <value>Сообщения</value>
+    </data>
+    <data name="PhoneNumberConfirmed">
+        <value>Номер телефона подтвержден?</value>
+    </data>
+    <data name="Posts">
+        <value>Посты</value>
+    </data>
+    <data name="PostsCount">
+        <value>Количество постов</value>
+    </data>
+    <data name="ProfileAvatar">
+        <value>Аватар</value>
+    </data>
+    <data name="ProfileAvatarId">
+        <value>Аватар (ID)</value>
+    </data>
+    <data name="ProfileAvatarUrl">
+        <value>Аватар (URL)</value>
+    </data>
+    <data name="ProfileGifts">
+        <value>Подарки</value>
+    </data>
+    <data name="ProfileRanks">
+        <value>Ранки</value>
+    </data>
+    <data name="ProfileStatus">
+        <value>Статус</value>
+    </data>
+    <data name="Rank">
+        <value>Ранк</value>
+    </data>
+    <data name="ErrorChangeUsername" >
+        <value>Ошибка изменения имени пользователя!</value>
+    </data>
+    <data name="ErrorChangeEmail" >
+        <value>Ошибка смены электронной почты!</value>
+    </data>
+    <data name="ErrorSetPassword" >
+        <value>Ошибка установки пароля!</value>
+    </data>
+    <data name="ErrorFollowYouSelf" >
+        <value>Вы не можете подписаться на себя!</value>
+    </data>
+    <data name="ErrorBlockYouSelf" >
+        <value>Вы не можете заблокировать себя!</value>
+    </data>
+    <data name="ErrorCannotFollowDueBlock" >
+        <value>Вы не можете подписаться на пользователя, который блокирует вас!</value>
+    </data>
+    <data name="ResponseNowFollow" >
+        <value>Вы подписаны на {0}.</value>
+    </data>
+    <data name="ResponseNowUnFollow" >
+        <value>Вы больше не подписаны на {0}.</value>
+    </data>
+    <data name="ResponseAlreadyFollow" >
+        <value>Вы уже подписаны на {0}.</value>
+    </data>
+    <data name="ResponseNotFollow" >
+        <value>Вы не подписаны на {0}.</value>
+    </data>
+    <data name="ResponseNowBlock" >
+        <value>{0} был заблокирован.</value>
+    </data>
+    <data name="ResponseNowUnBlock" >
+        <value>{0} был разблокирован.</value>
+    </data>
+    <data name="ResponseAlreadyBlock" >
+        <value>{0} уже заблокирован.</value>
+    </data>
+    <data name="ResponseNotBlock" >
+        <value>{0} не заблокирован.</value>
+    </data>
+    <data name="ErrorUserAlreadyExists" >
+        <value>Пользователь уже зарегистрирован!</value>
+    </data>
+    <data name="ErrorUsernameAlreadyExists" >
+        <value>Имя пользователя уже используется!</value>
+    </data>
+    <data name="ErrorChangePhone" >
+        <value>Ошибка смены телефона!</value>
+    </data>
+    <data name="ErrorIncorrectPassword" >
+        <value>Неверный пароль!</value>
+    </data>
+</root>

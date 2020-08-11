@@ -20,3 +20,4 @@ C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.BLL.Base\obj\Release\
 C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.BLL.Base\obj\Release\netstandard2.1\Contracts.BLL.Base.csproj.CopyComplete
 C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.BLL.Base\obj\Release\netstandard2.1\ee.itcollege.aleksi.Contracts.BLL.Base.dll
 C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.BLL.Base\obj\Release\netstandard2.1\ee.itcollege.aleksi.Contracts.BLL.Base.pdb
+C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.BLL.Base\obj\Release\netstandard2.1\Contracts.BLL.Base.csproj.CoreCompileInputs.cache

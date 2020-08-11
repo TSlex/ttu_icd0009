@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="ErrorMessage_MaxLength">
+        <value>Väli {0} ei saa olla pikem kui '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_MinLength">
+        <value>Väli {0} ei saa olla lühem kui '{1}'.</value>
+    </data>
+    <data name="ErrorMessage_Required">
+        <value>Väli {0} on kohustuslik.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMax">
+        <value>Väli {0} peab olema string, mille maksimaalne pikkus {1}.</value>
+    </data>
+    <data name="ErrorMessage_StringLengthMinMax">
+        <value>Väli {0} peab olema string minimaalse pikkusega {2} ja maksimaalse pikkusega {1}.</value>
+    </data>
+    <data name="ErrorMessage_Range">
+        <value>Väli {0} peab olema vahemikus {1} kuni {2}.</value>
+    </data>
+    <data name="ErrorMessage_InvalidValue">
+        <value>Väärtus {0} pole kehtiv {1} väli poole.</value>
+    </data>
+    <data name="MasterId">
+        <value>Meister (ID)</value>
+    </data>
+    <data name="Id">
+        <value>(ID)</value>
+    </data>
+    <data name="CreatedBy">
+        <value>Loodud</value>
+    </data>
+    <data name="CreatedAt">
+        <value>Loodud kell</value>
+    </data>
+    <data name="ChangedBy">
+        <value>Muudetud</value>
+    </data>
+    <data name="ChangedAt">
+        <value>Muudetud kell</value>
+    </data>
+    <data name="DeletedBy">
+        <value>Kustutatud</value>
+    </data>
+    <data name="DeletedAt">
+        <value>Kustutatud kell</value>
+    </data>
+    <data name="ReturnUrl">
+        <value>URL naasmiseks</value>
+    </data>
+    <data name="ErrorIdMatch">
+        <value>Id peaksid vastama!</value>
+    </data>
+    <data name="ErrorNotFound">
+        <value>Kirjet ei leitud!</value>
+    </data>
+    <data name="ErrorUserNotFound">
+        <value>Kasutajat ei leitud!</value>
+    </data>
+    <data name="ErrorAccessDenied">
+        <value>Ligipääs keelatud!</value>
+    </data>
+    <data name="ErrorBadData">
+        <value>Salvestusandmed on valed!</value>
+    </data>
+    <data name="SuccessDeleted">
+        <value>Kirje kustutati.</value>
+    </data>
+    <data name="SuccessRestored">
+        <value>Kirje taastati.</value>
+    </data>
+    <data name="ErrorTranslationRequired">
+        <value>Tõlge on vajalik!</value>
+    </data>
+    <data name="Name">
+        <value>Nimi</value>
+    </data>
+    <data name="UserRole">
+        <value>Roll</value>
+    </data>
+    <data name="UserRoleId">
+        <value>Roll (ID)</value>
+    </data>
+    <data name="User">
+        <value>Kasutaja</value>
+    </data>
+    <data name="UserId">
+        <value>Kasutaja (ID)</value>
+    </data>
+</root>

@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0",
+  "version": "1.0.1",
   "restore": {
     "projectUniqueName": "C:\\Users\\alex1\\icd0009-2019s\\ee.itcollege.aleksi\\Contracts.DAL.Base\\Contracts.DAL.Base.csproj",
     "projectName": "ee.itcollege.aleksi.Contracts.DAL.Base",
@@ -30,6 +30,10 @@
   "frameworks": {
     "netstandard2.1": {
       "dependencies": {
+        "Microsoft.Extensions.Identity.Stores": {
+          "target": "Package",
+          "version": "[3.1.6, )"
+        },
         "System.ComponentModel.Annotations": {
           "target": "Package",
           "version": "[4.7.0, )"

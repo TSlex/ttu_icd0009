@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="CreateButton">
+        <value>Создать</value>
+    </data>
+    <data name="CancelButton">
+        <value>Отмена</value>
+    </data>
+    <data name="SaveButton">
+        <value>Сохранить</value>
+    </data>
+    <data name="EditButton">
+        <value>Изменить</value>
+    </data>
+    <data name="InspectButton">
+        <value>Просмотреть</value>
+    </data>
+    <data name="DeleteButton">
+        <value>Удалить</value>
+    </data>
+    <data name="CreateHeader">
+        <value>Создание</value>
+    </data>
+    <data name="DetailsHeader">
+        <value>Детали</value>
+    </data>
+    <data name="EditHeader">
+        <value>Изменение</value>
+    </data>
+    <data name="DeleteHeader">
+        <value>Удаление</value>
+    </data>
+    <data name="SendButton">
+        <value>Отправить</value>
+    </data>
+    <data name="DeleteConfirm">
+        <value>Вы уверены, что хотите удалить это?</value>
+    </data>
+    <data name="DownloadButton">
+        <value>Скачать</value>
+    </data>
+    <data name="NoContent">
+        <value>Здесь пока ничего нет</value>
+    </data>
+    <data name="BackToListButton">
+        <value>Назад к списку</value>
+    </data>
+    <data name="IndexHeader">
+        <value>Каталог</value>
+    </data>
+    <data name="AdminProfileSectionHeader">
+        <value>Профиль</value>
+    </data>
+    <data name="AdminImageSectionHeader">
+        <value>Картинка</value>
+    </data>
+    <data name="AdminChatSectionHeader">
+        <value>Чат</value>
+    </data>
+    <data name="AdminPostSectionHeader">
+        <value>Пост</value>
+    </data>
+    <data name="AdminMiscSectionHeader">
+        <value>Разное</value>
+    </data>
+    <data name="AdminSystemSectionHeader">
+        <value>Система</value>
+    </data>
+    <data name="AdminProfilesHeader">
+        <value>Профили</value>
+    </data>
+    <data name="AdminProfileGiftsHeader">
+        <value>Подарки профилей</value>
+    </data>
+    <data name="AdminProfileRanksHeader">
+        <value>Ранки профилей</value>
+    </data>
+    <data name="AdminFavoritesHeader">
+        <value>Избранное</value>
+    </data>
+    <data name="AdminFollowersHeader">
+        <value>Подписки</value>
+    </data>
+    <data name="AdminBlockedProfilesHeader">
+        <value>Черные списки</value>
+    </data>
+    <data name="AdminImagesHeader">
+        <value>Картинки</value>
+    </data>
+    <data name="AdminChatRoomsHeader">
+        <value>Беседы</value>
+    </data>
+    <data name="AdminChatMembersHeader">
+        <value>Участники бесед</value>
+    </data>
+    <data name="AdminMessagesHeader">
+        <value>Сообщения</value>
+    </data>
+    <data name="AdminPostsHeader">
+        <value>Посты</value>
+    </data>
+    <data name="AdminCommentsHeader">
+        <value>Комментарии</value>
+    </data>
+    <data name="AdminChatRolesHeader">
+        <value>Роли бесед</value>
+    </data>
+    <data name="AdminRanksHeader">
+        <value>Ранки</value>
+    </data>
+    <data name="AdminGiftsHeader">
+        <value>Подарки</value>
+    </data>
+    <data name="AdminUserRolesHeader">
+        <value>Пользовательские роли</value>
+    </data>
+    <data name="AdminUserInRolesHeader">
+        <value>Пользователи в ролях</value>
+    </data>
+    <data name="PageNotFound">
+        <value>Страница, которую вы ищете, не найдена!</value>
+    </data>
+</root>

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Enums;
 
+
 namespace PublicApi.DTO.v1.Identity
 {
     public class ProfileDataDTO

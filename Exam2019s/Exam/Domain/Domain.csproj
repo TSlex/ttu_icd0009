@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ee.itcollege.aleksi.BLL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.Contracts.BLL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.Contracts.DAL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.DAL.Base" Version="1.0.0" />
+      <PackageReference Include="ee.itcollege.aleksi.DAL.Base.EF" Version="1.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.6" />
+    </ItemGroup>
+
+</Project>

@@ -14,3 +14,4 @@ C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.DAL.Base\obj\Release\
 C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.DAL.Base\obj\Release\netstandard2.1\Contracts.DAL.Base.AssemblyInfo.cs
 C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.DAL.Base\obj\Release\netstandard2.1\ee.itcollege.aleksi.Contracts.DAL.Base.dll
 C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.DAL.Base\obj\Release\netstandard2.1\ee.itcollege.aleksi.Contracts.DAL.Base.pdb
+C:\Users\alex1\icd0009-2019s\ee.itcollege.aleksi\Contracts.DAL.Base\obj\Release\netstandard2.1\Contracts.DAL.Base.csproj.CoreCompileInputs.cache

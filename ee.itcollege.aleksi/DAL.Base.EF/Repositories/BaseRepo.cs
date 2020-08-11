@@ -199,9 +199,14 @@ namespace ee.itcollege.aleksi.DAL.Base.EF.Repositories
             return await RepoDbSet.CountAsync();
         }
 
-        public async Task<bool> ExistAsync(Guid id)
+        public async Task<bool> ExistsAsync(Guid id)
         {
             return (await RepoDbSet.FirstOrDefaultAsync(x => x.Id == id)) != null;
+        }
+        
+        public Task<bool> ExistsUserAsync(Guid id, Guid? userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -20,8 +20,10 @@ namespace ee.itcollege.aleksi.Contracts.DAL.Base.Repositories
         Task<IEnumerable<TDALEntity>> GetRecordHistoryAsync(Guid id);
 
         TDALEntity Find(TKey id);
+        
         Task<TDALEntity> FindAsync(TKey id);
         Task<TDALEntity> FindAdminAsync(TKey id);
+        
         Task<TDALEntity> GetForUpdateAsync(Guid id);
 
         TDALEntity Add(TDALEntity entity);
@@ -32,7 +34,9 @@ namespace ee.itcollege.aleksi.Contracts.DAL.Base.Repositories
         TDALEntity Remove(TKey id);
 
         Task<int> CountAsync();
-        Task<bool> ExistAsync(Guid id);
+        
+        Task<bool> ExistsAsync(Guid id);
+        Task<bool> ExistsUserAsync(Guid id, Guid? userId);
 
         void Restore(TDALEntity entity);
     }

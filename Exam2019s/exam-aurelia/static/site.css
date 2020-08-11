@@ -1,0 +1,135 @@
+html {
+    user-select: none;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    /* Vertically center the text there */
+}
+
+/* Custom ---------------------------------------- */
+
+html {
+    user-select: none !important;
+}
+
+html::-webkit-scrollbar {
+    width: .5em;
+}
+
+span::-webkit-scrollbar, p::-webkit-scrollbar {
+    width: 0;
+}
+
+html::-webkit-scrollbar-track {
+    border-left: 1px solid lightgray;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    outline: 1px solid slategrey;
+}
+
+hr {
+    width: 100%;
+}
+
+.blur {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.brur-transition:not(.blur) {
+    -webkit-transition: all 2s linear;
+    transition: all 2s linear;
+    -moz-transition: all 2s linear;
+    -webkit-transition: all 2s linear;
+    -o-transition: all 2s linear;
+}
+
+.index_controls {
+    height: 30px;
+    line-height: 30px;
+    width: 40px;
+    text-align: center;
+}
+
+.index_controls * {
+    vertical-align: super;
+    pointer-events: none;
+}

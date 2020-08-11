@@ -27,7 +27,10 @@ namespace ee.itcollege.aleksi.Contracts.BLL.Base.Services
         Task<TBLLEntity> GetForUpdateAsync(Guid id);
 
         TBLLEntity Add(TBLLEntity entity);
+        TBLLEntity AddAdmin(TBLLEntity entity);
+        
         Task<TBLLEntity> UpdateAsync(TBLLEntity entity);
+        Task<TBLLEntity> UpdateAdminAsync(TBLLEntity entity);
 
         TBLLEntity Remove(TBLLEntity entity);
         TBLLEntity Remove(Guid id);
@@ -37,5 +40,6 @@ namespace ee.itcollege.aleksi.Contracts.BLL.Base.Services
         Task<int> CountAsync();
 
         Task<bool> ExistsAsync(Guid id);
+        Task<bool> ExistsUserAsync(Guid id, Guid? userId);
     }
 }
