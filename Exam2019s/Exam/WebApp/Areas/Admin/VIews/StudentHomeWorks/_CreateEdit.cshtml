@@ -1,0 +1,37 @@
+﻿@model BLL.App.DTO.StudentHomeWork
+
+<div class="form-group">
+    <label asp-for="HomeWorkId" class="control-label"></label>
+    <input asp-for="HomeWorkId" class="form-control"/>
+    <span asp-validation-for="HomeWorkId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="StudentSubjectId" class="control-label"></label>
+    <input asp-for="StudentSubjectId" class="form-control"/>
+    <span asp-validation-for="StudentSubjectId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Grade" class="control-label"></label>
+    <input asp-for="Grade" class="form-control"/>
+    <span asp-validation-for="Grade" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="StudentAnswer" class="control-label"></label>
+    <input asp-for="StudentAnswer" class="form-control"/>
+    <span asp-validation-for="StudentAnswer" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="AnswerDateTime" class="control-label"></label>
+    <input asp-for="AnswerDateTime" class="form-control"/>
+    <span asp-validation-for="AnswerDateTime" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="IsChecked"/> @Html.DisplayNameFor(model => model.IsChecked)
+    </label>
+</div>
+<div class="form-group form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="IsAccepted"/> @Html.DisplayNameFor(model => model.IsAccepted)
+    </label>
+</div>

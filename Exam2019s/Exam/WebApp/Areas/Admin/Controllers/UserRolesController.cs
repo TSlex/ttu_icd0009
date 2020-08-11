@@ -12,8 +12,8 @@ namespace WebApp.Areas.Admin.Controllers
     /// <summary>
     /// User roles controller
     /// </summary>
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("{area}/{controller}/{action=Index}")]
     public class UserRolesController : Controller
     {

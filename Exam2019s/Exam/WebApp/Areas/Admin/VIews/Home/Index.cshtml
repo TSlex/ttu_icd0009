@@ -5,12 +5,11 @@
 <div class="admin_panel">
     <div class="panel_section">
         <h4>Main:</h4>
-        @* <a class="btn btn-danger" asp-controller="UserRoles" asp-action="Index" asp-area="Admin"> *@
-        @*     @Resources.Views.Common.AdminUserRolesHeader *@
-        @* </a> *@
-        @* <a class="btn btn-danger" asp-controller="UserInRoles" asp-action="Index" asp-area="Admin"> *@
-        @*     @Resources.Views.Common.AdminUserInRolesHeader *@
-        @* </a> *@
+        <a class="btn btn-primary" asp-controller="Semesters" asp-action="Index" asp-area="Admin"> Semesters </a>
+        <a class="btn btn-primary" asp-controller="Subjects" asp-action="Index" asp-area="Admin"> Subjects </a>
+        <a class="btn btn-primary" asp-controller="HomeWorks" asp-action="Index" asp-area="Admin"> HomeWorks </a>
+        <a class="btn btn-primary" asp-controller="StudentSubjects" asp-action="Index" asp-area="Admin"> StudentSubjects </a>
+        <a class="btn btn-primary" asp-controller="StudentHomeWorks" asp-action="Index" asp-area="Admin"> StudentHomeWorks </a>
     </div>
     <div class="panel_section">
         <h4>@(Resources.Views.Common.AdminSystemSectionHeader):</h4>

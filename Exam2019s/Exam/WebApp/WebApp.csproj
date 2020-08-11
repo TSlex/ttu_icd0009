@@ -1791,6 +1791,12 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\wwwroot\localstorage\images\profiles\08d83c2c-fa5e-4971-807d-30fb172996e2\2ba55a80-e09b-4786-a298-6238515a33e8.jpg" />
       <_ContentIncludedByDefault Remove="wwwroot\css\wwwroot\localstorage\images\profiles\08d83c2c-fa5e-4971-807d-30fb172996e2\c32c55a2-d768-4727-9cdf-0ccfb8f096bf.jpg" />
       <_ContentIncludedByDefault Remove="wwwroot\css\wwwroot\localstorage\images\profiles\08d83c2c-fa5e-4971-807d-30fb172996e2\e3af05ca-dd0e-4876-8084-d3ae4ef79a08.jpg" />
+      <_ContentIncludedByDefault Remove="Views\Templates\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Templates\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Templates\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Templates\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Templates\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Templates\_CreateEdit.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

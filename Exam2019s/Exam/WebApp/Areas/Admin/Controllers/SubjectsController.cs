@@ -1,166 +1,139 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL.App.EF;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Subject = BLL.App.DTO.Subject;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class SubjectsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public SubjectsController(ApplicationDbContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bll"></param>
+        public SubjectsController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: Subjects
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Subjects.Include(s => s.Semester).Include(s => s.Teacher);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _bll.Subjects.AllAdminAsync());
         }
 
-        // GET: Subjects/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var history = (await _bll.Subjects.GetRecordHistoryAsync(id)).ToList();
 
-            var subject = await _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            return View(nameof(Index), history);
+        }
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var subject = await _bll.Subjects.FindAdminAsync(id);
+
             if (subject == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(subject);
         }
 
-        // GET: Subjects/Create
-        public IActionResult Create()
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Edit(Guid id)
         {
-            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Code");
-            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FirstName");
-            return View();
+            var subject = await _bll.Subjects.FindAdminAsync(id);
+
+            return View(subject);
         }
 
-        // POST: Subjects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="subject"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SubjectTitle,SubjectCode,TeacherId,SemesterId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Subject subject)
-        {
-            if (ModelState.IsValid)
-            {
-                subject.Id = Guid.NewGuid();
-                _context.Add(subject);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Code", subject.SemesterId);
-            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FirstName", subject.TeacherId);
-            return View(subject);
-        }
-
-        // GET: Subjects/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject == null)
-            {
-                return NotFound();
-            }
-            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Code", subject.SemesterId);
-            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FirstName", subject.TeacherId);
-            return View(subject);
-        }
-
-        // POST: Subjects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("SubjectTitle,SubjectCode,TeacherId,SemesterId,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Subject subject)
+        public async Task<IActionResult> Edit(Guid id, Subject subject)
         {
             if (id != subject.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorIdMatch);
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(subject);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SubjectExists(subject.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _bll.Subjects.UpdateAsync(subject);
+                await _bll.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SemesterId"] = new SelectList(_context.Semesters, "Id", "Code", subject.SemesterId);
-            ViewData["TeacherId"] = new SelectList(_context.Users, "Id", "FirstName", subject.TeacherId);
-            return View(subject);
-        }
-
-        // GET: Subjects/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var subject = await _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
-            {
-                return NotFound();
-            }
 
             return View(subject);
         }
 
-        // POST: Subjects/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var subject = await _context.Subjects.FindAsync(id);
-            _context.Subjects.Remove(subject);
-            await _context.SaveChangesAsync();
+            _bll.Subjects.Remove(id);
+            await _bll.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubjectExists(Guid id)
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
         {
-            return _context.Subjects.Any(e => e.Id == id);
+            var record = await _bll.Subjects.GetForUpdateAsync(id);
+            _bll.Subjects.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

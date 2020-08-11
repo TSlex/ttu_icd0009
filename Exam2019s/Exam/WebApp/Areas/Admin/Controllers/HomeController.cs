@@ -6,8 +6,8 @@ namespace WebApp.Areas.Admin.Controllers
     /// <summary>
     /// Home
     /// </summary>
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         /// <summary>

@@ -1,0 +1,23 @@
+@model BLL.App.DTO.Subject
+
+@{
+    ViewData["Title"] = Resources.Views.Common.CreateHeader;
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<hr/>
+<div class="row d-flex align-items-center flex-column">
+    <div class="col-md-4 text-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <partial name="_CreateEdit"/>
+            
+            <partial name="_CreateControls"/>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

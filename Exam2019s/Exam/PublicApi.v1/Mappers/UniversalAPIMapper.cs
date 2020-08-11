@@ -14,8 +14,6 @@ namespace PublicApi.v1.Mappers
                 config.CreateMap<TOutObject, TInObject>();
 
                 // own mapping for composite entities
-                config.CreateMap<BLL.App.DTO.Template, Template>();
-                config.CreateMap<Template, BLL.App.DTO.Template>();
 
                 config.AllowNullDestinationValues = true;
             }).CreateMapper())

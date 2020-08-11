@@ -1,0 +1,50 @@
+@model IEnumerable<BLL.App.DTO.Subject>
+
+@{
+    ViewData["Title"] = Resources.Views.Common.IndexHeader;
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-center" style="font-size: 30px">
+    <a asp-action="Create" class="fa fa-plus-square"></a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubjectTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubjectCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Semester)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester.Code)
+            </td>
+            <td>
+                <partial name="_IndexControls" model="@item"/>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

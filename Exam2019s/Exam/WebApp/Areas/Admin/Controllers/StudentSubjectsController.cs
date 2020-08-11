@@ -1,166 +1,139 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL.App.EF;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using StudentSubject = BLL.App.DTO.StudentSubject;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class StudentSubjectsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public StudentSubjectsController(ApplicationDbContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bll"></param>
+        public StudentSubjectsController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: StudentSubjects
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.StudentSubjects.Include(s => s.Student).Include(s => s.Subject);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _bll.StudentSubjects.AllAdminAsync());
         }
 
-        // GET: StudentSubjects/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
         {
-            if (id == null)
+            var history = (await _bll.StudentSubjects.GetRecordHistoryAsync(id)).ToList();
+
+            return View(nameof(Index), history);
+        }
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var subject = await _bll.StudentSubjects.FindAdminAsync(id);
+
+            if (subject == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
-            var studentSubject = await _context.StudentSubjects
-                .Include(s => s.Student)
-                .Include(s => s.Subject)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentSubject == null)
-            {
-                return NotFound();
-            }
-
-            return View(studentSubject);
+            return View(subject);
         }
 
-        // GET: StudentSubjects/Create
-        public IActionResult Create()
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Edit(Guid id)
         {
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName");
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode");
-            return View();
+            var subject = await _bll.StudentSubjects.FindAdminAsync(id);
+
+            return View(subject);
         }
 
-        // POST: StudentSubjects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="subject"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,SubjectId,Grade,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentSubject studentSubject)
+        public async Task<IActionResult> Edit(Guid id, StudentSubject subject)
         {
-            if (ModelState.IsValid)
+            if (id != subject.Id)
             {
-                studentSubject.Id = Guid.NewGuid();
-                _context.Add(studentSubject);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName", studentSubject.StudentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode", studentSubject.SubjectId);
-            return View(studentSubject);
-        }
-
-        // GET: StudentSubjects/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentSubject = await _context.StudentSubjects.FindAsync(id);
-            if (studentSubject == null)
-            {
-                return NotFound();
-            }
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName", studentSubject.StudentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode", studentSubject.SubjectId);
-            return View(studentSubject);
-        }
-
-        // POST: StudentSubjects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("StudentId,SubjectId,Grade,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentSubject studentSubject)
-        {
-            if (id != studentSubject.Id)
-            {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorIdMatch);
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(studentSubject);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentSubjectExists(studentSubject.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _bll.StudentSubjects.UpdateAsync(subject);
+                await _bll.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName", studentSubject.StudentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode", studentSubject.SubjectId);
-            return View(studentSubject);
+
+            return View(subject);
         }
 
-        // GET: StudentSubjects/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentSubject = await _context.StudentSubjects
-                .Include(s => s.Student)
-                .Include(s => s.Subject)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentSubject == null)
-            {
-                return NotFound();
-            }
-
-            return View(studentSubject);
-        }
-
-        // POST: StudentSubjects/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var studentSubject = await _context.StudentSubjects.FindAsync(id);
-            _context.StudentSubjects.Remove(studentSubject);
-            await _context.SaveChangesAsync();
+            _bll.StudentSubjects.Remove(id);
+            await _bll.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentSubjectExists(Guid id)
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
         {
-            return _context.StudentSubjects.Any(e => e.Id == id);
+            var record = await _bll.StudentSubjects.GetForUpdateAsync(id);
+            _bll.StudentSubjects.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,166 +1,139 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL.App.EF;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using StudentHomeWork = BLL.App.DTO.StudentHomeWork;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class StudentHomeWorksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public StudentHomeWorksController(ApplicationDbContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bll"></param>
+        public StudentHomeWorksController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: StudentHomeWorks
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.StudentHomeWorks.Include(s => s.HomeWork).Include(s => s.StudentSubject);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _bll.StudentHomeWorks.AllAdminAsync());
         }
 
-        // GET: StudentHomeWorks/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
         {
-            if (id == null)
+            var history = (await _bll.StudentHomeWorks.GetRecordHistoryAsync(id)).ToList();
+
+            return View(nameof(Index), history);
+        }
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var homework = await _bll.StudentHomeWorks.FindAdminAsync(id);
+
+            if (homework == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
-            var studentHomeWork = await _context.StudentHomeWorks
-                .Include(s => s.HomeWork)
-                .Include(s => s.StudentSubject)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentHomeWork == null)
-            {
-                return NotFound();
-            }
-
-            return View(studentHomeWork);
+            return View(homework);
         }
 
-        // GET: StudentHomeWorks/Create
-        public IActionResult Create()
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Edit(Guid id)
         {
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description");
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id");
-            return View();
+            var homework = await _bll.StudentHomeWorks.FindAdminAsync(id);
+
+            return View(homework);
         }
 
-        // POST: StudentHomeWorks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="homework"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HomeWorkId,StudentSubjectId,Grade,StudentAnswer,AnswerDateTime,IsChecked,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentHomeWork studentHomeWork)
+        public async Task<IActionResult> Edit(Guid id, StudentHomeWork homework)
         {
-            if (ModelState.IsValid)
+            if (id != homework.Id)
             {
-                studentHomeWork.Id = Guid.NewGuid();
-                _context.Add(studentHomeWork);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description", studentHomeWork.HomeWorkId);
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id", studentHomeWork.StudentSubjectId);
-            return View(studentHomeWork);
-        }
-
-        // GET: StudentHomeWorks/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
-            if (studentHomeWork == null)
-            {
-                return NotFound();
-            }
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description", studentHomeWork.HomeWorkId);
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id", studentHomeWork.StudentSubjectId);
-            return View(studentHomeWork);
-        }
-
-        // POST: StudentHomeWorks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("HomeWorkId,StudentSubjectId,Grade,StudentAnswer,AnswerDateTime,IsChecked,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentHomeWork studentHomeWork)
-        {
-            if (id != studentHomeWork.Id)
-            {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorIdMatch);
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(studentHomeWork);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentHomeWorkExists(studentHomeWork.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _bll.StudentHomeWorks.UpdateAsync(homework);
+                await _bll.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description", studentHomeWork.HomeWorkId);
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id", studentHomeWork.StudentSubjectId);
-            return View(studentHomeWork);
+
+            return View(homework);
         }
 
-        // GET: StudentHomeWorks/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentHomeWork = await _context.StudentHomeWorks
-                .Include(s => s.HomeWork)
-                .Include(s => s.StudentSubject)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentHomeWork == null)
-            {
-                return NotFound();
-            }
-
-            return View(studentHomeWork);
-        }
-
-        // POST: StudentHomeWorks/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
-            _context.StudentHomeWorks.Remove(studentHomeWork);
-            await _context.SaveChangesAsync();
+            _bll.StudentHomeWorks.Remove(id);
+            await _bll.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentHomeWorkExists(Guid id)
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
         {
-            return _context.StudentHomeWorks.Any(e => e.Id == id);
+            var record = await _bll.StudentHomeWorks.GetForUpdateAsync(id);
+            _bll.StudentHomeWorks.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

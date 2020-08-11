@@ -1,152 +1,138 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts.BLL.App;
 using DAL.App.EF;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Semester = BLL.App.DTO.Semester;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    [Route("{area}/{controller}/{action=Index}")]
     public class SemestersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppBLL _bll;
 
-        public SemestersController(ApplicationDbContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bll"></param>
+        public SemestersController(IAppBLL bll)
         {
-            _context = context;
+            _bll = bll;
         }
 
-        // GET: Semesters
+        /// <summary>
+        /// Get all records
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Semesters.ToListAsync());
+            return View(await _bll.Semesters.AllAdminAsync());
         }
 
-        // GET: Semesters/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        /// <summary>
+        /// Get record history
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> History(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var history = (await _bll.Semesters.GetRecordHistoryAsync(id)).ToList();
 
-            var semester = await _context.Semesters
-                .FirstOrDefaultAsync(m => m.Id == id);
+            return View(nameof(Index), history);
+        }
+
+        /// <summary>
+        /// Get record details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var semester = await _bll.Semesters.FindAdminAsync(id);
+
             if (semester == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home", new {area = ""});
             }
 
             return View(semester);
         }
 
-        // GET: Semesters/Create
-        public IActionResult Create()
+        /// <summary>
+        /// Get record editing page
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Edit(Guid id)
         {
-            return View();
+            var semester = await _bll.Semesters.FindAdminAsync(id);
+
+            return View(semester);
         }
 
-        // POST: Semesters/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Updates a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="semester"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Code,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Semester semester)
-        {
-            if (ModelState.IsValid)
-            {
-                semester.Id = Guid.NewGuid();
-                _context.Add(semester);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(semester);
-        }
-
-        // GET: Semesters/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var semester = await _context.Semesters.FindAsync(id);
-            if (semester == null)
-            {
-                return NotFound();
-            }
-            return View(semester);
-        }
-
-        // POST: Semesters/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Title,Code,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] Semester semester)
+        public async Task<IActionResult> Edit(Guid id, Semester semester)
         {
             if (id != semester.Id)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorIdMatch);
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(semester);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SemesterExists(semester.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _bll.Semesters.UpdateAsync(semester);
+                await _bll.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(semester);
-        }
-
-        // GET: Semesters/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var semester = await _context.Semesters
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (semester == null)
-            {
-                return NotFound();
-            }
 
             return View(semester);
         }
 
-        // POST: Semesters/Delete/5
+        /// <summary>
+        /// Deletes a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var semester = await _context.Semesters.FindAsync(id);
-            _context.Semesters.Remove(semester);
-            await _context.SaveChangesAsync();
+            _bll.Semesters.Remove(id);
+            await _bll.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SemesterExists(Guid id)
+        /// <summary>
+        /// Restores a record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
         {
-            return _context.Semesters.Any(e => e.Id == id);
+            var record = await _bll.Semesters.GetForUpdateAsync(id);
+            _bll.Semesters.Restore(record);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
