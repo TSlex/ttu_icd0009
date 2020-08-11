@@ -15,7 +15,20 @@ namespace DAL.App.Mappers
                 config.CreateMap<TOutObject, TInObject>();
                 
                 // own mapping for composite entities
-
+                config.CreateMap<Domain.HomeWork, HomeWork>();
+                config.CreateMap<HomeWork, Domain.HomeWork>();
+                
+                config.CreateMap<Domain.Semester, Semester>();
+                config.CreateMap<Semester, Domain.Semester>();
+                
+                config.CreateMap<Domain.Subject, Subject>();
+                config.CreateMap<Subject, Domain.Subject>();
+                
+                config.CreateMap<Domain.StudentSubject, StudentSubject>();
+                config.CreateMap<StudentSubject, Domain.StudentSubject>();
+                
+                config.CreateMap<Domain.StudentHomeWork, StudentHomeWork>();
+                config.CreateMap<StudentHomeWork, Domain.StudentHomeWork>();
 
                 config.AllowNullDestinationValues = true;
             }).CreateMapper())

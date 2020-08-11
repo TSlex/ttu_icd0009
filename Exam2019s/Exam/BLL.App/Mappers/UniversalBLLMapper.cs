@@ -15,8 +15,20 @@ namespace BLL.App.Mappers
                 config.CreateMap<TOutObject, TInObject>();
 
                 // own mapping for composite entities
-                config.CreateMap<DAL.App.DTO.Template, Template>();
-                config.CreateMap<Template, DAL.App.DTO.Template>();
+                config.CreateMap<DAL.App.DTO.HomeWork, HomeWork>();
+                config.CreateMap<HomeWork, DAL.App.DTO.HomeWork>();
+                
+                config.CreateMap<DAL.App.DTO.Semester, Semester>();
+                config.CreateMap<Semester, DAL.App.DTO.Semester>();
+                
+                config.CreateMap<DAL.App.DTO.Subject, Subject>();
+                config.CreateMap<Subject, DAL.App.DTO.Subject>();
+                
+                config.CreateMap<DAL.App.DTO.StudentSubject, StudentSubject>();
+                config.CreateMap<StudentSubject, DAL.App.DTO.StudentSubject>();
+                
+                config.CreateMap<DAL.App.DTO.StudentHomeWork, StudentHomeWork>();
+                config.CreateMap<StudentHomeWork, DAL.App.DTO.StudentHomeWork>();
 
                 config.AllowNullDestinationValues = true;
             }).CreateMapper())
