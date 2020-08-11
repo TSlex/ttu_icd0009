@@ -105,8 +105,8 @@ namespace WebApp
                 var supportedCultures = new[]
                 {
                     new CultureInfo(name: "en-GB"),
-                    new CultureInfo(name: "et-EE"),
-                    new CultureInfo(name: "ru-RU")
+//                    new CultureInfo(name: "et-EE"),
+//                    new CultureInfo(name: "ru-RU")
                 };
 
                 // State what the default culture for your application is. 

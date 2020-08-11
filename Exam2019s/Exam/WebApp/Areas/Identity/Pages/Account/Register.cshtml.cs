@@ -125,6 +125,14 @@ namespace WebApp.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            
+            var appUser = await _userManager.FindByEmailAsync(Input.Email);
+            if (appUser != null)
+            {
+                _logger.LogInformation($"WebApi register. User {Input.Email} already registered!");
+                ModelState.AddModelError(string.Empty, Resources.Domain.AppUsers.AppUser.ErrorUserAlreadyExists);
+            }
+            
             if (ModelState.IsValid)
             {
                 var user = new AppUser
