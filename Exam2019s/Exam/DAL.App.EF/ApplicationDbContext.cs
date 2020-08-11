@@ -15,6 +15,12 @@ namespace DAL.App.EF
     {
         //add own DbSets here
         public DbSet<Template> Templates { get; set; } = default!;
+        
+        public DbSet<HomeWork> HomeWorks { get; set; } = default!;
+        public DbSet<Semester> Semesters { get; set; } = default!;
+        public DbSet<StudentSubject> StudentSubjects { get; set; } = default!;
+        public DbSet<StudentHomeWork> StudentHomeWorks { get; set; } = default!;
+        public DbSet<Subject> Subjects { get; set; } = default!;
 
         public DbSet<LangString> LangStrings { get; set; } = default!;
         public DbSet<Translation> Translations { get; set; } = default!;
