@@ -1,8 +1,0 @@
-<template>
-    <div show.bind="alertData" class="alert alert-${alertData.type} alert-dismissible fade show" role="alert">
-        ${alertData.message}
-        <button show.bind="alertData.dismissable" type="button" class="close" aria-label="Close" click.delegate="dismiss()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</template>
