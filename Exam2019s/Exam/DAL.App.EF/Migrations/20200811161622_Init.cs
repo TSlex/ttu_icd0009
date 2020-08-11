@@ -421,8 +421,7 @@ namespace DAL.App.EF.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_TeacherId",
                 table: "Subjects",
-                column: "TeacherId",
-                unique: true);
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Translations_LangStringId",

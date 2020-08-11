@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.App.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200811141625_Init")]
+    [Migration("20200811161622_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -385,8 +385,7 @@ namespace DAL.App.EF.Migrations
 
                     b.HasIndex("SemesterId");
 
-                    b.HasIndex("TeacherId")
-                        .IsUnique();
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Subjects");
                 });
@@ -611,8 +610,8 @@ namespace DAL.App.EF.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Identity.AppUser", "Teacher")
-                        .WithOne("TeacherSubject")
-                        .HasForeignKey("Domain.Subject", "TeacherId")
+                        .WithMany("TeacherSubjects")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

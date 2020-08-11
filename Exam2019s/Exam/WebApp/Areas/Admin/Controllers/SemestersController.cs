@@ -66,6 +66,37 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(semester);
         }
+        
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="semester"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Semester semester)
+        {
+            if (TryValidateModel(semester))
+            {
+                semester.Id = Guid.NewGuid();
+                _bll.Semesters.Add(semester);
+                await _bll.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(semester);
+        }
 
         /// <summary>
         /// Get record editing page

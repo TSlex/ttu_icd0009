@@ -4,7 +4,7 @@ using ee.itcollege.aleksi.DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class Semester: DomainEntityBaseMetadata
+    public class Semester: DomainEntityBaseMetaSoftUpdateDelete
     {
         [Required]
         [MinLength(1)]

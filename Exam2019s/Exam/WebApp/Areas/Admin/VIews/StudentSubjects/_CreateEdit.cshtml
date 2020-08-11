@@ -12,7 +12,7 @@
 </div>
 <div class="form-group">
     <label asp-for="Grade" class="control-label"></label>
-    <input asp-for="Grade" class="form-control"/>
+    <select asp-for="Grade" class="form-control" asp-items="@Enumerable.Range(-1, 7).Select(i => new SelectListItem {Text = i.ToString(), Value = i.ToString()})"></select>
     <span asp-validation-for="Grade" class="text-danger"></span>
 </div>
 <div class="form-group form-check">

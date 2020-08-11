@@ -67,6 +67,37 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(homework);
         }
+        
+        /// <summary>
+        /// Get record creating page
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// Creates a new record
+        /// </summary>
+        /// <param name="homework"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(StudentHomeWork homework)
+        {
+            if (TryValidateModel(homework))
+            {
+                homework.Id = Guid.NewGuid();
+                _bll.StudentHomeWorks.Add(homework);
+                await _bll.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(homework);
+        }
 
         /// <summary>
         /// Get record editing page

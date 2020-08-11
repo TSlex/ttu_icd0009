@@ -13,10 +13,10 @@ namespace Domain
         [MaxLength(128)]
         public string Title { get; set; } = default!;
         
-        [Required]
         [MaxLength(4096)]
         public string? Description { get; set; }
         
+        [DataType(DataType.DateTime)]
         public DateTime? Deadline { get; set; }
         
         [Required]

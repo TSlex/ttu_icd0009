@@ -5,17 +5,17 @@ using ee.itcollege.aleksi.DAL.Base;
 
 namespace DAL.App.DTO
 {
-    public class HomeWork: DomainEntityBaseMetadata
+    public class HomeWork: DomainEntityBaseMetaSoftUpdateDelete
     {
         [Required]
         [MinLength(1)]
         [MaxLength(128)]
         public string Title { get; set; } = default!;
         
-        [Required]
         [MaxLength(4096)]
         public string? Description { get; set; }
         
+        [DataType(DataType.DateTime)]
         public DateTime? Deadline { get; set; }
         
         [Required]

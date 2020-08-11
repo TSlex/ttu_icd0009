@@ -1,5 +1,4 @@
 ﻿@using ee.itcollege.aleksi.Contracts.DAL.Base
-﻿@using ee.itcollege.aleksi.Contracts.DAL.Base
 
 @{
     var isSoftUpdateEntity = Model is ISoftUpdateEntity;
@@ -9,9 +8,9 @@
     @{
         if (isSoftUpdateEntity && Model.MasterId == null)
         {
-@*             <a asp-action="History" asp-area="Admin" asp-route-id="@Model.Id"> *@
-@*                 <button class="btn btn-info fa fa-history index_controls"></button> *@
-@*             </a> *@
+             <a asp-action="History" asp-area="Admin" asp-route-id="@Model.Id">
+                 <button class="btn btn-info fa fa-history index_controls"></button>
+             </a>
             <a asp-action="Edit" asp-area="Admin" asp-route-id="@Model.Id">
                 <button class="btn btn-primary fa fa-edit index_controls"></button>
             </a>
@@ -25,13 +24,13 @@
                     <button type="submit" class="btn btn-danger fa fa-trash index_controls"/>
                 </form>
             }
-@*             else *@
-@*             { *@
-@*                 <form method="post" asp-action="Restore" asp-area="Admin" class="disable_form_style"> *@
-@*                     <input type="hidden" name="id" value="@Model.Id"> *@
-@*                     <button type="submit" class="btn btn-success fa fa-trash-restore index_controls"/> *@
-@*                 </form> *@
-@*             } *@
+             else
+             {
+                 <form method="post" asp-action="Restore" asp-area="Admin" class="disable_form_style">
+                     <input type="hidden" name="id" value="@Model.Id">
+                     <button type="submit" class="btn btn-success fa fa-trash index_controls"/>
+                 </form>
+             }
         }
         else if (!isSoftUpdateEntity && isDomainEntityBaseMetadata)
         {
@@ -48,13 +47,13 @@
                     <button type="submit" class="btn btn-danger fa fa-trash index_controls"/>
                 </form>
             }
-@*             else *@
-@*             { *@
-@*                 <form method="post" asp-action="Restore" asp-area="Admin" class="disable_form_style"> *@
-@*                     <input type="hidden" name="id" value="@Model.Id"> *@
-@*                     <button type="submit" class="btn btn-success fa fa-trash-restore index_controls"/> *@
-@*                 </form> *@
-@*             } *@
+             else
+             {
+                 <form method="post" asp-action="Restore" asp-area="Admin" class="disable_form_style">
+                     <input type="hidden" name="id" value="@Model.Id">
+                     <button type="submit" class="btn btn-success fa fa-trash index_controls"/>
+                 </form>
+             }
         }
         else
         {

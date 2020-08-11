@@ -6,7 +6,7 @@ using ee.itcollege.aleksi.DAL.Base;
 
 namespace BLL.App.DTO
 {
-    public class StudentSubject: DomainEntityBaseMetadata
+    public class StudentSubject: DomainEntityBaseMetaSoftUpdateDelete
     {
         [Required]
         public Guid StudentId { get; set; } = default!;
