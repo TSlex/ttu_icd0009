@@ -1,10 +1,12 @@
-﻿@using System.Threading
+﻿﻿@using System.Runtime.Versioning
+@using System.Threading
+@using Extensions
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - ÕISMAX</title>
+    <title>@ViewData["Title"] - WebApp</title>
 
     <link rel="stylesheet" href="~/dist/site.css"/>
 
@@ -13,12 +15,13 @@
 
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="stylesheet" href="~/css/custom.css">
+    <link rel="stylesheet" href="~/css/admin.css">
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
         <div class="container">
-            <a class="navbar-brand fa fa-university" asp-area="" asp-controller="Home" asp-action="Index">ÕISMAX</a>
+            <a class="navbar-brand fa fa-arrow-left" asp-area="" asp-controller="Home" asp-action="Index"> BACK</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,24 +29,6 @@
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <partial name="_LoginPartial"/>
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Semesters" asp-action="Index">Semesters</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Subjects" asp-action="Index">Subjects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="HomeWorks" asp-action="Index">HomeWorks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="StudentSubjects" asp-action="Index">StudentSubjects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="StudentHomeWorks" asp-action="Index">StudentHomeWorks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -55,21 +40,17 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted text-center">
-    <div class="container">
-        &copy;2020 - ÕISMAX
-    </div>
-</footer>
 @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
 @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+@* <script src="~/lib/font-awesome/js/fontawesome.min.js"></script> *@
 
 <script src="~/dist/site.js" asp-append-version="true"></script>
 <script src="~/dist/jquery.validate.globalize.js" asp-append-version="true"></script>
 
-@RenderSection("Scripts", required: false)
+@* <script src="~/js/site.js" asp-append-version="true"></script> *@
 
+@RenderSection("Scripts", required: false)
 @{
     var currentCultureCode = Thread.CurrentThread.CurrentCulture.Name.Split('-')[0];
 

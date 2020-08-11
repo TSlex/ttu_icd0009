@@ -44,20 +44,20 @@
 }
 
 a{
-    color: #FF6633;
+    color: #388dff;
 }
 
 .btn-primary{
-    background-color: #FF6633;
-    border-color: #CC3300;
+    background-color: #388dff;
+    border-color: #386fde;
 }
 
 .btn-primary:hover{
-    background-color: #CC3300;
-    border-color: #CC3300;
+    background-color: #386fde;
+    border-color: #386fde;
 }
 
 .btn-primary:focus{
     outline-width: 3px !important;
-    outline-color: #CC3300 !important;
+    outline-color: #386fde !important;
 }

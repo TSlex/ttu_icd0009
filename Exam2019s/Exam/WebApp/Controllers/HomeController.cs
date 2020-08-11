@@ -30,22 +30,12 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Not found page
         /// </summary>
         /// <returns></returns>
-        public IActionResult Privacy()
+        public  IActionResult PageNotFound()
         {
-            return View();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            return View("404");
         }
     }
 }

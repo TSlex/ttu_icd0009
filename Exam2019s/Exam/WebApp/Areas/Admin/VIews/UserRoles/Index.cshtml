@@ -1,0 +1,36 @@
+﻿@model List<Domain.Identity.AppRole>
+
+@{
+    ViewData["Title"] = Resources.Views.Common.IndexHeader;
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+<br>
+<table class="table">
+    <thead>
+    <tr>
+        <th>@Resources.Domain.Common.Id</th>
+        <th colspan="2">@Resources.Domain.Common.Name</th>
+        <th>[ConcurrencyStamp]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NormalizedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
