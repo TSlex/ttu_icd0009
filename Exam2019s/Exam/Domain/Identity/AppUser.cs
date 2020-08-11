@@ -41,6 +41,6 @@ namespace Domain.Identity
         
         // actual data
         public Subject? TeacherSubject { get; set; }
-        public ICollection<SubjectStudent>? ParticipationSubjects { get; set; }
+        public ICollection<StudentSubject>? ParticipationSubjects { get; set; }
     }
 }

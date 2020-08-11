@@ -9,13 +9,13 @@ namespace Domain
         [Required] public Guid HomeWorkId { get; set; } = default!;
         public HomeWork? HomeWork { get; set; }
 
-        [Required] public Guid SubjectStudentId { get; set; } = default!;
-        public SubjectStudent? SubjectStudent { get; set; }
+        [Required] public Guid StudentSubjectId { get; set; } = default!;
+        public StudentSubject? StudentSubject { get; set; }
 
         [Required] [Range(-1, 5)] public int Grade { get; set; } = -1;
 
         [Required] [MaxLength(4096)] public string? StudentAnswer { get; set; }
-        
+
         public DateTime? AnswerDateTime { get; set; }
 
         public bool IsChecked { get; set; } = false;

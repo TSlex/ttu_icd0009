@@ -6,20 +6,26 @@ using ee.itcollege.aleksi.DAL.Base;
 
 namespace Domain
 {
-    public class Subject: DomainEntityBaseMetadata
+    public class Subject : DomainEntityBaseMetadata
     {
         [Required]
+        [MinLength(1)]
+        [MaxLength(128)]
         public string SubjectTitle { get; set; } = default!;
-        
-        [Required]
-        public string SubjectCode { get; set; } = default!;
 
         [Required]
-        public Guid TeacherId { get; set; } = default!;
+        [MinLength(1)]
+        [MaxLength(128)]
+        public string SubjectCode { get; set; } = default!;
+
+        [Required] public Guid TeacherId { get; set; } = default!;
         public AppUser? Teacher { get; set; }
-        
-        public ICollection<SubjectStudent>? SubjectStudent { get; set; }
-        
+
+        [Required] public Guid SemesterId { get; set; } = default!;
+        public Semester? Semester { get; set; }
+
+        public ICollection<StudentSubject>? StudentSubject { get; set; }
+
         public ICollection<HomeWork>? HomeWorks { get; set; }
     }
 }
