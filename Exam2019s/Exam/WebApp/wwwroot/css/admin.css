@@ -1,0 +1,63 @@
+﻿﻿html{
+    user-select: inherit !important;
+}
+
+.admin_panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel_section{
+    margin: 10px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.panel_section *{
+    width: 100%;
+}
+
+.panel_section h4{
+    border-bottom: 1px solid gray;
+    padding: 4px;
+}
+
+.panel_section a{
+    margin-top: 4px;
+}
+
+.bg-white{
+    background-color: lightgray!important;
+    font-family: Consolas, serif;
+    font-weight: bold !important;
+}
+
+.nav-link{
+    /*font-weight: bold !important;*/
+    display: block !important;
+    border: none;
+}
+
+a{
+    color: #FF6633;
+}
+
+.btn-primary{
+    background-color: #FF6633;
+    border-color: #CC3300;
+}
+
+.btn-primary:hover{
+    background-color: #CC3300;
+    border-color: #CC3300;
+}
+
+.btn-primary:focus{
+    outline-width: 3px !important;
+    outline-color: #CC3300 !important;
+}
