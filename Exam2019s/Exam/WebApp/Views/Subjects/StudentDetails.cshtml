@@ -1,17 +1,78 @@
-﻿
+﻿@using Extensions
+@model Domain.Subject
+
 @{
-    Layout = null;
+    ViewData["Title"] = "Details";
 }
 
-<!DOCTYPE html>
+<h1 class="card-title">@Model.SubjectTitle</h1>
+<h4 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h4>
+<hr>
+<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
+<h4 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h4>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+@{
+    if (Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())?.IsAccepted ?? false)
+    {
+        <hr>
+        <h4 class="card-subtitle mb-2 text-muted">Grade: @Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())!.Grade</h4>
+    }
+}
+
+<h3 class="card-subtitle mb-2 mt-5">Students</h3>
+<table class="table">
+    <tbody>
+    <tr>
+        <td>Participants: </td>
+        <td class="w-75">@Model.StudentSubjects.Count(subject => subject.IsAccepted)</td>
+    </tr>
+    </tbody>
+</table>
+
+@{
+    if (Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())?.IsAccepted ?? false)
+    {
+        <button class="btn btn-primary">View all</button>
+    }
+}
+@{
+    if (Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())?.IsAccepted ?? false)
+    {
+        <h3 class="card-subtitle mb-2 mt-5">Homeworks</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Deadline</th>
+                <th>Overal</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var homework in @Model.HomeWorks)
+            {
+                <tr>
+                    <td>@homework.Title</td>
+                    <td>@homework.Deadline</td>
+                    <td>
+                        @{
+                            var grades = homework.StudentHomeWorks.Select(work => work.Grade).Where(grade => grade >= 0).ToList();
+
+                <text>@(grades.Count > 0 ? grades.Average() : 0)</text>
+                        }
+                    </td>
+                    <td style="width: 10%">
+                        <a asp-action="Create" class="fa fa-edit"></a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="text-center">
+            <button class="btn btn-primary w-25">Enrol me!</button>
+        </div>
+    }
+}

@@ -5,7 +5,7 @@
 }
 
 <h1 class="card-title">@Model.SubjectTitle</h1>
-<h3 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h3>
+<h4 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h4>
 <hr>
 <h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
 
@@ -14,11 +14,11 @@
     <tbody>
     <tr>
         <td>Accepted: </td>
-        <td class="w-75">@Model.StudentSubject.Count(subject => subject.IsAccepted)</td>
+        <td class="w-75">@Model.StudentSubjects.Count(subject => subject.IsAccepted)</td>
     </tr>
     <tr>
         <td>Not accepted: </td>
-        <td class="w-75">@Model.StudentSubject.Count(subject => !subject.IsAccepted)</td>
+        <td class="w-75">@Model.StudentSubjects.Count(subject => !subject.IsAccepted)</td>
     </tr>
     </tbody>
 </table>
@@ -39,13 +39,13 @@
     </thead>
     <tbody>
     <tr>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade < 0)</td>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade == 0)</td>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade == 1)</td>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade == 2)</td>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade == 3)</td>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade == 4)</td>
-        <td>@Model.StudentSubject.Count(subject => subject.Grade >= 5)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade < 0)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade == 0)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade == 1)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade == 2)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade == 3)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade == 4)</td>
+        <td>@Model.StudentSubjects.Count(subject => subject.Grade >= 5)</td>
     </tr>
     </tbody>
 </table>

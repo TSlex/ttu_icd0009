@@ -25,6 +25,8 @@ namespace WebApp.Controllers
             return View(await _context.Semesters
                 .Include(semester => semester.Subjects)
                 .ThenInclude(subject => subject.Teacher)
+                .Include(semester => semester.Subjects)
+                .ThenInclude(subject => subject.StudentSubjects)
                 .ToListAsync());
         }
     }

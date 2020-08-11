@@ -29,24 +29,40 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Subjects" asp-action="Subjects">Subjects</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Subjects" asp-action="StudentSubjects">My subjects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="HomeWorks" asp-action="Index">My homeworks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Semesters" asp-action="Index">Semesters</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
-                    </li>
+                    @{
+                        if (User.IsInRole("Student") || User.IsInRole("Teacher"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subjects" asp-action="StudentSubjects">My subjects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HomeWorks" asp-action="Index">My homeworks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Semesters" asp-action="Index">Semesters</a>
+                            </li>
+                        }
+                    }
+                    @{
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
     </nav>
 </header>
 <div class="container">
+    @if (User.Identity.IsAuthenticated && !(User.IsInRole("Student") || User.IsInRole("Teacher") || User.IsInRole("Admin")))
+    {
+        <div class="alert alert-info text-center" role="alert">
+            Your account is not validated. Please wait until administrator validated you and assigns a role!
+        </div>
+    }
     <main role="main" class="pb-3">
         @RenderBody()
     </main>

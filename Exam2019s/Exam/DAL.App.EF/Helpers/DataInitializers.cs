@@ -121,7 +121,7 @@ namespace DAL.App.EF.Helpers
                 {
                     Id = new Guid("00000000-0000-0000-0000-000000000009"),
                     UserName = "mkalmo",
-                    Email = "akaver@a.com",
+                    Email = "mkalmo@a.com",
                     Password = "Admin_123",
                     FirstName = "Mart",
                     LastName = "Kalmo",

@@ -9,10 +9,10 @@ using DAL.App.EF;
 using Domain;
 using Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Resources.Views.Identity;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
     [Route("{controller}/{action=Subjects}")]
     public class SubjectsController : Controller
     {
@@ -32,17 +32,23 @@ namespace WebApp.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Student, Teacher, Admin")]
         [Route("/{controller}/my")]
         public async Task<IActionResult> StudentSubjects()
         {
-            var applicationDbContext = _context.Subjects
+            var query = _context.Subjects
                 .Include(s => s.Semester)
                 .Include(s => s.Teacher)
-                .Where(subject => subject.DeletedAt == null)
-                .Where(subject => subject.StudentSubject.Select(studentSubject => studentSubject.StudentId)
-                    .Contains(User.UserId()));
+                .Where(subject => subject.DeletedAt == null);
 
-            return View(await applicationDbContext.ToListAsync());
+            if (User.IsInRole("Teacher"))
+            {
+                return View(await query.Where(subject => subject.TeacherId == User.UserId()).ToListAsync());
+            }
+
+            return View(await query.Where(subject => subject.StudentSubjects
+                .Select(studentSubject => studentSubject.StudentId)
+                .Contains(User.UserId())).ToListAsync());
         }
 
         [HttpPost]
@@ -69,6 +75,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Student, Teacher, Admin")]
         public async Task<IActionResult> SearchStudent(string? keywords)
         {
             if (string.IsNullOrEmpty(keywords))
@@ -76,12 +83,10 @@ namespace WebApp.Controllers
                 return RedirectToAction("StudentSubjects");
             }
 
-            var applicationDbContext = _context.Subjects
+            var query = _context.Subjects
                 .Include(s => s.Semester)
                 .Include(s => s.Teacher)
                 .Where(subject => subject.DeletedAt == null)
-                .Where(subject => subject.StudentSubject.Select(studentSubject => studentSubject.StudentId)
-                    .Contains(User.UserId()))
                 .Where(subject =>
                     subject.Teacher.FirstName.ToLower().Contains(keywords) ||
                     subject.Teacher.LastName.ToLower().Contains(keywords) ||
@@ -90,7 +95,15 @@ namespace WebApp.Controllers
                     subject.SubjectTitle.ToLower().Contains(keywords) ||
                     subject.SubjectCode.ToLower().Contains(keywords));
 
-            return View("StudentSubjects", await applicationDbContext.ToListAsync());
+            if (User.IsInRole("Teacher"))
+            {
+                return View("StudentSubjects",
+                    await query.Where(subject => subject.TeacherId == User.UserId()).ToListAsync());
+            }
+
+            return View("StudentSubjects", await query.Where(subject => subject.StudentSubjects
+                .Select(studentSubject => studentSubject.StudentId)
+                .Contains(User.UserId())).ToListAsync());
         }
 
         [Route("/{controller}/{id}")]
@@ -101,8 +114,9 @@ namespace WebApp.Controllers
                 .Include(s => s.Teacher)
                 .Include(s => s.HomeWorks)
                 .ThenInclude(s => s.StudentHomeWorks)
-                .Include(s => s.StudentSubject)
+                .Include(s => s.StudentSubjects)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (subject == null)
             {
                 return NotFound();
@@ -110,7 +124,17 @@ namespace WebApp.Controllers
 
             subject.HomeWorks = subject.HomeWorks.Where(work => work.DeletedAt == null).ToList();
 
-            return View("TeacherDetails", subject);
+            if (User.IsInRole("Teacher"))
+            {
+                return View("/Views/Subjects/TeacherDetails.cshtml", subject);
+            }
+            
+            if (User.IsInRole("Student"))
+            {
+                return View("/Views/Subjects/StudentDetails.cshtml", subject);
+            }
+
+            return View("/Views/Subjects/Details.cshtml", subject);
         }
     }
 }

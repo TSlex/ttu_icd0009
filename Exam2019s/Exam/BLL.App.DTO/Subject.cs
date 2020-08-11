@@ -24,7 +24,7 @@ namespace BLL.App.DTO
         [Required] public Guid SemesterId { get; set; } = default!;
         public Semester? Semester { get; set; }
 
-        public ICollection<StudentSubject>? StudentSubject { get; set; }
+        public ICollection<StudentSubject>? StudentSubjects { get; set; }
 
         public ICollection<HomeWork>? HomeWorks { get; set; }
     }

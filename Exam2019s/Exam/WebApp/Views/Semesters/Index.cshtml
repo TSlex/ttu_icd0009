@@ -1,3 +1,4 @@
+@using Extensions
 @model IEnumerable<Domain.Semester>
 
 @{
@@ -8,7 +9,26 @@
 {
     <div class="mb-5">
         <h2>Semester: @semester.Title</h2>
-            <hr>
-            <partial name="_Subjects" model="@semester.Subjects"/>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Grade</th>
+                <th>Code</th>
+                <th>Title</th>
+                <th>Teacher</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var subject in semester.Subjects.SelectMany(subject => subject.StudentSubjects).Where(subject => subject.StudentId == User.UserId()).ToList())
+            {
+                <tr>
+                    <td>@subject.Grade</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 }

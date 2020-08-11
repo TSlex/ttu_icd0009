@@ -5,24 +5,18 @@
 }
 
 <h1 class="card-title">@Model.SubjectTitle</h1>
-<h3 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h3>
+<h4 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h4>
 <hr>
 <h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
 <h4 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h4>
 
-<br>
-<br>
-<h3 class="card-subtitle mb-2">Homeworks</h3>
-<hr>
-<div class="d-flex flex-column">
-    @foreach (var homework in @Model.HomeWorks)
-    {
-        <span>@homework.Title</span>
-    }
-</div>
-<button class="btn btn-primary">View all</button>
-<hr>
 
-
-<button class="btn btn-primary">Students</button>
-<button class="btn btn-primary">Enrol me</button>
+<h3 class="card-subtitle mb-2 mt-5">Students</h3>
+<table class="table">
+    <tbody>
+    <tr>
+        <td>Participants: </td>
+        <td class="w-75">@Model.StudentSubjects.Count(subject => subject.IsAccepted)</td>
+    </tr>
+    </tbody>
+</table>
