@@ -5,6 +5,10 @@ namespace Contracts.DAL.App
 {
     public interface IAppUnitOfWork : IBaseUnitOfWork
     {
-        ITemplateRepo Templates{ get; }
+        IHomeWorkRepo HomeWorks{ get; }
+        ISemesterRepo Semesters{ get; }
+        ISubjectRepo Subjects{ get; }
+        IStudentSubjectRepo StudentSubjects{ get; }
+        IStudentHomeWorkRepo StudentHomeWorks{ get; }
     }
 }

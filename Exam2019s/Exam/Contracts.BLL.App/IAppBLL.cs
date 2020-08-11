@@ -6,6 +6,10 @@ namespace Contracts.BLL.App
 {
     public interface IAppBLL : IBaseBLL
     {
-        ITemplateService Templates { get; }
+        IHomeWorkService HomeWorks { get; }
+        ISemesterService Semesters { get; }
+        ISubjectService Subjects { get; }
+        IStudentSubjectService StudentSubjects { get; }
+        IStudentHomeWorkService StudentHomeWorks { get; }
     }
 }

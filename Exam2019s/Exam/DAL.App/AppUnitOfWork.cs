@@ -12,6 +12,10 @@ namespace DAL.App
         {
         }
 
-        public ITemplateRepo Templates => GetRepository<ITemplateRepo>(() => new TemplateRepo(UOWDbContext));
+        public IHomeWorkRepo HomeWorks => GetRepository<IHomeWorkRepo>(() => new HomeWorkRepo(UOWDbContext));
+        public ISemesterRepo Semesters => GetRepository<ISemesterRepo>(() => new SemesterRepo(UOWDbContext));
+        public ISubjectRepo Subjects => GetRepository<ISubjectRepo>(() => new SubjectRepo(UOWDbContext));
+        public IStudentSubjectRepo StudentSubjects => GetRepository<IStudentSubjectRepo>(() => new StudentSubjectRepo(UOWDbContext));
+        public IStudentHomeWorkRepo StudentHomeWorks => GetRepository<IStudentHomeWorkRepo>(() => new StudentHomeWorkRepo(UOWDbContext));
     }
 }

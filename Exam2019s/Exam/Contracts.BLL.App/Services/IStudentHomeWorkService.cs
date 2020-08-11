@@ -3,8 +3,8 @@ using ee.itcollege.aleksi.Contracts.BLL.Base.Services;
 
 namespace Contracts.BLL.App.Services
 {
-    public interface ITemplateService: IBaseEntityService<DAL.App.DTO.Template, Template>
+    public interface IStudentHomeWorkService : IBaseEntityService<DAL.App.DTO.StudentHomeWork, StudentHomeWork>
     {
         // custom service methods
     }
-}   
+}

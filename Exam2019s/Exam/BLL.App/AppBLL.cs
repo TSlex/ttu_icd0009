@@ -13,6 +13,10 @@ namespace BLL.App
         {
         }
 
-        public ITemplateService Templates => GetService<ITemplateService>(() => new TemplateService(UnitOfWork));
+        public IHomeWorkService HomeWorks => GetService<IHomeWorkService>(() => new HomeWorkService(UnitOfWork));
+        public ISemesterService Semesters => GetService<ISemesterService>(() => new SemesterService(UnitOfWork));
+        public ISubjectService Subjects => GetService<ISubjectService>(() => new SubjectService(UnitOfWork));
+        public IStudentSubjectService StudentSubjects => GetService<IStudentSubjectService>(() => new StudentSubjectService(UnitOfWork));
+        public IStudentHomeWorkService StudentHomeWorks => GetService<IStudentHomeWorkService>(() => new StudentHomeWorkService(UnitOfWork));
     }
 }
