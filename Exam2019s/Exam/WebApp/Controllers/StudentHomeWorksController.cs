@@ -40,6 +40,7 @@ namespace WebApp.Controllers
         {
             var studentHomeWork = await _context.StudentHomeWorks
                 .Include(s => s.HomeWork)
+                .ThenInclude(hw => hw.Subject)
                 .Include(s => s.StudentSubject)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -105,6 +106,7 @@ namespace WebApp.Controllers
 
             var studentHomeWork = await _context.StudentHomeWorks
                 .Include(ssh => ssh.HomeWork)
+                .ThenInclude(hw => hw.Subject)
                 .Include(ssh => ssh.StudentSubject)
                 .FirstOrDefaultAsync(ssh => ssh.Id == id);
 
@@ -130,6 +132,7 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                studentHomeWork.AnswerDateTime = DateTime.UtcNow;
                 studentHomeWork.StudentAnswer = model.StudentAnswer;
                 studentHomeWork.IsChecked = false;
 

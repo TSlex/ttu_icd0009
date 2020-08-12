@@ -1,0 +1,10 @@
+﻿@model Domain.StudentHomeWork
+
+<div class="form-group">
+    <label asp-for="StudentAnswer" class="control-label">Your answer</label>
+    <textarea asp-for="StudentAnswer" rows="5" class="form-control"></textarea>
+    <span asp-validation-for="StudentAnswer" class="text-danger"></span>
+</div>
+
+<input asp-for="StudentSubjectId" type="hidden" class="form-control"/>
+<input asp-for="HomeWorkId" type="hidden" class="form-control"/>
