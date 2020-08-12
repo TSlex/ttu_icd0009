@@ -29,39 +29,6 @@ namespace WebApp.ApiControllers._1._0
             _context = context;
         }
 
-        [HttpGet]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Index()
-        {
-//            var query = _context.HomeWorks
-//                .Include(hw => hw.Subject)
-//                .ThenInclude(hw => hw.StudentSubjects)
-//                .ThenInclude(sb => sb.Student)
-//                .Include(hw => hw.Subject)
-//                .ThenInclude(hw => hw.StudentSubjects)
-//                .ThenInclude(hw => hw.StudentHomeWorks)
-//                .Where(hw => hw.Subject.StudentSubjects.Select(ssb => ssb.StudentId).Contains(User.UserId()));
-//
-//            return View(await query.ToListAsync());
-
-//            return Ok(await _context.HomeWorks
-//                .Where(work => work.DeletedAt == null)
-//                .Select(work => work.Subject)
-//                .SelectMany(sb => sb.StudentSubjects)
-//                .Where(sbb => sbb.StudentId == User.UserId() && sbb.DeletedAt == null && sbb.IsAccepted)
-//                .Select(sbb => new StudentHomeWorkDTO
-//                {
-//                    Deadline = sbb.,
-//                    Grade = ,
-//                    IsAccepted = ,
-//                    IsChecked = ,
-//                    SubjectId = ,
-//                    HomeWorkId = sbb. 
-//                }).ToListAsync()
-//            );
-        }
-
         /// <summary>
         /// 
         /// </summary>

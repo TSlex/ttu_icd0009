@@ -22,20 +22,6 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var query = _context.HomeWorks
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(sb => sb.Student)
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(hw => hw.StudentHomeWorks)
-                .Where(hw => hw.Subject.StudentSubjects.Select(ssb => ssb.StudentId).Contains(User.UserId()));
-
-            return View(await query.ToListAsync());
-        }
-
         public async Task<IActionResult> Details(Guid id)
         {
             var studentHomeWork = await _context.StudentHomeWorks
