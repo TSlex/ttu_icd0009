@@ -36,7 +36,7 @@ namespace DAL.App.EF
 
             builder.Entity<AppUser>(b => b.ToTable("AppUser"));
             builder.Entity<AppRole>(b => b.ToTable("UserRole"));
-
+            
             //remove cascade delete
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

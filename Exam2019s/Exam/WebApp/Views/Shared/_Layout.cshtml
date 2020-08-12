@@ -62,7 +62,7 @@
 <div class="container">
     @if (User.Identity.IsAuthenticated && !(User.IsInRole("Student") || User.IsInRole("Teacher") || User.IsInRole("Admin")))
     {
-        <div class="alert alert-info text-center" role="alert">
+        <div class="alert alert-info text-center" role="alert" style="user-select: none; margin-bottom: 20px !important;">
             Your account is not validated. Please wait until administrator validated you and assigns a role!
         </div>
     }

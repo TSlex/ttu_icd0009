@@ -29,11 +29,10 @@ namespace WebApp.Controllers
                 .ThenInclude(subject => subject.Teacher)
                 .Include(semester => semester.Subjects)
                 .ThenInclude(subject => subject.StudentSubjects)
-                .Where(semester => 
+                .Where(semester =>
                     semester.Subjects
                         .SelectMany(subject => subject.StudentSubjects)
-                        .Select(ssb => ssb.StudentId).Contains(User.UserId())
-                    )
+                        .Select(ssb => ssb.StudentId).Contains(User.UserId()))
                 .ToListAsync());
         }
     }

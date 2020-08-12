@@ -20,21 +20,6 @@
         <th>
             @Html.DisplayNameFor(model => model.StudentSubject)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Grade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentAnswer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AnswerDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsChecked)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsAccepted)
-        </th>
         <th></th>
     </tr>
     </thead>
@@ -46,25 +31,10 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HomeWork.Description)
+                @Html.DisplayFor(modelItem => item.HomeWork.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StudentSubject.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Grade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentAnswer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnswerDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsChecked)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAccepted)
             </td>
             <td>
                 <partial name="_IndexControls" model="@item"/>

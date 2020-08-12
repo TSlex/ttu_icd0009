@@ -21,12 +21,15 @@
             <tbody>
             @foreach (var subject in semester.Subjects.SelectMany(subject => subject.StudentSubjects).Where(subject => subject.StudentId == User.UserId()).ToList())
             {
-                <tr>
-                    <td>@(subject.Grade >= 0 ? subject.Grade.ToString() : "Not graded")</td>
-                    <td>@subject.Subject.SubjectTitle</td>
-                    <td>@subject.Subject.SubjectCode</td>
-                    <td>@subject.Subject.Teacher.FirstLastName</td>
-                </tr>
+                if (subject.Subject.DeletedAt == null)
+                {
+                    <tr>
+                        <td>@(subject.Grade >= 0 ? subject.Grade.ToString() : "Not graded")</td>
+                        <td>@subject.Subject.SubjectTitle</td>
+                        <td>@subject.Subject.SubjectCode</td>
+                        <td>@subject.Subject.Teacher.FirstLastName</td>
+                    </tr>
+                }
             }
             </tbody>
         </table>

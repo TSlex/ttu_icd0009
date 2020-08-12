@@ -23,9 +23,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Deadline)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Subject)
-        </th>
         <th></th>
     </tr>
     </thead>
@@ -44,9 +41,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Deadline)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject.SubjectCode)
             </td>
             <td>
                 <partial name="_IndexControls" model="@item"/>

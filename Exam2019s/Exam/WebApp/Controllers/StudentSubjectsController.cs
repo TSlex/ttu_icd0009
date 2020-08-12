@@ -27,7 +27,8 @@ namespace WebApp.Controllers
         {
             var applicationDbContext = _context.StudentSubjects
                 .Include(s => s.Student)
-                .Where(subject => subject.SubjectId == subjectId);
+                .Where(subject => subject.SubjectId == subjectId &&
+                                  subject.DeletedAt == null);
 
             return View(await applicationDbContext.ToListAsync());
         }
@@ -43,7 +44,7 @@ namespace WebApp.Controllers
             var studentSubject = await _context.StudentSubjects
                 .Include(subject => subject.Student)
                 .FirstOrDefaultAsync(subject => subject.Id == id);
-            
+
             if (studentSubject == null)
             {
                 return NotFound();
@@ -62,7 +63,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             var subject = await _context.StudentSubjects
                 .FirstOrDefaultAsync(s => s.Id == id);
 
@@ -103,7 +104,7 @@ namespace WebApp.Controllers
 
             return RedirectToAction("Index", new {model.SubjectId});
         }
-        
+
         [HttpPost]
         [Authorize(Roles = "Teacher, Admin")]
         public async Task<IActionResult> RemoveStudent(StudentSubject model)

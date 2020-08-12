@@ -20,16 +20,20 @@ namespace WebApp.Areas.Admin.Controllers
     {
         private readonly RoleManager<AppRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="roleManager"></param>
         /// <param name="userManager"></param>
-        public UserInRolesController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
+        /// <param name="signInManager"></param>
+        public UserInRolesController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
 
                 await _userManager.AddToRoleAsync(user, role.Name);
-
+                
                 return RedirectToAction("Index");
             }
 
@@ -168,7 +172,7 @@ namespace WebApp.Areas.Admin.Controllers
                     await _userManager.RemoveFromRoleAsync(user, oldRole.Name);
                     await _userManager.AddToRoleAsync(user, newRole.Name);
                 }
-
+                
                 return RedirectToAction("Index");
             }
 

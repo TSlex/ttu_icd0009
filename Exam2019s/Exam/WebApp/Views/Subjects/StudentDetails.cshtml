@@ -5,14 +5,15 @@
     ViewData["Title"] = "Details";
 
     var studentSubject = Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId() && subject.DeletedAt == null);
-    var studentHomeworkGrades = Model.StudentSubjects.SelectMany(ssb => ssb.StudentHomeWorks).Select(work => work.Grade).ToList();
+
+//    var studentHomeworkGrades = studentSubject?.IsAccepted ?? false ? Model.StudentSubjects.SelectMany(ssb => ssb.StudentHomeWorks).Select(work => work.Grade).ToList() : new List<int>();
 }
 
 @{
     if (!studentSubject?.IsAccepted ?? false)
     {
-        <div class="alert alert-info text-center" role="alert">
-            Your have enrolled to subject. Wait untill teacher accepts you.
+        <div class="alert alert-info text-center" role="alert" style="margin-bottom: 20px !important;">
+            You have enrolled to subject. Wait until teacher accepts you.
         </div>
     }
 }
@@ -28,7 +29,7 @@
     {
         <hr>
         <h4 class="card-subtitle mb-2 text-muted">Grade: @(studentSubject!.Grade >= 0 ? studentSubject.Grade.ToString() : "Not graded")</h4>
-        <h4 class="card-subtitle mb-2 text-muted">Homework grades: @(studentHomeworkGrades.Count > 0 ? studentHomeworkGrades.Average().ToString() : "Not graded")</h4>
+@*          <h4 class="card-subtitle mb-2 text-muted">Homework grades: @(studentHomeworkGrades.Count > 0 ? studentHomeworkGrades.Average().ToString() : "Not graded")</h4> *@
     }
 }
 

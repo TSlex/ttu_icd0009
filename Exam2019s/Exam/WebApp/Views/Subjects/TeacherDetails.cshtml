@@ -80,7 +80,7 @@
         <text>@(grades.Count > 0 ? grades.Average() : 0)</text>
                 }
             </td>
-            <td class="text-right d-flex" style="justify-content: flex-end">
+            <td class="text-right d-flex" style="justify-content: flex-end; max-width: unset !important;">
                 <a asp-action="Details" asp-controller="HomeWorks" asp-route-id="@homework.Id" class="btn btn-primary fa fa-eye mr-1"></a>
                 <a asp-action="Edit" asp-controller="HomeWorks" asp-route-id="@homework.Id" class="btn btn-primary fa fa-edit mr-1"></a>
 

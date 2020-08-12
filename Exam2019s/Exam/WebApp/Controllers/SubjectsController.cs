@@ -74,12 +74,12 @@ namespace WebApp.Controllers
                 .Include(s => s.Teacher)
                 .Where(subject => subject.DeletedAt == null)
                 .Where(subject =>
-                    subject.Teacher.FirstName.ToLower().Contains(keywords) ||
-                    subject.Teacher.LastName.ToLower().Contains(keywords) ||
-                    subject.Semester.Code.ToLower().Contains(keywords) ||
-                    subject.Semester.Title.ToLower().Contains(keywords) ||
-                    subject.SubjectTitle.ToLower().Contains(keywords) ||
-                    subject.SubjectCode.ToLower().Contains(keywords));
+                    subject.Teacher.FirstName.ToLower().Contains(keywords.ToLower()) ||
+                    subject.Teacher.LastName.ToLower().Contains(keywords.ToLower()) ||
+                    subject.Semester.Code.ToLower().Contains(keywords.ToLower()) ||
+                    subject.Semester.Title.ToLower().Contains(keywords.ToLower()) ||
+                    subject.SubjectTitle.ToLower().Contains(keywords.ToLower()) ||
+                    subject.SubjectCode.ToLower().Contains(keywords.ToLower()));
 
             return View("Subjects", await applicationDbContext.ToListAsync());
         }
@@ -98,12 +98,12 @@ namespace WebApp.Controllers
                 .Include(s => s.Teacher)
                 .Where(subject => subject.DeletedAt == null)
                 .Where(subject =>
-                    subject.Teacher.FirstName.ToLower().Contains(keywords) ||
-                    subject.Teacher.LastName.ToLower().Contains(keywords) ||
-                    subject.Semester.Code.ToLower().Contains(keywords) ||
-                    subject.Semester.Title.ToLower().Contains(keywords) ||
-                    subject.SubjectTitle.ToLower().Contains(keywords) ||
-                    subject.SubjectCode.ToLower().Contains(keywords));
+                    subject.Teacher.FirstName.ToLower().Contains(keywords.ToLower()) ||
+                    subject.Teacher.LastName.ToLower().Contains(keywords.ToLower()) ||
+                    subject.Semester.Code.ToLower().Contains(keywords.ToLower()) ||
+                    subject.Semester.Title.ToLower().Contains(keywords.ToLower()) ||
+                    subject.SubjectTitle.ToLower().Contains(keywords.ToLower()) ||
+                    subject.SubjectCode.ToLower().Contains(keywords.ToLower()));
 
             if (User.IsInRole("Teacher"))
             {
@@ -133,8 +133,9 @@ namespace WebApp.Controllers
             }
 
             subject.HomeWorks = subject.HomeWorks.Where(work => work.DeletedAt == null).ToList();
+            subject.StudentSubjects = subject.StudentSubjects.Where(ssb => ssb.DeletedAt == null).ToList();
 
-            if (User.IsInRole("Teacher") && subject.TeacherId == User.UserId())
+            if (User.IsInRole("Teacher") && subject.TeacherId == User.UserId() || User.IsInRole("Admin"))
             {
                 return View("/Views/Subjects/TeacherDetails.cshtml", subject);
             }
