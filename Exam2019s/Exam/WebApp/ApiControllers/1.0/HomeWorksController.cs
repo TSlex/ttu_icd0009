@@ -46,7 +46,7 @@ namespace WebApp.ApiControllers._1._0
             return View(homeWork);
         }
 
-        [HttpGet("{subjectId}")]
+        [HttpGet("createmodel/{subjectId}")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
         public async Task<IActionResult> Create(Guid subjectId)
@@ -77,6 +77,7 @@ namespace WebApp.ApiControllers._1._0
             return View(homeWork);
         }
 
+        [HttpGet("editmodel/{id}")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid? id)
@@ -99,7 +100,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
 
-        [HttpPost]
+        [HttpPut]
         [Consumes(("application/json"))]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid id, HomeWork homeWork)
@@ -120,7 +121,7 @@ namespace WebApp.ApiControllers._1._0
             return View(homeWork);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Consumes(("application/json"))]
         [Produces("application/json")]
         public async Task<IActionResult> Delete(Guid id)

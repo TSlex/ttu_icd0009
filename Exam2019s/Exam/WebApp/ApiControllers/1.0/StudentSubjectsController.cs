@@ -26,6 +26,7 @@ namespace WebApp.ApiControllers._1._0
             _context = context;
         }
 
+        [HttpGet]
         [Consumes(("application/json"))]
         [Produces("application/json")]
         public async Task<IActionResult> Index(Guid subjectId)
@@ -38,6 +39,7 @@ namespace WebApp.ApiControllers._1._0
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [HttpGet("editmodel/{id}")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -61,7 +63,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -90,7 +92,7 @@ namespace WebApp.ApiControllers._1._0
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("student/new")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -115,7 +117,7 @@ namespace WebApp.ApiControllers._1._0
             return RedirectToAction("Index", new {model.SubjectId});
         }
 
-        [HttpPost]
+        [HttpPost("student/remove")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -142,7 +144,7 @@ namespace WebApp.ApiControllers._1._0
             return RedirectToAction("Index", new {model.SubjectId});
         }
 
-        [HttpPost]
+        [HttpPost("subject/register")]
         [Authorize(Roles = "Student, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -177,7 +179,7 @@ namespace WebApp.ApiControllers._1._0
             return RedirectToAction("Details", "Subjects", new {id = model.Id});
         }
 
-        [HttpPost]
+        [HttpPost("subject/unregister")]
         [Authorize(Roles = "Student, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]

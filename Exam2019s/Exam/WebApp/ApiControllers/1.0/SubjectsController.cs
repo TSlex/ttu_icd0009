@@ -24,7 +24,8 @@ namespace WebApp.ApiControllers._1._0
         {
             _context = context;
         }
-
+        
+        [HttpGet]
         [AllowAnonymous]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -37,7 +38,7 @@ namespace WebApp.ApiControllers._1._0
             return View(await applicationDbContext.ToListAsync());
         }
 
-        [Route("my")]
+        [HttpGet("my")]
         [Authorize(Roles = "Student, Teacher, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -68,7 +69,7 @@ namespace WebApp.ApiControllers._1._0
             return View(studentSubjects);
         }
 
-        [HttpPost]
+        [HttpPost("search")]
         [AllowAnonymous]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -94,7 +95,7 @@ namespace WebApp.ApiControllers._1._0
             return View("Subjects", await applicationDbContext.ToListAsync());
         }
 
-        [HttpPost]
+        [HttpPost("search/my")]
         [Authorize(Roles = "Student, Teacher, Admin")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
@@ -128,7 +129,7 @@ namespace WebApp.ApiControllers._1._0
                 .Contains(User.UserId())).ToListAsync());
         }
 
-        [Route("{id}")]
+        [HttpGet("{id}")]
         [Consumes(("application/json"))]
         [Produces("application/json")]
         public async Task<IActionResult> Details(Guid id)
