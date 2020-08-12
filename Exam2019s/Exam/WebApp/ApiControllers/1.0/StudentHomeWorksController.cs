@@ -2,16 +2,18 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.EF;
-using Domain;
 using Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.v1;
+using StudentHomeWork = Domain.StudentHomeWork;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <inheritdoc />
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -21,6 +23,7 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly ApplicationDbContext _context;
 
+        /// <inheritdoc />
         public StudentHomeWorksController(ApplicationDbContext context)
         {
             _context = context;
@@ -31,35 +34,70 @@ namespace WebApp.ApiControllers._1._0
         [Produces("application/json")]
         public async Task<IActionResult> Index()
         {
-            var query = _context.HomeWorks
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(sb => sb.Student)
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(hw => hw.StudentHomeWorks)
-                .Where(hw => hw.Subject.StudentSubjects.Select(ssb => ssb.StudentId).Contains(User.UserId()));
+//            var query = _context.HomeWorks
+//                .Include(hw => hw.Subject)
+//                .ThenInclude(hw => hw.StudentSubjects)
+//                .ThenInclude(sb => sb.Student)
+//                .Include(hw => hw.Subject)
+//                .ThenInclude(hw => hw.StudentSubjects)
+//                .ThenInclude(hw => hw.StudentHomeWorks)
+//                .Where(hw => hw.Subject.StudentSubjects.Select(ssb => ssb.StudentId).Contains(User.UserId()));
+//
+//            return View(await query.ToListAsync());
 
-            return View(await query.ToListAsync());
+//            return Ok(await _context.HomeWorks
+//                .Where(work => work.DeletedAt == null)
+//                .Select(work => work.Subject)
+//                .SelectMany(sb => sb.StudentSubjects)
+//                .Where(sbb => sbb.StudentId == User.UserId() && sbb.DeletedAt == null && sbb.IsAccepted)
+//                .Select(sbb => new StudentHomeWorkDTO
+//                {
+//                    Deadline = sbb.,
+//                    Grade = ,
+//                    IsAccepted = ,
+//                    IsChecked = ,
+//                    SubjectId = ,
+//                    HomeWorkId = sbb. 
+//                }).ToListAsync()
+//            );
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentHomeWorkDetailsDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Details(Guid id)
         {
             var studentHomeWork = await _context.StudentHomeWorks
-                .Include(s => s.HomeWork)
-                .ThenInclude(hw => hw.Subject)
-                .Include(s => s.StudentSubject)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(shw => shw.Id == id && shw.DeletedAt == null)
+                .Select(shw => new StudentHomeWorkDetailsDTO
+                {
+                    Deadline = shw.HomeWork.Deadline,
+                    Description = shw.HomeWork.Description,
+                    Title = shw.HomeWork.Title,
+                    Grade = shw.Grade,
+                    IsAccepted = shw.IsAccepted,
+                    IsChecked = shw.IsChecked,
+                    StudentAnswer = shw.StudentAnswer,
+                    SubjectCode = shw.HomeWork.Subject.SubjectCode,
+                    SubjectId = shw.HomeWork.Subject.Id,
+                    SubjectTitle = shw.HomeWork.Subject.SubjectTitle,
+                    AnswerDateTime = shw.AnswerDateTime,
+                    HomeWorkId = shw.HomeWork.Id
+                }).FirstOrDefaultAsync();
 
             if (studentHomeWork == null)
             {
                 return NotFound();
             }
 
-            return View(studentHomeWork);
+            return Ok(studentHomeWork);
         }
 
         [HttpGet("createmodel/{homeworkId}/{studentSubjectId}")]
@@ -160,7 +198,7 @@ namespace WebApp.ApiControllers._1._0
 
             return View(studentHomeWork);
         }
-        
+
         [HttpGet("teacher/{homeworkId}/{studentSubjectId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -176,7 +214,7 @@ namespace WebApp.ApiControllers._1._0
             if (studentHomeWork == null)
             {
                 var id = Guid.NewGuid();
-                
+
                 _context.Add(new StudentHomeWork()
                 {
                     Id = id,
@@ -185,7 +223,7 @@ namespace WebApp.ApiControllers._1._0
                 });
 
                 await _context.SaveChangesAsync();
-                
+
                 studentHomeWork = await _context.StudentHomeWorks
                     .Include(ssh => ssh.HomeWork)
                     .ThenInclude(hw => hw.Subject)
@@ -195,7 +233,7 @@ namespace WebApp.ApiControllers._1._0
 
             return View("TeacherDetails", studentHomeWork);
         }
-        
+
         [HttpPut("teacher")]
         [Consumes("application/json")]
         [Produces("application/json")]

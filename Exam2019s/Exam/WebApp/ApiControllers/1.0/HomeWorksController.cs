@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.EF;
 using Domain;
@@ -7,79 +9,127 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.v1;
+using StudentHomeWork = PublicApi.v1.StudentHomeWork;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <inheritdoc />
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Student, Teacher, Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Teacher, Admin")]
     public class HomeWorksController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        /// <inheritdoc />
         public HomeWorksController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<HomeWorkDetailsDTO>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Details(Guid id)
         {
             var homeWork = await _context.HomeWorks
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(sb => sb.Student)
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(hw => hw.StudentHomeWorks)
-                .FirstOrDefaultAsync(hw => hw.Id == id);
-            
+                .Where(work => work.DeletedAt == null && work.Id == id)
+                .Select(work => new HomeWorkDetailsDTO
+                {
+                    Id = work.Id,
+                    SubjectId = work.SubjectId,
+                    SubjectCode = work.Subject.SubjectCode,
+                    SubjectTitle = work.Subject.SubjectTitle,
+                    Deadline = work.Deadline,
+                    Title = work.Title,
+                    Description = work.Description,
+                    StudentHomeWorks = work.Subject.StudentSubjects
+                        .Where(ssb => ssb.DeletedAt == null && ssb.IsAccepted)
+                        .Select(ssb => new StudentHomeWork
+                        {
+                            SubjectId = ssb.Id,
+                            HomeWorkId = work.Id,
+                            IsAccepted = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsAccepted,
+                            IsChecked = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsChecked,
+                            StudentCode = ssb.Student.UserName,
+                            StudentName = ssb.Student.FirstName + " " + ssb.Student.LastName,
+                        }).ToList()
+                }).FirstOrDefaultAsync();
+
             if (homeWork == null)
             {
                 return NotFound();
             }
 
-            return View(homeWork);
+            return Ok(homeWork);
         }
 
-        [HttpGet("createmodel/{subjectId}")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Create(Guid subjectId)
-        {
-            var subject = await _context.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId);
-            
-            return View(new HomeWork
-            {
-                Subject = subject
-            });
-        }
+//        [HttpGet("createmodel/{subjectId}")]
+//        [Consumes("application/json")]
+//        [Produces("application/json")]
+//        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HomeWorkDTO))]
+//        public async Task<IActionResult> Create(Guid subjectId)
+//        {
+//            var subject = await _context.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId);
+//            
+//            
+//
+//            return View(new HomeWork
+//            {
+//                Subject = subject
+//            });
+//        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HomeWork homeWork)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(HomeWorkPostDTO model)
         {
             if (ModelState.IsValid)
             {
-                homeWork.Id = Guid.NewGuid();
+                var homeWork = new HomeWork()
+                {
+                    Id = Guid.NewGuid(),
+                    Deadline = model.Deadline,
+                    Description = model.Description,
+                    Title = model.Title,
+                    SubjectId = model.SubjectId,
+                };
 
                 _context.Add(homeWork);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Subjects", new {id = homeWork.SubjectId});
+                return Ok();
             }
 
-            return View(homeWork);
+            return BadRequest();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("editmodel/{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HomeWorkDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -88,48 +138,76 @@ namespace WebApp.ApiControllers._1._0
             }
 
             var homeWork = await _context.HomeWorks
-                .Include(h => h.Subject)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(work => work.DeletedAt == null)
+                .Select(work => new HomeWorkDTO
+                {
+                    Deadline = work.Deadline,
+                    Description = work.Description,
+                    Id = work.Id,
+                    Title = work.Title,
+                    SubjectId = work.SubjectId,
+                    SubjectTitle = work.Subject.SubjectTitle
+                }).FirstOrDefaultAsync();
 
             if (homeWork == null)
             {
                 return NotFound();
             }
 
-            return View(homeWork);
+            return Ok(homeWork);
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="homeWork"></param>
+        /// <returns></returns>
         [HttpPut]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> Edit(Guid id, HomeWork homeWork)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Edit(Guid id, HomeWorkPutDTO homeWork)
         {
             if (id != homeWork.Id)
             {
                 return NotFound();
             }
 
+            var record = await _context.HomeWorks.FindAsync(id);
+
             if (ModelState.IsValid)
             {
-                _context.Update(homeWork);
+                record.Title = homeWork.Title;
+                record.Description = homeWork.Description;
+                record.Deadline = homeWork.Deadline;
+
+                _context.Update(record);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Details", "Subjects", new {id = homeWork.SubjectId});
+                return NoContent();
             }
 
-            return View(homeWork);
+            return View(record);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(Guid id)
         {
             var homeWork = await _context.HomeWorks.FindAsync(id);
-            
+
             _context.HomeWorks.Remove(homeWork);
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", "Subjects", new {id = homeWork.SubjectId});
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PublicApi.v1
 {
@@ -36,6 +37,7 @@ namespace PublicApi.v1
         
         public bool IsAccepted { get; set; }
         
+        [Range(-1, 5)]
         public int Grade { get; set; }
     }
 
