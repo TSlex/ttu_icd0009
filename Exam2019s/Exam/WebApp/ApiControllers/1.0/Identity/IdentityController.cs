@@ -70,7 +70,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         [Produces("application/json")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JwtResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
         public async Task<ActionResult<string>> Login([FromBody] LoginDTO model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
@@ -78,14 +78,14 @@ namespace WebApp.ApiControllers._1._0.Identity
             if (user == null)
             {
                 _logger.LogInformation($"Web-Api login. AppUser with credentials: {model.Email} - was not found!");
-                return NotFound(new ResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
+                return NotFound(new ErrorResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
             }
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
             if (!userRoles.Select(role => role.ToLower()).Contains("admin") && user.DeletedAt != null)
             {
-                return NotFound(new ResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
+                return NotFound(new ErrorResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
@@ -106,7 +106,7 @@ namespace WebApp.ApiControllers._1._0.Identity
 
             _logger.LogInformation(
                 $"Web-Api login. AppUser with credentials: {model.Email} - was attempted to log-in with bad password!");
-            return NotFound(new ResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
+            return NotFound(new ErrorResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
         }
 
         /// <summary>
@@ -118,16 +118,16 @@ namespace WebApp.ApiControllers._1._0.Identity
         [AllowAnonymous]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<ActionResult<string>> Register([FromBody] RegisterDTO model)
         {
             var appUser = await _userManager.FindByEmailAsync(model.Email);
             if (appUser != null)
             {
                 _logger.LogInformation($"WebApi register. User {model.Email} already registered!");
-                return NotFound(new ResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorUserAlreadyExists));
+                return NotFound(new ErrorResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorUserAlreadyExists));
             }
 
             if (ModelState.IsValid)
@@ -167,10 +167,10 @@ namespace WebApp.ApiControllers._1._0.Identity
 
                 var errors = result.Errors.Select(error => error.Description).ToList();
 
-                return BadRequest(new ResponseDTO(JsonSerializer.Serialize(errors)));
+                return BadRequest(new ErrorResponseDTO(JsonSerializer.Serialize(errors)));
             }
 
-            return BadRequest(new ResponseDTO(Resources.Domain.Common.ErrorBadData));
+            return BadRequest(new ErrorResponseDTO(Resources.Domain.Common.ErrorBadData));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         [Produces("application/json")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> UpdateAppUserData([FromBody] UserDataDTO dto)
         {
             var user = await _userManager.FindByIdAsync(User.UserId().ToString());
@@ -224,7 +224,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, dto.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    return BadRequest(new ResponseDTO(
+                    return BadRequest(new ErrorResponseDTO(
                         Resources.Domain.AppUsers.AppUser.ErrorChangePhone));
                 }
             }
@@ -238,7 +238,7 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
 
-            return Ok(new ResponseDTO(Resources.Views.Identity.Identity.ProfileDataUpdateStatusSuccess));
+            return Ok(new ErrorResponseDTO(Resources.Views.Identity.Identity.ProfileDataUpdateStatusSuccess));
         }
 
         /// <summary>
@@ -249,8 +249,8 @@ namespace WebApp.ApiControllers._1._0.Identity
         [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> UpdateAppUserEmail([FromBody] EmailDTO dto)
         {
             var user = await _userManager.FindByIdAsync(User.UserId().ToString());
@@ -265,16 +265,16 @@ namespace WebApp.ApiControllers._1._0.Identity
                 if (!setEmailResult.Succeeded)
                 {
                     return BadRequest(
-                        new ResponseDTO(
+                        new ErrorResponseDTO(
                             Resources.Domain.AppUsers.AppUser.ErrorChangeEmail));
                 }
             }
             else
             {
-                return Ok(new ResponseDTO(Resources.Views.Identity.Identity.EmailUpdateStatusUnchanged));
+                return Ok(new ErrorResponseDTO(Resources.Views.Identity.Identity.EmailUpdateStatusUnchanged));
             }
 
-            return Ok(new ResponseDTO(Resources.Views.Identity.Identity.EmailUpdateStatusSuccess));
+            return Ok(new ErrorResponseDTO(Resources.Views.Identity.Identity.EmailUpdateStatusSuccess));
         }
 
         /// <summary>
@@ -285,8 +285,8 @@ namespace WebApp.ApiControllers._1._0.Identity
         [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OkResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> UpdateAppUserPassword([FromBody] PasswordDTO dto)
         {
             var user = await _userManager.FindByIdAsync(User.UserId().ToString());
@@ -296,13 +296,13 @@ namespace WebApp.ApiControllers._1._0.Identity
             if (!changePasswordResult.Succeeded)
             {
                 return BadRequest(
-                    new ResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorIncorrectPassword));
+                    new ErrorResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorIncorrectPassword));
             }
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
 
-            return Ok(new ResponseDTO(Resources.Views.Identity.Identity.PasswordDataUpdateStatusSuccess));
+            return Ok(new ErrorResponseDTO(Resources.Views.Identity.Identity.PasswordDataUpdateStatusSuccess));
         }
 
         /// <summary>
@@ -313,15 +313,15 @@ namespace WebApp.ApiControllers._1._0.Identity
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResponseDTO))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponseDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> DeleteAppUser([FromBody] DeleteDTO deleteDTO)
         {
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
             {
-                return NotFound(new ResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
+                return NotFound(new ErrorResponseDTO(Resources.Domain.Common.ErrorUserNotFound));
             }
 
             var requirePassword = await _userManager.HasPasswordAsync(user);
@@ -330,7 +330,7 @@ namespace WebApp.ApiControllers._1._0.Identity
                 if (deleteDTO.Password == null || !await _userManager.CheckPasswordAsync(user, deleteDTO.Password))
                 {
                     return BadRequest(
-                        new ResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorIncorrectPassword));
+                        new ErrorResponseDTO(Resources.Domain.AppUsers.AppUser.ErrorIncorrectPassword));
                 }
             }
 

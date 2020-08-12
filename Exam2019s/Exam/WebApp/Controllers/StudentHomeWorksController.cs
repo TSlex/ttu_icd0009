@@ -12,11 +12,13 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <inheritdoc />
     [Authorize(Roles = "Student, Teacher, Admin")]
     public class StudentHomeWorksController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        /// <inheritdoc />
         public StudentHomeWorksController(ApplicationDbContext context)
         {
             _context = context;

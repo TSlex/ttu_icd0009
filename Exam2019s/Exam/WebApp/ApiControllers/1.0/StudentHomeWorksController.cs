@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using PublicApi.v1;
 using StudentHomeWork = Domain.StudentHomeWork;
 
@@ -67,81 +68,47 @@ namespace WebApp.ApiControllers._1._0
             return Ok(studentHomeWork);
         }
 
-        [HttpGet("createmodel/{homeworkId}/{studentSubjectId}")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Create(Guid homeworkId, Guid studentSubjectId)
-        {
-            var homework = await _context.HomeWorks
-                .Include(hw => hw.Subject)
-                .FirstOrDefaultAsync(hw => hw.Id == homeworkId);
-
-            var subject = await _context.StudentSubjects.FindAsync(studentSubjectId);
-
-            if (homework == null || subject == null)
-            {
-                return NotFound();
-            }
-
-            return View(new StudentHomeWork
-            {
-                HomeWork = homework,
-                StudentSubject = subject
-            });
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Student, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> Create(StudentHomeWork model)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create(StudentHomeWorkPostDTO model)
         {
             if (ModelState.IsValid)
             {
-                model.Id = Guid.NewGuid();
-                model.AnswerDateTime = DateTime.UtcNow;
+                var homework = new StudentHomeWork
+                {
+                    Id = Guid.NewGuid(),
+                    StudentAnswer = model.StudentAnswer,
+                    HomeWorkId = model.HomeWorkId,
+                    StudentSubjectId = model.StudentSubjectId,
+                    AnswerDateTime = DateTime.UtcNow
+                };
 
-                _context.Add(model);
+                _context.Add(homework);
 
                 await _context.SaveChangesAsync();
 
-                var homework = await _context.StudentHomeWorks
-                    .Include(shw => shw.StudentSubject)
-                    .ThenInclude(ssb => ssb.Subject)
-                    .FirstOrDefaultAsync(shw => shw.Id == model.Id);
-
-                return RedirectToAction("Details", "Subjects", new {id = homework.StudentSubject.SubjectId});
+                return Ok();
             }
 
-            return View(model);
-        }
-
-        [HttpGet("editmodel/{id}")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentHomeWork = await _context.StudentHomeWorks
-                .Include(ssh => ssh.HomeWork)
-                .ThenInclude(hw => hw.Subject)
-                .Include(ssh => ssh.StudentSubject)
-                .FirstOrDefaultAsync(ssh => ssh.Id == id);
-
-            if (studentHomeWork == null)
-            {
-                return NotFound();
-            }
-
-            return View(studentHomeWork);
+            return BadRequest();
         }
 
         [HttpPut]
+        [Authorize(Roles = "Student, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Edit(Guid id, StudentHomeWork model)
         {
             var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
@@ -160,15 +127,17 @@ namespace WebApp.ApiControllers._1._0
                 _context.Update(studentHomeWork);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Details", new {studentHomeWork.Id});
+                return NoContent();
             }
 
-            return View(studentHomeWork);
+            return BadRequest();
         }
 
+        [Authorize(Roles = "Teacher, Admin")]
         [HttpGet("teacher/{homeworkId}/{studentSubjectId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> TeacherSubmit(Guid homeworkId, Guid studentSubjectId)
         {
             var studentHomeWork = await _context.StudentHomeWorks
@@ -198,12 +167,15 @@ namespace WebApp.ApiControllers._1._0
                     .FirstOrDefaultAsync(ssh => ssh.Id == id);
             }
 
-            return View("TeacherDetails", studentHomeWork);
+            return Ok();
         }
 
         [HttpPut("teacher")]
+        [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> TeacherSubmit(Guid id, StudentHomeWork model)
         {
             var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
@@ -225,7 +197,7 @@ namespace WebApp.ApiControllers._1._0
                 return RedirectToAction("Details", "HomeWorks", new {id = studentHomeWork.HomeWorkId});
             }
 
-            return View("TeacherDetails", studentHomeWork);
+            return NoContent();
         }
     }
 }

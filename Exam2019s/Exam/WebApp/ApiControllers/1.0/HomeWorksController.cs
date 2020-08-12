@@ -38,7 +38,7 @@ namespace WebApp.ApiControllers._1._0
         [HttpGet("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<HomeWorkDetailsDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HomeWorkDetailsDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -73,22 +73,6 @@ namespace WebApp.ApiControllers._1._0
 
             return Ok(homeWork);
         }
-
-//        [HttpGet("createmodel/{subjectId}")]
-//        [Consumes("application/json")]
-//        [Produces("application/json")]
-//        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HomeWorkDTO))]
-//        public async Task<IActionResult> Create(Guid subjectId)
-//        {
-//            var subject = await _context.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId);
-//            
-//            
-//
-//            return View(new HomeWork
-//            {
-//                Subject = subject
-//            });
-//        }
 
         /// <summary>
         /// 

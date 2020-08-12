@@ -16,4 +16,8 @@
       <ProjectReference Include="..\BLL.App.DTO\BLL.App.DTO.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Response\ResponseDTO.cs" />
+    </ItemGroup>
+
 </Project>

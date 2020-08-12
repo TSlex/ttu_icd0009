@@ -114,6 +114,21 @@ namespace WebApp.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var user = await _userManager.FindByEmailAsync(Input.Email);
+                
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorUserNotFound);
+                    return Page();
+                }
+                
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                if (!userRoles.Select(role => role.ToLower()).Contains("admin") && user.DeletedAt != null)
+                {
+                    ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorUserNotFound);
+                    return Page();
+                }
+                
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe,
                     lockoutOnFailure: false);
                 if (result.Succeeded)
