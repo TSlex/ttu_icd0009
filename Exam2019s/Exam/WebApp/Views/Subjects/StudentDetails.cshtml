@@ -26,7 +26,7 @@
     if (studentSubject?.IsAccepted ?? false)
     {
         <hr>
-        <h4 class="card-subtitle mb-2 text-muted">Grade: @Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())!.Grade</h4>
+        <h4 class="card-subtitle mb-2 text-muted">Grade: @(studentSubject!.Grade > 0 ? studentSubject.Grade.ToString() : "Not graded")</h4>
     }
 }
 
