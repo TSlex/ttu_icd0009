@@ -1,0 +1,36 @@
+<template>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="card card-sm" method="post" action="/subjects/search">
+                    <div class="d-flex align-items-center" style="padding: 10px">
+                        <div class="col-auto">
+                            <i class="fa fa-search h4 text-body"></i>
+                        </div>
+                        <div class="col">
+                            <input class="form-control form-control form-control-borderless" type="search" name="keywords"
+                                value.bind="searchBar" placeholder="Search by title or keywords">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success mt-0" type="button" click.delegate="onSearch()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="justify-content-center">
+        <div class="card-columns">
+            <a class="btn-link" href="/subjects/00000000-0000-0000-0000-000000000001">
+                <div class="card text-center" style="padding: 10px; user-select: none">
+                    <h5 class="card-title">Java</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">ICD0019</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Semester: FALL</h6>
+                    <h6 class="card-subtitle mb-2 text-success">Teacher: Mart Kalmo</h6>
+                </div>
+            </a>
+        </div>
+    </div>
+</template>

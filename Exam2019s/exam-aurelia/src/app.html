@@ -31,10 +31,21 @@
 
                     <ul class="navbar-nav flex-grow-1">
 
-                        <li repeat.for="nav of router.navigation" class="nav-item ${nav.isActive ? 'active' : ''}">
+                        <!-- <li repeat.for="nav of router.navigation" class="nav-item ${nav.isActive ? 'active' : ''}">
                             <a class="nav-link text-dark" href.bind="nav.href">${nav.title}</a>
+                        </li> -->
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" route-href="route: subjects">Subjects</a>
                         </li>
 
+                        <li class="nav-item" if.bind="isTeacher || isStudent">
+                            <a class="nav-link text-dark" route-href="route: student-subjects">My subjects</a>
+                        </li>
+
+                        <li class="nav-item" if.bind="isStudent">
+                            <a class="nav-link text-dark">Semesters</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -42,13 +53,18 @@
     </header>
     <div class="container">
         <loading-overlay if.bind="isLoading"></loading-overlay>
+        <div if.bind="isNotValidated && isAuthenticated" class="alert alert-info text-center" role="alert"
+            style="user-select: none; margin-bottom: 20px !important;">
+            Your account is not validated. Please wait until administrator validated you and assigns a role!
+        </div>
         <main role="main">
              <router-view></router-view> 
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
+            ©2020 - ÕISMAX
         </div>
     </footer>
 </template>

@@ -1,20 +1,19 @@
 import { AppState } from './state/state';
 import { autoinject, PLATFORM } from 'aurelia-framework';
 import { RouterConfiguration, Router, Redirect } from 'aurelia-router';
+import { IdentityStore } from 'components/IdentityStore';
 
 @autoinject
-export class App {
+export class App extends IdentityStore {
     router?: Router;
 
     get isLoading() {
         return this.appState.isComponentLoading;
     }
 
-    get userName() {
-        return this.appState.userName;
+    constructor(appState: AppState) {
+        super(appState);
     }
-
-    constructor(private appState: AppState) { }
 
     configureRouter(config: RouterConfiguration, router: Router): void {
         this.router = router;
@@ -33,7 +32,8 @@ export class App {
             { route: ['account/manage/:page?'], name: 'account-manage', moduleId: PLATFORM.moduleName('views/identity/manage'), nav: false, title: 'Manage', settings: { auth: true } },
 
             // subjects
-            // { route: ['subjects', 'subjects/index'], name: 'subjects', moduleId: PLATFORM.moduleName('views/posts/index'), nav: true, title: 'Posts', settings: { auth: true } },
+            { route: ['subjects', 'subjects/index'], name: 'subjects', moduleId: PLATFORM.moduleName('views/subjects/subjects'), nav: true, title: 'Subjects' },
+            { route: ['subjects/my'], name: 'student-subjects', moduleId: PLATFORM.moduleName('views/subjects/student-subjects'), nav: true, title: 'Subjects' },
             // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
             // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
 

@@ -66,8 +66,8 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-top: 60px;
-    margin-bottom: 60px;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 .footer {
@@ -132,4 +132,46 @@ hr {
 .index_controls * {
     vertical-align: super;
     pointer-events: none;
+}
+
+/* new */
+
+html::-webkit-scrollbar {
+    width: .5em;
+}
+
+span::-webkit-scrollbar, p::-webkit-scrollbar {
+    width: 0;
+}
+
+html::-webkit-scrollbar-track {
+    border-left: 1px solid lightgray;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    outline: 1px solid slategrey;
+}
+
+/* btn-link */
+
+.btn-link {
+    color: black !important;
+    text-decoration: none !important;
+    display: inline !important;
+    border: none !important;
+    background: none !important;
+    outline: none !important;
+}
+
+.btn-link:hover {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.btn-link:active {
+    text-decoration: none !important;
+    color: black !important;
+    outline: none !important;
+    border: none !important;
 }
