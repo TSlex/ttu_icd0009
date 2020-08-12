@@ -1,89 +1,77 @@
-@model IEnumerable<Domain.StudentSubject>
+@model List<Domain.StudentSubject>
 
 @{
     ViewData["Title"] = "Index";
+
+    var acceptedStudents = Model.Where(subject => subject.IsAccepted).ToList();
+    var notAcceptedStudents = Model.Where(subject => !subject.IsAccepted).ToList();
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h3 class="card-subtitle mb-2 mt-5">Accepted students</h3>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Student)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Subject)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsAccepted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChangedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th style="width: 20%">Student code</th>
+        <th style="width: 40%">Student name</th>
+        <th>Grade</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in acceptedStudents)
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Student.FirstName)
+                @item.Student.UserName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subject.SubjectCode)
+                @item.Student.FirstLastName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Grade)
+                @item.Grade
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAccepted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td class="text-right">
+                <a class="btn btn-primary fa fa-edit"></a>
+                <form class="text-right">
+                    <input type="hidden" name="Id" value="@item.Id">
+                    <input type="hidden" name="SubjectId" value="@item.SubjectId">
+                    <button class="btn btn-danger fa fa-times mt-0"></button>
+                </form>
             </td>
         </tr>
-}
+    }
+    </tbody>
+</table>
+
+<h3 class="card-subtitle mb-2 mt-5">Not accepted students</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width: 20%">Student code</th>
+        <th>Student name</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in notAcceptedStudents)
+    {
+        <tr>
+            <td>
+                @item.Student.UserName
+            </td>
+            <td>
+                @item.Student.FirstLastName
+            </td>
+            <td></td>
+            <td>
+                <form asp-controller="StudentSubjects" asp-action="AcceptStudent" class="text-right">
+                    <input type="hidden" name="Id" value="@item.Id">
+                    <input type="hidden" name="SubjectId" value="@item.SubjectId">
+                    <button class="btn btn-primary fa fa-check mt-0"></button>
+                </form>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

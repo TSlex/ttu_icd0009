@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
 using Domain;
 using Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Student, Teacher, Admin")]
     public class StudentSubjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,7 +22,81 @@ namespace WebApp.Controllers
             _context = context;
         }
 
+//        [Authorize(Roles = "Teacher, Admin")]
+        public async Task<IActionResult> Index(Guid subjectId)
+        {
+            var applicationDbContext = _context.StudentSubjects
+                .Include(s => s.Student)
+                .Where(subject => subject.SubjectId == subjectId);
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        [Authorize(Roles = "Teacher, Admin")]
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var studentSubject = await _context.StudentSubjects.FindAsync(id);
+            if (studentSubject == null)
+            {
+                return NotFound();
+            }
+
+            return View(studentSubject);
+        }
+
+
         [HttpPost]
+        [Authorize(Roles = "Teacher, Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, StudentSubject studentSubject)
+        {
+            if (id != studentSubject.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.StudentSubjects.Update(studentSubject);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            return View(studentSubject);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Teacher, Admin")]
+        public async Task<IActionResult> AcceptStudent(StudentSubject model)
+        {
+            var studentSubject =
+                await _context.StudentSubjects
+                    .FirstOrDefaultAsync(s =>
+                        s.Id == model.Id && s.DeletedAt == null);
+
+            if (studentSubject == null || studentSubject.IsAccepted)
+            {
+                return RedirectToAction("Index", new {model.SubjectId});
+            }
+
+            studentSubject.IsAccepted = true;
+
+            _context.StudentSubjects.Update(studentSubject);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", new {model.SubjectId});
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Student, Admin")]
         public async Task<IActionResult> RegisterToSubject(Subject model)
         {
             var studentSubject =
@@ -42,7 +118,9 @@ namespace WebApp.Controllers
             else if (studentSubject.DeletedAt != null)
             {
                 studentSubject.DeletedAt = null;
-                _context.Update(studentSubject);
+                studentSubject.DeletedBy = null;
+
+                _context.StudentSubjects.Update(studentSubject);
 
                 await _context.SaveChangesAsync();
             }
@@ -51,6 +129,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Student, Admin")]
         public async Task<IActionResult> CancelRegistration(Subject model)
         {
             var subject = await _context.StudentSubjects
@@ -63,6 +142,8 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction("Subjects", "Subjects");
             }
+
+            subject.IsAccepted = false;
 
             _context.StudentSubjects.Remove(subject);
             await _context.SaveChangesAsync();

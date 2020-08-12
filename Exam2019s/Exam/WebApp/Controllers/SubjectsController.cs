@@ -39,6 +39,7 @@ namespace WebApp.Controllers
             var query = _context.Subjects
                 .Include(s => s.Semester)
                 .Include(s => s.Teacher)
+                .Include(s => s.StudentSubjects)
                 .Where(subject => subject.DeletedAt == null);
 
             if (User.IsInRole("Teacher"))
@@ -46,9 +47,18 @@ namespace WebApp.Controllers
                 return View(await query.Where(subject => subject.TeacherId == User.UserId()).ToListAsync());
             }
 
-            return View(await query.Where(subject => subject.StudentSubjects
-                .Select(studentSubject => studentSubject.StudentId)
-                .Contains(User.UserId())).ToListAsync());
+            var studentSubjects = await query.Where(subject =>
+                    subject.StudentSubjects
+                        .Select(studentSubject => studentSubject.StudentId)
+                        .Contains(User.UserId())
+//                    &&
+//                    subject.StudentSubjects
+//                        .Select(studentSubject => studentSubject.DeletedAt)
+//                        .Contains(null)
+                )
+                .ToListAsync();
+
+            return View(studentSubjects);
         }
 
         [HttpPost]
@@ -116,7 +126,7 @@ namespace WebApp.Controllers
                 .ThenInclude(s => s.StudentHomeWorks)
                 .Include(s => s.StudentSubjects)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            
+
             if (subject == null)
             {
                 return NotFound();
@@ -128,7 +138,7 @@ namespace WebApp.Controllers
             {
                 return View("/Views/Subjects/TeacherDetails.cshtml", subject);
             }
-            
+
             if (User.IsInRole("Student"))
             {
                 return View("/Views/Subjects/StudentDetails.cshtml", subject);
