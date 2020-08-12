@@ -27,7 +27,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Index(Guid subjectId)
         {
@@ -41,7 +41,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpGet("editmodel/{id}")]
         [Authorize(Roles = "Teacher, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -65,7 +65,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpPut]
         [Authorize(Roles = "Teacher, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid id, StudentSubject model)
         {
@@ -94,7 +94,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpPost("student/new")]
         [Authorize(Roles = "Teacher, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> AcceptStudent(StudentSubject model)
         {
@@ -119,7 +119,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpPost("student/remove")]
         [Authorize(Roles = "Teacher, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> RemoveStudent(StudentSubject model)
         {
@@ -146,7 +146,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpPost("subject/register")]
         [Authorize(Roles = "Student, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> RegisterToSubject(Subject model)
         {
@@ -181,7 +181,7 @@ namespace WebApp.ApiControllers._1._0
 
         [HttpPost("subject/unregister")]
         [Authorize(Roles = "Student, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> CancelRegistration(Subject model)
         {

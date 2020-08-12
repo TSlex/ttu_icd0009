@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.EF;
@@ -32,14 +33,16 @@ namespace WebApp.ApiControllers._1._0
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SemesterDTO>))]
         public async Task<IActionResult> Index()
         {
             var semesters = await _context.Semesters
                 .Where(semester => semester.DeletedAt == null)
                 .Select(semester => new SemesterDTO
                 {
+                    Id = semester.Id,
                     Title = semester.Title,
                     Subjects = semester.Subjects
                         .Where(subject => subject.DeletedAt == null)
@@ -47,6 +50,7 @@ namespace WebApp.ApiControllers._1._0
                         .Where(subject => subject.DeletedAt == null && subject.StudentId == User.UserId())
                         .Select(subject => new SemesterSubjectDTO()
                         {
+                            Id = subject.SubjectId,
                             Grade = subject.Grade,
                             SubjectCode = subject.Subject.SubjectCode,
                             SubjectTitle = subject.Subject.SubjectTitle,

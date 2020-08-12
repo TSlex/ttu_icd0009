@@ -25,7 +25,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet("{id}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -47,7 +47,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet("createmodel/{subjectId}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Create(Guid subjectId)
         {
@@ -60,7 +60,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpPost]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HomeWork homeWork)
@@ -78,7 +78,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet("editmodel/{id}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -101,7 +101,7 @@ namespace WebApp.ApiControllers._1._0
 
 
         [HttpPut]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid id, HomeWork homeWork)
         {
@@ -122,7 +122,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpDelete]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Delete(Guid id)
         {

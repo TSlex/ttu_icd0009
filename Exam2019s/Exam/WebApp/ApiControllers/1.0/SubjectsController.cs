@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.EF;
@@ -8,9 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.v1;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <inheritdoc />
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -20,69 +23,103 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly ApplicationDbContext _context;
 
+        /// <inheritdoc />
         public SubjectsController(ApplicationDbContext context)
         {
             _context = context;
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectDTO>))]
         public async Task<IActionResult> Subjects()
         {
-            var applicationDbContext = _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
-                .Where(subject => subject.DeletedAt == null);
-            return View(await applicationDbContext.ToListAsync());
+            var subjects = await _context.Subjects
+                .Where(subject => subject.DeletedAt == null)
+                .Select(subject => new SubjectDTO
+                {
+                    Id = subject.Id,
+                    SemesterTitle = subject.Semester.Title,
+                    SubjectCode = subject.SubjectCode,
+                    SubjectTitle = subject.SubjectTitle,
+                    TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName
+                }).ToListAsync();
+
+            return Ok(subjects);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("my")]
         [Authorize(Roles = "Student, Teacher, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectDTO>))]
         public async Task<IActionResult> StudentSubjects()
         {
             var query = _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
-                .Include(s => s.StudentSubjects)
                 .Where(subject => subject.DeletedAt == null);
+
+            ICollection<SubjectDTO> subjects;
 
             if (User.IsInRole("Teacher"))
             {
-                return View(await query.Where(subject => subject.TeacherId == User.UserId()).ToListAsync());
+                subjects = await query
+                    .Where(subject => subject.Teacher.Id == User.UserId())
+                    .Select(subject => new SubjectDTO
+                    {
+                        Id = subject.Id,
+                        SemesterTitle = subject.Semester.Title,
+                        SubjectCode = subject.SubjectCode,
+                        SubjectTitle = subject.SubjectTitle,
+                        TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName
+                    }).ToListAsync();
+            }
+            else
+            {
+                subjects = await query
+                    .SelectMany(subject => subject.StudentSubjects)
+                    .Select(subject => subject)
+                    .Where(subject => subject.StudentId == User.UserId() && subject.DeletedAt == null)
+                    .Select(subject => new SubjectDTO
+                    {
+                        Id = subject.Subject.Id,
+                        SemesterTitle = subject.Subject.Semester.Title,
+                        SubjectCode = subject.Subject.SubjectCode,
+                        SubjectTitle = subject.Subject.SubjectTitle,
+                        TeacherName = subject.Subject.Teacher.FirstName + " " + subject.Subject.Teacher.LastName
+                    }).ToListAsync();
             }
 
-            var studentSubjects = await query.Where(subject =>
-                    subject.StudentSubjects
-                        .Select(studentSubject => studentSubject.StudentId)
-                        .Contains(User.UserId())
-//                    &&
-//                    subject.StudentSubjects
-//                        .Select(studentSubject => studentSubject.DeletedAt)
-//                        .Contains(null)
-                )
-                .ToListAsync();
-
-            return View(studentSubjects);
+            return Ok(subjects);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keywords"></param>
+        /// <returns></returns>
         [HttpPost("search")]
         [AllowAnonymous]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectDTO>))]
         public async Task<IActionResult> Search(string? keywords)
         {
             if (string.IsNullOrEmpty(keywords))
             {
-                return RedirectToAction("Subjects");
+                return await Subjects();
             }
 
-            var applicationDbContext = _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
+            var query = _context.Subjects
                 .Where(subject => subject.DeletedAt == null)
                 .Where(subject =>
                     subject.Teacher.FirstName.ToLower().Contains(keywords.ToLower()) ||
@@ -92,23 +129,37 @@ namespace WebApp.ApiControllers._1._0
                     subject.SubjectTitle.ToLower().Contains(keywords.ToLower()) ||
                     subject.SubjectCode.ToLower().Contains(keywords.ToLower()));
 
-            return View("Subjects", await applicationDbContext.ToListAsync());
+            var subjects = await query
+                .Select(subject => new SubjectDTO
+                {
+                    Id = subject.Id,
+                    SemesterTitle = subject.Semester.Title,
+                    SubjectCode = subject.SubjectCode,
+                    SubjectTitle = subject.SubjectTitle,
+                    TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName
+                }).ToListAsync();
+
+            return Ok(subjects);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keywords"></param>
+        /// <returns></returns>
         [HttpPost("search/my")]
         [Authorize(Roles = "Student, Teacher, Admin")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectDTO>))]
         public async Task<IActionResult> SearchStudent(string? keywords)
         {
             if (string.IsNullOrEmpty(keywords))
             {
-                return RedirectToAction("StudentSubjects");
+                return await StudentSubjects();
             }
 
             var query = _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
                 .Where(subject => subject.DeletedAt == null)
                 .Where(subject =>
                     subject.Teacher.FirstName.ToLower().Contains(keywords.ToLower()) ||
@@ -118,49 +169,145 @@ namespace WebApp.ApiControllers._1._0
                     subject.SubjectTitle.ToLower().Contains(keywords.ToLower()) ||
                     subject.SubjectCode.ToLower().Contains(keywords.ToLower()));
 
+            ICollection<SubjectDTO> subjects;
+
             if (User.IsInRole("Teacher"))
             {
-                return View("StudentSubjects",
-                    await query.Where(subject => subject.TeacherId == User.UserId()).ToListAsync());
+                subjects = await query
+                    .Where(subject => subject.Teacher.Id == User.UserId())
+                    .Select(subject => new SubjectDTO
+                    {
+                        Id = subject.Id,
+                        SemesterTitle = subject.Semester.Title,
+                        SubjectCode = subject.SubjectCode,
+                        SubjectTitle = subject.SubjectTitle,
+                        TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName
+                    }).ToListAsync();
+            }
+            else
+            {
+                subjects = await query
+                    .SelectMany(subject => subject.StudentSubjects)
+                    .Select(subject => subject)
+                    .Where(subject => subject.StudentId == User.UserId() && subject.DeletedAt == null)
+                    .Select(subject => new SubjectDTO
+                    {
+                        Id = subject.Subject.Id,
+                        SemesterTitle = subject.Subject.Semester.Title,
+                        SubjectCode = subject.Subject.SubjectCode,
+                        SubjectTitle = subject.Subject.SubjectTitle,
+                        TeacherName = subject.Subject.Teacher.FirstName + " " + subject.Subject.Teacher.LastName
+                    }).ToListAsync();
             }
 
-            return View("StudentSubjects", await query.Where(subject => subject.StudentSubjects
-                .Select(studentSubject => studentSubject.StudentId)
-                .Contains(User.UserId())).ToListAsync());
+            return Ok(subjects);
         }
-
+        
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectDetails>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectStudentDetails>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectTeacherDetails>))]
         public async Task<IActionResult> Details(Guid id)
         {
-            var subject = await _context.Subjects
-                .Include(s => s.Semester)
-                .Include(s => s.Teacher)
-                .Include(s => s.HomeWorks)
-                .ThenInclude(s => s.StudentHomeWorks)
-                .Include(s => s.StudentSubjects)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var record = await _context.Subjects.FindAsync(id);
 
-            if (subject == null)
+            if (record == null)
             {
                 return NotFound();
             }
 
-            subject.HomeWorks = subject.HomeWorks.Where(work => work.DeletedAt == null).ToList();
-            subject.StudentSubjects = subject.StudentSubjects.Where(ssb => ssb.DeletedAt == null).ToList();
+            var query = _context.Subjects.Where(s => s.Id == id && s.DeletedAt == null);
 
-            if (User.IsInRole("Teacher") && subject.TeacherId == User.UserId() || User.IsInRole("Admin"))
+            if (User.IsInRole("Teacher") && record.TeacherId == User.UserId() || User.IsInRole("Admin"))
             {
-                return View("/Views/Subjects/TeacherDetails.cshtml", subject);
+                return Ok(await query.Select(subject => new SubjectTeacherDetails
+                    {
+                        Id = subject.Id,
+                        NotGradedCount = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade < 0),
+                        FailedCount = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade == 0),
+                        PassedCount = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade > 0),
+                        Score1Count = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade == 1),
+                        Score2Count = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade == 2),
+                        Score3Count = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade == 3),
+                        Score4Count = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade == 4),
+                        Score5Count = subject.StudentSubjects.Where(s => s.IsAccepted && s.DeletedAt == null)
+                            .Count(s => s.Grade == 5),
+                        AcceptedStudentsCount = subject.StudentSubjects.Count(s => s.IsAccepted && s.DeletedAt == null),
+                        NotAcceptedStudentsCount =
+                            subject.StudentSubjects.Count(s => !s.IsAccepted && s.DeletedAt == null),
+                        SemesterTitle = subject.Semester.Title,
+                        SubjectCode = subject.SubjectCode,
+                        SubjectTitle = subject.SubjectTitle,
+                        TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName,
+                        Homeworks = subject.HomeWorks
+                            .Where(work => work.DeletedAt == null)
+                            .Select(work => new SubjectTeacherDetailsHomework
+                            {
+                                Deadline = work.Deadline,
+                                AverageGrade = work.StudentHomeWorks
+                                    .Where(homeWork => homeWork.DeletedAt == null && homeWork.Grade > 0)
+                                    .Select(homeWork => homeWork.Grade).Average(),
+                                Id = work.Id,
+                                Title = work.Title
+                            }).ToList()
+                    })
+                    .FirstOrDefaultAsync());
             }
 
             if (User.IsInRole("Student"))
             {
-                return View("/Views/Subjects/StudentDetails.cshtml", subject);
+                return Ok(await query.Select(subject => new SubjectStudentDetails
+                    {
+                        Id = subject.Id,
+                        Grade = subject.StudentSubjects.FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted)
+                            .Grade,
+                        HomeWorksGrade = subject.StudentSubjects
+                            .FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted).StudentHomeWorks
+                            .Where(shw => shw.DeletedAt == null)
+                            .Select(work => work.Grade).Average(),
+                        StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null),
+                        SemesterTitle = subject.Semester.Title,
+                        SubjectCode = subject.SubjectCode,
+                        SubjectTitle = subject.SubjectTitle,
+                        TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName,
+                        Homeworks = subject.HomeWorks
+                            .Where(work => work.DeletedAt == null)
+                            .Select(work => new SubjectStudentDetailsHomework
+                            {
+                                Deadline = work.Deadline,
+                                Grade = work.StudentHomeWorks.FirstOrDefault(shw =>
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Grade,
+                                Id = work.Id,
+                                Title = work.Title,
+                                IsAccepted = work.StudentHomeWorks.FirstOrDefault(shw =>
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).IsAccepted,
+                                IsChecked = work.StudentHomeWorks.FirstOrDefault(shw =>
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).IsChecked,
+                            }).ToList()
+                    })
+                    .FirstOrDefaultAsync()
+                );
             }
 
-            return View("/Views/Subjects/Details.cshtml", subject);
+            return Ok(await query.Select(subject => new SubjectDetails
+            {
+                Id = subject.Id,
+                StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null),
+                SemesterTitle = subject.Semester.Title,
+                SubjectCode = subject.SubjectCode,
+                SubjectTitle = subject.SubjectTitle,
+                TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName,
+            }).FirstOrDefaultAsync());
         }
     }
 }

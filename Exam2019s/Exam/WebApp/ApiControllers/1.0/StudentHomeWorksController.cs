@@ -27,7 +27,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Index()
         {
@@ -44,7 +44,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet("{id}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -63,7 +63,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet("createmodel/{homeworkId}/{studentSubjectId}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Create(Guid homeworkId, Guid studentSubjectId)
         {
@@ -86,7 +86,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpPost]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Create(StudentHomeWork model)
         {
@@ -111,7 +111,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpGet("editmodel/{id}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -135,7 +135,7 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [HttpPut]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Edit(Guid id, StudentHomeWork model)
         {
@@ -162,7 +162,7 @@ namespace WebApp.ApiControllers._1._0
         }
         
         [HttpGet("teacher/{homeworkId}/{studentSubjectId}")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> TeacherSubmit(Guid homeworkId, Guid studentSubjectId)
         {
@@ -197,7 +197,7 @@ namespace WebApp.ApiControllers._1._0
         }
         
         [HttpPut("teacher")]
-        [Consumes(("application/json"))]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> TeacherSubmit(Guid id, StudentHomeWork model)
         {

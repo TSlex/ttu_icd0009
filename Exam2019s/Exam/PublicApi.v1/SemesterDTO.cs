@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PublicApi.v1
 {
     public class SemesterDTO
      {
+         public Guid Id { get; set; } = default!;
+         
          public string Title { get; set; } = default!;
          public ICollection<SemesterSubjectDTO> Subjects { get; set; }
      }
      
      public class SemesterSubjectDTO
      {
+         public Guid Id { get; set; } = default!;
+         
          public int Grade { get; set; }
          
          public string SubjectTitle { get; set; } = default!;
