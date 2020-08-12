@@ -36,13 +36,13 @@ namespace WebApp.Controllers
             return View(await query.ToListAsync());
         }
 
-        // GET: StudentHomeWorks/Details/5
         public async Task<IActionResult> Details(Guid id)
         {
             var studentHomeWork = await _context.StudentHomeWorks
                 .Include(s => s.HomeWork)
                 .Include(s => s.StudentSubject)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (studentHomeWork == null)
             {
                 return NotFound();
@@ -51,29 +51,48 @@ namespace WebApp.Controllers
             return View(studentHomeWork);
         }
 
-        // GET: StudentHomeWorks/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(Guid homeworkId, Guid studentSubjectId)
         {
-            return View();
+            var homework = await _context.HomeWorks
+                .Include(hw => hw.Subject)
+                .FirstOrDefaultAsync(hw => hw.Id == homeworkId);
+
+            var subject = await _context.StudentSubjects.FindAsync(studentSubjectId);
+
+            if (homework == null || subject == null)
+            {
+                return NotFound();
+            }
+
+            return View(new StudentHomeWork
+            {
+                HomeWork = homework,
+                StudentSubject = subject
+            });
         }
 
-        // POST: StudentHomeWorks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(StudentHomeWork studentHomeWork)
+        public async Task<IActionResult> Create(StudentHomeWork model)
         {
             if (ModelState.IsValid)
             {
-                studentHomeWork.Id = Guid.NewGuid();
-                _context.Add(studentHomeWork);
+                model.Id = Guid.NewGuid();
+                model.AnswerDateTime = DateTime.UtcNow;
+
+                _context.Add(model);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                var homework = await _context.StudentHomeWorks
+                    .Include(shw => shw.StudentSubject)
+                    .ThenInclude(ssb => ssb.Subject)
+                    .FirstOrDefaultAsync(shw => shw.Id == model.Id);
+
+                return RedirectToAction("Details", "Subjects", new {id = homework.StudentSubject.SubjectId});
             }
 
-
-            return View(studentHomeWork);
+            return View(model);
         }
 
         // GET: StudentHomeWorks/Edit/5
@@ -84,7 +103,11 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
+            var studentHomeWork = await _context.StudentHomeWorks
+                .Include(ssh => ssh.HomeWork)
+                .Include(ssh => ssh.StudentSubject)
+                .FirstOrDefaultAsync(ssh => ssh.Id == id);
+
             if (studentHomeWork == null)
             {
                 return NotFound();
@@ -93,21 +116,27 @@ namespace WebApp.Controllers
             return View(studentHomeWork);
         }
 
-        [HttpPost]
+        [
+            HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, StudentHomeWork studentHomeWork)
+        public async Task<IActionResult> Edit(Guid id, StudentHomeWork model)
         {
-            if (id != studentHomeWork.Id)
+            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
+
+            if (id != model.Id || studentHomeWork == null || studentHomeWork.IsAccepted)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                studentHomeWork.StudentAnswer = model.StudentAnswer;
+                studentHomeWork.IsChecked = false;
+
                 _context.Update(studentHomeWork);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new {studentHomeWork.Id});
             }
 
             return View(studentHomeWork);

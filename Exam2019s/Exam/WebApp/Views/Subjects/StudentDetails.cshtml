@@ -64,7 +64,7 @@
             <tbody>
             @foreach (var homework in @Model.HomeWorks)
             {
-                var studentHomework = homework.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == Model.Id
+                var studentHomework = homework.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == homework.Id
                                                                                        && work.StudentSubject.StudentId == User.UserId());
 
                 <tr>
@@ -83,13 +83,22 @@
                         else if (studentHomework == null)
                         {
                             <td class="text-right">
-                                <a href="" class="btn btn-warning fa fa-pencil"></a>
+                                <a asp-controller="StudentHomeWorks"
+                                   asp-action="Create"
+                                   asp-route-homeworkId="@homework.Id"
+                                   asp-route-studentSubjectId="@studentSubject.Id"
+                                   class="btn btn-warning fa fa-pencil">
+                                </a>
                             </td>
                         }
                         else
                         {
                             <td class="text-right">
-                                <a href="" class="btn btn-info fa fa-pencil"></a>
+                                <a asp-controller="StudentHomeWorks"
+                                   asp-action="Details"
+                                   asp-route-id="@studentHomework.Id"
+                                   class="btn btn-info fa fa-pencil">
+                                </a>
                             </td>
                         }
                     }

@@ -4,59 +4,38 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h3 class="d-flex" style="justify-content: space-between">
+    @Model.HomeWork.Title
+</h3>
+<hr>
+<h4>@Model.HomeWork.Description</h4>
+<h5 class="text-muted">Due: @Model.HomeWork.Deadline</h5>
+<hr>
+<h5 class="text-muted">@Model.HomeWork.Subject.SubjectTitle</h5>
+<h5 class="text-muted">@Model.HomeWork.Subject.SubjectCode</h5>
 
-<h4>StudentHomeWork</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row text-center justify-content-center">
+    <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="All" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="HomeWorkId" class="control-label"></label>
-                <select asp-for="HomeWorkId" class ="form-control" asp-items="ViewBag.HomeWorkId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="StudentSubjectId" class="control-label"></label>
-                <select asp-for="StudentSubjectId" class ="form-control" asp-items="ViewBag.StudentSubjectId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Grade" class="control-label"></label>
-                <input asp-for="Grade" class="form-control" />
-                <span asp-validation-for="Grade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StudentAnswer" class="control-label"></label>
-                <input asp-for="StudentAnswer" class="form-control" />
+                <label asp-for="StudentAnswer" class="control-label">Your answer</label>
+                <textarea asp-for="StudentAnswer" rows="5" class="form-control"></textarea>
                 <span asp-validation-for="StudentAnswer" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AnswerDateTime" class="control-label"></label>
-                <input asp-for="AnswerDateTime" class="form-control" />
-                <span asp-validation-for="AnswerDateTime" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsChecked" /> @Html.DisplayNameFor(model => model.IsChecked)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsAccepted" /> @Html.DisplayNameFor(model => model.IsAccepted)
-                </label>
-            </div>
+
+            <input asp-for="StudentSubjectId" type="hidden" class="form-control"/>
+            <input asp-for="HomeWorkId" type="hidden" class="form-control"/>
             
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary"/>
+                <a asp-action="Details" asp-controller="Subjects" asp-route-id="@Model.HomeWork.Subject.Id" class="btn btn-secondary">Return</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
