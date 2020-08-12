@@ -6,9 +6,9 @@
                 <section>
                     <form id="account" method="post" submit.trigger="onSubmit($event)">
                         <hr>
-                        <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
-                            <ul>
-                                <li repeat.for="error of errors">
+                        <div class="text-danger mb-3" data-valmsg-summary="true">
+                            <ul class="list-group">
+                                <li repeat.for="error of errors" class="list-group-item list-group-item-danger">
                                     ${error}
                                 </li>
                             </ul>

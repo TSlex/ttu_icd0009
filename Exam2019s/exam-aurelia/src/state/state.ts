@@ -54,6 +54,28 @@ export class AppState {
         return "null";
     }
 
+    get isTeacher() {
+        var result: boolean = false
+        this.userRoles.forEach((element: string) => {
+            if (element.toLowerCase().indexOf("teacher") !== -1) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
+    get isStudent() {
+        var result: boolean = false
+        this.userRoles.forEach((element: string) => {
+            if (element.toLowerCase().indexOf("student") !== -1) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
     get isAdmin() {
         var result: boolean = false
         this.userRoles.forEach((element: string) => {

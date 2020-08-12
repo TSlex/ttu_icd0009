@@ -35,7 +35,7 @@ export class AccountApi extends BaseApi {
                 case 204:
                     return (await response.json()) as IJwtResponseDTO
                 default:
-                    return (await response.json()) as IJwtResponseDTO
+                    return parseResponse(response) as any
             }
         } catch (reason) {
             return {
@@ -54,9 +54,9 @@ export class AccountApi extends BaseApi {
                 case 200:
                 case 201:
                 case 204:
-                    return (await response.json()) as IFetchResponse<any>
+                    return parseResponse(response)
                 default:
-                    return (await response.json()) as IFetchResponse<any>
+                    return parseResponse(response)
             }
         } catch (reason) {
             return {
