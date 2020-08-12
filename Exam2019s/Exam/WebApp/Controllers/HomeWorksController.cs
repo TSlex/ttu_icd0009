@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Student, Teacher, Admin")]
     public class HomeWorksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,16 +21,16 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var homeWork = await _context.HomeWorks
-                .Include(h => h.Subject)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(hw => hw.Subject)
+                .ThenInclude(hw => hw.StudentSubjects)
+                .ThenInclude(sb => sb.Student)
+                .Include(hw => hw.Subject)
+                .ThenInclude(hw => hw.StudentSubjects)
+                .ThenInclude(hw => hw.StudentHomeWorks)
+                .FirstOrDefaultAsync(hw => hw.Id == id);
             
             if (homeWork == null)
             {

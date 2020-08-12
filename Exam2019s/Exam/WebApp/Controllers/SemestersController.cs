@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
 using Domain;
+using Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Student, Teacher, Admin")]
     public class SemestersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,7 +22,6 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        // GET: Semesters
         public async Task<IActionResult> Index()
         {
             return View(await _context.Semesters
@@ -27,6 +29,11 @@ namespace WebApp.Controllers
                 .ThenInclude(subject => subject.Teacher)
                 .Include(semester => semester.Subjects)
                 .ThenInclude(subject => subject.StudentSubjects)
+                .Where(semester => 
+                    semester.Subjects
+                        .SelectMany(subject => subject.StudentSubjects)
+                        .Select(ssb => ssb.StudentId).Contains(User.UserId())
+                    )
                 .ToListAsync());
         }
     }

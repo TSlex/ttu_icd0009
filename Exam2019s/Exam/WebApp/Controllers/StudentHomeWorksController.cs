@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
 using Domain;
+using Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Roles = "Student, Teacher, Admin")]
     public class StudentHomeWorksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,21 +22,23 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        // GET: StudentHomeWorks
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.StudentHomeWorks.Include(s => s.HomeWork).Include(s => s.StudentSubject);
-            return View(await applicationDbContext.ToListAsync());
+            var query = _context.HomeWorks
+                .Include(hw => hw.Subject)
+                .ThenInclude(hw => hw.StudentSubjects)
+                .ThenInclude(sb => sb.Student)
+                .Include(hw => hw.Subject)
+                .ThenInclude(hw => hw.StudentSubjects)
+                .ThenInclude(hw => hw.StudentHomeWorks)
+                .Where(hw => hw.Subject.StudentSubjects.Select(ssb => ssb.StudentId).Contains(User.UserId()));
+
+            return View(await query.ToListAsync());
         }
 
         // GET: StudentHomeWorks/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var studentHomeWork = await _context.StudentHomeWorks
                 .Include(s => s.HomeWork)
                 .Include(s => s.StudentSubject)
@@ -49,8 +54,6 @@ namespace WebApp.Controllers
         // GET: StudentHomeWorks/Create
         public IActionResult Create()
         {
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description");
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id");
             return View();
         }
 
@@ -59,7 +62,7 @@ namespace WebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HomeWorkId,StudentSubjectId,Grade,StudentAnswer,AnswerDateTime,IsChecked,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentHomeWork studentHomeWork)
+        public async Task<IActionResult> Create(StudentHomeWork studentHomeWork)
         {
             if (ModelState.IsValid)
             {
@@ -68,8 +71,8 @@ namespace WebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description", studentHomeWork.HomeWorkId);
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id", studentHomeWork.StudentSubjectId);
+
+
             return View(studentHomeWork);
         }
 
@@ -86,17 +89,13 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description", studentHomeWork.HomeWorkId);
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id", studentHomeWork.StudentSubjectId);
+
             return View(studentHomeWork);
         }
 
-        // POST: StudentHomeWorks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("HomeWorkId,StudentSubjectId,Grade,StudentAnswer,AnswerDateTime,IsChecked,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentHomeWork studentHomeWork)
+        public async Task<IActionResult> Edit(Guid id, StudentHomeWork studentHomeWork)
         {
             if (id != studentHomeWork.Id)
             {
@@ -105,63 +104,13 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(studentHomeWork);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentHomeWorkExists(studentHomeWork.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(studentHomeWork);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HomeWorkId"] = new SelectList(_context.HomeWorks, "Id", "Description", studentHomeWork.HomeWorkId);
-            ViewData["StudentSubjectId"] = new SelectList(_context.StudentSubjects, "Id", "Id", studentHomeWork.StudentSubjectId);
-            return View(studentHomeWork);
-        }
-
-        // GET: StudentHomeWorks/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentHomeWork = await _context.StudentHomeWorks
-                .Include(s => s.HomeWork)
-                .Include(s => s.StudentSubject)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentHomeWork == null)
-            {
-                return NotFound();
-            }
 
             return View(studentHomeWork);
-        }
-
-        // POST: StudentHomeWorks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
-            _context.StudentHomeWorks.Remove(studentHomeWork);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool StudentHomeWorkExists(Guid id)
-        {
-            return _context.StudentHomeWorks.Any(e => e.Id == id);
         }
     }
 }

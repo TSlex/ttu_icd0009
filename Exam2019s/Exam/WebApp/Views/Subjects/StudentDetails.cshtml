@@ -55,26 +55,44 @@
             <tr>
                 <th>Title</th>
                 <th>Deadline</th>
-                <th>Overal</th>
+                <th>Is accepted?</th>
+                <th>Is checked?</th>
+                <th>Grade</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             @foreach (var homework in @Model.HomeWorks)
             {
+                var studentHomework = homework.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == Model.Id
+                                                                                       && work.StudentSubject.StudentId == User.UserId());
+
                 <tr>
                     <td>@homework.Title</td>
                     <td>@homework.Deadline</td>
-                    <td>
-                        @{
-                            var grades = homework.StudentHomeWorks.Select(work => work.Grade).Where(grade => grade >= 0).ToList();
-
-                <text>@(grades.Count > 0 ? grades.Average() : 0)</text>
+                    <td>@(studentHomework?.IsAccepted ?? false ? "True" : "False")</td>
+                    <td>@(studentHomework?.IsChecked ?? false ? "True" : "False")</td>
+                    <td>@((studentHomework?.Grade ?? -1) > 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td>
+                    @{
+                        if (studentHomework?.IsAccepted ?? false)
+                        {
+                            <td class="text-right">
+                                <span class="btn btn-success fa fa-check"></span>
+                            </td>
                         }
-                    </td>
-                    <td style="width: 10%">
-                        <a asp-action="Create" class="fa fa-edit"></a>
-                    </td>
+                        else if (studentHomework == null)
+                        {
+                            <td class="text-right">
+                                <a href="" class="btn btn-warning fa fa-pencil"></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-right">
+                                <a href="" class="btn btn-info fa fa-pencil"></a>
+                            </td>
+                        }
+                    }
                 </tr>
             }
             </tbody>
