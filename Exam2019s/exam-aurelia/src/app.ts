@@ -32,10 +32,21 @@ export class App {
             // Manage
             { route: ['account/manage/:page?'], name: 'account-manage', moduleId: PLATFORM.moduleName('views/identity/manage'), nav: false, title: 'Manage', settings: { auth: true } },
 
-            // posts
+            // subjects
+            // { route: ['subjects', 'subjects/index'], name: 'subjects', moduleId: PLATFORM.moduleName('views/posts/index'), nav: true, title: 'Posts', settings: { auth: true } },
+            // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
+            // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
+
+            // my subjects
             // { route: ['posts', 'posts/index'], name: 'posts', moduleId: PLATFORM.moduleName('views/posts/index'), nav: true, title: 'Posts', settings: { auth: true } },
             // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
             // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
+
+            // my semester
+            // { route: ['posts', 'posts/index'], name: 'posts', moduleId: PLATFORM.moduleName('views/posts/index'), nav: true, title: 'Posts', settings: { auth: true } },
+            // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
+            // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
+
         ]);
 
         config.addAuthorizeStep
