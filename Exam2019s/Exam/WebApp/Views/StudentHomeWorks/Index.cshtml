@@ -29,7 +29,7 @@
 @*                 <td>@homework.Deadline</td> *@
 @*                 <td>@(studentHomework?.IsAccepted ?? false ? "True" : "False")</td> *@
 @*                 <td>@(studentHomework?.IsChecked ?? false ? "True" : "False")</td> *@
-@*                 <td>@((studentHomework?.Grade ?? -1) > 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td> *@
+@*                 <td>@((studentHomework?.Grade ?? -1) >= 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td> *@
 @*                 @{ *@
 @*                     if (studentHomework?.IsAccepted ?? false) *@
 @*                     { *@

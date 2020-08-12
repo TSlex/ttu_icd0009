@@ -96,7 +96,6 @@ namespace WebApp.Controllers
             return View(model);
         }
 
-        // GET: StudentHomeWorks/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -118,8 +117,7 @@ namespace WebApp.Controllers
             return View(studentHomeWork);
         }
 
-        [
-            HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, StudentHomeWork model)
         {
@@ -143,6 +141,64 @@ namespace WebApp.Controllers
             }
 
             return View(studentHomeWork);
+        }
+        
+        public async Task<IActionResult> TeacherSubmit(Guid homeworkId, Guid studentSubjectId)
+        {
+            var studentHomeWork = await _context.StudentHomeWorks
+                .Include(ssh => ssh.HomeWork)
+                .ThenInclude(hw => hw.Subject)
+                .Include(ssh => ssh.StudentSubject)
+                .FirstOrDefaultAsync(work =>
+                    work.HomeWorkId == homeworkId && work.StudentSubjectId == studentSubjectId);
+
+            if (studentHomeWork == null)
+            {
+                var id = Guid.NewGuid();
+                
+                _context.Add(new StudentHomeWork()
+                {
+                    Id = id,
+                    HomeWorkId = homeworkId,
+                    StudentSubjectId = studentSubjectId
+                });
+
+                await _context.SaveChangesAsync();
+                
+                studentHomeWork = await _context.StudentHomeWorks
+                    .Include(ssh => ssh.HomeWork)
+                    .ThenInclude(hw => hw.Subject)
+                    .Include(ssh => ssh.StudentSubject)
+                    .FirstOrDefaultAsync(ssh => ssh.Id == id);
+            }
+
+            return View("TeacherDetails", studentHomeWork);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TeacherSubmit(Guid id, StudentHomeWork model)
+        {
+            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
+
+            if (id != model.Id || studentHomeWork == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                studentHomeWork.Grade = model.Grade;
+                studentHomeWork.IsAccepted = model.IsAccepted;
+                studentHomeWork.IsChecked = model.IsChecked;
+
+                _context.Update(studentHomeWork);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Details", "HomeWorks", new {id = studentHomeWork.HomeWorkId});
+            }
+
+            return View("TeacherDetails", studentHomeWork);
         }
     }
 }

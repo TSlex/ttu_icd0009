@@ -31,7 +31,7 @@
                         @item.Student.FirstLastName
                     </td>
                     <td>
-                        @(item.Grade > 0 ? item.Grade.ToString() : "Not graded")
+                        @(item.Grade >= 0 ? item.Grade.ToString() : "Not graded")
                     </td>
                     <td class="text-right d-flex" style="justify-content: flex-end">
                         <a class="btn btn-primary fa fa-edit mr-1" asp-action="Edit" asp-route-id="@item.Id"></a>

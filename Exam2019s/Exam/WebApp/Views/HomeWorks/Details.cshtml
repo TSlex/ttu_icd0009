@@ -26,20 +26,29 @@
         <th>Is accepted?</th>
         <th>Is checked?</th>
         <th>Grade</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-        @foreach (var student in @Model.Subject.StudentSubjects)
-        {
-            var studentHomework = student.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == Model.Id);
-                
-            <tr>
-                <td>@student.Student.UserName</td>
-                <td>@student.Student.FirstLastName</td>
-                <td>@(studentHomework?.IsAccepted ?? false ? "True" : "False")</td>
-                <td>@(studentHomework?.IsChecked ?? false ? "True" : "False")</td>
-                <td>@((studentHomework?.Grade ?? -1) > 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td>
-            </tr>
-        }
+    @foreach (var student in @Model.Subject.StudentSubjects)
+    {
+        var studentHomework = student.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == Model.Id);
+
+        <tr>
+            <td>@student.Student.UserName</td>
+            <td>@student.Student.FirstLastName</td>
+            <td>@(studentHomework?.IsAccepted ?? false ? "True" : "False")</td>
+            <td>@(studentHomework?.IsChecked ?? false ? "True" : "False")</td>
+            <td>@((studentHomework?.Grade ?? -1) >= 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td>
+            <td class="text-right">
+                <a asp-controller="StudentHomeWorks"
+                   asp-action="TeacherSubmit"
+                   asp-route-homeworkId="@Model.Id"
+                   asp-route-studentSubjectId="@student.Id"
+                   class="btn btn-primary fa fa-eye">
+                </a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

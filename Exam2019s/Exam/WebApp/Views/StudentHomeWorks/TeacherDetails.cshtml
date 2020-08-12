@@ -1,0 +1,54 @@
+﻿@model Domain.StudentHomeWork
+
+<h3 class="d-flex" style="justify-content: space-between">
+    @Model.HomeWork.Title
+</h3>
+<hr>
+<h4>@Model.HomeWork.Description</h4>
+<h5 class="text-muted">Due: @Model.HomeWork.Deadline</h5>
+<hr>
+<h5 class="text-muted">@Model.HomeWork.Subject.SubjectTitle</h5>
+<h5 class="text-muted">@Model.HomeWork.Subject.SubjectCode</h5>
+
+<div class="row text-center justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="TeacherSubmit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <h4>Student answer</h4>
+            <hr>
+            <h5>@Model.StudentAnswer</h5>
+            <h5 class="text-muted mt-3">Ansvered: @Model.AnswerDateTime</h5>
+            <hr>
+
+            <div class="form-group">
+                <label asp-for="Grade" class="control-label"></label>
+                <select asp-for="Grade" class="form-control" asp-items="@Enumerable.Range(-1, 7).Select(i => new SelectListItem {Text = i.ToString(), Value = i.ToString()})"></select>
+                <span asp-validation-for="Grade" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsChecked"/> @Html.DisplayNameFor(model => model.IsChecked)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAccepted"/> @Html.DisplayNameFor(model => model.IsAccepted)
+                </label>
+            </div>
+
+            <input type="hidden" asp-for="Id"/>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"/>
+                <a asp-action="Details" asp-controller="HomeWorks" asp-route-id="@Model.HomeWork.Id" class="btn btn-secondary">Return</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

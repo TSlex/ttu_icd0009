@@ -9,7 +9,6 @@
 </h3>
 <hr>
 <h4>@Model.HomeWork.Description</h4>
-<h5 class="text-muted mt-3">Ansvered: @Model.AnswerDateTime</h5>
 <h5 class="text-muted">Due: @Model.HomeWork.Deadline</h5>
 <hr>
 <h5 class="text-muted">@Model.HomeWork.Subject.SubjectTitle</h5>
@@ -20,6 +19,7 @@
         <h4>Your answer</h4>
         <hr>
         <h5>@Model.StudentAnswer</h5>
+        <h5 class="text-muted mt-3">Ansvered: @Model.AnswerDateTime</h5>
         <hr>
         <h5>Checked: @(Model.IsChecked ? "true" : "false")</h5>
         <h5>Accepted: @(Model.IsAccepted ? "true" : "false")</h5>
