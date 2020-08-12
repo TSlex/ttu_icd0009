@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
 using Domain;
+using Extensions;
 
 namespace WebApp.Controllers
 {
@@ -19,149 +20,54 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        // GET: StudentSubjects
-        public async Task<IActionResult> Index()
+        [HttpPost]
+        public async Task<IActionResult> RegisterToSubject(Subject model)
         {
-            var applicationDbContext = _context.StudentSubjects.Include(s => s.Student).Include(s => s.Subject);
-            return View(await applicationDbContext.ToListAsync());
-        }
+            var studentSubject =
+                await _context.StudentSubjects
+                    .FirstOrDefaultAsync(s =>
+                        s.StudentId == User.UserId() &&
+                        s.SubjectId == model.Id);
 
-        // GET: StudentSubjects/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentSubject = await _context.StudentSubjects
-                .Include(s => s.Student)
-                .Include(s => s.Subject)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (studentSubject == null)
             {
-                return NotFound();
-            }
+                _context.StudentSubjects.Add(new StudentSubject
+                {
+                    StudentId = User.UserId(),
+                    SubjectId = model.Id,
+                });
 
-            return View(studentSubject);
-        }
-
-        // GET: StudentSubjects/Create
-        public IActionResult Create()
-        {
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName");
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode");
-            return View();
-        }
-
-        // POST: StudentSubjects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,SubjectId,Grade,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentSubject studentSubject)
-        {
-            if (ModelState.IsValid)
-            {
-                studentSubject.Id = Guid.NewGuid();
-                _context.Add(studentSubject);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName", studentSubject.StudentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode", studentSubject.SubjectId);
-            return View(studentSubject);
+            else if (studentSubject.DeletedAt != null)
+            {
+                studentSubject.DeletedAt = null;
+                _context.Update(studentSubject);
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Details", "Subjects", new {id = model.Id});
         }
 
-        // GET: StudentSubjects/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentSubject = await _context.StudentSubjects.FindAsync(id);
-            if (studentSubject == null)
-            {
-                return NotFound();
-            }
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName", studentSubject.StudentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode", studentSubject.SubjectId);
-            return View(studentSubject);
-        }
-
-        // POST: StudentSubjects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("StudentId,SubjectId,Grade,IsAccepted,Id,CreatedBy,CreatedAt,ChangedBy,ChangedAt,DeletedBy,DeletedAt")] StudentSubject studentSubject)
+        public async Task<IActionResult> CancelRegistration(Subject model)
         {
-            if (id != studentSubject.Id)
+            var subject = await _context.StudentSubjects
+                .FirstOrDefaultAsync(s =>
+                    s.DeletedAt == null &&
+                    s.StudentId == User.UserId() &&
+                    s.SubjectId == model.Id);
+
+            if (subject == null)
             {
-                return NotFound();
+                return RedirectToAction("Subjects", "Subjects");
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(studentSubject);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentSubjectExists(studentSubject.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["StudentId"] = new SelectList(_context.Users, "Id", "FirstName", studentSubject.StudentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "SubjectCode", studentSubject.SubjectId);
-            return View(studentSubject);
-        }
-
-        // GET: StudentSubjects/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentSubject = await _context.StudentSubjects
-                .Include(s => s.Student)
-                .Include(s => s.Subject)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentSubject == null)
-            {
-                return NotFound();
-            }
-
-            return View(studentSubject);
-        }
-
-        // POST: StudentSubjects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var studentSubject = await _context.StudentSubjects.FindAsync(id);
-            _context.StudentSubjects.Remove(studentSubject);
+            _context.StudentSubjects.Remove(subject);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool StudentSubjectExists(Guid id)
-        {
-            return _context.StudentSubjects.Any(e => e.Id == id);
+            return RedirectToAction("Details", "Subjects", new {id = model.Id});
         }
     }
 }

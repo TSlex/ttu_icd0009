@@ -124,7 +124,7 @@ namespace WebApp.Controllers
 
             subject.HomeWorks = subject.HomeWorks.Where(work => work.DeletedAt == null).ToList();
 
-            if (User.IsInRole("Teacher"))
+            if (User.IsInRole("Teacher") && subject.TeacherId == User.UserId())
             {
                 return View("/Views/Subjects/TeacherDetails.cshtml", subject);
             }

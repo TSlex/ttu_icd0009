@@ -28,4 +28,28 @@ namespace BLL.App.DTO
 
         public ICollection<HomeWork>? HomeWorks { get; set; }
     }
+    
+    public class SubjectTeacherDetails : DomainEntityBaseMetaSoftUpdateDelete
+    {
+        [Required]
+        [MinLength(1)]
+        [MaxLength(128)]
+        public string SubjectTitle { get; set; } = default!;
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(128)]
+        public string SubjectCode { get; set; } = default!;
+
+        [Required] public Guid TeacherId { get; set; } = default!;
+        public AppUser? Teacher { get; set; }
+
+        [Required] public Guid SemesterId { get; set; } = default!;
+        public Semester? Semester { get; set; }
+
+        public ICollection<StudentSubject>? StudentSubjects { get; set; }
+
+        public ICollection<HomeWork>? HomeWorks { get; set; }
+    }
 }
+

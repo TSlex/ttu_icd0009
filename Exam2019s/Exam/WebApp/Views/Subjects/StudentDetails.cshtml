@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    var studentSubject = Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId() && subject.DeletedAt == null);
 }
 
 <h1 class="card-title">@Model.SubjectTitle</h1>
@@ -12,7 +14,7 @@
 <h4 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h4>
 
 @{
-    if (Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())?.IsAccepted ?? false)
+    if (studentSubject?.IsAccepted ?? false)
     {
         <hr>
         <h4 class="card-subtitle mb-2 text-muted">Grade: @Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())!.Grade</h4>
@@ -30,13 +32,13 @@
 </table>
 
 @{
-    if (Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())?.IsAccepted ?? false)
+    if (studentSubject?.IsAccepted ?? false)
     {
         <button class="btn btn-primary">View all</button>
     }
 }
 @{
-    if (Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId())?.IsAccepted ?? false)
+    if (studentSubject?.IsAccepted ?? false)
     {
         <h3 class="card-subtitle mb-2 mt-5">Homeworks</h3>
         <table class="table">
@@ -71,8 +73,23 @@
     }
     else
     {
-        <div class="text-center">
-            <button class="btn btn-primary w-25">Enrol me!</button>
-        </div>
+        if (studentSubject == null)
+        {
+            <form asp-controller="StudentSubjects" asp-action="RegisterToSubject">
+                <div class="text-center">
+                    <button class="btn btn-primary w-25">Enrol me!</button>
+                    <input type="hidden" asp-for="Id">
+                </div>
+            </form>
+        }
+        else if (!studentSubject.IsAccepted)
+        {
+            <form asp-controller="StudentSubjects" asp-action="CancelRegistration">
+                <div class="text-center">
+                    <button class="btn btn-warning w-25">Cancel registration!</button>
+                    <input type="hidden" asp-for="Id">
+                </div>
+            </form>
+        }
     }
 }

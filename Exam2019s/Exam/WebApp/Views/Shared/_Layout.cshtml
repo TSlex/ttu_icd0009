@@ -35,6 +35,10 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Subjects" asp-action="StudentSubjects">My subjects</a>
                             </li>
+                        }
+
+                        if (User.IsInRole("Student"))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="HomeWorks" asp-action="Index">My homeworks</a>
                             </li>
@@ -42,8 +46,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Semesters" asp-action="Index">Semesters</a>
                             </li>
                         }
-                    }
-                    @{
+
                         if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
