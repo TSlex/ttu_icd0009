@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.App.EF;
@@ -9,9 +10,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PublicApi.v1;
 
 namespace WebApp.ApiControllers._1._0
 {
+    /// <inheritdoc />
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -21,28 +24,49 @@ namespace WebApp.ApiControllers._1._0
     {
         private readonly ApplicationDbContext _context;
 
+        /// <inheritdoc />
         public StudentSubjectsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subjectId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<StudentSubjectDTO>))]
         public async Task<IActionResult> Index(Guid subjectId)
         {
-            var applicationDbContext = _context.StudentSubjects
-                .Include(s => s.Student)
+            return Ok(await _context.StudentSubjects
                 .Where(subject => subject.SubjectId == subjectId &&
-                                  subject.DeletedAt == null);
-
-            return View(await applicationDbContext.ToListAsync());
+                                  subject.DeletedAt == null)
+                .Select(ssb => new StudentSubjectDTO
+                {
+                    Grade = ssb.Grade,
+                    Id = ssb.Id,
+                    IsAccepted = ssb.IsAccepted,
+                    StudentCode = ssb.Student.UserName,
+                    StudentName = ssb.Student.FirstName + " " + ssb.Student.LastName,
+                    SubjectId = ssb.SubjectId
+                }).ToListAsync()
+            );
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("editmodel/{id}")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentSubjectDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -51,23 +75,41 @@ namespace WebApp.ApiControllers._1._0
             }
 
             var studentSubject = await _context.StudentSubjects
-                .Include(subject => subject.Student)
-                .FirstOrDefaultAsync(subject => subject.Id == id);
+                .Where(subject => subject.Id == id &&
+                                  subject.DeletedAt == null)
+                .Select(ssb => new StudentSubjectDTO
+                {
+                    Grade = ssb.Grade,
+                    Id = ssb.Id,
+                    IsAccepted = ssb.IsAccepted,
+                    StudentCode = ssb.Student.UserName,
+                    StudentName = ssb.Student.FirstName + " " + ssb.Student.LastName,
+                    SubjectId = ssb.SubjectId
+                }).FirstOrDefaultAsync();
 
             if (studentSubject == null)
             {
                 return NotFound();
             }
 
-            return View(studentSubject);
+            return Ok(studentSubject);
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> Edit(Guid id, StudentSubject model)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Edit(Guid id, StudentSubjectPutDTO model)
         {
             if (id != model.Id)
             {
@@ -76,6 +118,12 @@ namespace WebApp.ApiControllers._1._0
 
             var subject = await _context.StudentSubjects
                 .FirstOrDefaultAsync(s => s.Id == id);
+            
+            if (User.IsInRole("Teacher") && 
+                !await _context.StudentSubjects.AnyAsync(s => s.Id == id && s.Subject.TeacherId == User.UserId()))
+            {
+                return BadRequest();
+            }
 
             subject.Grade = model.Grade;
             subject.IsAccepted = model.IsAccepted;
@@ -85,18 +133,25 @@ namespace WebApp.ApiControllers._1._0
                 _context.StudentSubjects.Update(subject);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index", new {subject.SubjectId});
+                return NoContent();
             }
 
 
-            return View(model);
+            return NoContent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("student/new")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> AcceptStudent(StudentSubject model)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AcceptStudent(StudentControlDTO model)
         {
             var studentSubject =
                 await _context.StudentSubjects
@@ -105,7 +160,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (studentSubject == null || studentSubject.IsAccepted)
             {
-                return RedirectToAction("Index", new {model.SubjectId});
+                return BadRequest();
             }
 
             studentSubject.IsAccepted = true;
@@ -114,14 +169,21 @@ namespace WebApp.ApiControllers._1._0
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", new {model.SubjectId});
+            return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("student/remove")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> RemoveStudent(StudentSubject model)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoveStudent(StudentControlDTO model)
         {
             var studentSubject =
                 await _context.StudentSubjects
@@ -130,7 +192,7 @@ namespace WebApp.ApiControllers._1._0
 
             if (studentSubject == null)
             {
-                return RedirectToAction("Index", new {model.SubjectId});
+                return BadRequest();
             }
 
             studentSubject.IsAccepted = false;
@@ -141,27 +203,34 @@ namespace WebApp.ApiControllers._1._0
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", new {model.SubjectId});
+            return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subjectId"></param>
+        /// <returns></returns>
         [HttpPost("subject/register")]
         [Authorize(Roles = "Student, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> RegisterToSubject(Subject model)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RegisterToSubject(Guid subjectId)
         {
             var studentSubject =
                 await _context.StudentSubjects
                     .FirstOrDefaultAsync(s =>
                         s.StudentId == User.UserId() &&
-                        s.SubjectId == model.Id);
+                        s.SubjectId == subjectId);
 
             if (studentSubject == null)
             {
                 _context.StudentSubjects.Add(new StudentSubject
                 {
                     StudentId = User.UserId(),
-                    SubjectId = model.Id,
+                    SubjectId = subjectId,
                 });
 
                 await _context.SaveChangesAsync();
@@ -176,24 +245,31 @@ namespace WebApp.ApiControllers._1._0
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("Details", "Subjects", new {id = model.Id});
+            return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subjectId"></param>
+        /// <returns></returns>
         [HttpPost("subject/unregister")]
         [Authorize(Roles = "Student, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public async Task<IActionResult> CancelRegistration(Subject model)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CancelRegistration(Guid subjectId)
         {
             var subject = await _context.StudentSubjects
                 .FirstOrDefaultAsync(s =>
                     s.DeletedAt == null &&
                     s.StudentId == User.UserId() &&
-                    s.SubjectId == model.Id);
+                    s.SubjectId == subjectId);
 
             if (subject == null)
             {
-                return RedirectToAction("Subjects", "Subjects");
+                return BadRequest();
             }
 
             subject.IsAccepted = false;
@@ -201,7 +277,7 @@ namespace WebApp.ApiControllers._1._0
             _context.StudentSubjects.Remove(subject);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", "Subjects", new {id = model.Id});
+            return Ok();
         }
     }
 }

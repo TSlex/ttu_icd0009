@@ -23,6 +23,9 @@ namespace PublicApi.v1
         public int StudentsCount { get; set; }
         public int Grade { get; set; }
         public double HomeWorksGrade { get; set; }
+        
+        public bool IsAccepted { get; set; }
+        public bool IsEnrolled { get; set; }
 
         public ICollection<SubjectStudentDetailsHomework> Homeworks { get; set; }
     }

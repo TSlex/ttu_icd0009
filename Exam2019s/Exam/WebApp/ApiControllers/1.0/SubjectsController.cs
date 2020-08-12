@@ -269,17 +269,19 @@ namespace WebApp.ApiControllers._1._0
                 return Ok(await query.Select(subject => new SubjectStudentDetails
                     {
                         Id = subject.Id,
-                        Grade = subject.StudentSubjects.FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted)
+                        Grade = subject.StudentSubjects.FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted && ssb.StudentId == User.UserId())
                             .Grade,
                         HomeWorksGrade = subject.StudentSubjects
-                            .FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted).StudentHomeWorks
+                            .FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted && ssb.StudentId == User.UserId()).StudentHomeWorks
                             .Where(shw => shw.DeletedAt == null)
                             .Select(work => work.Grade).Average(),
-                        StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null),
+                        StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null && s.IsAccepted),
                         SemesterTitle = subject.Semester.Title,
                         SubjectCode = subject.SubjectCode,
                         SubjectTitle = subject.SubjectTitle,
                         TeacherName = subject.Teacher.FirstName + " " + subject.Teacher.LastName,
+                        IsAccepted = subject.StudentSubjects.FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.StudentId == User.UserId()).IsAccepted,
+                        IsEnrolled = subject.StudentSubjects.Any(ssb => ssb.DeletedAt == null && ssb.StudentId == User.UserId()),
                         Homeworks = subject.HomeWorks
                             .Where(work => work.DeletedAt == null)
                             .Select(work => new SubjectStudentDetailsHomework
@@ -302,7 +304,7 @@ namespace WebApp.ApiControllers._1._0
             return Ok(await query.Select(subject => new SubjectDetails
             {
                 Id = subject.Id,
-                StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null),
+                StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null && s.IsAccepted),
                 SemesterTitle = subject.Semester.Title,
                 SubjectCode = subject.SubjectCode,
                 SubjectTitle = subject.SubjectTitle,
