@@ -39,13 +39,18 @@ namespace DAL.App.Repositories
 
         public override async Task<IEnumerable<HomeWork>> AllAdminAsync()
         {
-            return (await RepoDbSet.IgnoreQueryFilters().Where(entity => entity.MasterId == null).ToListAsync())
+            return (await RepoDbSet.IgnoreQueryFilters()
+                    .Include(entity => entity.Subject)
+                    .Where(entity => entity.MasterId == null)
+                    .ToListAsync())
                 .Select(Mapper.Map);
         }
 
         public override async Task<HomeWork> FindAdminAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet.IgnoreQueryFilters().FirstOrDefaultAsync(entity => entity.Id == id));
+            return Mapper.Map(await RepoDbSet.IgnoreQueryFilters()
+                .Include(entity => entity.Subject)
+                .FirstOrDefaultAsync(entity => entity.Id == id));
         }
     }
 }

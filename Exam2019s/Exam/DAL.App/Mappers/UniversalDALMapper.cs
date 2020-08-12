@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DAL.App.DTO;
+using DAL.App.DTO.Identity;
 using ee.itcollege.aleksi.DAL.Base.EF.Mappers;
 
 namespace DAL.App.Mappers
@@ -15,6 +16,12 @@ namespace DAL.App.Mappers
                 config.CreateMap<TOutObject, TInObject>();
                 
                 // own mapping for composite entities
+                config.CreateMap<Domain.Identity.AppUser, AppUser>();
+                config.CreateMap<AppUser, Domain.Identity.AppUser>();
+                
+                config.CreateMap<Domain.Identity.AppRole, AppRole>();
+                config.CreateMap<AppRole, Domain.Identity.AppRole>();
+                
                 config.CreateMap<Domain.HomeWork, HomeWork>();
                 config.CreateMap<HomeWork, Domain.HomeWork>();
                 

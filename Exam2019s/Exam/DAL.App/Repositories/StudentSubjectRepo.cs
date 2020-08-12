@@ -38,13 +38,19 @@ namespace DAL.App.Repositories
         
         public override async Task<IEnumerable<StudentSubject>> AllAdminAsync()
         {
-            return (await RepoDbSet.IgnoreQueryFilters().Where(entity => entity.MasterId == null).ToListAsync())
+            return (await RepoDbSet.IgnoreQueryFilters()
+                    .Include(entity => entity.Student)
+                    .Include(entity => entity.Subject)
+                    .Where(entity => entity.MasterId == null).ToListAsync())
                 .Select(Mapper.Map);
         }
 
         public override async Task<StudentSubject> FindAdminAsync(Guid id)
         {
-            return Mapper.Map(await RepoDbSet.IgnoreQueryFilters().FirstOrDefaultAsync(entity => entity.Id == id));
+            return Mapper.Map(await RepoDbSet.IgnoreQueryFilters()
+                .Include(entity => entity.Student)
+                .Include(entity => entity.Subject)
+                .FirstOrDefaultAsync(entity => entity.Id == id));
         }
     }
 }
