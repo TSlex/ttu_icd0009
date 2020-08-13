@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BLL.App.DTO;
 
 namespace PublicApi.v1
 {
@@ -18,7 +17,7 @@ namespace PublicApi.v1
 
         public DateTime? Deadline { get; set; }
         
-        public ICollection<StudentHomeWork> StudentHomeWorks { get; set; }
+        public ICollection<StudentHomeWork>? StudentHomeWorks { get; set; }
     }
     
     public class StudentHomeWork

@@ -29,7 +29,7 @@ namespace PublicApi.v1
         public bool IsAccepted { get; set; }
         public bool IsEnrolled { get; set; }
 
-        public ICollection<SubjectStudentDetailsHomework> Homeworks { get; set; }
+        public ICollection<SubjectStudentDetailsHomework>? Homeworks { get; set; }
     }
     
     public class SubjectTeacherDetails: SubjectDTO
@@ -49,7 +49,7 @@ namespace PublicApi.v1
         public int Score4Count { get; set; }
         public int Score5Count { get; set; }
         
-        public ICollection<SubjectTeacherDetailsHomework> Homeworks { get; set; }
+        public ICollection<SubjectTeacherDetailsHomework>? Homeworks { get; set; }
     }
 
     public class SubjectStudentDetailsHomework

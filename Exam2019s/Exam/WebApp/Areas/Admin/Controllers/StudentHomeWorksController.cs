@@ -81,22 +81,22 @@ namespace WebApp.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new record
         /// </summary>
-        /// <param name="homework"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(StudentHomeWork homework)
+        public async Task<IActionResult> Create(StudentHomeWork model)
         {
-            if (TryValidateModel(homework))
+            if (TryValidateModel(model))
             {
-                homework.Id = Guid.NewGuid();
-                _bll.StudentHomeWorks.Add(homework);
+                model.Id = Guid.NewGuid();
+                _bll.StudentHomeWorks.Add(model);
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(homework);
+            return View(model);
         }
 
         /// <summary>
@@ -114,26 +114,26 @@ namespace WebApp.Areas.Admin.Controllers
         /// Updates a record
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="homework"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, StudentHomeWork homework)
+        public async Task<IActionResult> Edit(Guid id, StudentHomeWork model)
         {
-            if (id != homework.Id)
+            if (id != model.Id)
             {
                 ModelState.AddModelError(string.Empty, Resources.Domain.Common.ErrorIdMatch);
             }
 
             if (ModelState.IsValid)
             {
-                await _bll.StudentHomeWorks.UpdateAsync(homework);
+                await _bll.StudentHomeWorks.UpdateAsync(model);
                 await _bll.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(homework);
+            return View(model);
         }
 
         /// <summary>
