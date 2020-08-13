@@ -18,6 +18,10 @@ export class ManageProfileData extends ViewBase {
 
     private profileDataModel: IUserDataDTO | null = null;
 
+    get UserName() {
+        return this.appState.userName
+    }
+
     bind() {
         this.accountApi.getUserData().then(
             (response: IFetchResponse<IUserDataDTO>) => {
@@ -35,10 +39,10 @@ export class ManageProfileData extends ViewBase {
             this.accountApi.putUserData(this.profileDataModel).then(
                 (response: IFetchResponse<IResponseDTO>) => {
                     console.log(response)
-                    if (response.errors) {
+                    if (response.errors?.length > 0) {
                         this.errors = response.errors;
                     } else {
-                        this.alert = { message: response.data?.messages[0]!, type: AlertType.Success, dismissable: true }
+                        this.alert = { message: response.status, type: AlertType.Success, dismissable: true }
                     }
                 }
             );

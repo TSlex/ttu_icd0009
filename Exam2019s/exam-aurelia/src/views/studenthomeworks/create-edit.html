@@ -1,31 +1,29 @@
 <template>
     <require from="conventers/DateFormatConventer"></require>
-    <h3 class="d-flex" style="justify-content: space-between">
-        dsdsdsa
-    </h3>
+    <h2 class="text-center">
+        ${homework.title}
+    </h2>
     <hr>
-    <h4>sdsdsa</h4>
-    <h5 class="text-muted">Due: </h5>
+    <h4 class="text-center">${homework.description}</h4>
+    <h5 class="text-muted text-center" if.bind="homework.deadline != null">Due: ${homework.deadline | dateFormat}</h5>
     <hr>
-    <h5 class="text-muted">ASP.NET Veebirakendused</h5>
-    <h5 class="text-muted">ICD0015</h5>
+    <h6 class="text-muted">${homework.subjectTitle}</h6>
+    <h6 class="text-muted">${homework.subjectCode}</h6>
 
-    <div class="row text-center justify-content-center">
+    <div class="row text-center justify-content-center mt-5">
         <div class="col-md-6">
             <div>
 
                 <div class="form-group">
-                    <label class="control-label" for="StudentAnswer">Your answer</label>
-                    <textarea rows="5" class="form-control" data-val="true"
-                        data-val-maxlength="The field StudentAnswer must be a string or array type with a maximum length of '4096'."
-                        data-val-maxlength-max="4096" id="StudentAnswer" maxlength="4096" name="StudentAnswer"></textarea>
+                    <h4>Your answer</h4>
+                    <textarea rows="5" class="form-control" name="StudentAnswer" value.bind="studentAnswer"></textarea>
                     <span class="text-danger field-validation-valid" data-valmsg-for="StudentAnswer"
                         data-valmsg-replace="true"></span>
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary" click.delegate="onPost()">Create</button>
-                    <button type="submit" class="btn btn-primary" click.delegate="onPut()">Save</button>
+                    <button type="submit" class="btn btn-primary" click.delegate="onPost()" if.bind="!id">Submit</button>
+                    <button type="submit" class="btn btn-primary" click.delegate="onPut()" else>Update</button>
                     <button class="btn btn-secondary" click.delegate="onCancel()">Return</button>
                 </div>
             </div>

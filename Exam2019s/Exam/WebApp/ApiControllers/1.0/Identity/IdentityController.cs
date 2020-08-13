@@ -211,7 +211,7 @@ namespace WebApp.ApiControllers._1._0.Identity
         [HttpPut]
         [Produces("application/json")]
         [Consumes("application/json")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponseDTO))]
         public async Task<IActionResult> UpdateAppUserData([FromBody] UserDataDTO dto)
         {
@@ -238,7 +238,8 @@ namespace WebApp.ApiControllers._1._0.Identity
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
 
-            return Ok(new ErrorResponseDTO(Resources.Views.Identity.Identity.ProfileDataUpdateStatusSuccess));
+            return Ok(new OkResponseDTO{Status = Resources.Views.Identity.Identity.ProfileDataUpdateStatusSuccess});
+            
         }
 
         /// <summary>

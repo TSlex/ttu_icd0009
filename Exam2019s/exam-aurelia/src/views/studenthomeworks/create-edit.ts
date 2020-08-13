@@ -67,8 +67,6 @@ export class CreateEdit {
     async created() {
         const homeworkResponse = await this.homeworksApi.getHomeworkModel(this.homeworkId)
 
-        console.log(homeworkResponse)
-
         if (homeworkResponse.errors?.length > 0) this.onCancel();
 
         this.homework = homeworkResponse.data!
