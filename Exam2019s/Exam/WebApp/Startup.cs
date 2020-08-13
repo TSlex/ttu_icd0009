@@ -105,7 +105,7 @@ namespace WebApp
                 var supportedCultures = new[]
                 {
                     new CultureInfo(name: "en-GB"),
-//                    new CultureInfo(name: "et-EE"),
+//                    new CultureInfo(name: "et-EE"), 
 //                    new CultureInfo(name: "ru-RU")
                 };
 
