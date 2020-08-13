@@ -17,6 +17,7 @@ export class TeacherSubmit {
     private studentSubjectId!: string;
 
     onSubmit() {
+        if (!(this.model.grade >= -1 && this.model.grade < 6)) return
         var submitModel: StudentHomeworkTeacherSubmitDTO = {
             grade: this.model.grade,
             id: this.model.id,
