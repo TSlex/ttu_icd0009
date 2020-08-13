@@ -61,5 +61,70 @@ namespace BLL.App.DTO
         public string SemesterTitle { get; set; } = default!;
         public string TeacherName { get; set; } = default!;
     }
+    
+    public class SubjectDetailsDTO: SubjectDTO
+    {
+        public int StudentsCount { get; set; }
+    }
+    
+    public class SubjectStudentDetailsDTO: SubjectDTO
+    {
+        public int StudentsCount { get; set; }
+        public int Grade { get; set; }
+        public double HomeWorksGrade { get; set; }
+        
+        public Guid StudentSubjectId { get; set; }
+        
+        public bool IsAccepted { get; set; }
+        public bool IsEnrolled { get; set; }
+
+        public ICollection<SubjectStudentDetailsHomeworkDTO>? Homeworks { get; set; }
+    }
+    
+    public class SubjectTeacherDetailsDTO: SubjectDTO
+    {
+        
+        public int AcceptedStudentsCount { get; set; }
+        public int NotAcceptedStudentsCount { get; set; }
+        
+        public int NotGradedCount { get; set; }
+        
+        public int FailedCount { get; set; }
+        public int PassedCount { get; set; }
+        
+        public int Score1Count { get; set; }
+        public int Score2Count { get; set; }
+        public int Score3Count { get; set; }
+        public int Score4Count { get; set; }
+        public int Score5Count { get; set; }
+        
+        public ICollection<SubjectTeacherDetailsHomeworkDTO>? Homeworks { get; set; }
+    }
+
+    public class SubjectStudentDetailsHomeworkDTO
+    {
+        public Guid Id { get; set; } = default!;
+        public Guid? StudentHomeworkId { get; set; }
+
+        public string Title { get; set; } = default!;
+        public DateTime? Deadline { get; set; }
+
+        public bool IsAccepted { get; set; }
+        public bool IsChecked { get; set; }
+        
+        public bool IsStarted { get; set; }
+        
+        public int Grade { get; set; }
+    }
+    
+    public class SubjectTeacherDetailsHomeworkDTO
+    {
+        public Guid Id { get; set; } = default!;
+        
+        public string Title { get; set; } = default!;
+        public DateTime? Deadline { get; set; }
+        
+        public double AverageGrade { get; set; }
+    }
 }
 

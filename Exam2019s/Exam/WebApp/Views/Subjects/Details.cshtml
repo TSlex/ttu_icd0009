@@ -1,4 +1,4 @@
-@model Domain.Subject
+@model BLL.App.DTO.SubjectDetailsDTO
 
 @{
     ViewData["Title"] = "Details";
@@ -7,8 +7,8 @@
 <h1 class="card-title">@Model.SubjectTitle</h1>
 <h4 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h4>
 <hr>
-<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
-<h4 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h4>
+<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.SemesterTitle</h4>
+<h4 class="card-subtitle mb-2 text-success">Teacher: @Model.TeacherName</h4>
 
 
 <h3 class="card-subtitle mb-2 mt-5">Students</h3>
@@ -16,7 +16,7 @@
     <tbody>
     <tr>
         <td>Participants: </td>
-        <td class="w-75">@Model.StudentSubjects.Count(subject => subject.IsAccepted)</td>
+        <td class="w-75">@Model.StudentsCount</td>
     </tr>
     </tbody>
 </table>

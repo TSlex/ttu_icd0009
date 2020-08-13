@@ -1,16 +1,12 @@
 ﻿@using Extensions
-@model Domain.Subject
+@model BLL.App.DTO.SubjectStudentDetailsDTO
 
 @{
     ViewData["Title"] = "Details";
-
-    var studentSubject = Model.StudentSubjects.FirstOrDefault(subject => subject.StudentId == User.UserId() && subject.DeletedAt == null);
-
-//    var studentHomeworkGrades = studentSubject?.IsAccepted ?? false ? Model.StudentSubjects.SelectMany(ssb => ssb.StudentHomeWorks).Select(work => work.Grade).ToList() : new List<int>();
 }
 
 @{
-    if (!studentSubject?.IsAccepted ?? false)
+    if (!Model.IsAccepted && Model.IsEnrolled)
     {
         <div class="alert alert-info text-center" role="alert" style="margin-bottom: 20px !important;">
             You have enrolled to subject. Wait until teacher accepts you.
@@ -21,15 +17,15 @@
 <h1 class="card-title">@Model.SubjectTitle</h1>
 <h4 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h4>
 <hr>
-<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
-<h4 class="card-subtitle mb-2 text-success">Teacher: @Model.Teacher.FirstLastName</h4>
+<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.SemesterTitle</h4>
+<h4 class="card-subtitle mb-2 text-success">Teacher: @Model.TeacherName</h4>
 
 @{
-    if (studentSubject?.IsAccepted ?? false)
+    if (Model.IsAccepted)
     {
         <hr>
-        <h4 class="card-subtitle mb-2 text-muted">Grade: @(studentSubject!.Grade >= 0 ? studentSubject.Grade.ToString() : "Not graded")</h4>
-@*          <h4 class="card-subtitle mb-2 text-muted">Homework grades: @(studentHomeworkGrades.Count > 0 ? studentHomeworkGrades.Average().ToString() : "Not graded")</h4> *@
+        <h4 class="card-subtitle mb-2 text-muted">Grade: @(Model.Grade >= 0 ? Model.Grade.ToString() : "Not graded")</h4>
+        <h4 class="card-subtitle mb-2 text-muted">Homework grades: @(Model.HomeWorksGrade > 0 ? Model.HomeWorksGrade.ToString() : "Not graded")</h4>
     }
 }
 
@@ -38,19 +34,19 @@
     <tbody>
     <tr>
         <td>Participants: </td>
-        <td class="w-75">@Model.StudentSubjects.Count(subject => subject.IsAccepted)</td>
+        <td class="w-75">@Model.StudentsCount</td>
     </tr>
     </tbody>
 </table>
 
 @{
-    if (studentSubject?.IsAccepted ?? false)
+    if (Model.IsAccepted)
     {
         <a class="btn btn-primary" asp-controller="StudentSubjects" asp-action="Index" asp-route-subjectId="@Model.Id">View all</a>
     }
 }
 @{
-    if (studentSubject?.IsAccepted ?? false)
+    if (Model.IsAccepted)
     {
         <h3 class="card-subtitle mb-2 mt-5">Homeworks</h3>
         <table class="table">
@@ -65,31 +61,28 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var homework in @Model.HomeWorks)
+            @foreach (var homework in Model.Homeworks)
             {
-                var studentHomework = homework.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == homework.Id
-                                                                                       && work.StudentSubject.StudentId == User.UserId());
-
                 <tr>
                     <td>@homework.Title</td>
                     <td>@homework.Deadline</td>
-                    <td>@(studentHomework?.IsAccepted ?? false ? "True" : "False")</td>
-                    <td>@(studentHomework?.IsChecked ?? false ? "True" : "False")</td>
-                    <td>@((studentHomework?.Grade ?? -1) >= 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td>
+                    <td>@homework.IsAccepted</td>
+                    <td>@homework.IsChecked</td>
+                    <td>@(homework.Grade >= 0 ? (homework.Grade).ToString() : "Not graded")</td>
                     @{
-                        if (studentHomework?.IsAccepted ?? false)
+                        if (homework.IsAccepted)
                         {
                             <td class="text-right">
                                 <span class="btn btn-success fa fa-check"></span>
                             </td>
                         }
-                        else if (studentHomework == null)
+                        else if (!homework.IsAccepted && !homework.IsStarted)
                         {
                             <td class="text-right">
                                 <a asp-controller="StudentHomeWorks"
                                    asp-action="Create"
                                    asp-route-homeworkId="@homework.Id"
-                                   asp-route-studentSubjectId="@studentSubject.Id"
+                                   asp-route-studentSubjectId="@Model.StudentSubjectId"
                                    class="btn btn-warning fa fa-pencil">
                                 </a>
                             </td>
@@ -99,7 +92,7 @@
                             <td class="text-right">
                                 <a asp-controller="StudentHomeWorks"
                                    asp-action="Details"
-                                   asp-route-id="@studentHomework.Id"
+                                   asp-route-id="@homework.StudentHomeworkId"
                                    class="btn btn-info fa fa-pencil">
                                 </a>
                             </td>
@@ -112,7 +105,7 @@
     }
     else
     {
-        if (studentSubject == null)
+        if (!Model.IsEnrolled)
         {
             <form asp-controller="StudentSubjects" asp-action="RegisterToSubject">
                 <div class="text-center">
@@ -121,7 +114,7 @@
                 </div>
             </form>
         }
-        else if (!studentSubject.IsAccepted)
+        else if (!Model.IsAccepted && Model.IsEnrolled)
         {
             <form asp-controller="StudentSubjects" asp-action="CancelRegistration">
                 <div class="text-center">

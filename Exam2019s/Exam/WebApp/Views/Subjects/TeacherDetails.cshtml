@@ -1,4 +1,4 @@
-﻿@model Domain.Subject
+﻿@model BLL.App.DTO.SubjectTeacherDetailsDTO
 
 @{
     ViewData["Title"] = "Details";
@@ -7,18 +7,18 @@
 <h1 class="card-title">@Model.SubjectTitle</h1>
 <h4 class="card-subtitle mb-2 text-muted">@Model.SubjectCode</h4>
 <hr>
-<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.Semester.Title</h4>
+<h4 class="card-subtitle mb-2 text-muted">Semester: @Model.SemesterTitle</h4>
 
 <h3 class="card-subtitle mb-2 mt-5">Students</h3>
 <table class="table">
     <tbody>
     <tr>
         <td>Accepted: </td>
-        <td class="w-75">@Model.StudentSubjects.Count(subject => subject.IsAccepted)</td>
+        <td class="w-75">@Model.AcceptedStudentsCount</td>
     </tr>
     <tr>
         <td>Not accepted: </td>
-        <td class="w-75">@Model.StudentSubjects.Count(subject => !subject.IsAccepted)</td>
+        <td class="w-75">@Model.NotAcceptedStudentsCount</td>
     </tr>
     </tbody>
 </table>
@@ -40,14 +40,14 @@
     </thead>
     <tbody>
     <tr>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade < 0)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade == 0)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade > 0)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade == 1)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade == 2)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade == 3)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade == 4)</td>
-        <td>@Model.StudentSubjects.Where(subject => subject.IsAccepted).Count(subject => subject.Grade >= 5)</td>
+        <td>@Model.NotGradedCount</td>
+        <td>@Model.FailedCount</td>
+        <td>@Model.PassedCount</td>
+        <td>@Model.Score1Count</td>
+        <td>@Model.Score2Count</td>
+        <td>@Model.Score3Count</td>
+        <td>@Model.Score4Count</td>
+        <td>@Model.Score5Count</td>
     </tr>
     </tbody>
 </table>
@@ -68,17 +68,13 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var homework in @Model.HomeWorks)
+    @foreach (var homework in Model.Homeworks)
     {
         <tr>
             <td>@homework.Title</td>
             <td>@homework.Deadline</td>
             <td>
-                @{
-                    var grades = homework.StudentHomeWorks.Select(work => work.Grade).Where(grade => grade >= 0).ToList();
-
-        <text>@(grades.Count > 0 ? grades.Average() : 0)</text>
-                }
+                @(homework.AverageGrade > 0 ? homework.AverageGrade : 0)
             </td>
             <td class="text-right d-flex" style="justify-content: flex-end; max-width: unset !important;">
                 <a asp-action="Details" asp-controller="HomeWorks" asp-route-id="@homework.Id" class="btn btn-primary fa fa-eye mr-1"></a>
