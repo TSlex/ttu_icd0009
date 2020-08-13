@@ -11,3 +11,9 @@ export class TimeFormatValueConverter {
         return moment(value).format('HH:mm');
     }
 }
+
+export class GradeFormatValueConverter {
+    toView(value: number) {
+        return value > 0 ? value : "Not graded"
+    }
+}

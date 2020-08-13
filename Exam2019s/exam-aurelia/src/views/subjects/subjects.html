@@ -23,12 +23,12 @@
 
     <div class="justify-content-center">
         <div class="card-columns">
-            <a class="btn-link" href="/subjects/00000000-0000-0000-0000-000000000001">
+            <a class="btn-link" href="/subjects/00000000-0000-0000-0000-000000000001" repeat.for="subject of subjects">
                 <div class="card text-center" style="padding: 10px; user-select: none">
-                    <h5 class="card-title">Java</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">ICD0019</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">Semester: FALL</h6>
-                    <h6 class="card-subtitle mb-2 text-success">Teacher: Mart Kalmo</h6>
+                    <h5 class="card-title">${subject.subjectTitle}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${subject.subjectCode}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Semester: ${subject.semesterTitle}</h6>
+                    <h6 class="card-subtitle mb-2 text-success">Teacher: ${subject.teacherName}</h6>
                 </div>
             </a>
         </div>

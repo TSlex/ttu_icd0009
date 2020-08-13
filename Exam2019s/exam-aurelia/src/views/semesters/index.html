@@ -1,2 +1,26 @@
 <template>
+    <require from="conventers/DateFormatConventer"></require>
+    <div class="mb-5" repeat.for="semester of semesters">
+        <h2>Semester: ${semester.title}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Grade</th>
+                    <th style="width: 30%">Title</th>
+                    <th style="width: 25%">Code</th>
+                    <th>Teacher</th>
+                    <th>Accepted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="subject of semester.subjects">
+                    <td>${subject.grade | gradeFormat}</td>
+                    <td>${subject.subjectTitle}</td>
+                    <td>${subject.subjectCode}</td>
+                    <td>${subject.teacherName}</td>
+                    <td>${subject.isAccepted}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>

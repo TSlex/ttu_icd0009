@@ -11,7 +11,8 @@ export class BaseApi {
 
     protected headers: HeadersInit = {
         Authorization: 'Bearer ',
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'accept-language': 'en-GB'
     }
 
     constructor(protected appState: AppState, protected url: string, protected httpClient: HttpClient) {
