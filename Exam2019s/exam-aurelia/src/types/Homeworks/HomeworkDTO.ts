@@ -1,5 +1,6 @@
 export interface StudentHomeworkDTO {
     subjectId: string;
+    studentSubjectId: string;
     homeWorkId: string;
     studentName: string;
     studentCode: string;

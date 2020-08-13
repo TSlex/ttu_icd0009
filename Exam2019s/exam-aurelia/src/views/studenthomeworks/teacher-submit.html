@@ -1,58 +1,57 @@
 <template>
     <require from="conventers/DateFormatConventer"></require>
-    <h3 class="d-flex" style="justify-content: space-between">
-        test1
-    </h3>
+    <h2 class="text-center">
+        ${homework.title}
+    </h2>
     <hr>
-    <h4>test1</h4>
-    <h5 class="text-muted">Due: 8/12/2020 12:00:00 PM</h5>
+    <h4 class="text-center">${homework.description}</h4>
+    <h5 class="text-muted text-center" if.bind="homework.deadline != null">Due: ${homework.deadline | dateFormat}</h5>
     <hr>
-    <h5 class="text-muted">ASP.NET Veebirakendused</h5>
-    <h5 class="text-muted">ICD0015</h5>
+    <h6 class="text-muted">${homework.subjectTitle}</h6>
+    <h6 class="text-muted">${homework.subjectCode}</h6>
 
-    <div class="row text-center justify-content-center">
+    <div class="row text-center justify-content-center mt-5">
         <div class="col-md-6">
             <div action="/studenthomeworks/teachersubmit" method="post" novalidate="novalidate">
                 <h4>Student answer</h4>
                 <hr>
-                <h5></h5>
-                <h5 class="text-muted mt-3">Answered: 8/13/2020 5:35:13 AM</h5>
+                <h5 if.bind="model.studentAnswer">${model.studentAnswer}</h5>
+                <h5 else>No answer</h5>
+                <h5 class="text-muted mt-3" if.bind="model.answerDateTime != null">Answered: ${model.answerDateTime | dateFormat}
+                </h5>
                 <hr>
 
                 <div class="form-group">
                     <label class="control-label" for="Grade">Grade</label>
-                    <select class="form-control" data-val="true" data-val-range="The field Grade must be between -1 and 5."
-                        data-val-range-max="5" data-val-range-min="-1" data-val-required="The Grade field is required." id="Grade"
-                        name="Grade">
-                        <option value="-1">-1</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option selected="selected" value="5">5</option>
+                    <select class="form-control" id="Grade" name="Grade" value.bind="model.grade">
+                        <option model.bind="-1">-1</option>
+                        <option model.bind="0">0</option>
+                        <option model.bind="1">1</option>
+                        <option model.bind="2">2</option>
+                        <option model.bind="3">3</option>
+                        <option model.bind="4">4</option>
+                        <option model.bind="5">5</option>
                     </select>
-                    <span class="text-danger field-validation-valid" data-valmsg-for="Grade" data-valmsg-replace="true"></span>
                 </div>
 
                 <div class="form-group form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" checked="checked" data-val="true"
-                            data-val-required="The IsChecked field is required." id="IsChecked" name="IsChecked" value="true">
+                        <input class="form-check-input" type="checkbox" checked.bind="model.isChecked" id="IsChecked"
+                            name="IsChecked">
                         IsChecked
                     </label>
                 </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" checked="checked" data-val="true"
-                            data-val-required="The IsAccepted field is required." id="IsAccepted" name="IsAccepted" value="true">
+                        <input class="form-check-input" type="checkbox" checked.bind="model.isAccepted" id="IsAccepted"
+                            name="IsAccepted">
                         IsAccepted
                     </label>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary">
-                    <a class="btn btn-secondary" href="/homeworks/details/007da9ac-4e5b-4b8e-8692-726b698dec26">Return</a>
+                    <input type="submit" value="Submit" class="btn btn-primary" click.delegate="onSubmit()">
+                    <a class="btn btn-secondary" click.delegate="onCancel()">Return</a>
                 </div>
             </div>
         </div>

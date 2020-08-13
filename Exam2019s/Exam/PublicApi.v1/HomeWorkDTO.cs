@@ -23,6 +23,7 @@ namespace PublicApi.v1
     
     public class StudentHomeWork
     {
+        public Guid StudentSubjectId { get; set; } = default!;
         public Guid SubjectId { get; set; } = default!;
         public Guid HomeWorkId { get; set; } = default!;
         

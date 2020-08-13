@@ -58,7 +58,8 @@ namespace WebApp.ApiControllers._1._0
                         .Where(ssb => ssb.DeletedAt == null && ssb.IsAccepted)
                         .Select(ssb => new StudentHomeWork
                         {
-                            SubjectId = ssb.Id,
+                            StudentSubjectId = ssb.Id,
+                            SubjectId = ssb.SubjectId,
                             HomeWorkId = work.Id,
                             IsAccepted = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsAccepted,
                             IsChecked = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsChecked,

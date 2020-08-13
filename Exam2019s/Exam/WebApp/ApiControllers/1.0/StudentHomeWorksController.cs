@@ -156,6 +156,7 @@ namespace WebApp.ApiControllers._1._0
                     shw.StudentSubjectId == studentSubjectId && shw.HomeWorkId == homeworkId && shw.DeletedAt == null)
                 .Select(shw => new StudentHomeWorkDetailsDTO
                 {
+                    Id = shw.Id,
                     Deadline = shw.HomeWork.Deadline,
                     Description = shw.HomeWork.Description,
                     Title = shw.HomeWork.Title,
@@ -201,6 +202,7 @@ namespace WebApp.ApiControllers._1._0
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> TeacherSubmit(StudentHomeWorkTeacherSubmitDTO model)
         {
@@ -220,10 +222,10 @@ namespace WebApp.ApiControllers._1._0
                 _context.Update(studentHomeWork);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Details", "HomeWorks", new {id = studentHomeWork.HomeWorkId});
+                return NoContent();
             }
 
-            return NoContent();
+            return BadRequest();
         }
     }
 }
