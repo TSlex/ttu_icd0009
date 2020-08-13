@@ -11,7 +11,7 @@ export class Index extends IdentityStore {
         super(appState);
     }
 
-    private model!: StudentSubjectDTO[]
+    private model: StudentSubjectDTO[] = []
 
     private get Students() {
         return this.model

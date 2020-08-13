@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <a if.bind="model.isEnrolled && model.isAccepted" class="btn btn-primary"
-        route-href="studentsubjects; param.bind: {id: model.id}">View all</a>
+        route-href="route: studentsubjects; params.bind: {id: model.id}">View all</a>
 
     <template if.bind="model.isAccepted">
         <h3 class="card-subtitle mb-2 mt-5">Homeworks</h3>
