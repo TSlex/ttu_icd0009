@@ -19,6 +19,8 @@ export class Create {
     private title!: string;
 
     onPost() {
+        if (!(this.title.length > 0)) return
+
         var postModel: HomeworkPostDTO = {
             deadline: this.deadline,
             subjectId: this.subjectId,
@@ -33,6 +35,8 @@ export class Create {
     }
 
     onPut() {
+        if (!(this.title.length > 0)) return
+
         var putModel: HomeworkPutDTO = {
             deadline: this.deadline,
             subjectId: this.subjectId,

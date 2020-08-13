@@ -11,6 +11,9 @@ import '../static/site.css';
 
 export function configure(aurelia: Aurelia) {
     aurelia.use
+        .plugin(PLATFORM.moduleName('aurelia-flatpickr'))
+
+    aurelia.use
         .standardConfiguration()
         .feature(PLATFORM.moduleName('resources/index'));
 
