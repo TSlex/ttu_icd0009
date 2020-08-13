@@ -1,8 +1,8 @@
-import { autoinject, PLATFORM } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { autoinject, PLATFORM } from 'aurelia-framework';
 
 @autoinject
-export class Details {
+export class TeacherSubmit {
     constructor(private router: Router) {
     }
 

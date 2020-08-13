@@ -56,12 +56,14 @@
                     </template>
                     <template if.bind="!homework.isStarted">
                         <td class="text-right">
-                            <button class="btn btn-warning fa fa-pencil"></button>
+                            <a class="btn btn-warning fa fa-pencil"
+                                route-href="route: studenthomeworks-create; params.bind: {homeworkId: model.id}"></a>
                         </td>
                     </template>
                     <template if.bind="homework.isStarted && !homework.isAccepted">
                         <td class="text-right">
-                            <button class="btn btn-info fa fa-pencil"></button>
+                            <a class="btn btn-info fa fa-pencil"
+                                route-href="route: studenthomeworks-details; params.bind: {id: homework.id}"></a>
                         </td>
                     </template>
                 </tr>

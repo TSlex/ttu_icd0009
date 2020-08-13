@@ -9,7 +9,7 @@
     </h3>
     <hr>
     <h4>${model.description}</h4>
-    <h5 class="text-muted">Due: ${model.deadline}</h5>
+    <h5 class="text-muted">Due: ${model.deadline | dateFormat}</h5>
     <hr>
     <h5 class="text-muted">${model.subjectTitle}</h5>
     <h5 class="text-muted">${model.subjectCode}</h5>
@@ -33,7 +33,8 @@
                 <td>${homework.isChecked}</td>
                 <td>${homework.grade | gradeFormat}</td>
                 <td class="text-right">
-                    <a class="btn btn-primary fa fa-eye"></a>
+                    <a class="btn btn-primary fa fa-eye"
+                        route-href="route: teacher-homeworks-submit; params.bind: {id: homework.id}"></a>
                 </td>
             </tr>
         </tbody>
