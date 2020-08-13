@@ -1,0 +1,71 @@
+<template>
+    <require from="conventers/DateFormatConventer"></require>
+    <div if.bind="model.isEnrolled && !model.isAccepted" class="alert alert-info text-center" role="alert"
+        style="margin-bottom: 20px !important;">
+        You have enrolled to subject. Wait until teacher accepts you.
+    </div>
+
+    <h1 class="card-title">${model.subjectTitle}</h1>
+    <h4 class="card-subtitle mb-2 text-muted">${model.subjectCode}</h4>
+    <hr>
+    <h4 class="card-subtitle mb-2 text-muted">Semester: ${model.semesterTitle}</h4>
+    <h4 class="card-subtitle mb-2 text-success">Teacher: ${model.teacherName}</h4>
+
+    <template if.bind="model.isEnrolled && model.isAccepted">
+        <hr>
+        <h4 class="card-subtitle mb-2 text-muted">Grade: ${model.grade | gradeFormat}</h4>
+        <h4 class="card-subtitle mb-2 text-muted">Homeworks grade overal: ${model.homeWorksGrade | gradeFormat}</h4>
+    </template>
+
+    <h3 class="card-subtitle mb-2 mt-5">Students</h3>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Participants: </td>
+                <td class="w-75">${model.studentsCount}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a if.bind="model.isEnrolled && model.isAccepted" class="btn btn-primary" asp-controller="StudentSubjects" asp-action="Index"
+        asp-route-subjectId="@Model.Id">View all</a>
+
+    <template if.bind="model.isAccepted">
+        <h3 class="card-subtitle mb-2 mt-5">Homeworks</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Deadline</th>
+                    <th>Is accepted?</th>
+                    <th>Is checked?</th>
+                    <th>Grade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="homework of model.homeworks">
+                    <td>${homework.title}</td>
+                    <td>${homework.deadline | dateFormat}</td>
+                    <td>${homework.isAccepted}</td>
+                    <td>${homework.isChecked}</td>
+                    <td>${homework.grade | gradeFormat}</td>
+                    <td class="text-right">
+                        <a class="btn btn-warning fa fa-pencil"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+    <template else>
+        <div if.bind="model.isEnrolled">
+            <div class="text-center">
+                <button class="btn btn-warning w-25">Cancel registration!</button>
+            </div>
+        </div>
+        <div if.bind="!model.isEnrolled">
+            <div class="text-center">
+                <button class="btn btn-primary w-25">Enrol me!</button>
+            </div>
+        </div>
+    </template>
+</template>

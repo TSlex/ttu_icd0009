@@ -23,7 +23,7 @@
 
     <div class="justify-content-center">
         <div class="card-columns">
-            <a class="btn-link" href="/subjects/00000000-0000-0000-0000-000000000001" repeat.for="subject of subjects">
+            <a class="btn-link" route-href="subject-details; params.bind: { id: subject.id }" repeat.for="subject of subjects">
                 <div class="card text-center" style="padding: 10px; user-select: none">
                     <h5 class="card-title">${subject.subjectTitle}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${subject.subjectCode}</h6>

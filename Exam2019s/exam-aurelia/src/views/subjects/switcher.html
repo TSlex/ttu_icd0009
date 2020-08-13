@@ -1,0 +1,9 @@
+<template>
+    <require from="views/subjects/teacher-details"></require>
+    <require from="views/subjects/student-details"></require>
+    <require from="views/subjects/details"></require>
+
+    <teacher-details if.bind="model.notGradedCount !== undefined" model.bind="model"></teacher-details>
+    <student-details if.bind="model.isAccepted !== undefined" model.bind="model"></student-details>
+    <subject-details else model.bind="model"></subject-details>
+</template>

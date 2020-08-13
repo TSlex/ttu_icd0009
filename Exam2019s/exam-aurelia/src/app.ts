@@ -34,7 +34,7 @@ export class App extends IdentityStore {
             // subjects
             { route: ['subjects', 'subjects/index'], name: 'subjects', moduleId: PLATFORM.moduleName('views/subjects/subjects'), nav: false, title: 'Subjects' },
             { route: ['subjects/my'], name: 'student-subjects', moduleId: PLATFORM.moduleName('views/subjects/student-subjects'), nav: false, title: 'Subjects' },
-            // { route: ['subjects/:id'], name: 'subject-details', moduleId: PLATFORM.moduleName('views/subjects/student-subjects'), nav: false, title: 'Subjects' },
+            { route: ['subjects/:id'], name: 'subject-details', moduleId: PLATFORM.moduleName('views/subjects/switcher'), nav: false, title: 'Details' },
             // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
             // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
 
