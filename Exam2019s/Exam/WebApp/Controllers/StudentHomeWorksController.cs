@@ -130,20 +130,22 @@ namespace WebApp.Controllers
 
             return View(studentHomeWork);
         }
-        
+
         public async Task<IActionResult> TeacherSubmit(Guid homeworkId, Guid studentSubjectId)
         {
             var studentHomeWork = await _context.StudentHomeWorks
                 .Include(ssh => ssh.HomeWork)
                 .ThenInclude(hw => hw.Subject)
                 .Include(ssh => ssh.StudentSubject)
-                .FirstOrDefaultAsync(work =>
-                    work.HomeWorkId == homeworkId && work.StudentSubjectId == studentSubjectId);
+                .FirstOrDefaultAsync(swh =>
+                    swh.HomeWorkId == homeworkId &&
+                    swh.StudentSubjectId == studentSubjectId &&
+                    swh.DeletedAt == null);
 
             if (studentHomeWork == null)
             {
                 var id = Guid.NewGuid();
-                
+
                 _context.Add(new StudentHomeWork()
                 {
                     Id = id,
@@ -152,17 +154,18 @@ namespace WebApp.Controllers
                 });
 
                 await _context.SaveChangesAsync();
-                
+
                 studentHomeWork = await _context.StudentHomeWorks
                     .Include(ssh => ssh.HomeWork)
                     .ThenInclude(hw => hw.Subject)
                     .Include(ssh => ssh.StudentSubject)
-                    .FirstOrDefaultAsync(ssh => ssh.Id == id);
+                    .FirstOrDefaultAsync(swh => swh.Id == id &&
+                                                swh.DeletedAt == null);
             }
 
             return View("TeacherDetails", studentHomeWork);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TeacherSubmit(Guid id, StudentHomeWork model)

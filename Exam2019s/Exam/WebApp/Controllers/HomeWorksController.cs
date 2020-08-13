@@ -43,11 +43,11 @@ namespace WebApp.Controllers
                             StudentSubjectId = ssb.Id,
                             SubjectId = ssb.SubjectId,
                             HomeWorkId = work.Id,
-                            IsAccepted = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsAccepted,
-                            IsChecked = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsChecked,
+                            IsAccepted = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id && w.DeletedAt == null).IsAccepted,
+                            IsChecked = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id && w.DeletedAt == null).IsChecked,
                             StudentCode = ssb.Student.UserName,
                             StudentName = ssb.Student.FirstName + " " + ssb.Student.LastName,
-                            Grade = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).Grade
+                            Grade = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id && w.DeletedAt == null).Grade
                         }).ToList()
                 }).FirstOrDefaultAsync();
 
