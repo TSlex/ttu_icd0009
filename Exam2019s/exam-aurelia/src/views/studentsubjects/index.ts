@@ -11,6 +11,8 @@ export class Index extends IdentityStore {
         super(appState);
     }
 
+    private subjectId!: string;
+
     private model: StudentSubjectDTO[] = []
 
     private get Students() {
@@ -25,14 +27,37 @@ export class Index extends IdentityStore {
         return this.model.filter(student => !student.isAccepted)
     }
 
+    private OnAcceptStudent(studentSubjectId: string) {
+        if (this.isStudent) return;
+
+        this.studentSubjectsApi.acceptStudent(studentSubjectId, this.subjectId)
+            .then(response => {
+                this.loadStudents();
+            })
+    }
+
+    private OnRemoveStudent(studentSubjectId: string) {
+        if (this.isStudent) return;
+
+        this.studentSubjectsApi.removeStudent(studentSubjectId, this.subjectId)
+            .then(response => {
+                this.loadStudents();
+            })
+    }
+
+    private async loadStudents() {
+        this.studentSubjectsApi.getStudents(this.subjectId)
+            .then((response: IFetchResponse<StudentSubjectDTO[]>) => {
+                if (response?.errors?.length === 0) {
+                    this.model = response.data!
+                }
+            })
+    }
+
     async activate(params: any) {
         if (params.id && typeof (params.id) == 'string') {
-            this.studentSubjectsApi.getStudents(params.id)
-                .then((response: IFetchResponse<StudentSubjectDTO[]>) => {
-                    if (response?.errors?.length === 0) {
-                        this.model = response.data!
-                    }
-                })
+            this.subjectId = params.id
+            await this.loadStudents();
         }
     }
 }

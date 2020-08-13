@@ -109,18 +109,13 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Edit(Guid id, StudentSubjectPutDTO model)
+        public async Task<IActionResult> Edit(StudentSubjectPutDTO model)
         {
-            if (id != model.Id)
-            {
-                return NotFound();
-            }
-
             var subject = await _context.StudentSubjects
-                .FirstOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == model.Id);
             
             if (User.IsInRole("Teacher") && 
-                !await _context.StudentSubjects.AnyAsync(s => s.Id == id && s.Subject.TeacherId == User.UserId()))
+                !await _context.StudentSubjects.AnyAsync(s => s.Id == model.Id && s.Subject.TeacherId == User.UserId()))
             {
                 return BadRequest();
             }

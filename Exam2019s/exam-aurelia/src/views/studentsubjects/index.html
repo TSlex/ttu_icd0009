@@ -23,12 +23,11 @@
                         ${student.grade | gradeFormat}
                     </td>
                     <td class="text-right d-flex" style="justify-content: flex-end">
-                        <a class="btn btn-primary fa fa-edit mr-1" asp-action="Edit" asp-route-id="@item.Id"></a>
-                        <form class="text-right" asp-action="RemoveStudent" asp-controller="StudentSubjects">
-                            <input type="hidden" name="Id" value="@item.Id">
-                            <input type="hidden" name="SubjectId" value="@item.SubjectId">
-                            <button class="btn btn-danger fa fa-times mt-0"></button>
-                        </form>
+                        <a class="btn btn-primary fa fa-edit mr-1"
+                            route-href="route: studentsubjects-edit; params.bind: {id: student.id}"></a>
+                        <div class="text-right">
+                            <button class="btn btn-danger fa fa-times mt-0" click.delegate="OnRemoveStudent(student.id)"></button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -54,11 +53,10 @@
                     </td>
                     <td></td>
                     <td>
-                        <form asp-controller="StudentSubjects" asp-action="AcceptStudent" class="text-right">
-                            <input type="hidden" name="Id" value="@item.Id">
-                            <input type="hidden" name="SubjectId" value="@item.SubjectId">
-                            <button class="btn btn-primary fa fa-check mt-0"></button>
-                        </form>
+                        <div class="text-right">
+                            <button class="btn btn-primary fa fa-check mt-0"
+                                click.delegate="OnAcceptStudent(student.id)"></button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
