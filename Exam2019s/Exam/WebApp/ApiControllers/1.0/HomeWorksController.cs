@@ -145,7 +145,6 @@ namespace WebApp.ApiControllers._1._0
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="homeWork"></param>
         /// <returns></returns>
         [HttpPut]
@@ -153,14 +152,9 @@ namespace WebApp.ApiControllers._1._0
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Edit(Guid id, HomeWorkPutDTO homeWork)
+        public async Task<IActionResult> Edit(HomeWorkPutDTO homeWork)
         {
-            if (id != homeWork.Id)
-            {
-                return NotFound();
-            }
-
-            var record = await _context.HomeWorks.FindAsync(id);
+            var record = await _context.HomeWorks.FindAsync(homeWork.Id);
 
             if (ModelState.IsValid)
             {
@@ -182,7 +176,7 @@ namespace WebApp.ApiControllers._1._0
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

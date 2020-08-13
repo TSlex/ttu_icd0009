@@ -50,7 +50,7 @@
 
     <h3 class="card-subtitle mb-2 mt-5">
         Homeworks
-        <a class="fa fa-plus-circle" href="/homeworks/create?subjectId=00000000-0000-0000-0000-000000000005">
+        <a class="fa fa-plus-circle" route-href="route: homeworks-create; params.bind: {subjectId: model.id};">
         </a>
     </h3>
     <table class="table">
@@ -69,14 +69,9 @@
                 <td>${homework.averageGrade | gradeFormat}</td>
                 <td class="text-right d-flex" style="justify-content: flex-end; max-width: unset !important;">
                     <a class="btn btn-primary fa fa-eye mr-1" href="/homeworks/details/007da9ac-4e5b-4b8e-8692-726b698dec26"></a>
-                    <a class="btn btn-primary fa fa-edit mr-1" href="/homeworks/edit/007da9ac-4e5b-4b8e-8692-726b698dec26"></a>
-
-                    <div action="/homeworks/delete" method="post">
-                        <div class="text-center">
-                            <input type="hidden" name="Id" value="007da9ac-4e5b-4b8e-8692-726b698dec26">
-                            <button class="btn btn-danger fa fa-times mt-0"></button>
-                        </div>
-                    </div>
+                    <a class="btn btn-primary fa fa-edit mr-1"
+                        route-href="route: homeworks-edit; params.bind: {subjectId: model.id, id: homework.id};"></a>
+                    <button class="btn btn-danger fa fa-times mt-0"></button>
                 </td>
             </tr>
         </tbody>

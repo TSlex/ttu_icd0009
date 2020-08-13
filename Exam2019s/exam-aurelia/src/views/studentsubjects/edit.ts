@@ -21,7 +21,7 @@ export class Edit extends IdentityStore {
         }
 
         this.studentSubjectsApi.updateStudent(putModel).then(response => {
-            this.onCancel();
+            this.router.navigateToRoute('studentsubjects', { id: this.model.subjectId })
         })
     }
 

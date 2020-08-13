@@ -43,6 +43,10 @@ export class App extends IdentityStore {
             { route: ['studentsubjects/:id'], name: 'studentsubjects', moduleId: PLATFORM.moduleName('views/studentsubjects/index'), nav: false, title: 'Students' },
             { route: ['studentsubjects/edit/:id'], name: 'studentsubjects-edit', moduleId: PLATFORM.moduleName('views/studentsubjects/edit'), nav: false, title: 'Manage' },
 
+            // homeworks
+            { route: ['homeworks/create/:subjectId'], name: 'homeworks-create', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'New Homework' },
+            { route: ['homeworks/edit/:subjectId/:id'], name: 'homeworks-edit', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'Manage' },
+
         ]);
 
         config.addAuthorizeStep

@@ -7,20 +7,20 @@
 
                 <div class="form-group">
                     <label class="control-label" for="Grade">Grade</label>
-                    <select class="form-control" id="Grade" name="Grade" value.bind="model.Grade">
-                        <option value="-1">-1</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                    <select class="form-control" id="Grade" name="Grade" value.bind="model.grade">
+                        <option model.bind="-1">-1</option>
+                        <option model.bind="0">0</option>
+                        <option model.bind="1">1</option>
+                        <option model.bind="2">2</option>
+                        <option model.bind="3">3</option>
+                        <option model.bind="4">4</option>
+                        <option model.bind="5">5</option>
                     </select>
                 </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" checked="checked" data-val="true" id="IsAccepted"
-                            name="IsAccepted" value.bind="model.isAccepted"> is student accepted?
+                        <input class="form-check-input" type="checkbox" data-val="true" id="IsAccepted" name="IsAccepted"
+                            checked.bind="model.isAccepted"> is student accepted?
                     </label>
                 </div>
 
