@@ -1,0 +1,41 @@
+<template>
+    <require from="conventers/DateFormatConventer"></require>
+    <h3 class="d-flex" style="justify-content: space-between">
+        ${model.title}
+        <span>
+            <a class="btn btn-primary" click.delegate="onEdit()">Edit</a>
+            <a class="btn btn-secondary" click.delegate="onReturn()">Return</a>
+        </span>
+    </h3>
+    <hr>
+    <h4>${model.description}</h4>
+    <h5 class="text-muted">Due: ${model.deadline}</h5>
+    <hr>
+    <h5 class="text-muted">${model.subjectTitle}</h5>
+    <h5 class="text-muted">${model.subjectCode}</h5>
+
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th>Student code</th>
+                <th>Student name</th>
+                <th>Is accepted?</th>
+                <th>Is checked?</th>
+                <th>Grade</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="homework of model.studentHomeWorks">
+                <td>${homework.studentCode}</td>
+                <td>${homework.studentName}</td>
+                <td>${homework.isAccepted}</td>
+                <td>${homework.isChecked}</td>
+                <td>${homework.grade | gradeFormat}</td>
+                <td class="text-right">
+                    <a class="btn btn-primary fa fa-eye"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>

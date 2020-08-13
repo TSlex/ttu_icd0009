@@ -28,6 +28,7 @@ export class Create {
 
         this.homeworksApi.createHomework(postModel).then(response => {
             // 
+            this.onCancel();
         })
     }
 
@@ -42,6 +43,7 @@ export class Create {
 
         this.homeworksApi.updateHomework(putModel).then(response => {
             // 
+            this.onCancel();
         })
     }
 

@@ -63,6 +63,7 @@ namespace WebApp.ApiControllers._1._0
                             IsChecked = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsChecked,
                             StudentCode = ssb.Student.UserName,
                             StudentName = ssb.Student.FirstName + " " + ssb.Student.LastName,
+                            Grade = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).Grade
                         }).ToList()
                 }).FirstOrDefaultAsync();
 
@@ -122,7 +123,7 @@ namespace WebApp.ApiControllers._1._0
             }
 
             var homeWork = await _context.HomeWorks
-                .Where(work => work.DeletedAt == null)
+                .Where(work => work.DeletedAt == null && work.Id == id)
                 .Select(work => new HomeWorkDTO
                 {
                     Deadline = work.Deadline,

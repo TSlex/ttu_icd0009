@@ -16,6 +16,6 @@ export class TimeFormatValueConverter {
 
 export class GradeFormatValueConverter {
     toView(value: number) {
-        return value > 0 ? value : "Not graded"
+        return value >= 0 ? value : "Not graded"
     }
 }

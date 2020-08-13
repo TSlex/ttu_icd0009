@@ -68,10 +68,11 @@
                 <td>${homework.deadline | dateFormat}</td>
                 <td>${homework.averageGrade | gradeFormat}</td>
                 <td class="text-right d-flex" style="justify-content: flex-end; max-width: unset !important;">
-                    <a class="btn btn-primary fa fa-eye mr-1" href="/homeworks/details/007da9ac-4e5b-4b8e-8692-726b698dec26"></a>
+                    <a class="btn btn-primary fa fa-eye mr-1"
+                        route-href="route: homeworks-details; params.bind: {id: homework.id};"></a>
                     <a class="btn btn-primary fa fa-edit mr-1"
                         route-href="route: homeworks-edit; params.bind: {subjectId: model.id, id: homework.id};"></a>
-                    <button class="btn btn-danger fa fa-times mt-0"></button>
+                    <button class="btn btn-danger fa fa-times mt-0" click.delegate="onDeleteHomework(homework.id)"></button>
                 </td>
             </tr>
         </tbody>

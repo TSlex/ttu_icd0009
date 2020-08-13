@@ -46,6 +46,7 @@ export class App extends IdentityStore {
             // homeworks
             { route: ['homeworks/create/:subjectId'], name: 'homeworks-create', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'New Homework' },
             { route: ['homeworks/edit/:subjectId/:id'], name: 'homeworks-edit', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'Manage' },
+            { route: ['homeworks/:id'], name: 'homeworks-details', moduleId: PLATFORM.moduleName('views/homeworks/details'), nav: false, title: 'Manage' },
 
         ]);
 
