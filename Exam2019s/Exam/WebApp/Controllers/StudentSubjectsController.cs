@@ -119,6 +119,8 @@ namespace WebApp.Controllers
             }
 
             studentSubject.IsAccepted = false;
+            studentSubject.Grade = -1;
+            
             studentSubject.DeletedAt = DateTime.UtcNow;
             studentSubject.DeletedBy = User.Identity.Name;
 
@@ -172,7 +174,7 @@ namespace WebApp.Controllers
                     s.StudentId == User.UserId() &&
                     s.SubjectId == model.Id);
 
-            if (subject == null)
+            if (subject == null || subject.IsAccepted)
             {
                 return RedirectToAction("Subjects", "Subjects");
             }

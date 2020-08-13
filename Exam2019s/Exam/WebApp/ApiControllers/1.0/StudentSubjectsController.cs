@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PublicApi.v1;
+using StudentHomeWork = Domain.StudentHomeWork;
 
 namespace WebApp.ApiControllers._1._0
 {
@@ -190,6 +191,8 @@ namespace WebApp.ApiControllers._1._0
             }
 
             studentSubject.IsAccepted = false;
+            studentSubject.Grade = -1;
+            
             studentSubject.DeletedAt = DateTime.UtcNow;
             studentSubject.DeletedBy = User.Identity.Name;
 
@@ -261,7 +264,7 @@ namespace WebApp.ApiControllers._1._0
                     s.StudentId == User.UserId() &&
                     s.SubjectId == subjectId);
 
-            if (subject == null)
+            if (subject == null || subject.IsAccepted)
             {
                 return BadRequest();
             }
