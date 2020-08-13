@@ -22,7 +22,6 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-//        [Authorize(Roles = "Teacher, Admin")]
         public async Task<IActionResult> Index(Guid subjectId)
         {
             var applicationDbContext = _context.StudentSubjects

@@ -242,7 +242,7 @@ namespace WebApp.Controllers
                             {
                                 Deadline = work.Deadline,
                                 AverageGrade = work.StudentHomeWorks
-                                    .Where(homeWork => homeWork.DeletedAt == null && homeWork.Grade > 0)
+                                    .Where(homeWork => homeWork.DeletedAt == null && homeWork.Grade > 0 && homeWork.StudentSubject.IsAccepted)
                                     .Select(homeWork => homeWork.Grade).Average(),
                                 Id = work.Id,
                                 Title = work.Title
