@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using PublicApi.v1;
-using StudentHomeWork = Domain.StudentHomeWork;
 
 namespace WebApp.ApiControllers._1._0
 {
@@ -33,17 +32,19 @@ namespace WebApp.ApiControllers._1._0
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="homeworkId"></param>
+        /// <param name="studentSubjectId"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{homeworkId}/{studentSubjectId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentHomeWorkDetailsDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid homeworkId, Guid studentSubjectId)
         {
             var studentHomeWork = await _context.StudentHomeWorks
-                .Where(shw => shw.Id == id && shw.DeletedAt == null)
+                .Where(shw =>
+                    shw.StudentSubjectId == studentSubjectId && shw.HomeWorkId == homeworkId && shw.DeletedAt == null)
                 .Select(shw => new StudentHomeWorkDetailsDTO
                 {
                     Deadline = shw.HomeWork.Deadline,
@@ -83,7 +84,7 @@ namespace WebApp.ApiControllers._1._0
         {
             if (ModelState.IsValid)
             {
-                var homework = new StudentHomeWork
+                var homework = new Domain.StudentHomeWork
                 {
                     Id = Guid.NewGuid(),
                     StudentAnswer = model.StudentAnswer,
@@ -109,11 +110,11 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Edit(Guid id, StudentHomeWork model)
+        public async Task<IActionResult> Edit(StudentHomeWorkPutDTO model)
         {
-            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
+            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(model.Id);
 
-            if (id != model.Id || studentHomeWork == null || studentHomeWork.IsAccepted)
+            if (studentHomeWork == null || studentHomeWork.IsAccepted)
             {
                 return NotFound();
             }
@@ -134,24 +135,38 @@ namespace WebApp.ApiControllers._1._0
         }
 
         [Authorize(Roles = "Teacher, Admin")]
-        [HttpGet("teacher/{homeworkId}/{studentSubjectId}")]
+        [HttpGet("{homeworkId}/{studentSubjectId}/teacher")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentHomeWorkDetailsDTO))]
         public async Task<IActionResult> TeacherSubmit(Guid homeworkId, Guid studentSubjectId)
         {
-            var studentHomeWork = await _context.StudentHomeWorks
-                .Include(ssh => ssh.HomeWork)
-                .ThenInclude(hw => hw.Subject)
-                .Include(ssh => ssh.StudentSubject)
-                .FirstOrDefaultAsync(work =>
-                    work.HomeWorkId == homeworkId && work.StudentSubjectId == studentSubjectId);
+            var query = _context.StudentHomeWorks
+                .Where(shw =>
+                    shw.StudentSubjectId == studentSubjectId && shw.HomeWorkId == homeworkId && shw.DeletedAt == null)
+                .Select(shw => new StudentHomeWorkDetailsDTO
+                {
+                    Deadline = shw.HomeWork.Deadline,
+                    Description = shw.HomeWork.Description,
+                    Title = shw.HomeWork.Title,
+                    Grade = shw.Grade,
+                    IsAccepted = shw.IsAccepted,
+                    IsChecked = shw.IsChecked,
+                    StudentAnswer = shw.StudentAnswer,
+                    SubjectCode = shw.HomeWork.Subject.SubjectCode,
+                    SubjectId = shw.HomeWork.Subject.Id,
+                    SubjectTitle = shw.HomeWork.Subject.SubjectTitle,
+                    AnswerDateTime = shw.AnswerDateTime,
+                    HomeWorkId = shw.HomeWork.Id
+                });
+            
+            var studentHomeWork = await query.FirstOrDefaultAsync();
 
             if (studentHomeWork == null)
             {
                 var id = Guid.NewGuid();
 
-                _context.Add(new StudentHomeWork()
+                _context.Add(new Domain.StudentHomeWork()
                 {
                     Id = id,
                     HomeWorkId = homeworkId,
@@ -160,14 +175,10 @@ namespace WebApp.ApiControllers._1._0
 
                 await _context.SaveChangesAsync();
 
-                studentHomeWork = await _context.StudentHomeWorks
-                    .Include(ssh => ssh.HomeWork)
-                    .ThenInclude(hw => hw.Subject)
-                    .Include(ssh => ssh.StudentSubject)
-                    .FirstOrDefaultAsync(ssh => ssh.Id == id);
+                studentHomeWork = await query.FirstOrDefaultAsync();
             }
 
-            return Ok();
+            return Ok(studentHomeWork);
         }
 
         [HttpPut("teacher")]
@@ -176,11 +187,11 @@ namespace WebApp.ApiControllers._1._0
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> TeacherSubmit(Guid id, StudentHomeWork model)
+        public async Task<IActionResult> TeacherSubmit(StudentHomeWorkTeacherSubmitDTO model)
         {
-            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(id);
+            var studentHomeWork = await _context.StudentHomeWorks.FindAsync(model.Id);
 
-            if (id != model.Id || studentHomeWork == null)
+            if (studentHomeWork == null)
             {
                 return NotFound();
             }
