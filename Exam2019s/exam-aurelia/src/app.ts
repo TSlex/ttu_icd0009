@@ -33,26 +33,26 @@ export class App extends IdentityStore {
 
             // subjects
             { route: ['subjects', 'subjects/index'], name: 'subjects', moduleId: PLATFORM.moduleName('views/subjects/subjects'), nav: false, title: 'Subjects' },
-            { route: ['subjects/my'], name: 'student-subjects', moduleId: PLATFORM.moduleName('views/subjects/student-subjects'), nav: false, title: 'Subjects' },
+            { route: ['subjects/my'], name: 'student-subjects', moduleId: PLATFORM.moduleName('views/subjects/student-subjects'), nav: false, title: 'Subjects', settings: { auth: true } },
             { route: ['subjects/:id'], name: 'subject-details', moduleId: PLATFORM.moduleName('views/subjects/switcher'), nav: false, title: 'Details' },
 
             // my semester
-            { route: ['semesters', 'semesters/index'], name: 'semesters', moduleId: PLATFORM.moduleName('views/semesters/index'), nav: false, title: 'Semesters' },
+            { route: ['semesters', 'semesters/index'], name: 'semesters', moduleId: PLATFORM.moduleName('views/semesters/index'), nav: false, title: 'Semesters', settings: { auth: true } },
 
             // studentsubjects
-            { route: ['studentsubjects/:id'], name: 'studentsubjects', moduleId: PLATFORM.moduleName('views/studentsubjects/index'), nav: false, title: 'Students' },
-            { route: ['studentsubjects/edit/:id'], name: 'studentsubjects-edit', moduleId: PLATFORM.moduleName('views/studentsubjects/edit'), nav: false, title: 'Manage' },
+            { route: ['studentsubjects/:id'], name: 'studentsubjects', moduleId: PLATFORM.moduleName('views/studentsubjects/index'), nav: false, title: 'Students', settings: { auth: true } },
+            { route: ['studentsubjects/edit/:id'], name: 'studentsubjects-edit', moduleId: PLATFORM.moduleName('views/studentsubjects/edit'), nav: false, title: 'Manage', settings: { auth: true } },
 
             // homeworks
-            { route: ['homeworks/create/:subjectId'], name: 'homeworks-create', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'New Homework' },
-            { route: ['homeworks/edit/:subjectId/:id'], name: 'homeworks-edit', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'Manage' },
-            { route: ['homeworks/:id'], name: 'homeworks-details', moduleId: PLATFORM.moduleName('views/homeworks/details'), nav: false, title: 'Manage' },
+            { route: ['homeworks/create/:subjectId'], name: 'homeworks-create', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'New Homework', settings: { auth: true } },
+            { route: ['homeworks/edit/:subjectId/:id'], name: 'homeworks-edit', moduleId: PLATFORM.moduleName('views/homeworks/create-edit'), nav: false, title: 'Manage', settings: { auth: true } },
+            { route: ['homeworks/:id'], name: 'homeworks-details', moduleId: PLATFORM.moduleName('views/homeworks/details'), nav: false, title: 'Manage', settings: { auth: true } },
 
             // student homeworks
-            { route: ['studenthomeworks/create/:homeworkId/:studentSubjectId'], name: 'studenthomeworks-create', moduleId: PLATFORM.moduleName('views/studenthomeworks/create-edit'), nav: false, title: 'Answer' },
-            { route: ['studenthomeworks/edit/:homeworkId/:id'], name: 'studenthomeworks-edit', moduleId: PLATFORM.moduleName('views/studenthomeworks/create-edit'), nav: false, title: 'Edit' },
-            { route: ['studenthomeworks/:id'], name: 'studenthomeworks-details', moduleId: PLATFORM.moduleName('views/studenthomeworks/details'), nav: false, title: 'Manage' },
-            { route: ['studenthomeworks/:homeworkId/:studentSubjectId/teacher'], name: 'teacher-homeworks-submit', moduleId: PLATFORM.moduleName('views/studenthomeworks/teacher-submit'), nav: false, title: 'Manage' },
+            { route: ['studenthomeworks/create/:homeworkId/:studentSubjectId'], name: 'studenthomeworks-create', moduleId: PLATFORM.moduleName('views/studenthomeworks/create-edit'), nav: false, title: 'Answer', settings: { auth: true } },
+            { route: ['studenthomeworks/edit/:homeworkId/:id'], name: 'studenthomeworks-edit', moduleId: PLATFORM.moduleName('views/studenthomeworks/create-edit'), nav: false, title: 'Edit', settings: { auth: true } },
+            { route: ['studenthomeworks/:id'], name: 'studenthomeworks-details', moduleId: PLATFORM.moduleName('views/studenthomeworks/details'), nav: false, title: 'Manage', settings: { auth: true } },
+            { route: ['studenthomeworks/:homeworkId/:studentSubjectId/teacher'], name: 'teacher-homeworks-submit', moduleId: PLATFORM.moduleName('views/studenthomeworks/teacher-submit'), nav: false, title: 'Manage', settings: { auth: true } },
 
         ]);
 
