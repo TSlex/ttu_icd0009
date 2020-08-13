@@ -62,7 +62,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Create(Guid subjectId)
         {
             var subject = await _context.Subjects.FirstOrDefaultAsync(s => s.Id == subjectId);
-            
+
             return View(new HomeWork
             {
                 Subject = subject
@@ -130,9 +130,13 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var homeWork = await _context.HomeWorks.FindAsync(id);
-            
+
             _context.HomeWorks.Remove(homeWork);
             
+            //remove related student homeworks
+            _context.RemoveRange(await _context.StudentHomeWorks.Where(shw => shw.HomeWorkId == homeWork.Id)
+                .ToListAsync());
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", "Subjects", new {id = homeWork.SubjectId});
         }

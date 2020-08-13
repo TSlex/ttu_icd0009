@@ -193,6 +193,10 @@ namespace WebApp.ApiControllers._1._0
             var homeWork = await _context.HomeWorks.FindAsync(id);
 
             _context.HomeWorks.Remove(homeWork);
+            
+            //remove related student homeworks
+            _context.RemoveRange(await _context.StudentHomeWorks.Where(shw => shw.HomeWorkId == homeWork.Id)
+                .ToListAsync());
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", "Subjects", new {id = homeWork.SubjectId});
