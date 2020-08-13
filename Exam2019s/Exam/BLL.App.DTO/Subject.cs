@@ -51,5 +51,15 @@ namespace BLL.App.DTO
 
         public ICollection<HomeWork>? HomeWorks { get; set; }
     }
+    
+    public class SubjectDTO
+    {
+        public Guid Id { get; set; } = default!;
+        
+        public string SubjectTitle { get; set; } = default!;
+        public string SubjectCode { get; set; } = default!;
+        public string SemesterTitle { get; set; } = default!;
+        public string TeacherName { get; set; } = default!;
+    }
 }
 
