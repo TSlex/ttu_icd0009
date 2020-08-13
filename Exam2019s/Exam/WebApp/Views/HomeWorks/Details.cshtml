@@ -1,4 +1,4 @@
-@model Domain.HomeWork
+@model BLL.App.DTO.HomeWorkDetailsDTO
 
 @{
     ViewData["Title"] = "Details";
@@ -15,8 +15,8 @@
 <h4>@Model.Description</h4>
 <h5 class="text-muted">Due: @Model.Deadline</h5>
 <hr>
-<h5 class="text-muted">@Model.Subject.SubjectTitle</h5>
-<h5 class="text-muted">@Model.Subject.SubjectCode</h5>
+<h5 class="text-muted">@Model.SubjectTitle</h5>
+<h5 class="text-muted">@Model.SubjectCode</h5>
 
 <table class="table mt-5">
     <thead>
@@ -30,21 +30,19 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var student in @Model.Subject.StudentSubjects)
+    @foreach (var student in Model.StudentHomeWorks)
     {
-        var studentHomework = student.StudentHomeWorks.FirstOrDefault(work => work.HomeWorkId == Model.Id);
-
         <tr>
-            <td>@student.Student.UserName</td>
-            <td>@student.Student.FirstLastName</td>
-            <td>@(studentHomework?.IsAccepted ?? false ? "True" : "False")</td>
-            <td>@(studentHomework?.IsChecked ?? false ? "True" : "False")</td>
-            <td>@((studentHomework?.Grade ?? -1) >= 0 ? (studentHomework?.Grade ?? -1).ToString() : "Not graded")</td>
+            <td>@student.StudentCode</td>
+            <td>@student.StudentName</td>
+            <td>@(student.IsAccepted ? "True" : "False")</td>
+            <td>@(student.IsChecked? "True" : "False")</td>
+            <td>@(student.Grade >= 0 ? student.Grade.ToString() : "Not graded")</td>
             <td class="text-right">
                 <a asp-controller="StudentHomeWorks"
                    asp-action="TeacherSubmit"
                    asp-route-homeworkId="@Model.Id"
-                   asp-route-studentSubjectId="@student.Id"
+                   asp-route-studentSubjectId="@student.StudentSubjectId"
                    class="btn btn-primary fa fa-eye">
                 </a>
             </td>

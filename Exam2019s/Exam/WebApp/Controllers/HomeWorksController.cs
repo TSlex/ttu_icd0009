@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.App.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.App.EF;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
+using HomeWork = Domain.HomeWork;
+using StudentHomeWork = Domain.StudentHomeWork;
 
 namespace WebApp.Controllers
 {
@@ -24,14 +26,31 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var homeWork = await _context.HomeWorks
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(sb => sb.Student)
-                .Include(hw => hw.Subject)
-                .ThenInclude(hw => hw.StudentSubjects)
-                .ThenInclude(hw => hw.StudentHomeWorks)
-                .FirstOrDefaultAsync(hw => hw.Id == id);
-            
+                .Where(work => work.DeletedAt == null && work.Id == id)
+                .Select(work => new HomeWorkDetailsDTO
+                {
+                    Id = work.Id,
+                    SubjectId = work.SubjectId,
+                    SubjectCode = work.Subject.SubjectCode,
+                    SubjectTitle = work.Subject.SubjectTitle,
+                    Deadline = work.Deadline,
+                    Title = work.Title,
+                    Description = work.Description,
+                    StudentHomeWorks = work.Subject.StudentSubjects
+                        .Where(ssb => ssb.DeletedAt == null && ssb.IsAccepted)
+                        .Select(ssb => new StudentHomeWorkDTO()
+                        {
+                            StudentSubjectId = ssb.Id,
+                            SubjectId = ssb.SubjectId,
+                            HomeWorkId = work.Id,
+                            IsAccepted = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsAccepted,
+                            IsChecked = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).IsChecked,
+                            StudentCode = ssb.Student.UserName,
+                            StudentName = ssb.Student.FirstName + " " + ssb.Student.LastName,
+                            Grade = ssb.StudentHomeWorks.FirstOrDefault(w => w.HomeWorkId == work.Id).Grade
+                        }).ToList()
+                }).FirstOrDefaultAsync();
+
             if (homeWork == null)
             {
                 return NotFound();
