@@ -210,6 +210,7 @@ namespace WebApp.ApiControllers._1._0
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectDetails>))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectStudentDetails>))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<SubjectTeacherDetails>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Details(Guid id)
         {
             var record = await _context.Subjects.FindAsync(id);
