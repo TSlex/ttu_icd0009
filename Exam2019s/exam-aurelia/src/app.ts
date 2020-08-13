@@ -41,6 +41,7 @@ export class App extends IdentityStore {
 
             // studentsubjects
             { route: ['studentsubjects/:id'], name: 'studentsubjects', moduleId: PLATFORM.moduleName('views/studentsubjects/index'), nav: false, title: 'Students' },
+            { route: ['studentsubjects/edit/:id'], name: 'studentsubjects-edit', moduleId: PLATFORM.moduleName('views/studentsubjects/edit'), nav: false, title: 'Manage' },
 
         ]);
 

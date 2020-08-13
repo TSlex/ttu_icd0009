@@ -6,3 +6,9 @@ export interface StudentSubjectDTO {
     subjectId: string;
     grade: number;
 }
+
+export interface StudentSubjectPutDTO {
+    id: string;
+    isAccepted: boolean;
+    grade: number;
+}
