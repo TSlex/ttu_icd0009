@@ -123,6 +123,8 @@ namespace WebApp.Controllers
             
             studentSubject.DeletedAt = DateTime.UtcNow;
             studentSubject.DeletedBy = User.Identity.Name;
+            
+            _context.RemoveRange(_context.StudentHomeWorks.Where(ssh => ssh.StudentSubjectId == studentSubject.Id));
 
             _context.StudentSubjects.Update(studentSubject);
 
