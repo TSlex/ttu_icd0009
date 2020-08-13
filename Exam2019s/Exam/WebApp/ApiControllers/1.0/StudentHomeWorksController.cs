@@ -32,21 +32,20 @@ namespace WebApp.ApiControllers._1._0
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="homeworkId"></param>
-        /// <param name="studentSubjectId"></param>
         /// <returns></returns>
-        [HttpGet("{homeworkId}/{studentSubjectId}")]
+        [HttpGet("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StudentHomeWorkDetailsDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Details(Guid homeworkId, Guid studentSubjectId)
+        public async Task<IActionResult> Details(Guid id)
         {
             var studentHomeWork = await _context.StudentHomeWorks
                 .Where(shw =>
-                    shw.StudentSubjectId == studentSubjectId && shw.HomeWorkId == homeworkId && shw.DeletedAt == null)
+                    shw.Id == id && shw.DeletedAt == null)
                 .Select(shw => new StudentHomeWorkDetailsDTO
                 {
+                    Id = shw.Id,
                     Deadline = shw.HomeWork.Deadline,
                     Description = shw.HomeWork.Description,
                     Title = shw.HomeWork.Title,
@@ -103,6 +102,11 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut]
         [Authorize(Roles = "Student, Admin")]
         [Consumes("application/json")]
@@ -134,6 +138,12 @@ namespace WebApp.ApiControllers._1._0
             return BadRequest();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="homeworkId"></param>
+        /// <param name="studentSubjectId"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Teacher, Admin")]
         [HttpGet("{homeworkId}/{studentSubjectId}/teacher")]
         [Consumes("application/json")]
@@ -159,7 +169,7 @@ namespace WebApp.ApiControllers._1._0
                     AnswerDateTime = shw.AnswerDateTime,
                     HomeWorkId = shw.HomeWork.Id
                 });
-            
+
             var studentHomeWork = await query.FirstOrDefaultAsync();
 
             if (studentHomeWork == null)
@@ -181,6 +191,11 @@ namespace WebApp.ApiControllers._1._0
             return Ok(studentHomeWork);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("teacher")]
         [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]

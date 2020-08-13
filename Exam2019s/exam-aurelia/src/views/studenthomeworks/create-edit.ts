@@ -1,78 +1,79 @@
 import { autoinject, PLATFORM } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { StudentHomeworkPostDTO, StudentHomeworkPutDTO } from 'types/StudentHomeworks/StudentHomeworkDTO';
+import { StudentHomeworksApi } from 'services/StudentHomeworksApi';
+import { HomeworkGetDTO } from 'types/Homeworks/HomeworkDTO';
 
 @autoinject
 export class CreateEdit {
-    constructor(private router: Router) {
+    constructor(private studentHomeworksApi: StudentHomeworksApi, private router: Router) {
     }
 
-    // private subjectTitle!: string;
+    private id?: string;
+    private homeworkId!: string;
 
-    // private subjectId!: string;
-    // private id?: string;
+    private homework!: HomeworkGetDTO;
 
-    // private deadline?: Date;
-    // private description?: string;
-    // private title!: string;
+    private deadline?: Date;
+    private studentAnswer?: string;
+    private title!: string;
 
-    // onPost() {
-    //     var postModel: HomeworkPostDTO = {
-    //         deadline: this.deadline,
-    //         subjectId: this.subjectId,
-    //         title: this.title,
-    //         description: this.description
-    //     }
+    onPost() {
+        var postModel: StudentHomeworkPostDTO = {
+            homeWorkId: this.homeworkId,
+            studentAnswer,
+            studentSubjectId,
+        }
 
-    //     this.homeworksApi.createHomework(postModel).then(response => {
-    //         // 
-    //         this.onCancel();
-    //     })
-    // }
+        this.studentHomeworksApi.createHomeworkAnswer(postModel).then(response => {
+            // 
+            this.onCancel();
+        })
+    }
 
-    // onPut() {
-    //     var putModel: HomeworkPutDTO = {
-    //         deadline: this.deadline,
-    //         subjectId: this.subjectId,
-    //         title: this.title,
-    //         description: this.description,
-    //         id: this.id!
-    //     }
+    onPut() {
+        var putModel: StudentHomeworkPutDTO = {
+            id: this.id!,
+            homeWorkId: this.homeworkId,
+            studentAnswer,
+            studentSubjectId,
+        }
 
-    //     this.homeworksApi.updateHomework(putModel).then(response => {
-    //         // 
-    //         this.onCancel();
-    //     })
-    // }
+        this.studentHomeworksApi.updateHomeworkAnswer(putModel).then(response => {
+            // 
+            this.onCancel();
+        })
+    }
 
     onCancel() {
         this.router.navigateBack();
     }
 
-    // //bind params
-    // activate(params: any) {
-    //     if (params.subjectId && typeof (params.subjectId) == 'string') {
-    //         this.subjectId = params.subjectId;
-    //     }
-    //     if (params.id && typeof (params.id) == 'string') {
-    //         this.id = params.id;
-    //     }
-    // }
+    //bind params
+    activate(params: any) {
+        if (params.homeworkId && typeof (params.homeworkId) == 'string') {
+            this.homeworkId = params.homeworkId;
+        }
+        if (params.id && typeof (params.id) == 'string') {
+            this.id = params.id;
+        }
+    }
 
-    // async created() {
-    //     const subject = await this.subjectsApi.getDetails(this.subjectId)
+    async created() {
+        const subject = await this.subjectsApi.getDetails(this.subjectId)
 
-    //     if (subject.errors?.length > 0) return;
+        if (subject.errors?.length > 0) return;
 
-    //     this.subjectTitle = subject.data?.subjectTitle!
+        this.subjectTitle = subject.data?.subjectTitle!
 
-    //     if (this.id) {
-    //         const homework = await this.homeworksApi.getHomeworkModel(this.id)
+        if (this.id) {
+            const homework = await this.homeworksApi.getHomeworkModel(this.id)
 
-    //         if (homework.errors?.length > 0) return;
+            if (homework.errors?.length > 0) return;
 
-    //         this.deadline = homework.data?.deadline
-    //         this.description = homework.data?.description
-    //         this.title = homework.data?.title!
-    //     }
-    // }
+            this.deadline = homework.data?.deadline
+            this.description = homework.data?.description
+            this.title = homework.data?.title!
+        }
+    }
 }

@@ -24,6 +24,7 @@ export interface HomeworkGetDTO {
     title: string;
     description: string;
     subjectTitle: string;
+    subjectCode: string;
     subjectId: string;
     deadline: Date;
 }

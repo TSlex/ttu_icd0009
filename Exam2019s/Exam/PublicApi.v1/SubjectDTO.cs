@@ -53,6 +53,7 @@ namespace PublicApi.v1
     public class SubjectStudentDetailsHomework
     {
         public Guid Id { get; set; } = default!;
+        public Guid? StudentHomeworkId { get; set; }
         
         public string Title { get; set; } = default!;
         public DateTime? Deadline { get; set; }

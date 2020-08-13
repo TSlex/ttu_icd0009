@@ -131,7 +131,8 @@ namespace WebApp.ApiControllers._1._0
                     Id = work.Id,
                     Title = work.Title,
                     SubjectId = work.SubjectId,
-                    SubjectTitle = work.Subject.SubjectTitle
+                    SubjectTitle = work.Subject.SubjectTitle,
+                    SubjectCode = work.Subject.SubjectCode
                 }).FirstOrDefaultAsync();
 
             if (homeWork == null)

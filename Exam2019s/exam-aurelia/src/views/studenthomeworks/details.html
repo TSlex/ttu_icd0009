@@ -1,29 +1,30 @@
 <template>
     <require from="conventers/DateFormatConventer"></require>
     <h3 class="d-flex" style="justify-content: space-between">
-        Eksam2
+        ${model.title}
     </h3>
     <hr>
-    <h4>test</h4>
-    <h5 class="text-muted">Due: 8/14/2020 12:00:00 PM</h5>
+    <h4>${model.description}</h4>
+    <h5 class="text-muted">Due: ${model.deadline | dateFormat}</h5>
     <hr>
-    <h5 class="text-muted">ASP.NET Veebirakendused</h5>
-    <h5 class="text-muted">ICD0015</h5>
+    <h5 class="text-muted">${model.subjectTitle}</h5>
+    <h5 class="text-muted">${model.subjectCode}</h5>
 
     <div class="row text-center justify-content-center">
         <div class="col-md-6">
             <h4>Your answer</h4>
             <hr>
-            <h5></h5>
-            <h5 class="text-muted mt-3">Answered: </h5>
+            <h5>${model.studentAnswer}</h5>
+            <h5 class="text-muted mt-3">Answered: ${model.answerDateTime | dateFormat}</h5>
             <hr>
-            <h5>Checked: true</h5>
-            <h5>Accepted: false</h5>
+            <h5>Checked: ${model.isChecked}</h5>
+            <h5>Accepted: ${model.isAccepted}</h5>
         </div>
     </div>
 
-    <div class="justify-content-center d-flex mt-5">
-        <a class="btn btn-primary mr-1" href="/studenthomeworks/edit/bc0e3611-c67c-4aac-8ffd-3396283fabb7">Edit</a>
-        <a class="btn btn-secondary" href="/subjects/00000000-0000-0000-0000-000000000005">Back to List</a>
+    <div class="justify-content-center d-flex mt-5" if.bind="model.homeWorkId">
+        <a class="btn btn-primary mr-1"
+            route-href="route: studenthomeworks-edit; params.bind: { homeworkId: model.homeWorkId, id: model.id }">Edit</a>
+        <a class="btn btn-secondary" click.delegate="onCancel()">Back to List</a>
     </div>
 </template>

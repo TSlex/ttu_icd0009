@@ -43,6 +43,7 @@ namespace PublicApi.v1
         public string? Description { get; set; }
 
         public string SubjectTitle { get; set; } = default!;
+        public string SubjectCode { get; set; } = default!;
         public Guid SubjectId { get; set; } = default!;
 
         public DateTime? Deadline { get; set; }

@@ -286,6 +286,8 @@ namespace WebApp.ApiControllers._1._0
                             .Where(work => work.DeletedAt == null)
                             .Select(work => new SubjectStudentDetailsHomework
                             {
+                                StudentHomeworkId = work.StudentHomeWorks.FirstOrDefault(shw =>
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Id,
                                 Deadline = work.Deadline,
                                 Grade = work.StudentHomeWorks.FirstOrDefault(shw =>
                                     shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Grade,

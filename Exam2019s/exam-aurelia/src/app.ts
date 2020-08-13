@@ -52,7 +52,7 @@ export class App extends IdentityStore {
             { route: ['studenthomeworks/create/:homeworkId'], name: 'studenthomeworks-create', moduleId: PLATFORM.moduleName('views/studenthomeworks/create-edit'), nav: false, title: 'Answer' },
             { route: ['studenthomeworks/edit/:homeworkId/:id'], name: 'studenthomeworks-edit', moduleId: PLATFORM.moduleName('views/studenthomeworks/create-edit'), nav: false, title: 'Edit' },
             { route: ['studenthomeworks/:id'], name: 'studenthomeworks-details', moduleId: PLATFORM.moduleName('views/studenthomeworks/details'), nav: false, title: 'Manage' },
-            { route: ['studenthomeworks/:id/teacher'], name: 'teacher-homeworks-submit', moduleId: PLATFORM.moduleName('views/studenthomeworks/teacher-submit'), nav: false, title: 'Manage' },
+            { route: ['studenthomeworks/:homeworkId/:studentSubjectId/teacher'], name: 'teacher-homeworks-submit', moduleId: PLATFORM.moduleName('views/studenthomeworks/teacher-submit'), nav: false, title: 'Manage' },
 
         ]);
 

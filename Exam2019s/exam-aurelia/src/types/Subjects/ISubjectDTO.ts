@@ -8,6 +8,7 @@ export interface ISubjectDTO {
 
 export interface ISubjectStudentDetailsHomeworkDTO {
     id: string;
+    studentHomeworkId: string;
     title: string;
     deadline?: Date;
     isAccepted: boolean;
