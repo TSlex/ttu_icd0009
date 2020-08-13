@@ -3,26 +3,30 @@ import { Router } from 'aurelia-router';
 import { StudentHomeworkPostDTO, StudentHomeworkPutDTO } from 'types/StudentHomeworks/StudentHomeworkDTO';
 import { StudentHomeworksApi } from 'services/StudentHomeworksApi';
 import { HomeworkGetDTO } from 'types/Homeworks/HomeworkDTO';
+import { HomeworksApi } from 'services/HomeworksApi';
 
 @autoinject
 export class CreateEdit {
-    constructor(private studentHomeworksApi: StudentHomeworksApi, private router: Router) {
+    constructor(private studentHomeworksApi: StudentHomeworksApi, private homeworksApi: HomeworksApi, private router: Router) {
     }
 
     private id?: string;
-    private homeworkId!: string;
+    private studentSubjectId?: string;
 
+    private homeworkId!: string;
     private homework!: HomeworkGetDTO;
 
-    private deadline?: Date;
     private studentAnswer?: string;
+
+    private deadline?: Date;
     private title!: string;
+    private description!: string;
 
     onPost() {
         var postModel: StudentHomeworkPostDTO = {
             homeWorkId: this.homeworkId,
-            studentAnswer,
-            studentSubjectId,
+            studentAnswer: this.studentAnswer,
+            studentSubjectId: this.studentSubjectId!,
         }
 
         this.studentHomeworksApi.createHomeworkAnswer(postModel).then(response => {
@@ -34,9 +38,7 @@ export class CreateEdit {
     onPut() {
         var putModel: StudentHomeworkPutDTO = {
             id: this.id!,
-            homeWorkId: this.homeworkId,
-            studentAnswer,
-            studentSubjectId,
+            studentAnswer: this.studentAnswer,
         }
 
         this.studentHomeworksApi.updateHomeworkAnswer(putModel).then(response => {
@@ -57,23 +59,34 @@ export class CreateEdit {
         if (params.id && typeof (params.id) == 'string') {
             this.id = params.id;
         }
+        if (params.studentSubjectId && typeof (params.studentSubjectId) == 'string') {
+            this.studentSubjectId = params.studentSubjectId;
+        }
     }
 
     async created() {
-        const subject = await this.subjectsApi.getDetails(this.subjectId)
+        const homeworkResponse = await this.homeworksApi.getHomeworkModel(this.homeworkId)
 
-        if (subject.errors?.length > 0) return;
+        console.log(homeworkResponse)
 
-        this.subjectTitle = subject.data?.subjectTitle!
+        if (homeworkResponse.errors?.length > 0) this.onCancel();
+
+        this.homework = homeworkResponse.data!
+
+        this.deadline = this.homework.deadline;;
+        this.description = this.homework.description;
+        this.title = this.homework.title!;
 
         if (this.id) {
-            const homework = await this.homeworksApi.getHomeworkModel(this.id)
+            const modelResponse = await this.studentHomeworksApi.getHomeworkAnswerDetails(this.id)
 
-            if (homework.errors?.length > 0) return;
+            if (modelResponse.errors?.length > 0) this.onCancel();
 
-            this.deadline = homework.data?.deadline
-            this.description = homework.data?.description
-            this.title = homework.data?.title!
+            this.studentAnswer = modelResponse.data!.studentAnswer
+
+        } else {
+
+            this.studentAnswer = ""
         }
     }
 }

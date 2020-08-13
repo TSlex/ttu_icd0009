@@ -27,6 +27,7 @@ export interface ISubjectStudentDetailsDTO {
     id: string;
     subjectTitle: string;
     subjectCode: string;
+    studentSubjectId: string;
     semesterTitle: string;
     teacherName: string;
 }

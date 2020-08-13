@@ -57,7 +57,7 @@
                     <template if.bind="!homework.isStarted">
                         <td class="text-right">
                             <a class="btn btn-warning fa fa-pencil"
-                                route-href="route: studenthomeworks-create; params.bind: {homeworkId: model.id};"></a>
+                                route-href="route: studenthomeworks-create; params.bind: {homeworkId: homework.id, studentSubjectId: model.studentSubjectId};"></a>
                         </td>
                     </template>
                     <template if.bind="homework.isStarted && !homework.isAccepted">

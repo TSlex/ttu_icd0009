@@ -24,6 +24,8 @@ namespace PublicApi.v1
         public int Grade { get; set; }
         public double HomeWorksGrade { get; set; }
         
+        public Guid StudentSubjectId { get; set; }
+        
         public bool IsAccepted { get; set; }
         public bool IsEnrolled { get; set; }
 
@@ -54,7 +56,7 @@ namespace PublicApi.v1
     {
         public Guid Id { get; set; } = default!;
         public Guid? StudentHomeworkId { get; set; }
-        
+
         public string Title { get; set; } = default!;
         public DateTime? Deadline { get; set; }
 

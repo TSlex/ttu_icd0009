@@ -3,6 +3,7 @@ import { HttpClient, json } from 'aurelia-fetch-client';
 import { AppState } from 'state/state';
 import { IFetchResponse } from 'types/Response/IFetchResponseDTO';
 import { parseResponse } from 'helpers/ResponseParser';
+import { HomeworkGetDTO } from 'types/Homeworks/HomeworkDTO';
 
 @autoinject
 export class BaseApi {

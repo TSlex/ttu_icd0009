@@ -15,16 +15,14 @@ export interface StudentHomeworkDTO {
 }
 
 export interface StudentHomeworkPostDTO {
-    studentAnswer: string;
+    studentAnswer?: string;
     studentSubjectId: string;
     homeWorkId: string;
 }
 
 export interface StudentHomeworkPutDTO {
     id: string;
-    studentAnswer: string;
-    studentSubjectId: string;
-    homeWorkId: string;
+    studentAnswer?: string;
 }
 
 export interface StudentHomeworkTeacherSubmitDTO {

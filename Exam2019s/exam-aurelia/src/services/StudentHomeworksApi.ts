@@ -5,8 +5,7 @@ import { HttpClient, json } from 'aurelia-fetch-client';
 import { BaseApi } from './BaseApi';
 
 import { parseResponse } from 'helpers/ResponseParser';
-import { StudentHomeworkDTO } from 'types/Homeworks/HomeworkDTO';
-import { StudentHomeworkTeacherSubmitDTO, StudentHomeworkPutDTO, StudentHomeworkPostDTO } from 'types/StudentHomeworks/StudentHomeworkDTO';
+import { StudentHomeworkTeacherSubmitDTO, StudentHomeworkPutDTO, StudentHomeworkPostDTO, StudentHomeworkDTO } from 'types/StudentHomeworks/StudentHomeworkDTO';
 
 @autoinject
 export class StudentHomeworksApi extends BaseApi {

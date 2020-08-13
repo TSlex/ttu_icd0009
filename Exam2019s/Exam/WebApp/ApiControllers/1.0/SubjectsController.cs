@@ -269,11 +269,13 @@ namespace WebApp.ApiControllers._1._0
                 return Ok(await query.Select(subject => new SubjectStudentDetails
                     {
                         Id = subject.Id,
+                        StudentSubjectId = subject.StudentSubjects.FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted && ssb.StudentId == User.UserId())
+                            .Id,
                         Grade = subject.StudentSubjects.FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted && ssb.StudentId == User.UserId())
                             .Grade,
                         HomeWorksGrade = subject.StudentSubjects
                             .FirstOrDefault(ssb => ssb.DeletedAt == null && ssb.IsAccepted && ssb.StudentId == User.UserId()).StudentHomeWorks
-                            .Where(shw => shw.DeletedAt == null)
+                            .Where(shw => shw.DeletedAt == null && shw.Grade >= 0)
                             .Select(work => work.Grade).Average(),
                         StudentsCount = subject.StudentSubjects.Count(s => s.DeletedAt == null && s.IsAccepted),
                         SemesterTitle = subject.Semester.Title,
@@ -290,7 +292,8 @@ namespace WebApp.ApiControllers._1._0
                                     shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Id,
                                 Deadline = work.Deadline,
                                 Grade = work.StudentHomeWorks.FirstOrDefault(shw =>
-                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Grade,
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Grade >= 0 ? work.StudentHomeWorks.FirstOrDefault(shw =>
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).Grade : -1,
                                 Id = work.Id,
                                 Title = work.Title,
                                 IsAccepted = work.StudentHomeWorks.FirstOrDefault(shw =>

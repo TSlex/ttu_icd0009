@@ -1,7 +1,7 @@
 import { autoinject, PLATFORM } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { StudentHomeworksApi } from 'services/StudentHomeworksApi';
-import { StudentHomeworkDTO } from 'types/Homeworks/HomeworkDTO';
+import { StudentHomeworkDTO } from 'types/StudentHomeworks/StudentHomeworkDTO';
 
 @autoinject
 export class Details {

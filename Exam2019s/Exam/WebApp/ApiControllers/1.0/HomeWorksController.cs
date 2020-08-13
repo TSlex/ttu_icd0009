@@ -19,7 +19,7 @@ namespace WebApp.ApiControllers._1._0
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Teacher, Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Teacher, Admin, Student")]
     public class HomeWorksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,6 +36,7 @@ namespace WebApp.ApiControllers._1._0
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HomeWorkDetailsDTO))]
@@ -81,6 +82,7 @@ namespace WebApp.ApiControllers._1._0
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -113,6 +115,7 @@ namespace WebApp.ApiControllers._1._0
         [HttpGet("editmodel/{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [Authorize(Roles = "Teacher, Admin, Student")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HomeWorkDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Edit(Guid? id)
@@ -150,6 +153,7 @@ namespace WebApp.ApiControllers._1._0
         /// <param name="homeWork"></param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -179,6 +183,7 @@ namespace WebApp.ApiControllers._1._0
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
