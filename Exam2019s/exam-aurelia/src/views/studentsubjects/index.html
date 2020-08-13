@@ -1,0 +1,88 @@
+<template>
+    <require from="conventers/DateFormatConventer"></require>
+    <template if.bind="isTeacher">
+        <h3 class="card-subtitle mb-2 mt-5">Accepted students</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 20%">Student code</th>
+                    <th style="width: 40%">Student name</th>
+                    <th>Grade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody repeat.for="student of AcceptedStudents">
+                <tr>
+                    <td>
+                        ${student.studentCode}
+                    </td>
+                    <td>
+                        ${student.studentName}
+                    </td>
+                    <td>
+                        ${student.grade | formatGrade}
+                    </td>
+                    <td class="text-right d-flex" style="justify-content: flex-end">
+                        <a class="btn btn-primary fa fa-edit mr-1" asp-action="Edit" asp-route-id="@item.Id"></a>
+                        <form class="text-right" asp-action="RemoveStudent" asp-controller="StudentSubjects">
+                            <input type="hidden" name="Id" value="@item.Id">
+                            <input type="hidden" name="SubjectId" value="@item.SubjectId">
+                            <button class="btn btn-danger fa fa-times mt-0"></button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="card-subtitle mb-2 mt-5">Not accepted students</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 20%">Student code</th>
+                    <th>Student name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody repeat.for="student of NotAcceptedStudents">
+                <tr>
+                    <td>
+                        ${student.studentCode}
+                    </td>
+                    <td>
+                        ${student.studentName}
+                    </td>
+                    <td></td>
+                    <td>
+                        <form asp-controller="StudentSubjects" asp-action="AcceptStudent" class="text-right">
+                            <input type="hidden" name="Id" value="@item.Id">
+                            <input type="hidden" name="SubjectId" value="@item.SubjectId">
+                            <button class="btn btn-primary fa fa-check mt-0"></button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+    <template else>
+        <h3 class="card-subtitle mb-2 mt-5">Students</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 50%">Student code</th>
+                    <th>Student name</th>
+                </tr>
+            </thead>
+            <tbody repeat.for="student of Students">
+                <tr>
+                    <td>
+                        ${student.studentCode}
+                    </td>
+                    <td>
+                        ${student.studentName}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+</template>

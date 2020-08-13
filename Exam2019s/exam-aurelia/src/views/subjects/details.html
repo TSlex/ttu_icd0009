@@ -1,1 +1,18 @@
-<template>User</template>
+<template>
+    <h1 class="card-title">${model.subjectTitle}</h1>
+    <h4 class="card-subtitle mb-2 text-muted">${model.subjectCode}</h4>
+    <hr>
+    <h4 class="card-subtitle mb-2 text-muted">Semester: ${model.semesterTitle}</h4>
+    <h4 class="card-subtitle mb-2 text-success">Teacher: ${model.teacherName}</h4>
+
+
+    <h3 class="card-subtitle mb-2 mt-5">Students</h3>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Participants: </td>
+                <td class="w-75">${model.studentsCount}</td>
+            </tr>
+        </tbody>
+    </table>
+</template>

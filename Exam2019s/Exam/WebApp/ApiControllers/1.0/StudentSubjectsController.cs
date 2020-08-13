@@ -35,7 +35,7 @@ namespace WebApp.ApiControllers._1._0
         /// </summary>
         /// <param name="subjectId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{subjectId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<StudentSubjectDTO>))]

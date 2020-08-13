@@ -26,8 +26,8 @@
             </tr>
         </tbody>
     </table>
-    <a if.bind="model.isEnrolled && model.isAccepted" class="btn btn-primary" asp-controller="StudentSubjects" asp-action="Index"
-        asp-route-subjectId="@Model.Id">View all</a>
+    <a if.bind="model.isEnrolled && model.isAccepted" class="btn btn-primary"
+        route-href="studentsubjects; param.bind: {id: model.id}">View all</a>
 
     <template if.bind="model.isAccepted">
         <h3 class="card-subtitle mb-2 mt-5">Homeworks</h3>
@@ -49,9 +49,21 @@
                     <td>${homework.isAccepted}</td>
                     <td>${homework.isChecked}</td>
                     <td>${homework.grade | gradeFormat}</td>
-                    <td class="text-right">
-                        <a class="btn btn-warning fa fa-pencil"></a>
-                    </td>
+                    <template if.bind="homework.isAccepted">
+                        <td class="text-right">
+                            <button class="btn btn-success fa fa-check"></button>
+                        </td>
+                    </template>
+                    <template if.bind="!homework.isStarted">
+                        <td class="text-right">
+                            <button class="btn btn-warning fa fa-pencil"></button>
+                        </td>
+                    </template>
+                    <template if.bind="homework.isStarted && !homework.isAccepted">
+                        <td class="text-right">
+                            <button class="btn btn-info fa fa-pencil"></button>
+                        </td>
+                    </template>
                 </tr>
             </tbody>
         </table>
@@ -59,12 +71,12 @@
     <template else>
         <div if.bind="model.isEnrolled">
             <div class="text-center">
-                <button class="btn btn-warning w-25">Cancel registration!</button>
+                <button class="btn btn-warning w-25" click.delegate="onCancelRegistration()">Cancel registration!</button>
             </div>
         </div>
         <div if.bind="!model.isEnrolled">
             <div class="text-center">
-                <button class="btn btn-primary w-25">Enrol me!</button>
+                <button class="btn btn-primary w-25" click.delegate="onRegister()">Enrol me!</button>
             </div>
         </div>
     </template>

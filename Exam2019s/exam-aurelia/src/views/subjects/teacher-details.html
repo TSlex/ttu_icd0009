@@ -1,1 +1,84 @@
-<template>Teacher</template>
+<template>
+    <require from="conventers/DateFormatConventer"></require>
+    <h1 class="card-title">${model.subjectTitle}</h1>
+    <h4 class="card-subtitle mb-2 text-muted">${model.subjectCode}</h4>
+    <hr>
+    <h4 class="card-subtitle mb-2 text-muted">Semester: ${model.semesterTitle}</h4>
+
+    <h3 class="card-subtitle mb-2 mt-5">Students</h3>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Accepted: </td>
+                <td class="w-75">${model.acceptedStudentsCount}</td>
+            </tr>
+            <tr>
+                <td>Not accepted: </td>
+                <td class="w-75">${model.notAcceptedStudentsCount}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="/studentsubjects?subjectId=00000000-0000-0000-0000-000000000005">View all</a>
+
+    <h3 class="card-subtitle mb-2 mt-5">Statistic</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Not graded</th>
+                <th>Failed</th>
+                <th>Passed</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>${model.notGradedCount}</td>
+                <td>${model.failedCount}</td>
+                <td>${model.passedCount}</td>
+                <td>${model.score1Count}</td>
+                <td>${model.score2Count}</td>
+                <td>${model.score3Count}</td>
+                <td>${model.score4Count}</td>
+                <td>${model.score5Count}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="card-subtitle mb-2 mt-5">
+        Homeworks
+        <a class="fa fa-plus-circle" href="/homeworks/create?subjectId=00000000-0000-0000-0000-000000000005">
+        </a>
+    </h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Deadline</th>
+                <th>Overal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="homework of model.homeworks">
+                <td>${homework.title}</td>
+                <td>${homework.deadline | dateFormat}</td>
+                <td>${homework.averageGrade | gradeFormat}</td>
+                <td class="text-right d-flex" style="justify-content: flex-end; max-width: unset !important;">
+                    <a class="btn btn-primary fa fa-eye mr-1" href="/homeworks/details/007da9ac-4e5b-4b8e-8692-726b698dec26"></a>
+                    <a class="btn btn-primary fa fa-edit mr-1" href="/homeworks/edit/007da9ac-4e5b-4b8e-8692-726b698dec26"></a>
+
+                    <div action="/homeworks/delete" method="post">
+                        <div class="text-center">
+                            <input type="hidden" name="Id" value="007da9ac-4e5b-4b8e-8692-726b698dec26">
+                            <button class="btn btn-danger fa fa-times mt-0"></button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>

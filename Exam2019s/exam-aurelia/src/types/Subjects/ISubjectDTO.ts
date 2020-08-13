@@ -12,6 +12,7 @@ export interface ISubjectStudentDetailsHomeworkDTO {
     deadline?: Date;
     isAccepted: boolean;
     isChecked: boolean;
+    isStarted: boolean;
     grade: number;
 }
 

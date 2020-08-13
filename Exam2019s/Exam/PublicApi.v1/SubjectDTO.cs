@@ -60,6 +60,8 @@ namespace PublicApi.v1
         public bool IsAccepted { get; set; }
         public bool IsChecked { get; set; }
         
+        public bool IsStarted { get; set; }
+        
         public int Grade { get; set; }
     }
     

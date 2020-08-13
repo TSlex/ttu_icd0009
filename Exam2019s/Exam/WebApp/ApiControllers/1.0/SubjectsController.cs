@@ -295,6 +295,8 @@ namespace WebApp.ApiControllers._1._0
                                     shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).IsAccepted,
                                 IsChecked = work.StudentHomeWorks.FirstOrDefault(shw =>
                                     shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()).IsChecked,
+                                IsStarted = work.StudentHomeWorks.FirstOrDefault(shw =>
+                                    shw.DeletedAt == null && shw.StudentSubject.StudentId == User.UserId()) != null
                             }).ToList()
                     })
                     .FirstOrDefaultAsync()

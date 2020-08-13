@@ -35,16 +35,12 @@ export class App extends IdentityStore {
             { route: ['subjects', 'subjects/index'], name: 'subjects', moduleId: PLATFORM.moduleName('views/subjects/subjects'), nav: false, title: 'Subjects' },
             { route: ['subjects/my'], name: 'student-subjects', moduleId: PLATFORM.moduleName('views/subjects/student-subjects'), nav: false, title: 'Subjects' },
             { route: ['subjects/:id'], name: 'subject-details', moduleId: PLATFORM.moduleName('views/subjects/switcher'), nav: false, title: 'Details' },
-            // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
-            // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
-
-            // my subjects
-            // { route: ['posts', 'posts/index'], name: 'posts', moduleId: PLATFORM.moduleName('views/posts/index'), nav: true, title: 'Posts', settings: { auth: true } },
-            // { route: ['posts/create'], name: 'posts-create', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
-            // { route: ['posts/edit/:id'], name: 'posts-edit', moduleId: PLATFORM.moduleName('views/posts/create-edit'), settings: { auth: true } },
 
             // my semester
             { route: ['semesters', 'semesters/index'], name: 'semesters', moduleId: PLATFORM.moduleName('views/semesters/index'), nav: false, title: 'Semesters' },
+
+            // studentsubjects
+            { route: ['studentsubjects/:id'], name: 'studentsubjects', moduleId: PLATFORM.moduleName('views/studentsubjects/index'), nav: false, title: 'Students' },
 
         ]);
 
