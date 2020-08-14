@@ -32,7 +32,10 @@ namespace DAL.App.Repositories
         
         public override async Task<IEnumerable<Subject>> GetRecordHistoryAsync(Guid id)
         {
-            return (await RepoDbSet.IgnoreQueryFilters().Where(entity => entity.MasterId == id || entity.Id == id).ToListAsync())
+            return (await RepoDbSet.IgnoreQueryFilters()
+                    .Include(entity => entity.Teacher)
+                    .Include(entity => entity.Semester)
+                    .Where(entity => entity.MasterId == id || entity.Id == id).ToListAsync())
                 .Select(Mapper.Map);
         }
         
